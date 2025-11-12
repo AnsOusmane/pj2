@@ -1,0 +1,11 @@
+[
+  { "id": 1, "title": "Vidéo 1", "url": "assets/videos/1.mp4", "thumbnail": "assets/videos/phone1.png" },
+  { "id": 2, "title": "Vidéo 2", "url": "assets/videos/2.mp4", "thumbnail": "assets/videos/phone2.png" },
+  { "id": 3, "title": "Vidéo 3", "url": "assets/videos/3.mp4", "thumbnail": "assets/videos/phone3.png" },
+  { "id": 4, "title": "Vidéo 4", "url": "assets/videos/4.mp4", "thumbnail": "assets/videos/phone1.png" },
+  { "id": 5, "title": "Vidéo 5", "url": "assets/videos/5.mp4", "thumbnail": "assets/videos/phone2.png" },
+  { "id": 6, "title": "Vidéo 6", "url": "assets/videos/6.mp4", "thumbnail": "assets/videos/phone3.png" },
+  { "id": 7, "title": "Vidéo 7", "url": "assets/videos/7.mp4", "thumbnail": "assets/videos/phone1.png" },
+  { "id": 8, "title": "Vidéo 8", "url": "assets/videos/8.mp4", "thumbnail": "assets/videos/phone2.png" },
+  { "id": 9, "title": "Vidéo 9", "url": "assets/videos/9.mp4", "thumbnail": "assets/videos/phone3.png" }
+]
