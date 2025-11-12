@@ -1,0 +1,40 @@
+<div class="max-w-4xl mx-auto py-12">
+  <ng-container [ngSwitch]="id">
+    <div *ngSwitchCase="'0-5-ans'">
+      <h1 class="text-3xl font-bold text-green-700 mb-4">Gratuité des soins (0 à 5 ans)</h1>
+      <p>
+        Gratuité des soins des enfants âgés de moins de cinq (5) ans : est éligible tout enfant sénégalais
+        disposant d’un carnet de santé ou tout autre document attestant de son âge.
+      </p>
+      <!-- tu peux ajouter ici plus de texte, listes, etc. -->
+    </div>
+
+    <div *ngSwitchCase="'plan-sesame'">
+      <h1 class="text-3xl font-bold text-green-700 mb-4">Plan Sésame</h1>
+      <p>
+        Le plan SESAME assure la prise en charge des soins de santé pour les Sénégalais âgés de 60 ans et plus,
+        dans les structures publiques.
+      </p>
+    </div>
+
+    <div *ngSwitchCase="'cesarienne'">
+      <h1 class="text-3xl font-bold text-green-700 mb-4">Gratuité de la césarienne</h1>
+      <p>
+        Toute femme enceinte nécessitant une césarienne bénéficie d’une gratuité complète dans les structures
+        publiques habilitées.
+      </p>
+    </div>
+
+    <div *ngSwitchCase="'dialyse'">
+      <h1 class="text-3xl font-bold text-green-700 mb-4">Gratuité de la dialyse</h1>
+      <p>
+        Gratuité totale des séances d’hémodialyse ou de dialyse péritonéale pour les patients souffrant
+        d’insuffisance rénale chronique.
+      </p>
+    </div>
+
+    <div *ngSwitchDefault>
+      <h1 class="text-3xl font-bold text-gray-600">Programme non trouvé</h1>
+    </div>
+  </ng-container>
+</div>

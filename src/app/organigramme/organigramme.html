@@ -1,0 +1,22 @@
+<div class="organigramme-container flex flex-col items-center">
+  <div class="relative w-full max-w-xl rounded-lg shadow-lg overflow-hidden bg-white">
+    <img [src]="currentMembre.photo" class="w-full h-80 object-cover transition-transform duration-300" alt="{{currentMembre.nom}}">
+    <div class="p-4 text-center">
+      <h3 class="text-lg font-bold text-green-700">{{ currentMembre.nom }}</h3>
+      <p class="text-sm font-semibold text-gray-600">{{ currentMembre.poste }}</p>
+      <p class="mt-2 text-gray-700">{{ currentMembre.bio }}</p>
+    </div>
+    <!-- Flèches -->
+    <button (click)="prev()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition">‹</button>
+    <button (click)="next()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition">›</button>
+  </div>
+
+  <!-- Miniatures hover -->
+  <div class="mt-4 flex gap-3 overflow-x-auto">
+    <div *ngFor="let membre of membres; let i = index"
+         (mouseenter)="currentIndex = i"
+         class="w-20 h-20 rounded-full overflow-hidden cursor-pointer border-2 border-green-300 hover:border-green-600 transition">
+      <img [src]="membre.photo" class="w-full h-full object-cover" alt="{{membre.nom}}">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+/* Animation pour l’apparition progressive */
+.group:hover span {
+  transition: transform 0.5s ease;
+}

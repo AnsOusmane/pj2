@@ -1,0 +1,16 @@
+<div class="relative max-w-4xl mx-auto py-10 px-4">
+  <h2 class="text-3xl font-bold text-green-700 text-center mb-10">Timeline historique</h2>
+
+  <div class="relative border-l-4 border-green-200 dark:border-green-600">
+    <div *ngFor="let event of events; let i = index" class="mb-10 ml-6 relative group">
+      <!-- Cercle -->
+      <span class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-green-500 border-4 border-white shadow-lg transform transition duration-500 group-hover:scale-125"></span>
+
+      <!-- Contenu -->
+      <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg transition transform duration-500 hover:scale-105 hover:shadow-2xl">
+        <span class="text-green-500 font-bold text-xl">{{ event.year }}</span>
+        <p class="mt-2 text-gray-700 dark:text-gray-300">{{ event.text }}</p>
+      </div>
+    </div>
+  </div>
+</div>

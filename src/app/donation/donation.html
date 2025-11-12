@@ -1,0 +1,171 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+  <div class="bg-white rounded-2xl shadow-xl max-w-6xl w-full overflow-y-auto max-h-[90vh] p-8 relative">
+
+    <!-- Bouton de fermeture -->
+    <button
+      (click)="close.emit()"
+      class="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-2xl"
+    >
+      ✖
+    </button>
+
+    <!-- 🔽 Ton code donation inchangé en dessous -->
+    <div class="min-h-screen bg-gradient-to-b from-green-50 to-green-100 py-10 px-4 flex flex-col items-center">
+      <h1 class="text-3xl font-bold text-green-700 mb-10 text-center">
+        🌍 Faire un don pour soutenir la Couverture Maladie Universelle
+      </h1>
+
+      <div class="grid md:grid-cols-3 gap-8 w-full max-w-7xl">
+     <!-- 🟩 1. MON DON -->
+      <div
+        class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition"
+      >
+        <h2 class="text-2xl font-semibold text-green-600 mb-4">💰 Mon don</h2>
+
+        <h3 class="font-semibold text-gray-800 mb-2">Je donne</h3>
+        <div class="flex flex-wrap gap-2 mb-3">
+          <button
+            *ngFor="let amount of oneTimeAmounts"
+            (click)="selectOneTime(amount)"
+            [class.bg-green-600]="selectedOneTime === amount"
+            [class.text-white]="selectedOneTime === amount"
+            class="border border-green-500 rounded-lg px-3 py-1 hover:bg-green-100 transition"
+          >
+            {{ amount | number }} F
+          </button>
+        </div>
+
+        <input
+          type="number"
+          placeholder="Autre montant"
+          [(ngModel)]="customOneTime"
+          class="border w-full rounded-md px-3 py-2 mb-4 focus:ring-2 focus:ring-green-400 outline-none"
+        />
+
+        <h3 class="font-semibold text-gray-800 mb-2">Je donne chaque mois</h3>
+        <div class="flex flex-wrap gap-2 mb-3">
+          <button
+            *ngFor="let amount of monthlyAmounts"
+            (click)="selectMonthly(amount)"
+            [class.bg-green-600]="selectedMonthly === amount"
+            [class.text-white]="selectedMonthly === amount"
+            class="border border-green-500 rounded-lg px-3 py-1 hover:bg-green-100 transition"
+          >
+            {{ amount | number }} F
+          </button>
+        </div>
+
+        <input
+          type="number"
+          placeholder="Autre montant mensuel"
+          [(ngModel)]="customMonthly"
+          class="border w-full rounded-md px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none"
+        />
+      </div>
+
+      <!-- 🟦 2. MES COORDONNÉES -->
+      <div
+        class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition"
+      >
+        <h2 class="text-2xl font-semibold text-green-600 mb-4">
+          👤 Mes coordonnées
+        </h2>
+
+        <label class="block mb-2 font-medium">Je suis :</label>
+        <select
+          [(ngModel)]="donor.type"
+          class="border rounded-md px-3 py-2 w-full mb-4"
+        >
+          <option value="particulier">Un particulier</option>
+          <option value="organisation">Une organisation / entreprise</option>
+        </select>
+
+        <label class="block mb-1">Nom / Prénom ou Raison sociale</label>
+        <input
+          [(ngModel)]="donor.name"
+          class="border rounded-md px-3 py-2 w-full mb-3"
+        />
+
+        <div *ngIf="donor.type === 'organisation'">
+          <label class="block mb-1">Nom de l’organisation</label>
+          <input
+            [(ngModel)]="donor.organization"
+            class="border rounded-md px-3 py-2 w-full mb-3"
+          />
+        </div>
+
+        <label class="block mb-1">Email</label>
+        <input
+          type="email"
+          [(ngModel)]="donor.email"
+          class="border rounded-md px-3 py-2 w-full mb-3"
+        />
+
+        <label class="block mb-1">Téléphone</label>
+        <input
+          type="tel"
+          [(ngModel)]="donor.phone"
+          class="border rounded-md px-3 py-2 w-full"
+        />
+      </div>
+
+      <!-- 🟥 3. MON RÈGLEMENT -->
+      <div
+        class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition"
+      >
+        <h2 class="text-2xl font-semibold text-green-600 mb-4">
+          💳 Mon règlement
+        </h2>
+
+        <p class="text-gray-700 mb-3">Choisissez un mode de paiement :</p>
+
+        <div class="flex flex-col gap-2">
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="pay"
+              value="wave"
+              [(ngModel)]="paymentMethod"
+            />
+            Wave
+          </label>
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="pay"
+              value="orange"
+              [(ngModel)]="paymentMethod"
+            />
+            Orange Money
+          </label>
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="pay"
+              value="free"
+              [(ngModel)]="paymentMethod"
+            />
+            Free Money
+          </label>
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="pay"
+              value="visa"
+              [(ngModel)]="paymentMethod"
+            />
+            Carte bancaire (Visa / MasterCard)
+          </label>
+        </div>
+
+        <button
+          (click)="submitDonation()"
+          class="mt-6 w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition"
+        >
+          Valider mon don
+        </button>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
