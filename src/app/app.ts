@@ -9,6 +9,7 @@ import { TutoScreenComponent } from './tuto-screen-component/tuto-screen-compone
 import { AboutTimelineComponent } from './about-timeline/about-timeline';
 import { DonationComponent } from './donation/donation';
 import { OrganigrammeComponent } from './organigramme/organigramme';
+import { AccueilsunuComponent } from './accueilsunu/accueilsunu';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ import { OrganigrammeComponent } from './organigramme/organigramme';
     TutoScreenComponent,
     AboutTimelineComponent,
     DonationComponent,
-    OrganigrammeComponent
+    OrganigrammeComponent,
+    AccueilsunuComponent
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],

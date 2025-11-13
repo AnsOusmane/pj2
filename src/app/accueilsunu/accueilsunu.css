@@ -1,0 +1,5 @@
+.counter {
+  display: inline-block;
+  min-width: 140px;
+  font-variant-numeric: tabular-nums;
+}
