@@ -5,7 +5,7 @@ import { OrganigrammeComponent } from '../organigramme/organigramme';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, OrganigrammeComponent],
+  imports: [CommonModule],
   templateUrl: './header.html',
   styleUrls: ['./header.css']
 })

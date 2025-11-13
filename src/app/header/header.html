@@ -17,8 +17,8 @@
         <button class="flex items-center gap-x-2 text-green-700 hover:text-green-900 transition">
           La Sen CSU
         </button>
-        <div class="absolute -left-32 mt-0.5 hidden group-hover:block w-[940px] h-[320px] rounded-md bg-white shadow-xl ring-1 ring-gray-900/10 p-6 z-50">
-          <div class="grid grid-cols-4 gap-6 w-full h-full">
+        <div class="absolute -left-96 mt-0.5 hidden group-hover:block w-[1235px] h-[320px] rounded-md bg-white shadow-xl ring-1 ring-gray-900/10 p-6 z-50">
+          <div class="grid grid-cols-6 gap-6 w-full h-full">
             <button (click)="onAboutClick()" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer focus:outline-none">
               <img src="assets/immcsu.webp" class="h-60 w-full object-cover" alt="A propos de l'agence" />
               <div class="p-2 text-center bg-gray-50">
@@ -27,7 +27,7 @@
             </button>
 
             <a href="#" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
-              <img src="assets/2.png" class="h-60 w-full object-cover" alt="Missions et vision" />
+              <img src="assets/2.png" class="h-60 w-full object-cover" alt="Audit" />
               <div class="p-2 text-center bg-gray-50">
                 <p class="text-base font-semibold text-green-600">Missions & Vision</p>
               </div>
@@ -39,7 +39,18 @@
                 <p class="text-base font-semibold text-green-600">Organigramme</p>
               </div>
             </button>
-
+            <a href="#" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
+              <img src="assets/2.png" class="h-60 w-full object-cover" alt="Audit" />
+              <div class="p-2 text-center bg-gray-50">
+                <p class="text-base font-semibold text-green-600">Audit</p>
+              </div>
+            </a>
+            <a href="#" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
+              <img src="assets/2.png" class="h-60 w-full object-cover" alt="Appels d'offres" />
+              <div class="p-2 text-center bg-gray-50">
+                <p class="text-base font-semibold text-green-600">Appels d'offres</p>
+              </div>
+            </a>
             <a href="#" class="block relative rounded-md shadow hover:shadow-md hover:-translate-y-1 transition-all h-60 w-full">
               <div class="relative h-full w-full rounded-md overflow-hidden">
                 <div class="absolute inset-0 h-full w-full overflow-hidden rounded-md">
@@ -140,6 +151,7 @@
                 <li><a href="#" class="hover:text-green-900">Rapports officiels</a></li>
                 <li><a href="#" class="hover:text-green-900">Guides</a></li>
                 <li><a href="#" class="hover:text-green-900">Décrets</a></li>
+                <li><a href="#" class="hover:text-green-900">Manuel d'audit</a></li>
               </ul>
             </div>
 
@@ -177,12 +189,7 @@
           </div>
         </div>
       </div>
-      <a href="#" class="text-green-700 hover:text-green-900 transition">
-        Audit
-      </a>
-    <a href="#" class="text-green-700 hover:text-green-900 transition">Appels d'offres</a>
       <a href="#" class="text-green-700 hover:text-green-900 transition">Carrière</a>
-
       <!-- Fundrising -->
       <button (click)="openDonation.emit()" class="border-2 border-yellow-500 text-yellow-500 font-semibold px-3 py-2 rounded-full bg-white hover:bg-yellow-400 hover:text-white transition">
         Fundrising
