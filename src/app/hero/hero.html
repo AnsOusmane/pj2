@@ -1,71 +1,75 @@
 <!-- Section hero / Image de fond -->
 <div
   class="relative w-full bg-cover bg-center bg-no-repeat"
-  style="background-image: url('/assets/bghero.jpg'); height: calc(100vh - 4rem);"
+  style="background-image: url('/assets/bghero.jpg'); min-height: calc(100vh - 4rem);"
 >
   <!-- Overlay léger -->
   <div class="absolute inset-0 bg-black/30"></div>
 
   <!-- Contenu principal -->
-  <div class="relative z-10 flex items-center justify-between h-full px-16">
-
-    <!--  Partie gauche : Texte + bouton -->
-    <div class="flex flex-col items-start text-left space-y-8">
-      <h1 class="text-white text-4xl font-bold leading-tight drop-shadow-lg">
-        Protégez votre santé et <br />
-        celle de vos proches. <br />
-        Inscrivez-vous dès <br />
+  <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between h-full px-6 sm:px-8 lg:px-16 py-8 lg:py-0">
+    
+    <!-- Partie gauche : Texte + bouton -->
+    <div class="flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 lg:space-y-8 w-full lg:w-auto">
+      <h1 class="mt-32 text-white text-3xl sm:text-4xl lg:text-4xl font-bold leading-tight drop-shadow-lg">
+        Protégez votre santé et <br class="hidden sm:inline" />
+        celle de vos proches. <br class="hidden lg:inline" />
+        Inscrivez-vous dès <br class="hidden lg:inline" />
         aujourd’hui !
       </h1>
 
-      <!-- Bouton oran -->
+      <!-- Bouton orange -->
       <a
-  href="https://sunucsu.sn/auth/create-account"
-  class="skew-x-[20deg] bg-gradient-to-r from-orange-500 to-yellow-500
-         animate-pulse hover:animate-none
-         hover:from-yellow-500 hover:to-orange-500
-         text-white text-2xl font-semibold px-10 py-5
-         shadow-2xl rounded-md cursor-pointer
-         transition-transform duration-300 hover:scale-110 group inline-block no-underline"
->
-  <div class="skew-x-[-20deg]">
-    Je m'inscris à la Sen CSU
-  </div>
-</a>
-
+        href="https://sunucsu.sn/auth/create-account"
+        class="skew-x-[20deg] bg-gradient-to-r from-orange-500 to-yellow-500
+               animate-pulse hover:animate-none
+               hover:from-yellow-500 hover:to-orange-500
+               text-white text-lg sm:text-xl lg:text-2xl font-semibold 
+               px-6 sm:px-8 lg:px-10 py-4 sm:py-5
+               shadow-2xl rounded-md cursor-pointer
+               transition-transform duration-300 hover:scale-110 group inline-block no-underline"
+      >
+        <div class="skew-x-[-20deg]">
+          Je m'inscris à la Sen CSU
+        </div>
+      </a>
     </div>
 
-    <!-- 🟩 Partie droite : Bloc vert -->
+    <!-- Partie droite : Bloc vert (mobile en bas, desktop à droite) -->
     <div
-      class="bg-green-600 bg-opacity-95 rounded-xl shadow-2xl p-6 border border-green-500
-             animate-fade-slide-up w-[260px] flex flex-col space-y-4 text-right"
+      class="bg-green-600 bg-opacity-95 rounded-xl shadow-2xl p-5 sm:p-6 border border-green-500
+             w-full max-w-sm lg:max-w-none lg:w-[260px] 
+             flex flex-col space-y-3 sm:space-y-4 text-center lg:text-right
+             mt-8 lg:mt-0
+             [animation-fill-mode:both] 
+             {{ showGreenBlock ? 'animate-fade-in-down' : 'opacity-0' }}"
     >
       <button
         class="w-full bg-transparent text-white font-semibold py-3 rounded-lg
                hover:bg-green-300 hover:text-green-800 hover:scale-[1.03]
-               transition-all duration-300 shadow-lg"
+               transition-all duration-300 shadow-lg
+               {{ showBtn1 ? 'animate-fade-in-down delay-300' : 'opacity-0' }}"
       >
         Pourquoi s’inscrire ?
       </button>
-
       <button
         class="w-full bg-transparent text-white font-semibold py-3 rounded-lg
                hover:bg-green-300 hover:text-green-800 hover:scale-[1.03]
-               transition-all duration-300 shadow-lg"
+               transition-all duration-300 shadow-lg
+               {{ showBtn2 ? 'animate-fade-in-down delay-600' : 'opacity-0' }}"
       >
         Comment s’inscrire ?
       </button>
-      <a
-       href="https://sunucsu.sn/auth/create-account">
-      <button
-        class="w-full bg-white text-green-800 font-semibold py-3 rounded-lg
-               hover:bg-green-100 hover:scale-[1.05]
-               transition-all duration-300 shadow-xl"
-      >
-        S’inscrire à la Sen CSU
-      </button>
-    </a>
+      <a href="https://sunucsu.sn/auth/create-account">
+        <button
+          class="w-full bg-white text-green-800 font-semibold py-3 rounded-lg
+                 hover:bg-green-100 hover:scale-[1.05]
+                 transition-all duration-300 shadow-xl
+                 {{ showBtn3 ? 'animate-fade-in-down delay-900' : 'opacity-0' }}"
+        >
+          S’inscrire à la Sen CSU
+        </button>
+      </a>
     </div>
-
   </div>
 </div>

@@ -6,36 +6,38 @@
   (openOrganigramme)="openOrganigramme()"
 ></app-header>
 
-<!-- ✅ ROUTER-OUTLET OBLIGATOIRE -->
+<!-- ROUTER-OUTLET : affiche HeroComponent, MediaComponent, etc. -->
 <router-outlet></router-outlet>
 
-<!-- ✅ Modale Tutos -->
+<!-- Modale Tutos -->
 <app-tuto-screen *ngIf="showTuto()"></app-tuto-screen>
 
-<!-- ✅ Timeline A propos -->
-<div *ngIf="showAbout()" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-  <div class="relative w-[90%] max-w-5xl p-6 bg-white rounded-2xl shadow-2xl overflow-auto max-h-[90vh]">
-    <button (click)="showAbout.set(false)" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 font-bold text-xl">
-      ×
+<!-- Timeline A propos -->
+<div *ngIf="showAbout()" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+  <div class="relative w-full max-w-5xl p-6 bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]">
+    <button (click)="showAbout.set(false)" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl font-bold">
+      times
     </button>
     <app-about-timeline></app-about-timeline>
   </div>
 </div>
 
-<!-- ✅ Modale Faire un don -->
+<!-- Modale Faire un don -->
 <app-donation
   *ngIf="showDonation()"
   (close)="showDonation.set(false)"
-  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
 ></app-donation>
 
-<!-- ✅ Overlay Organigramme -->
+<!-- Overlay Organigramme -->
 <div *ngIf="showOrganigramme()" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-  <div class="relative w-full max-w-4xl">
-    <app-organigramme></app-organigramme>
-    <button (click)="closeOrganigramme()" class="absolute top-2 right-2 text-white text-3xl font-bold">
-      ×
+  <div class="relative w-full max-w-4xl bg-white rounded-lg shadow-xl">
+    <button (click)="closeOrganigramme()" class="absolute top-3 right-3 text-white bg-red-600 hover:bg-red-700 w-8 h-8 rounded-full flex items-center justify-center text-xl font-bold z-10">
+      times
     </button>
+    <app-organigramme (close)="closeOrganigramme()"></app-organigramme>
   </div>
 </div>
-<app-accueilsunu></app-accueilsunu>
+
+<!-- Composant global (accueil ?) -->
+<app-accueilsunu *ngIf="router.url !== '/media'"></app-accueilsunu>

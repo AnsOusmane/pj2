@@ -1,0 +1,132 @@
+<!-- src/app/media/media.component.html -->
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-gradient-to-r from-blue-600 to-green-600 text-white">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <div class="relative container mx-auto px-6 py-24 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4">Médias & Ressources</h1>
+      <p class="text-lg md:text-xl max-w-3xl mx-auto opacity-90">
+        Newsletters, vidéos explicatives, témoignages et ressources officielles de la CSU Sénégal.
+      </p>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>
+  </section>
+
+  <!-- Tabs -->
+  <div class="sticky top-0 z-40 bg-white shadow-sm">
+    <div class="container mx-auto px-6">
+      <nav class="flex flex-wrap justify-center gap-4 md:gap-8 py-4 font-medium">
+        <button (click)="activeTab = 'newsletters'" [class]="activeTab === 'newsletters' ? 'tab-active' : 'tab-inactive'">Newsletters</button>
+        <button (click)="activeTab = 'videos'" [class]="activeTab === 'videos' ? 'tab-active' : 'tab-inactive'">Vidéos</button>
+        <button (click)="activeTab = 'temoignages'" [class]="activeTab === 'temoignages' ? 'tab-active' : 'tab-inactive'">Témoignages</button>
+        <button (click)="activeTab = 'autres'" [class]="activeTab === 'autres' ? 'tab-active' : 'tab-inactive'">Autres</button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Contenu -->
+  <div class="container mx-auto px-6 py-12">
+
+    <!-- Newsletters -->
+    <div *ngIf="activeTab === 'newsletters'" class="space-y-12 animate-fade-in">
+      <h2 class="text-3xl font-bold text-center mb-10">Newsletters</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let n of newsletters" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="h-48 bg-gradient-to-br from-blue-100 to-green-100 flex items-center justify-center">
+            <svg class="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0H5m0 0h2m10-8h.01M9 12h.01M15 16h.01M9 16h.01"></path>
+            </svg>
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-lg group-hover:text-blue-600">{{ n.title }}</h3>
+            <p class="text-sm text-gray-600 mt-1">{{ n.date }}</p>
+            <p class="text-gray-700 mt-3 line-clamp-2">{{ n.excerpt }}</p>
+            <a [href]="n.link" target="_blank" class="inline-flex items-center mt-4 text-blue-600 hover:text-blue-800">
+              Lire
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vidéos -->
+    <div *ngIf="activeTab === 'videos'" class="space-y-12 animate-fade-in">
+      <h2 class="text-3xl font-bold text-center mb-10">Vidéos Explicatives</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let v of videos" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer" (click)="openVideoModal(v)">
+          <div class="relative aspect-video bg-gray-900">
+            <img [src]="v.thumbnail" [alt]="v.title" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center group-hover:bg-opacity-50 transition">
+              <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
+                <svg class="w-8 h-8 text-blue-600 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7L8 5z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">{{ v.duration }}</div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold group-hover:text-blue-600">{{ v.title }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Témoignages -->
+    <div *ngIf="activeTab === 'temoignages'" class="space-y-12 animate-fade-in">
+      <h2 class="text-3xl font-bold text-center mb-10">Témoignages</h2>
+      <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+        <div *ngFor="let t of temoignages" class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-green-500 hover:shadow-xl transition">
+          <div class="flex items-center mb-4">
+            <img [src]="t.photo" [alt]="t.name" class="w-16 h-16 rounded-full object-cover border-2 border-green-200">
+            <div class="ml-4">
+              <h4 class="font-bold">{{ t.name }}</h4>
+              <p class="text-sm text-gray-600">{{ t.location }}</p>
+            </div>
+          </div>
+          <p class="text-gray-700 italic">"{{ t.quote }}"</p>
+          <div class="mt-4 text-right text-xs text-gray-500">{{ t.date }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Autres -->
+    <div *ngIf="activeTab === 'autres'" class="space-y-12 animate-fade-in">
+      <h2 class="text-3xl font-bold text-center mb-10">Autres Ressources</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="#" class="group bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-lg font-bold">Rapport Annuel 2024</h3>
+              <p class="text-sm opacity-90 mt-1">PDF • 5.2 Mo</p>
+            </div>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2-8H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7z"></path>
+            </svg>
+          </div>
+        </a>
+        <!-- Autres cartes similaires -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Vidéo -->
+  <div *ngIf="selectedVideo" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4" (click)="closeModal()">
+    <div class="relative bg-white rounded-xl max-w-4xl w-full p-6 shadow-2xl" (click)="$event.stopPropagation()">
+      <button (click)="closeModal()" class="absolute -top-3 -right-3 bg-white rounded-full p-2 shadow-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      <div class="aspect-video bg-gray-900 rounded-lg overflow-hidden">
+        <iframe [src]="selectedVideo.embedUrl" frameborder="0" allowfullscreen class="w-full h-full"></iframe>
+      </div>
+      <h3 class="mt-4 text-xl font-bold">{{ selectedVideo.title }}</h3>
+      <p class="text-gray-600">{{ selectedVideo.description }}</p>
+    </div>
+  </div>
+</div>

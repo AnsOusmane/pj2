@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { OrganigrammeComponent } from '../organigramme/organigramme';
 
 @Component({
   selector: 'app-header',
@@ -29,10 +28,6 @@ export class HeaderComponent implements AfterViewInit {
 
   onAboutClick() {
     this.openAboutTimeline.emit();
-  }
-
-  onDonationClick() {
-    this.openDonation.emit();
   }
 
   showOrganigrammeClick() {
