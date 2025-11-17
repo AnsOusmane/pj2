@@ -117,17 +117,13 @@
   <!-- Overlay semi-transparent pour lisibilité -->
   <div class="absolute inset-0 bg-white-200 flex flex-col items-center justify-center p-4">
     <p class="text-lg font-bold text-green-600 mb-3 text-center">Voir nos pharmacies partenaires</p>
-    
-    <!-- Carousel images -->
+
     <div class="w-full flex justify-center gap-2">
       <img id="carouselImage" src="assets/pharmacies/phar1.png" alt="Pharmacie partenaire"
            class="h-16 w-16 object-cover rounded-full border-2 border-white shadow-md transition-opacity duration-200 ease-in-out">
     </div>
   </div>
-
 </a>
-
-
           </div>
         </div>
       </div>
@@ -146,20 +142,21 @@
                 <p class="text-base font-semibold text-green-600">Communiqués de presse</p>
               </div>
             </a>
-
-<a routerLink="/media" 
-   class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer">
+<!-- Bouton Media -->
+<button (click)="goToMedia()" 
+        class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all w-full">
   <img src="assets/dossiers.jpg" class="h-60 w-full object-cover" alt="Dossiers média" />
   <div class="p-2 text-center bg-gray-50">
     <p class="text-base font-semibold text-green-600">Dossiers média</p>
   </div>
-</a>
-            <a href="#" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
+</button>
+          <button (click)="goToBankImg()" 
+            class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
               <img src="assets/1.jpg" class="h-60 w-full object-cover" alt="Banque d’images" />
               <div class="p-2 text-center bg-gray-50">
                 <p class="text-base font-semibold text-green-600">Banque d’images</p>
               </div>
-            </a>
+      </button>
 
             <div class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all bg-gray-50 p-4">
               <p class="text-lg font-bold text-green-700 mb-3 text-center">Publications</p>

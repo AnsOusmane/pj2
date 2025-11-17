@@ -12,6 +12,7 @@ import { OrganigrammeComponent } from './organigramme/organigramme';
 import { AccueilsunuComponent } from './accueilsunu/accueilsunu';
 import { MediaComponent } from './media/media';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
+//import { BanqueDImageComponent } from './banque-d-image/banque-d-image';
 
 @Component({
   selector: 'app-root',
@@ -20,13 +21,11 @@ import { MissionsvisionComponent } from './missionsvision/missionsvision';
     CommonModule,
     RouterOutlet,
     HeaderComponent,
-    HeroComponent,
     TutoScreenComponent,
     AboutTimelineComponent,
     DonationComponent,
     OrganigrammeComponent,
     AccueilsunuComponent,
-    MediaComponent,
     MissionsvisionComponent,
   ],
   templateUrl: './app.html',

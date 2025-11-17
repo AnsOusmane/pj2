@@ -1,0 +1,33 @@
+<div class="page-container">
+
+  <!-- Header catégories -->
+  <div class="categories">
+    <button *ngFor="let cat of categories"
+            (click)="setCategory(cat)"
+            [class.active]="cat === activeCategory">
+      {{ cat }}
+    </button>
+  </div>
+
+  <!-- Grille dynamique -->
+  <div class="grid-images">
+    <div class="img-card" 
+         *ngFor="let img of filteredImages"
+         (click)="openLightbox(img.src)">
+      
+      <div class="img-wrapper">
+        <img [src]="img.src" [alt]="img.title" />
+
+        <div class="overlay">
+          <p>{{ img.title }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" *ngIf="lightboxImage" (click)="closeLightbox()">
+    <img [src]="lightboxImage" class="lightbox-img" />
+  </div>
+
+</div>

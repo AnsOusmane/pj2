@@ -1,8 +1,8 @@
 <!-- src/app/media/media.component.html -->
-<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+<div class="min-h-screen bg-gradient-to-br from-green-50 via-white to-red-50">
 
   <!-- Hero -->
-  <section class="relative overflow-hidden bg-gradient-to-r from-blue-600 to-green-600 text-white">
+  <section class="relative overflow-hidden bg-gradient-to-r from-green-600 to-red-600 text-white">
     <div class="absolute inset-0 bg-black opacity-20"></div>
     <div class="relative container mx-auto px-6 py-24 text-center">
       <h1 class="text-4xl md:text-6xl font-bold mb-4">Médias & Ressources</h1>
@@ -33,16 +33,16 @@
       <h2 class="text-3xl font-bold text-center mb-10">Newsletters</h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div *ngFor="let n of newsletters" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
-          <div class="h-48 bg-gradient-to-br from-blue-100 to-green-100 flex items-center justify-center">
-            <svg class="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="h-48 bg-gradient-to-br from-green-100 to-red-100 flex items-center justify-center">
+            <svg class="w-20 h-20 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0H5m0 0h2m10-8h.01M9 12h.01M15 16h.01M9 16h.01"></path>
             </svg>
           </div>
           <div class="p-5">
-            <h3 class="font-semibold text-lg group-hover:text-blue-600">{{ n.title }}</h3>
+            <h3 class="font-semibold text-lg group-hover:text-green-600">{{ n.title }}</h3>
             <p class="text-sm text-gray-600 mt-1">{{ n.date }}</p>
             <p class="text-gray-700 mt-3 line-clamp-2">{{ n.excerpt }}</p>
-            <a [href]="n.link" target="_blank" class="inline-flex items-center mt-4 text-blue-600 hover:text-blue-800">
+            <a [href]="n.link" target="_blank" class="inline-flex items-center mt-4 text-green-600 hover:text-green-800">
               Lire
               <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -62,7 +62,7 @@
             <img [src]="v.thumbnail" [alt]="v.title" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center group-hover:bg-opacity-50 transition">
               <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg class="w-8 h-8 text-blue-600 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <svg class="w-8 h-8 text-green-600 ml-1" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7L8 5z"/>
                 </svg>
               </div>
@@ -70,7 +70,7 @@
             <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">{{ v.duration }}</div>
           </div>
           <div class="p-4">
-            <h3 class="font-semibold group-hover:text-blue-600">{{ v.title }}</h3>
+            <h3 class="font-semibold group-hover:text-green-600">{{ v.title }}</h3>
           </div>
         </div>
       </div>

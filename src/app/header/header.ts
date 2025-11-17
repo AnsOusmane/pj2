@@ -18,8 +18,6 @@ export class HeaderComponent implements AfterViewInit {
   @Output() openAbout = new EventEmitter<void>();
   @Output() openDonation = new EventEmitter<void>();
   @Output() openOrganigramme = new EventEmitter<void>();
-
-  // ⭐ AJOUT POUR MISSIONSVISION
   @Output() openMissionsvision = new EventEmitter<void>();
 
   constructor(
@@ -41,13 +39,16 @@ export class HeaderComponent implements AfterViewInit {
     this.openOrganigramme.emit();
   }
 
-  // ⭐ AJOUT POUR MISSIONSVISION
   onMissionsvisionClick() {
     this.openMissionsvision.emit();
   }
 
   goToMedia() {
     this.router.navigate(['/media']);
+  }
+  
+  goToBankImg() {
+    this.router.navigate(['/banque-images']);
   }
 
   ngAfterViewInit() {
@@ -77,28 +78,5 @@ export class HeaderComponent implements AfterViewInit {
       }, 1500);
     }
 
-    // === Carrousel pharmacies partenaires ===
-    const pharmacyImages = [
-      'assets/pharmacies/1.png',
-      'assets/pharmacies/2.png',
-      'assets/pharmacies/3.png',
-      'assets/pharmacies/4.png',
-      'assets/pharmacies/5.png',
-    ];
-    let phIndex = 0;
-    const phImgElement = document.getElementById('carouselPharmacies') as HTMLImageElement | null;
-    if (phImgElement) {
-      phImgElement.style.objectFit = 'cover';
-      phImgElement.style.width = '100%';
-      phImgElement.style.height = '100%';
-      setInterval(() => {
-        phIndex = (phIndex + 1) % pharmacyImages.length;
-        phImgElement.style.opacity = '0';
-        setTimeout(() => {
-          phImgElement.src = pharmacyImages[phIndex];
-          phImgElement.style.opacity = '1';
-        }, 200); // correspond au fade
-      }, 3000); // change toutes les 3s
-    }
   }
 }
