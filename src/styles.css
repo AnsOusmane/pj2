@@ -10,3 +10,11 @@
 .animate-fade-slide-up {
   animation: fade-slide-up 0.9s ease forwards;
 }
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* Défilement de la moitié du bloc pour boucle infinie */
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}

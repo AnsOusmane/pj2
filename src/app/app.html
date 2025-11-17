@@ -1,43 +1,113 @@
-<!-- Header avec événements -->
 <app-header
   (openTuto)="openTuto()"
   (openAboutTimeline)="openAbout()"
   (openDonation)="openDonation()"
   (openOrganigramme)="openOrganigramme()"
+  (openMissionsvision)="openMissionsvision()"
 ></app-header>
 
 <!-- ROUTER-OUTLET : affiche HeroComponent, MediaComponent, etc. -->
 <router-outlet></router-outlet>
 
 <!-- Modale Tutos -->
-<app-tuto-screen *ngIf="showTuto()"></app-tuto-screen>
+<div
+  *ngIf="showTuto()"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+  (click)="showTuto.set(false)"
+>
+  <div
+    class="relative w-full max-w-4xl p-6 bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      (click)="showTuto.set(false)"
+      class="fixed top-4 right-4 text-gray-700 hover:text-gray-900 text-3xl font-bold leading-none z-50"
+    >
+      &times;
+    </button>
+    <app-tuto-screen></app-tuto-screen>
+  </div>
+</div>
 
 <!-- Timeline A propos -->
-<div *ngIf="showAbout()" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-  <div class="relative w-full max-w-5xl p-6 bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]">
-    <button (click)="showAbout.set(false)" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl font-bold">
-      times
+<div
+  *ngIf="showAbout()"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+  (click)="showAbout.set(false)"
+>
+  <div
+    class="relative w-full max-w-5xl p-6 bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      (click)="showAbout.set(false)"
+      class="fixed top-4 right-4 text-gray-700 hover:text-gray-900 text-3xl font-bold leading-none z-50"
+    >
+      &times;
     </button>
     <app-about-timeline></app-about-timeline>
   </div>
 </div>
 
 <!-- Modale Faire un don -->
-<app-donation
+<div
   *ngIf="showDonation()"
-  (close)="showDonation.set(false)"
   class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
-></app-donation>
+  (click)="showDonation.set(false)"
+>
+  <div
+    class="relative w-full max-w-4xl p-6 bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      (click)="showDonation.set(false)"
+      class="fixed top-4 right-4 text-gray-700 hover:text-gray-900 text-3xl font-bold leading-none z-50"
+    >
+      &times;
+    </button>
+    <app-donation></app-donation>
+  </div>
+</div>
 
 <!-- Overlay Organigramme -->
-<div *ngIf="showOrganigramme()" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-  <div class="relative w-full max-w-4xl bg-white rounded-lg shadow-xl">
-    <button (click)="closeOrganigramme()" class="absolute top-3 right-3 text-white bg-red-600 hover:bg-red-700 w-8 h-8 rounded-full flex items-center justify-center text-xl font-bold z-10">
-      times
+<div
+  *ngIf="showOrganigramme()"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+  (click)="closeOrganigramme()"
+>
+  <div
+    class="relative w-full max-w-4xl bg-white rounded-lg shadow-xl"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      (click)="closeOrganigramme()"
+      class="fixed top-4 right-4 text-white bg-red-600 hover:bg-red-700 w-10 h-10 rounded-full flex items-center justify-center text-2xl font-bold leading-none z-50"
+    >
+      &times;
     </button>
     <app-organigramme (close)="closeOrganigramme()"></app-organigramme>
   </div>
 </div>
 
-<!-- Composant global (accueil ?) -->
-<app-accueilsunu *ngIf="router.url !== '/media'"></app-accueilsunu>
+<!-- Modale Missions & Vision -->
+<div
+  *ngIf="showMissionsvision()"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+  (click)="closeMissionsvision()"
+>
+  <div
+    class="relative w-full max-w-5xl p-6 bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      (click)="closeMissionsvision()"
+      class="fixed top-4 right-4 text-gray-700 hover:text-gray-900 text-3xl font-bold leading-none z-50"
+    >
+      &times;
+    </button>
+    <app-missionsvision></app-missionsvision>
+  </div>
+</div>
+
+<!-- Composant accueil -->
+<app-accueilsunu *ngIf="router.url === '' || router.url === '/'"></app-accueilsunu>

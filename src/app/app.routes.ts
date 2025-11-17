@@ -3,10 +3,14 @@ import { Routes } from '@angular/router';
 import { HeroComponent } from './hero/hero';
 import { ProgrammeComponent } from './programme/programme';
 import { MediaComponent } from './media/media';
+import { MissionsvisionComponent } from './missionsvision/missionsvision';
 
 export const routes: Routes = [
-  { path: '', component: HeroComponent },           // Accueil
+  { path: '', component: HeroComponent }, 
   { path: 'programme/:id', component: ProgrammeComponent },
-  { path: 'media', component: MediaComponent },     // Page Médias
-  { path: '**', redirectTo: '', pathMatch: 'full' } // 404
+  { path: 'media', component: MediaComponent },    
+  { path: 'missionsvision', component: MissionsvisionComponent },
+
+
+  { path: '**', redirectTo: '', pathMatch: 'full' }, // 404
 ];

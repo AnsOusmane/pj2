@@ -1,7 +1,7 @@
-// src/app/app.ts
 import { Component, signal, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterOutlet, Router } from '@angular/router'; // ← AJOUTÉ Router
+import { RouterOutlet, Router } from '@angular/router';
+
 // Composants
 import { HeaderComponent } from './header/header';
 import { HeroComponent } from './hero/hero';
@@ -11,6 +11,7 @@ import { DonationComponent } from './donation/donation';
 import { OrganigrammeComponent } from './organigramme/organigramme';
 import { AccueilsunuComponent } from './accueilsunu/accueilsunu';
 import { MediaComponent } from './media/media';
+import { MissionsvisionComponent } from './missionsvision/missionsvision';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,8 @@ import { MediaComponent } from './media/media';
     DonationComponent,
     OrganigrammeComponent,
     AccueilsunuComponent,
-    MediaComponent
+    MediaComponent,
+    MissionsvisionComponent,
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
@@ -36,9 +38,12 @@ export class App {
   showDonation = signal(false);
   showOrganigramme = signal(false);
 
+  // ⭐ AJOUT MISSIONS & VISION
+  showMissionsvision = signal(false);
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    public router: Router // ← public pour l'utiliser dans le template
+    public router: Router
   ) {
     if (isPlatformBrowser(this.platformId)) {
       document.body.addEventListener('closeTuto', () => this.showTuto.set(false));
@@ -47,9 +52,28 @@ export class App {
     }
   }
 
-  openTuto() { this.showTuto.set(true); }
-  openAbout() { this.showAbout.set(true); }
-  openDonation() { this.showDonation.set(true); }
-  openOrganigramme() { this.showOrganigramme.set(true); }
-  closeOrganigramme() { this.showOrganigramme.set(false); }
+  openTuto() {
+    this.showTuto.set(true);
+  }
+  openAbout() {
+    this.showAbout.set(true);
+  }
+  openDonation() {
+    this.showDonation.set(true);
+  }
+
+  openOrganigramme() {
+    this.showOrganigramme.set(true);
+  }
+  closeOrganigramme() {
+    this.showOrganigramme.set(false);
+  }
+
+  // ⭐ MÉTHODES MISSIONS & VISION
+  openMissionsvision() {
+    this.showMissionsvision.set(true);
+  }
+  closeMissionsvision() {
+    this.showMissionsvision.set(false);
+  }
 }
