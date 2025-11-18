@@ -6,6 +6,11 @@ import { MediaComponent } from './media/media';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
 import { AccueilsunuComponent } from './accueilsunu/accueilsunu';
 import { BanqueDImageComponent } from './banque-d-image/banque-d-image';
+import { CommuniquesPresseComponent } from './communiques-presse/communiques-presse';
+import { RapportsOfficielsComponent } from './rapports-officiels/rapports-officiels';
+import { Guide } from './guide/guide';
+import { DecretsComponent } from './decrets/decrets';
+import { ManuelAuditComponent } from './manuel-audit/manuel-audit';
 
 
 export const routes: Routes = [
@@ -15,8 +20,11 @@ export const routes: Routes = [
   { path: 'missionsvision', component: MissionsvisionComponent },
   { path: '', component: AccueilsunuComponent },
   { path: 'banque-images', component: BanqueDImageComponent },
-
-
+  { path: 'communiques-presse', component: CommuniquesPresseComponent },
+  { path: 'rapports-officiels', component: RapportsOfficielsComponent },
+  { path: 'guide', component: Guide },
+  { path: 'decrets', component: DecretsComponent },
+  { path: 'manuel-d-audit', component: ManuelAuditComponent },
 
   { path: '**', redirectTo: '', pathMatch: 'full' }, // 404
 ];

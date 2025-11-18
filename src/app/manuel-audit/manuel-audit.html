@@ -1,0 +1,13 @@
+<div class="container">
+
+  <h2 class="titre">Manuels & Guides d'Audit</h2>
+
+  <div class="list">
+    <div class="card" *ngFor="let item of audits">
+      <h3>{{ item.titre }}</h3>
+      <p>{{ item.description }}</p>
+      <a [href]="item.fichier" target="_blank" class="btn">Télécharger</a>
+    </div>
+  </div>
+
+</div>

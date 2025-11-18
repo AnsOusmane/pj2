@@ -1,0 +1,91 @@
+<div class="pt-24 max-w-6xl mx-auto px-4">
+
+  <!-- 🔥 Titre principal -->
+  <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-6 text-center">
+    Communiqués de Presse
+  </h1>
+
+  <!-- ⭐ Filtres -->
+  <div class="flex justify-center gap-2 flex-wrap mb-8">
+    <button
+      *ngFor="let cat of categories"
+      (click)="selectCat(cat)"
+      class="px-4 py-2 rounded-full border transition-all duration-300"
+      [ngClass]="{
+        'bg-green-600 text-white shadow-md scale-105': selectedCat === cat,
+        'bg-white text-gray-600 hover:bg-gray-100': selectedCat !== cat
+      }"
+    >
+      {{ cat }}
+    </button>
+  </div>
+
+  <!-- 📰 Liste des communiqués -->
+  <div class="grid md:grid-cols-2 gap-6">
+
+    <div *ngFor="let c of filteredCommuniques"
+         (click)="openModal(c)"
+         class="bg-white rounded-xl shadow transition-all duration-500 hover:shadow-xl hover:-translate-y-2 transform hover:scale-[1.01] cursor-pointer group overflow-hidden opacity-0 animate-fadeUp">
+
+      <!-- Loader -->
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse" *ngIf="!c.loaded">
+          <span class="text-gray-400 text-sm">Chargement...</span>
+        </div>
+
+        <img 
+          [src]="c.image"
+          (load)="c.loaded = true"
+          class="h-56 w-full object-cover transition-opacity duration-500 group-hover:opacity-90"
+          alt="{{ c.titre }}"
+        />
+      </div>
+
+      <div class="p-4">
+        <p class="text-xs text-gray-400">{{ c.date }}</p>
+
+        <h2 class="text-xl font-semibold text-green-700 my-2">
+          {{ c.titre }}
+        </h2>
+
+        <p class="text-gray-600 mb-3 line-clamp-3">
+          {{ c.resume }}
+        </p>
+
+        <span class="inline-block px-3 py-1 text-sm rounded-full bg-green-100 text-green-700 font-medium">
+          {{ c.categorie }}
+        </span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 🌟 MODAL FULLSCREEN -->
+<div *ngIf="modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+     (click)="closeModal()">
+
+  <div class="bg-white rounded-xl max-w-2xl w-full overflow-hidden shadow-2xl animate-zoomIn"
+       (click)="$event.stopPropagation()">
+
+    <img [src]="modal.image" class="w-full h-72 object-cover" />
+
+    <div class="p-5">
+      <h2 class="text-2xl font-bold text-green-700">{{ modal.titre }}</h2>
+      <p class="text-gray-400 text-sm">{{ modal.date }}</p>
+
+      <p class="text-gray-700 mt-4">
+        {{ modal.resume }}
+      </p>
+
+      <span class="inline-block mt-4 px-3 py-1 text-sm rounded-full bg-green-100 text-green-700 font-medium">
+        {{ modal.categorie }}
+      </span>
+    </div>
+
+    <button (click)="closeModal()"
+            class="absolute top-4 right-4 bg-white rounded-full shadow p-2 hover:bg-gray-100">
+      ✕
+    </button>
+  </div>
+</div>

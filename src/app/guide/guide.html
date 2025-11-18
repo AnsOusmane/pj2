@@ -1,0 +1,90 @@
+<div class="guide-container">
+
+  <!-- HEADER + IPHONE -->
+  <div class="header-with-iphone">
+
+    <!-- GAUCHE : titre + FR EN WO -->
+    <div class="header-left">
+      <h2 class="title">{{ t.titre }}</h2>
+
+      <div class="lang-switch">
+        <button (click)="changeLang('fr')" [class.active]="lang === 'fr'">FR</button>
+        <button (click)="changeLang('en')" [class.active]="lang === 'en'">EN</button>
+        <button (click)="changeLang('wo')" [class.active]="lang === 'wo'">WO</button>
+      </div>
+    </div>
+
+    <!-- DROITE : iPhone en haut -->
+    <div class="iphone">
+      <div class="iphone-notch"></div>
+
+      <video
+        class="iphone-video"
+        src="assets/videos/1.mp4"
+        controls
+        playsinline
+      ></video>
+    </div>
+
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button
+      (click)="setTab('inscription')"
+      class="tab"
+      [class.active]="activeTab === 'inscription'">
+      {{ t.tab1 }}
+    </button>
+
+    <button
+      (click)="setTab('medicament')"
+      class="tab"
+      [class.active]="activeTab === 'medicament'">
+      {{ t.tab2 }}
+    </button>
+
+    <button
+      (click)="setTab('parcours')"
+      class="tab"
+      [class.active]="activeTab === 'parcours'">
+      {{ t.tab3 }}
+    </button>
+  </div>
+
+  <!-- CONTENT AREA -->
+  <div class="content fade-in">
+
+    <!-- INSCRIPTION -->
+    <section *ngIf="activeTab === 'inscription'">
+      <h3 class="section-title">{{ t.videoTitre }}</h3>
+      <p class="section-desc">{{ t.descriptionInscription }}</p>
+    </section>
+
+    <!-- MEDICAMENT -->
+    <section *ngIf="activeTab === 'medicament'">
+      <h3 class="section-title">{{ t.medicamentTitre }}</h3>
+      <p class="section-desc">{{ t.descriptionMedicament }}</p>
+
+      <div class="card">
+        <ul>
+          <li>🔍 Rechercher le médicament sur la plateforme.</li>
+          <li>💊 Vérifier son nom générique.</li>
+          <li>♻️ Trouver l’équivalent pris en charge par la CSU.</li>
+          <li>🏥 Vérifier la disponibilité dans postes / pharmacies.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PARCOURS -->
+    <section *ngIf="activeTab === 'parcours'">
+      <h3 class="section-title">{{ t.parcoursTitre }}</h3>
+      <p class="section-desc">{{ t.descriptionParcours }}</p>
+
+      <div class="card">
+        <img src="assets/logo.png" class="img" alt="Parcours de soins" />
+      </div>
+    </section>
+
+  </div>
+</div>

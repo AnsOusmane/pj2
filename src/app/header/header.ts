@@ -50,7 +50,22 @@ export class HeaderComponent implements AfterViewInit {
   goToBankImg() {
     this.router.navigate(['/banque-images']);
   }
+  goToComuPresse(){
+    this.router.navigate(['/communiques-presse']);
+  }
+  goToRapports() {
+  this.router.navigate(['/rapports-officiels']);
+}
+  goToGuide() {
+  this.router.navigate(['/guide']);
+}
 
+  goToDecret() {
+  this.router.navigate(['/decrets']);
+}
+  goToManuel() {
+  this.router.navigate(['/manuel-d-audit']);
+}
   ngAfterViewInit() {
     if (!this.isBrowser) return;
 
