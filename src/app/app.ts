@@ -10,9 +10,7 @@ import { AboutTimelineComponent } from './about-timeline/about-timeline';
 import { DonationComponent } from './donation/donation';
 import { OrganigrammeComponent } from './organigramme/organigramme';
 import { AccueilsunuComponent } from './accueilsunu/accueilsunu';
-import { MediaComponent } from './media/media';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
-//import { BanqueDImageComponent } from './banque-d-image/banque-d-image';
 
 @Component({
   selector: 'app-root',
@@ -36,8 +34,6 @@ export class App {
   showAbout = signal(false);
   showDonation = signal(false);
   showOrganigramme = signal(false);
-
-  // ⭐ AJOUT MISSIONS & VISION
   showMissionsvision = signal(false);
 
   constructor(
@@ -67,8 +63,6 @@ export class App {
   closeOrganigramme() {
     this.showOrganigramme.set(false);
   }
-
-  // ⭐ MÉTHODES MISSIONS & VISION
   openMissionsvision() {
     this.showMissionsvision.set(true);
   }

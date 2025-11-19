@@ -11,6 +11,8 @@ import { RapportsOfficielsComponent } from './rapports-officiels/rapports-offici
 import { Guide } from './guide/guide';
 import { DecretsComponent } from './decrets/decrets';
 import { ManuelAuditComponent } from './manuel-audit/manuel-audit';
+import { ContactFormComponent } from './contact-form/contact-form'; 
+import { NosServicesRegionauxComponent } from './nos-services-regionaux/nos-services-regionaux';
 
 
 export const routes: Routes = [
@@ -25,6 +27,9 @@ export const routes: Routes = [
   { path: 'guide', component: Guide },
   { path: 'decrets', component: DecretsComponent },
   { path: 'manuel-d-audit', component: ManuelAuditComponent },
+  { path: 'contact', component: ContactFormComponent },
+  { path: 'nos-services-regionaux', component: NosServicesRegionauxComponent },
+
 
   { path: '**', redirectTo: '', pathMatch: 'full' }, // 404
 ];

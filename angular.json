@@ -24,9 +24,14 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.css"],
-            "outputPath": "dist/pj2",
-            "prerender": false
+"styles": [
+  "node_modules/leaflet/dist/leaflet.css",
+   "node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css",
+  "src/styles.css"
+],
+"outputPath": "dist/pj2",
+"prerender": false
+
           },
           "configurations": {
             "production": {

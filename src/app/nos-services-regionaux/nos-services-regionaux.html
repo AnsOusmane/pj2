@@ -1,0 +1,48 @@
+<div class="container pt-24 px-4 max-w-4xl mx-auto">
+
+  <h1 class="text-3xl font-bold text-green-700 mb-6 text-center">
+    Nos Services Régionaux
+  </h1>
+
+
+  <!-- Info SR le plus proche -->
+  @if (nearest) {
+    <div class="nearest-box mb-6">
+      <h2 class="text-xl font-semibold text-green-700 mb-2">
+        📍 SR le plus proche : {{ nearest.region }}
+      </h2>
+
+      <p><strong>Adresse : </strong>{{ nearest.adresse }}</p>
+      <p><strong>Tél : </strong>{{ nearest.telephone }}</p>
+      <p><strong>Email : </strong>{{ nearest.email }}</p>
+      <p><strong>Horaires : </strong>{{ nearest.horaires }}</p>
+
+      @if (distanceToNearestKm !== null) {
+        <p class="distance-text">
+          Vous êtes à ~{{ distanceToNearestKm.toFixed(2) }} km de ce SR.
+        </p>
+      }
+
+      <button class="itineraire-btn" (click)="openItinerary()">
+        🚗 Voir l’itinéraire
+      </button>
+    </div>
+  }
+ <!-- Carte Leaflet -->
+  <div id="map" class="map mb-6"></div>
+
+  <h2 class="text-2xl font-semibold text-green-700 mt-8 mb-4">Tous nos SR</h2>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    @for (sr of services; track $index) {
+      <div class="sr-card">
+        <h3 class="text-lg font-semibold text-green-700">{{ sr.region }}</h3>
+        <p>{{ sr.adresse }}</p>
+        <p>📞 {{ sr.telephone }}</p>
+        <p>✉️ {{ sr.email }}</p>
+        <p>🕒 {{ sr.horaires }}</p>
+      </div>
+    }
+  </div>
+
+</div>

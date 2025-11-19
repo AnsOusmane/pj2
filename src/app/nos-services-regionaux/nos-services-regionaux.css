@@ -1,0 +1,47 @@
+.map {
+  height: 320px;
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.nearest-box {
+  background: #e8f5e9;
+  border-left: 5px solid #2e7d32;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.itineraire-btn {
+  margin-top: 12px;
+  background: #2e7d32;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.itineraire-btn:hover {
+  background: #1b5e20;
+}
+
+.distance-text {
+  margin: 8px 0;
+  font-style: italic;
+  color: #333;
+}
+
+.sr-card {
+  background: white;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform .2s;
+}
+.sr-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}

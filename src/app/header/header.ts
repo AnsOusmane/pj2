@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.css']
 })
 export class HeaderComponent implements AfterViewInit {
+
   isMenuOpen = false;
   isBrowser = false;
 
@@ -19,6 +20,25 @@ export class HeaderComponent implements AfterViewInit {
   @Output() openDonation = new EventEmitter<void>();
   @Output() openOrganigramme = new EventEmitter<void>();
   @Output() openMissionsvision = new EventEmitter<void>();
+
+  // === Carrousel Pub ===
+  bannerImages: string[] = [
+    'assets/pub/1.png',
+    'assets/pub/2.PNG',
+    'assets/pub/3.PNG',
+    'assets/pub/4.PNG',
+  ];
+
+  bannerLinks: string[] = [
+    'https://sunucsu.sn',
+    'https://sunucsu.sn/pharmacies',
+    'https://sunucsu.sn/actualite-3',
+    'https://sunucsu.sn/',
+  ];
+
+  bannerIndex: number = 0;
+  imageOpacity: number = 1;
+  bannerInterval: any;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -31,67 +51,48 @@ export class HeaderComponent implements AfterViewInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  onAboutClick() {
-    this.openAboutTimeline.emit();
+  // === Carrousel méthodes ===
+  nextBanner() {
+    this.imageOpacity = 0;
+    setTimeout(() => {
+      this.bannerIndex = (this.bannerIndex + 1) % this.bannerImages.length;
+      this.imageOpacity = 1;
+    }, 200);
   }
 
-  showOrganigrammeClick() {
-    this.openOrganigramme.emit();
+  previousBanner() {
+    this.imageOpacity = 0;
+    setTimeout(() => {
+      this.bannerIndex =
+        (this.bannerIndex - 1 + this.bannerImages.length) % this.bannerImages.length;
+      this.imageOpacity = 1;
+    }, 200);
   }
 
-  onMissionsvisionClick() {
-    this.openMissionsvision.emit();
+  startBannerAuto() {
+    this.bannerInterval = setInterval(() => {
+      this.nextBanner();
+    }, 3000);
   }
 
-  goToMedia() {
-    this.router.navigate(['/media']);
-  }
-  
-  goToBankImg() {
-    this.router.navigate(['/banque-images']);
-  }
-  goToComuPresse(){
-    this.router.navigate(['/communiques-presse']);
-  }
-  goToRapports() {
-  this.router.navigate(['/rapports-officiels']);
-}
-  goToGuide() {
-  this.router.navigate(['/guide']);
-}
-
-  goToDecret() {
-  this.router.navigate(['/decrets']);
-}
-  goToManuel() {
-  this.router.navigate(['/manuel-d-audit']);
-}
   ngAfterViewInit() {
     if (!this.isBrowser) return;
-
-    // === Carrousel principal (mincarou) ===
-    const images = [
-      'assets/mincarou/1.png',
-      'assets/mincarou/2.png',
-      'assets/mincarou/3.png',
-      'assets/mincarou/4.png',
-      'assets/mincarou/5.png',
-    ];
-    let index = 0;
-    const imgElement = document.getElementById('carouselImage') as HTMLImageElement | null;
-    if (imgElement) {
-      imgElement.style.objectFit = 'cover';
-      imgElement.style.width = '100%';
-      imgElement.style.height = '100%';
-      setInterval(() => {
-        index = (index + 1) % images.length;
-        imgElement.style.opacity = '0';
-        setTimeout(() => {
-          imgElement.src = images[index];
-          imgElement.style.opacity = '1';
-        }, 100);
-      }, 1500);
-    }
-
+    this.startBannerAuto();
   }
+
+  // === Navigation ===
+  onAboutClick() { this.openAboutTimeline.emit(); }
+  showOrganigrammeClick() { this.openOrganigramme.emit(); }
+  onMissionsvisionClick() { this.openMissionsvision.emit(); }
+
+  goToMedia() { this.router.navigate(['/media']); }
+  goToBankImg() { this.router.navigate(['/banque-images']); }
+  goToComuPresse() { this.router.navigate(['/communiques-presse']); }
+  goToRapports() { this.router.navigate(['/rapports-officiels']); }
+  goToGuide() { this.router.navigate(['/guide']); }
+  goToDecret() { this.router.navigate(['/decrets']); }
+  goToManuel() { this.router.navigate(['/manuel-d-audit']); }
+  goToContact() { this.router.navigate(['/contact']); }
+  goToSr() { this.router.navigate(['/nos-services-regionaux']); }
+
 }
