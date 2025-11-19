@@ -4,8 +4,6 @@ a {
   position: relative;
 }
 
-
-
 /* Bloque tout dépassement même pendant les transitions */
 /* ✅ Ne cible que le bloc du carrousel partenaires */
 .carousel-container,

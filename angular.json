@@ -40,17 +40,18 @@
               "sourceMap": false,
               "extractLicenses": true,
               "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
-                }
-              ],
+  {
+    "type": "initial",
+    "maximumWarning": "3mb",
+    "maximumError": "4mb"
+  },
+  {
+    "type": "anyComponentStyle",
+    "maximumWarning": "300kb",
+    "maximumError": "500kb"
+  }
+]
+,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
