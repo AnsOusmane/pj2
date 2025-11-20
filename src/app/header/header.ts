@@ -21,6 +21,9 @@ export class HeaderComponent implements AfterViewInit {
   @Output() openOrganigramme = new EventEmitter<void>();
   @Output() openMissionsvision = new EventEmitter<void>();
 
+  /** 👇 ➕ AJOUT ICI : lien retour accueil */
+  @Output() goHome = new EventEmitter<void>();
+
   // === Carrousel Pub ===
   bannerImages: string[] = [
     'assets/pub/1.png',
@@ -84,6 +87,7 @@ export class HeaderComponent implements AfterViewInit {
   onAboutClick() { this.openAboutTimeline.emit(); }
   showOrganigrammeClick() { this.openOrganigramme.emit(); }
   onMissionsvisionClick() { this.openMissionsvision.emit(); }
+  GoHomeClick() { this.goHome.emit(); }
 
   goToMedia() { this.router.navigate(['/media']); }
   goToBankImg() { this.router.navigate(['/banque-images']); }
@@ -94,5 +98,4 @@ export class HeaderComponent implements AfterViewInit {
   goToManuel() { this.router.navigate(['/manuel-d-audit']); }
   goToContact() { this.router.navigate(['/contact']); }
   goToSr() { this.router.navigate(['/nos-services-regionaux']); }
-
 }

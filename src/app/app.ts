@@ -69,4 +69,15 @@ export class App {
   closeMissionsvision() {
     this.showMissionsvision.set(false);
   }
+  goHome() {
+  this.showOrganigramme.set(false);
+  this.showMissionsvision.set(false);
+  this.showTuto.set(false);
+  this.showAbout.set(false);
+  this.showDonation.set(false);
+  this.router.navigate(['/']);
+
+}
+
+
 }

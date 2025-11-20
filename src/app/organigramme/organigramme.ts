@@ -17,7 +17,7 @@ interface Membre {
 })
 export class OrganigrammeComponent {
   membres: Membre[] = [
-    { nom: 'Dr Séga Gueye', poste: 'Directeur Général de la Sen CSU', photo: 'assets/team/1.jpg', bio: 'Directeur général depuis 2024...' },
+    { nom: 'Dr Séga Gueye', poste: 'Directeur Général de la SEN-CSU', photo: 'assets/team/1.jpg', bio: 'Directeur général depuis 2024...' },
     { nom: 'Matar Traoré', poste: 'Secrétaire Général', photo: 'assets/team/2.png', bio: 'Secrétaire générale...' },
     { nom: 'Samba Diop', poste: 'RH', photo: 'assets/team/4.png', bio: 'Directeur des...' },
     { nom: 'Mor Fall', poste: 'Audit', photo: 'assets/team/4.png', bio: 'Directeur de l...' },
