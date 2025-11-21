@@ -13,6 +13,7 @@ import { DecretsComponent } from './decrets/decrets';
 import { ManuelAuditComponent } from './manuel-audit/manuel-audit';
 import { ContactFormComponent } from './contact-form/contact-form'; 
 import { NosServicesRegionauxComponent } from './nos-services-regionaux/nos-services-regionaux';
+import { ZeroCinqAnsComponent } from './zero-cinq-ans/zero-cinq-ans';
 
 
 export const routes: Routes = [
@@ -29,6 +30,7 @@ export const routes: Routes = [
   { path: 'manuel-d-audit', component: ManuelAuditComponent },
   { path: 'contact', component: ContactFormComponent },
   { path: 'nos-services-regionaux', component: NosServicesRegionauxComponent },
+  { path: 'zero-cinq-ans', component: ZeroCinqAnsComponent },
 
 
   { path: '**', redirectTo: '', pathMatch: 'full' }, // 404

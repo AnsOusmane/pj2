@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContactFormComponent } from './contact-form';
+import { ZeroCinqAns } from './zero-cinq-ans';
 
-describe('ContactForm', () => {
-  let component: ContactFormComponent;
-  let fixture: ComponentFixture<ContactFormComponent>;
+describe('ZeroCinqAns', () => {
+  let component: ZeroCinqAns;
+  let fixture: ComponentFixture<ZeroCinqAns>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactFormComponent]
+      imports: [ZeroCinqAns]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ContactFormComponent);
+    fixture = TestBed.createComponent(ZeroCinqAns);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

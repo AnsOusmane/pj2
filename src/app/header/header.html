@@ -1,41 +1,99 @@
 <!-- Bande Publicitaire -->
-<div class="promo-banner w-full bg-white border-b border-gray-200">
-  <div class="max-w-7xl mx-auto flex items-center gap-4 justify-between px-6 h-28">
+<div class="promo-banner w-full bg-white border-b border-gray-200 relative">
+  <div class="max-w-6xl mx-auto flex items-center gap-4 justify-between px-1 h-28 ml-1">
 
-<div class="flex items-center shrink-0 cursor-pointer" (click)="GoHomeClick()">
-  <img src="assets/logo.png" class="h-24 w-auto object-contain" alt="Logo Agence" />
-</div>
-
+    <!-- Logo -->
+    <div class="flex items-center shrink-0 cursor-pointer" (click)="GoHomeClick()">
+      <img src="assets/logo.png" class="h-24 w-auto object-contain" alt="Logo Agence" />
+    </div>
 
     <!-- Carrousel Publicitaire -->
     <div class="relative flex-1 h-24 overflow-hidden rounded-xl shadow bg-white">
-
-      <!-- Lien autour de l’image -->
       <a [href]="bannerLinks[bannerIndex]" target="_blank" class="block w-full h-full">
-
-        <!-- Image principale -->
         <img
           [src]="bannerImages[bannerIndex]"
           class="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
           [style.opacity]="imageOpacity"
-          alt="Publicité">
+          alt="Offres CSU">
       </a>
 
-      <!-- Bouton précédent -->
       <button
         (click)="previousBanner()"
         class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/85 hover:bg-white text-green-700 px-3 py-1.5 rounded-full shadow-md">
         ‹
       </button>
 
-      <!-- Bouton suivant -->
       <button
         (click)="nextBanner()"
         class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/85 hover:bg-white text-green-700 px-3 py-1.5 rounded-full shadow-md">
         ›
       </button>
     </div>
+
+<div class="absolute right-4 flex items-center gap-3
+              px-3 py-2 rounded-xl
+            bg-white/20 backdrop-blur-md border border-white/30 shadow-md ">
+
+ <!-- Facebook -->
+<a href="https://facebook.com/CouvertureSanitaitrUniverselle" target="_blank"
+   class="w-5 h-5  transition-transform hover:rotate-[340deg] rounded-lg bg-blue-600 rotate-45 flex items-center justify-center">
+  <div class="-rotate-45 flex items-center justify-center mt-[5px] -ml-[3px]">
+    <!-- Icône Facebook sans cercle -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
+         class="w-3 h-3 fill-white">
+      <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 
+        12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 
+        0-121.36 44.38-121.36 124.72v70.62H22.89V288h81.11v224h100.2V288z"/>
+    </svg>
   </div>
+</a>
+
+
+
+  <!-- YouTube -->
+  <a href="https://youtube.com/@sen_csu" target="_blank"
+     class="w-5 h-5  transition-transform hover:rotate-[340deg] rounded-lg bg-red-600 rotate-45 flex items-center justify-center">
+    <div class="-rotate-45 flex items-center justify-center mt-[3px] -ml-[1px] ">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M21.8 8.001a2.756 2.756 0 0 0-1.94-1.948C17.924 5.5 12 5.5 12 5.5s-5.924 0-7.86.553A2.756 2.756 0 0 0 2.2 8.001 28.54 28.54 0 0 0 1.5 12a28.54 28.54 0 0 0 .7 3.999 2.756 2.756 0 0 0 1.94 1.948C6.076 18.5 12 18.5 12 18.5s5.924 0 7.86-.553A2.756 2.756 0 0 0 21.8 15.999 28.54 28.54 0 0 0 22.5 12a28.54 28.54 0 0 0-.7-3.999zM10 15.5v-7l6 3.5-6 3.5z"/>
+      </svg>
+    </div>
+  </a>
+
+  <!-- X / Twitter -->
+  <a href="https://x.com/sen_csu?s=21&t=6JWMaLzG-CZUjsMrrvT5Ag" target="_blank"
+     class="w-5 h-5  transition-transform hover:rotate-[340deg] rounded-lg bg-black rotate-45 flex items-center justify-center">
+    <div class="-rotate-45 flex items-center justify-center mt-[2px] -ml-[3px] ">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M18.9 2H22l-7.7 8.8L22 22h-7l-5.5-7L4.4 22H2l8.5-9.8L2 2h7l5 6.5L18.9 2z"/>
+      </svg>
+    </div>
+  </a>
+
+  <!-- Instagram -->
+  <a href="https://www.instagram.com/sen_csu_" target="_blank"
+     class="w-5 h-5  transition-transform hover:rotate-[340deg] rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 rotate-45 flex items-center justify-center">
+    <div class="-rotate-45 flex items-center justify-center mt-[2px] -ml-[0px] ">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm0 7.3A2.8 2.8 0 1 1 14.8 12 2.8 2.8 0 0 1 12 14.8zM17.3 6a1.1 1.1 0 1 1-1.1 1.1A1.1 1.1 0 0 1 17.3 6z"/>
+      </svg>
+    </div>
+  </a>
+
+  <!-- LinkedIn -->
+  <a href="https://linkedin.com/company/sen-csu" target="_blank"
+     class="w-5 h-5  transition-transform hover:rotate-[340deg] rounded-lg bg-blue-500 rotate-45 flex items-center justify-center">
+    <div class="-rotate-45 flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7 0h3.8v2.2h.1c.5-1 1.8-2.2 3.8-2.2 4 0 4.7 2.7 4.7 6.2V24h-4v-7.8c0-1.9 0-4.4-2.7-4.4-2.7 0-3.1 2.1-3.1 4.3V24h-4V8z"/>
+      </svg>
+    </div>
+  </a>
+
+</div>
+
+
+    
 </div>
 
 <header class="bg-white shadow-sm">
@@ -114,13 +172,13 @@
     </button>
     <div class="absolute -left-96 mt-0.5 hidden group-hover:block w-[1140px] h-[320px] rounded-md bg-white shadow-xl ring-1 ring-gray-900/10 p-6 z-50">
           <div class="grid grid-cols-5 gap-6 w-full h-full">
-            
-            <a routerLink="/programme/0-5-ans" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
+            <button   (click)="goTozero5ans()"
+             class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
               <img src="assets/videos/0-5ans.png" alt="0 à 5 ans" class="h-60 w-full object-cover">
               <div class="p-2 text-center bg-gray-50">
                 <p class="text-base font-semibold text-green-600">0 à 5 ans</p>
               </div>
-            </a>
+            </button>
 
             <a routerLink="/programme/plan-sesame" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
               <img src="assets/videos/sesame.png" alt="Plan Sésame" class="h-60 w-full object-cover">
@@ -132,13 +190,13 @@
             <a routerLink="/programme/cesarienne" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
               <img src="assets/videos/cesarienne.png" alt="Césarienne gratuite" class="h-60 w-full object-cover">
               <div class="p-2 text-center bg-gray-50">
-                <p class="text-base font-semibold text-green-600">Césarienne gratuite</p>
+                <p class="text-base font-semibold text-green-600">Césarienne</p>
               </div>
             </a>
             <a routerLink="/programme/dialyse" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
               <img src="assets/videos/dialyse.png" alt="Dialyse gratuite" class="h-60 w-full object-cover">
               <div class="p-2 text-center bg-gray-50">
-                <p class="text-base font-semibold text-green-600">Dialyse gratuite</p>
+                <p class="text-base font-semibold text-green-600">Dialyse</p>
               </div>
             </a>
 <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block rounded-md overflow-hidden shadow hover:shadow-lg hover:-translate-y-1 transition-all relative w-full h-60 bg-cover bg-center"

@@ -37,3 +37,27 @@ a {
   font-weight: bold;
   transition: background 0.2s ease;
 }
+/* Icône hexagonale arrondie */
+.hex-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Forme hexagonale arrondie */
+  clip-path: polygon(
+      25% 5%,  75% 5%,
+      95% 50%,
+      75% 95%, 25% 95%,
+      5% 50%
+  );
+
+  border-radius: 7px; /* ajoute un léger arrondi */
+  transition: transform 0.3s ease;
+}
+
+.hex-icon:hover {
+  transform: scale(1.15) rotate(5deg);
+}

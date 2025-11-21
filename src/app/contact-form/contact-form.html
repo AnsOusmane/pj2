@@ -1,14 +1,17 @@
-<section class="min-h-screen flex items-center justify-center 
-  bg-gradient-to-br from-[#ffffff] to-[#3CB371] px-4 py-10">
+<section
+  class="min-h-screen flex items-center justify-center
+         bg-gradient-to-br from-[#ffffff] to-[#3CB371]
+         px-4 py-10">
 
-  <div class="w-full max-w-xl p-6 
-      bg-white/10 backdrop-blur-xl 
-      border border-white/20 
-      rounded-2xl shadow-2xl shadow-black/20">
+  <div
+    class="w-full max-w-xl p-6
+           bg-white/10 backdrop-blur-xl
+           border border-white/20
+           rounded-2xl shadow-2xl shadow-black/20">
 
     <!-- TITRE -->
-    <h2 class="text-center text-3xl md:text-4xl font-bold mb-6 
-      text-green-600 drop-shadow">
+    <h2 class="text-center text-3xl md:text-4xl font-bold mb-6
+               text-green-600 drop-shadow">
       Contact SEN-CSU
     </h2>
 
@@ -20,10 +23,11 @@
         <input
           type="text"
           formControlName="name"
-          class="p-3 rounded-xl bg-white/20 text-white 
+          class="p-3 rounded-xl bg-white/20 text-white
                  border border-white/30
                  placeholder-white/60
-                 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600
+                 focus:outline-none focus:border-green-600
+                 focus:ring-1 focus:ring-green-600
                  transition"
           placeholder="Votre nom"
         />
@@ -35,15 +39,18 @@
         <input
           type="email"
           formControlName="email"
-          class="p-3 rounded-xl bg-white/20 text-white 
+          class="p-3 rounded-xl bg-white/20 text-white
                  border border-white/30
                  placeholder-white/60
-                 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600
+                 focus:outline-none focus:border-green-600
+                 focus:ring-1 focus:ring-green-600
                  transition"
           placeholder="Votre email"
         />
-        <p *ngIf="form.controls.email.invalid && form.controls.email.touched"
-           class="text-red-600 text-xs pt-1">
+
+        <p
+          *ngIf="form.controls.email.invalid && form.controls.email.touched"
+          class="text-red-600 text-xs pt-1">
           Email invalide
         </p>
       </div>
@@ -57,21 +64,20 @@
           class="p-3 rounded-xl bg-white/20 text-white
                  border border-white/30
                  placeholder-white/60
-                 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600
+                 focus:outline-none focus:border-green-600
+                 focus:ring-1 focus:ring-green-600
                  transition"
-          placeholder="Votre message"
-        ></textarea>
+          placeholder="Votre message"></textarea>
       </div>
 
       <!-- BOUTON -->
       <button
         type="submit"
-        class="w-full py-3 mt-3 rounded-xl 
+        class="w-full py-3 mt-3 rounded-xl
                bg-gradient-to-r from-[#0A5C36] via-[#0F7444] to-[#3CB371]
                text-white font-semibold uppercase tracking-wide
                shadow-lg hover:shadow-xl hover:scale-[1.02]
-               transition-all"
-      >
+               transition-all">
         Envoyer
       </button>
 

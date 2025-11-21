@@ -53,7 +53,6 @@ export class HeaderComponent implements AfterViewInit {
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
-
   // === Carrousel méthodes ===
   nextBanner() {
     this.imageOpacity = 0;
@@ -98,4 +97,5 @@ export class HeaderComponent implements AfterViewInit {
   goToManuel() { this.router.navigate(['/manuel-d-audit']); }
   goToContact() { this.router.navigate(['/contact']); }
   goToSr() { this.router.navigate(['/nos-services-regionaux']); }
+  goTozero5ans() { this.router.navigate(['/zero-cinq-ans']); }
 }

@@ -1,0 +1,38 @@
+.cards-row {
+  display: flex;
+  flex-wrap: wrap;          /* permet de passer à la ligne sur mobile */
+  justify-content: center;  /* centrer les cartes horizontalement */
+  gap: 25px;                /* espace entre les cartes */
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  padding: 20px 25px 30px 25px;
+  border: 3px solid;
+  border-image: linear-gradient(120deg, #00ffb2, #42fff7, #00ffb2) 1;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+  text-align: center;
+  width: 300px; /* largeur fixe pour toutes les cartes */
+  flex-shrink: 0; /* empêche la carte de rétrécir */
+}
+
+.card-top-img {
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  margin-bottom: 15px;
+  object-fit: cover;
+  height: 160px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.section-zoom:hover {
+  transform: scale(1.15) rotate(-1deg);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.35),
+              0 0 40px rgba(0,255,200,0.5);
+  z-index: 10;
+}
