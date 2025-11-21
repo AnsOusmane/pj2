@@ -1,38 +1,125 @@
+/* --- RESET --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  padding: 40px;
+}
+
+/* --- CONTENEUR DES CARTES EN FLEX ROW --- */
 .cards-row {
   display: flex;
-  flex-wrap: wrap;          /* permet de passer à la ligne sur mobile */
-  justify-content: center;  /* centrer les cartes horizontalement */
-  gap: 25px;                /* espace entre les cartes */
+  flex-wrap: wrap;          /* passe à la ligne sur mobile */
+  justify-content: center;  /* centre les cartes */
+  gap: 25px;
   padding: 20px;
 }
 
+/* --- CARTE GLOBALE --- */
 .card {
   background: rgba(255,255,255,0.65);
   backdrop-filter: blur(14px);
   border-radius: 22px;
   padding: 20px 25px 30px 25px;
   border: 3px solid;
-  border-image: linear-gradient(120deg, #00ffb2, #42fff7, #00ffb2) 1;
+  border-image: linear-gradient(120deg, #54e25b, #1cad23, #069c0e) 1;
   box-shadow: 0 15px 30px rgba(0,0,0,0.12);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   cursor: pointer;
   text-align: center;
-  width: 300px; /* largeur fixe pour toutes les cartes */
-  flex-shrink: 0; /* empêche la carte de rétrécir */
+  width: 300px;
+  flex-shrink: 0;
 }
 
+/* --- IMAGE EN HAUT DE CHAQUE CARTE --- */
 .card-top-img {
   width: 100%;
-  border-radius: 20px 20px 0 0;
-  margin-bottom: 15px;
-  object-fit: cover;
   height: 160px;
+  border-radius: 20px 20px 0 0;
+  object-fit: cover;
+  margin-bottom: 15px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
+/* --- GRAND EFFET ZOOM SUR SURVOL --- */
 .section-zoom:hover {
   transform: scale(1.15) rotate(-1deg);
   box-shadow: 0 30px 60px rgba(0,0,0,0.35),
-              0 0 40px rgba(0,255,200,0.5);
+              0 0 40px rgba(83, 182, 83, 0.877);
   z-index: 10;
+}
+
+/* --- TEXTE INTÉRIEUR --- */
+.card-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #1b1b1b;
+}
+
+.card-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+  }
+}
+/* --- INTRO SECTION --- */
+.intro {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  padding: 10px 20px;
+}
+
+/* Titre principal */
+.title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #1d1d1d;
+  margin-bottom: 12px;
+}
+
+.title span {
+  color: #1cad23; /* vert cohérent avec tes cartes */
+}
+
+/* Sous-titre */
+.subtitle {
+  font-size: 18px;
+  color: #444;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* Petit tag en bas */
+.subtag {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1cad23;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+  .title {
+    font-size: 32px;
+  }
+  .subtitle {
+    font-size: 16px;
+  }
+  .subtag {
+    font-size: 14px;
+  }
 }
