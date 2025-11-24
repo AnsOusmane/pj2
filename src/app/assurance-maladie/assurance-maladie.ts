@@ -58,7 +58,11 @@ export class AssuranceMaladieComponent {
     `
   };
 
-  showContent(key: string) {
-    this.selected = this.data[key];
-  }
+ selectedKey: string | null = null;
+
+showContent(key: string) {
+  this.selectedKey = key;
+  this.selected = this.data[key];
+}
+
 }

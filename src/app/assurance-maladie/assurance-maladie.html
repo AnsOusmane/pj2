@@ -1,11 +1,15 @@
 <div class="max-w-6xl mx-auto">
 
-  <!-- ====== CARTES ====== -->
   <div class="grid md:grid-cols-3 gap-6 mt-10">
 
     <!-- Carte 1 -->
-    <div (click)="showContent('poste')" 
-         class="bg-white border rounded-2xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden">
+    <div 
+      (click)="showContent('poste')"
+      class="bg-white border rounded-2xl shadow transition cursor-pointer overflow-hidden"
+      [ngClass]="{
+        'border-green-600 shadow-green-300 shadow-md': selectedKey === 'poste'
+      }"
+    >
       <div class="p-5">
         <img src="assets/postetouba.jfif" class="w-full h-40 object-cover rounded-xl mb-4">
         <h2 class="text-lg font-bold">Poste de santé</h2>
@@ -13,8 +17,13 @@
     </div>
 
     <!-- Carte 2 -->
-    <div (click)="showContent('eleve')" 
-         class="bg-white border rounded-2xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden">
+    <div 
+      (click)="showContent('eleve')"
+      class="bg-white border rounded-2xl shadow transition cursor-pointer overflow-hidden"
+      [ngClass]="{
+        'border-green-600 shadow-green-300 shadow-md': selectedKey === 'eleve'
+      }"
+    >
       <div class="p-5">
         <img src="assets/eleve.png" class="w-full h-40 object-cover rounded-xl mb-4">
         <h2 class="text-lg font-bold">CSU Élève</h2>
@@ -22,8 +31,13 @@
     </div>
 
     <!-- Carte 3 -->
-    <div (click)="showContent('daara')" 
-         class="bg-white border rounded-2xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden">
+    <div 
+      (click)="showContent('daara')"
+      class="bg-white border rounded-2xl shadow transition cursor-pointer overflow-hidden"
+      [ngClass]="{
+        'border-green-600 shadow-green-300 shadow-md': selectedKey === 'daara'
+      }"
+    >
       <div class="p-5">
         <img src="assets/daara.png" class="w-full h-40 object-cover rounded-xl mb-4">
         <h2 class="text-lg font-bold">CSU Daara</h2>
@@ -32,13 +46,13 @@
 
   </div>
 
-  <!-- ====== PANNEAU BAS ====== -->
+  <!-- Panneau bas -->
   <div *ngIf="selected"
        id="info-panel"
        class="bg-white border rounded-2xl shadow mt-10 p-8 text-gray-700 space-y-4">
-
+      
     <div [innerHTML]="selected"></div>
-
+  
   </div>
 
 </div>
