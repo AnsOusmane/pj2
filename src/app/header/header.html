@@ -180,25 +180,28 @@
               </div>
             </button>
 
-            <a routerLink="/programme/plan-sesame" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
-              <img src="assets/videos/sesame.png" alt="Plan Sésame" class="h-60 w-full object-cover">
-              <div class="p-2 text-center bg-gray-50">
-                <p class="text-base font-semibold text-green-600">Plan Sésame</p>
-              </div>
-            </a>
-
-            <a routerLink="/programme/cesarienne" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
+             <button   (click)="goToCesarienne()"
+            class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
               <img src="assets/videos/cesarienne.png" alt="Césarienne gratuite" class="h-60 w-full object-cover">
               <div class="p-2 text-center bg-gray-50">
                 <p class="text-base font-semibold text-green-600">Césarienne</p>
               </div>
-            </a>
-            <a routerLink="/programme/dialyse" class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
+            </button>
+            <button   (click)="goToDialyse()"
+            class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
               <img src="assets/videos/dialyse.png" alt="Dialyse gratuite" class="h-60 w-full object-cover">
               <div class="p-2 text-center bg-gray-50">
                 <p class="text-base font-semibold text-green-600">Dialyse</p>
               </div>
-            </a>
+            </button>
+
+             <button   (click)="goToPlanSesame()"
+        class="block rounded-md overflow-hidden shadow hover:shadow-md hover:-translate-y-1 transition-all">
+              <img src="assets/videos/sesame.png" alt="Plan Sésame" class="h-60 w-full object-cover">
+              <div class="p-2 text-center bg-gray-50">
+                <p class="text-base font-semibold text-green-600">Plan Sésame</p>
+              </div>
+        </button> 
 <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block rounded-md overflow-hidden shadow hover:shadow-lg hover:-translate-y-1 transition-all relative w-full h-60 bg-cover bg-center"
    style="background-image: url('assets/pharmacies/bg-pharmacies.jpg');">
 

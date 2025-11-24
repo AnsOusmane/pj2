@@ -1,0 +1,39 @@
+<div class="w-full min-h-screen bg-white py-12 px-4 md:px-10 lg:px-20">
+
+  <!-- TITLE -->
+  <div class="text-center max-w-3xl mx-auto mb-14">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-black mb-4">
+      Plan Sésame : Gratuité pour les personnes âgées de 60 ans et plus
+    </h1>
+    <p class="text-lg text-gray-700 leading-relaxed">
+      Un dispositif national garantissant une prise en charge <strong>totale ou partielle</strong>
+      des soins pour les personnes âgées, dans le respect de la pyramide sanitaire.
+    </p>
+  </div>
+
+  <!-- GRID CONTAINER -->
+  <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+
+    <!-- CARD -->
+    <div *ngFor="let item of sesameData"
+         class="bg-white shadow-xl rounded-2xl p-8 border border-gray-200 hover:shadow-2xl transition duration-300">
+
+      <!-- ICON -->
+      <div class="text-4xl mb-4" [innerHTML]="item.icon"></div>
+
+      <!-- TITLE -->
+      <h2 class="text-2xl font-bold mb-4 text-gray-900">
+        {{ item.title }}
+      </h2>
+
+      <!-- CONTENT -->
+      <ul class="space-y-3 text-gray-700 leading-relaxed">
+        <li *ngFor="let line of item.content" class="flex items-start gap-2">
+          <span class="text-green-600 text-xl">✔</span>
+          <span>{{ line }}</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>

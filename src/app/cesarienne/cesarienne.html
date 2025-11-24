@@ -1,0 +1,41 @@
+<div class="w-full min-h-screen bg-white py-12 px-4 md:px-10 lg:px-20">
+
+  <!-- INTRO -->
+  <div class="text-center max-w-3xl mx-auto mb-14">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-green-700 mb-4">
+      Gratuité de la Césarienne
+    </h1>
+    <p class="text-lg text-gray-700 leading-relaxed">
+      Une politique nationale garantissant la prise en charge complète des césariennes
+      pour toutes les femmes enceintes nécessitant une intervention, afin d’assurer
+      la protection de la mère et du nouveau-né.
+    </p>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+
+    <div *ngFor="let item of cesarienneData"
+         class="bg-white border border-gray-200 shadow-xl p-8 rounded-2xl hover:shadow-2xl transition duration-300">
+
+      <!-- ICON -->
+      <div class="text-5xl mb-4" [innerHTML]="item.icon"></div>
+
+      <!-- TITLE -->
+      <h2 class="text-2xl font-bold mb-4 text-gray-900">
+        {{ item.title }}
+      </h2>
+
+      <!-- CONTENT -->
+      <ul class="space-y-3 text-gray-700">
+        <li *ngFor="let line of item.content" class="flex gap-2 items-start">
+          <span class="text-green-600 text-xl">✔</span>
+          <span>{{ line }}</span>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+
+</div>

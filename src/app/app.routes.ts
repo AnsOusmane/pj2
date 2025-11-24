@@ -14,7 +14,9 @@ import { ManuelAuditComponent } from './manuel-audit/manuel-audit';
 import { ContactFormComponent } from './contact-form/contact-form'; 
 import { NosServicesRegionauxComponent } from './nos-services-regionaux/nos-services-regionaux';
 import { ZeroCinqAnsComponent } from './zero-cinq-ans/zero-cinq-ans';
-
+import { PlanSesameComponent } from './plan-sesame/plan-sesame';
+import { DialyseComponent } from './dialyse/dialyse';
+import { CesarienneComponent } from './cesarienne/cesarienne';
 
 export const routes: Routes = [
   { path: '', component: HeroComponent }, 
@@ -31,6 +33,9 @@ export const routes: Routes = [
   { path: 'contact', component: ContactFormComponent },
   { path: 'nos-services-regionaux', component: NosServicesRegionauxComponent },
   { path: 'zero-cinq-ans', component: ZeroCinqAnsComponent },
+  { path: 'plan-sesame', component: PlanSesameComponent },
+  { path: 'dialyse', component: DialyseComponent },
+  { path: 'cesarienne', component: CesarienneComponent },
 
 
   { path: '**', redirectTo: '', pathMatch: 'full' }, // 404
