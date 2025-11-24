@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-interface Section {
-  id: string;
-  title: string;
-  icon: string;
-  content: string[];
-}
-
 @Component({
   selector: 'app-assurance-maladie',
   standalone: true,
@@ -16,52 +9,56 @@ interface Section {
 })
 export class AssuranceMaladieComponent {
 
-  openSection: string | null = null;
+  selected: string | null = null;
 
-  sections: Section[] = [
-    {
-      id: 'mutuelle',
-      title: 'Mutuelles de santé (Poste de santé)',
-      icon: '🏥',
-      content: [
-        "Les mutuelles sont des associations à but non lucratif fondées sur la solidarité.",
-        "Elles financent la prise en charge des risques sanitaires via les cotisations.",
-        "Conditions d’adhésion : avoir 21 ans, payer le droit d’adhésion, fournir 2 photos, respecter les statuts.",
-        "La mutuelle prend en charge : 80% des soins publics & médicaments génériques, 50% en pharmacies privées.",
-        "Obligations : être à jour des cotisations, période d’observation, présenter livret cacheté.",
-        "Services : consultations, préventif, hospitalisations, accouchements, examens, soins spécialisés, évacuations, médicaments.",
-        "Cotisations : 7000 FCFA/personne/an. Subvention de 50% → 3500 FCFA.",
-        "Indigents : gratuité totale (100%)."
-      ]
-    },
-    {
-      id: 'csu-eleve',
-      title: 'CSU Élèves',
-      icon: '🎒',
-      content: [
-        "Régime d’assurance basé sur les mutuelles, prenant en charge 80% des dépenses de santé des élèves.",
-        "Exemple : sur 2500 F CFA, 2000 F payés par la mutuelle, 500 F restent à payer.",
-        "Médicaments privés : 50% pris en charge.",
-        "Inscription : dans l’établissement scolaire de l’enfant.",
-        "Cotisation : 1000 F CFA/an + 3500 F ajoutés par l'État.",
-        "Droits : postes & centres de santé (tous services), à l’hôpital : consultations & génériques.",
-        "Option premium : 3500 F/an + 3500 F de l'État → couverture totale hôpitaux."
-      ]
-    },
-    {
-      id: 'csu-daara',
-      title: 'CSU Daara',
-      icon: '📘',
-      content: [
-        "Une assurance maladie dédiée aux daaras du Sénégal.",
-        "Protection médicale des apprenants et encadreurs.",
-        "Accès aux soins dans les structures de santé publiques.",
-        "Règlementation alignée sur les mutuelles de santé."
-      ]
-    }
-  ];
+  data: any = {
+    poste: `
+      <h2 class="text-2xl font-bold mb-4">Poste de santé — Mutuelles de santé</h2>
+      <p><strong>Définition :</strong> Les mutuelles sont des associations solidaires permettant une prise 
+      en charge partielle des dépenses de santé grâce aux cotisations.</p>
 
-  toggleSection(id: string) {
-    this.openSection = this.openSection === id ? null : id;
+      <p class="font-semibold mt-3">Conditions d’adhésion :</p>
+      <ul class="list-disc ml-6">
+        <li>21 ans minimum</li>
+        <li>Payer le droit d’adhésion</li>
+        <li>Fournir 2 photos d’identité</li>
+        <li>Payer régulièrement ses cotisations</li>
+      </ul>
+
+      <p class="font-semibold mt-3">Prise en charge :</p>
+      <ul class="list-disc ml-6">
+        <li>80% structures publiques + médicaments génériques</li>
+        <li>50% pharmacies privées</li>
+      </ul>
+
+      <p class="mt-3"><strong>Cotisation :</strong> 7000 FCFA/an → subvention 50% → 3500 FCFA.<br>
+      Indigents : gratuit.</p>
+    `,
+
+    eleve: `
+      <h2 class="text-2xl font-bold mb-4">CSU Élève</h2>
+      <p><strong>Définition :</strong> Régime couvrant 80% des dépenses de santé des élèves.</p>
+      <p><strong>Exemple :</strong> Facture 2500 F → Mutuelle 2000 F, Parent 500 F.</p>
+      <p><strong>Médicaments privés :</strong> couverture 50%.</p>
+
+      <p class="font-semibold mt-3">Inscription :</p>
+      <p>Dans l’établissement scolaire de l’élève.</p>
+
+      <p class="font-semibold mt-3">Cotisation :</p>
+      <ul class="list-disc ml-6">
+        <li>1000 F/an/enfant + État 3500 F</li>
+        <li>Option premium : 3500 F + État 3500 F → couverture complète jusqu’à l’hôpital</li>
+      </ul>
+    `,
+
+    daara: `
+      <h2 class="text-2xl font-bold mb-4">CSU Daara</h2>
+      <p>Une assurance dédiée aux daaras du Sénégal, garantissant une couverture santé 
+      pour les apprenants dans les structures publiques.</p>
+    `
+  };
+
+  showContent(key: string) {
+    this.selected = this.data[key];
   }
 }

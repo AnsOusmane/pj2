@@ -4,7 +4,7 @@
   <div class="grid md:grid-cols-3 gap-6 mt-10">
 
     <!-- Carte 1 -->
-    <div onclick="showContent('poste')" 
+    <div (click)="showContent('poste')" 
          class="bg-white border rounded-2xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden">
       <div class="p-5">
         <img src="assets/postetouba.jfif" class="w-full h-40 object-cover rounded-xl mb-4">
@@ -13,7 +13,7 @@
     </div>
 
     <!-- Carte 2 -->
-    <div onclick="showContent('eleve')" 
+    <div (click)="showContent('eleve')" 
          class="bg-white border rounded-2xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden">
       <div class="p-5">
         <img src="assets/eleve.png" class="w-full h-40 object-cover rounded-xl mb-4">
@@ -22,7 +22,7 @@
     </div>
 
     <!-- Carte 3 -->
-    <div onclick="showContent('daara')" 
+    <div (click)="showContent('daara')" 
          class="bg-white border rounded-2xl shadow hover:shadow-lg transition cursor-pointer overflow-hidden">
       <div class="p-5">
         <img src="assets/daara.png" class="w-full h-40 object-cover rounded-xl mb-4">
@@ -33,60 +33,12 @@
   </div>
 
   <!-- ====== PANNEAU BAS ====== -->
-  <div id="info-panel"
-       class="hidden bg-white border rounded-2xl shadow mt-10 p-8 text-gray-700 space-y-4">
+  <div *ngIf="selected"
+       id="info-panel"
+       class="bg-white border rounded-2xl shadow mt-10 p-8 text-gray-700 space-y-4">
+
+    <div [innerHTML]="selected"></div>
+
   </div>
 
 </div>
-
-<!-- ====== JS ====== -->
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const data = {
-      poste: `
-        <h2 class="text-2xl font-bold mb-4">Poste de santé — Mutuelles de santé</h2>
-        <p><strong>Définition :</strong> Les mutuelles sont des associations solidaires permettant une prise 
-        en charge partielle des dépenses de santé grâce aux cotisations.</p>
-        <p class="font-semibold">Conditions d’adhésion :</p>
-        <ul class="list-disc ml-6">
-          <li>21 ans minimum</li>
-          <li>Payer le droit d’adhésion</li>
-          <li>Fournir 2 photos d’identité</li>
-          <li>Payer régulièrement ses cotisations</li>
-        </ul>
-        <p class="font-semibold">Prise en charge :</p>
-        <ul class="list-disc ml-6">
-          <li>80% structures publiques + médicaments génériques</li>
-          <li>50% pharmacies privées</li>
-        </ul>
-        <p><strong>Cotisation :</strong> 7000 FCFA/an → subvention 50% → 3500 FCFA.  
-        Indigents : gratuit.</p>
-      `,
-      eleve: `
-        <h2 class="text-2xl font-bold mb-4">CSU Élève</h2>
-        <p><strong>Définition :</strong> Régime couvrant 80% des dépenses de santé des élèves.</p>
-        <p><strong>Exemple :</strong> Facture 2500 F → Mutuelle 2000 F, Parent 500 F.</p>
-        <p><strong>Médicaments privés :</strong> couverture 50%.</p>
-        <p class="font-semibold">Inscription :</p>
-        <p>Dans l’établissement scolaire de l’élève.</p>
-        <p class="font-semibold">Cotisation :</p>
-        <ul class="list-disc ml-6">
-          <li>1000 F/an/enfant + État 3500 F</li>
-          <li>Option premium : 3500 F + État 3500 F → couverture complète jusqu’à l’hôpital</li>
-        </ul>
-      `,
-      daara: `
-        <h2 class="text-2xl font-bold mb-4">CSU Daara</h2>
-        <p>Une assurance dédiée aux daaras du Sénégal, garantissant une couverture santé 
-        pour les apprenants dans les structures publiques.</p>
-      `
-    };
-
-    window.showContent = function(key) {
-      const panel = document.getElementById("info-panel");
-      panel.innerHTML = data[key];
-      panel.classList.remove("hidden");
-      panel.scrollIntoView({ behavior: "smooth" });
-    }
-  });
-</script>
