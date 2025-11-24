@@ -17,6 +17,7 @@ import { ZeroCinqAnsComponent } from './zero-cinq-ans/zero-cinq-ans';
 import { PlanSesameComponent } from './plan-sesame/plan-sesame';
 import { DialyseComponent } from './dialyse/dialyse';
 import { CesarienneComponent } from './cesarienne/cesarienne';
+import { AssuranceMaladieComponent } from './assurance-maladie/assurance-maladie';
 
 export const routes: Routes = [
   { path: '', component: HeroComponent }, 
@@ -36,6 +37,7 @@ export const routes: Routes = [
   { path: 'plan-sesame', component: PlanSesameComponent },
   { path: 'dialyse', component: DialyseComponent },
   { path: 'cesarienne', component: CesarienneComponent },
+  { path: 'assurance-maladie', component: AssuranceMaladieComponent },
 
 
   { path: '**', redirectTo: '', pathMatch: 'full' }, // 404
