@@ -131,4 +131,6 @@ export class HeaderComponent implements AfterViewInit {
   goToDialyse() { this.router.navigate(['/dialyse']); }
   goToCesarienne() { this.router.navigate(['/cesarienne']); }
   goToAssuranceMaladie() { this.router.navigate(['/assurance-maladie']); }
+  goToAppelsOffre() { this.router.navigate(['/appels-offre']); }
+
 }

@@ -1,0 +1,58 @@
+<div class="max-w-6xl mx-auto mt-10">
+
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">
+    Appels d’Offres
+  </h1>
+
+  <!-- CARTES -->
+  <div class="grid md:grid-cols-3 gap-6">
+
+    <!-- Carte 1 -->
+    <div 
+      (click)="showContent('ao1')"
+      class="bg-white border rounded-2xl shadow hover:shadow-lg transition cursor-pointer p-5"
+      [ngClass]="{
+        'border-green-600 shadow-green-300 shadow-md': selectedKey === 'ao1'
+      }">
+      <img src="assets/ao1.png" class="w-full h-40 object-cover rounded-xl mb-4">
+      <h2 class="text-lg font-bold">Matériel médical</h2>
+      <p class="text-sm text-gray-600">Fourniture d’équipements médicaux</p>
+    </div>
+
+    <!-- Carte 2 -->
+    <div 
+      (click)="showContent('ao2')"
+      class="bg-white border rounded-2xl shadow hover:shadow-lg transition cursor-pointer p-5"
+      [ngClass]="{
+        'border-green-600 shadow-green-300 shadow-md': selectedKey === 'ao2'
+      }">
+      <img src="assets/ao2.webp" class="w-full h-40 object-cover rounded-xl mb-4">
+      <h2 class="text-lg font-bold">Centre de dialyse</h2>
+      <p class="text-sm text-gray-600">Construction & équipement</p>
+    </div>
+
+    <!-- Carte 3 -->
+    <div 
+      (click)="showContent('ao3')"
+      class="bg-white border rounded-2xl shadow hover:shadow-lg transition cursor-pointer p-5"
+      [ngClass]="{
+        'border-green-600 shadow-green-300 shadow-md': selectedKey === 'ao3'
+      }">
+      <img src="assets/ao3.png" class="w-full h-40 object-cover rounded-xl mb-4">
+      <h2 class="text-lg font-bold">Maintenance biomédicale</h2>
+      <p class="text-sm text-gray-600">Appareils hospitaliers</p>
+    </div>
+
+  <!-- PANNEAU BAS -->
+  <div 
+    *ngIf="selected"
+    class="bg-white border rounded-2xl shadow p-8 mt-10 text-gray-700 space-y-4">
+    
+    <div [innerHTML]="selected"></div>
+
+    <button class="mt-5 px-5 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700">
+      Télécharger le dossier
+    </button>
+  </div>
+
+</div>

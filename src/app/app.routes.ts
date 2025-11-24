@@ -18,6 +18,7 @@ import { PlanSesameComponent } from './plan-sesame/plan-sesame';
 import { DialyseComponent } from './dialyse/dialyse';
 import { CesarienneComponent } from './cesarienne/cesarienne';
 import { AssuranceMaladieComponent } from './assurance-maladie/assurance-maladie';
+import { AppelsOffreComponent } from './appels-offre/appels-offre';
 
 export const routes: Routes = [
   { path: '', component: HeroComponent }, 
@@ -38,7 +39,7 @@ export const routes: Routes = [
   { path: 'dialyse', component: DialyseComponent },
   { path: 'cesarienne', component: CesarienneComponent },
   { path: 'assurance-maladie', component: AssuranceMaladieComponent },
-
+  { path: 'appels-offre', component: AppelsOffreComponent },
 
   { path: '**', redirectTo: '', pathMatch: 'full' }, // 404
 ];
