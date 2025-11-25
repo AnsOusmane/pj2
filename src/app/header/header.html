@@ -353,12 +353,12 @@
                <!-- Affichage mobile -->
    <div
   *ngIf="isMenuOpen"
-  class="lg:hidden absolute top-16 left-0 w-full bg-white shadow-lg border-t border-gray-200 z-[9999]"
+  class="lg:hidden absolute top-16 left-8 mt-2 w-2/3 rounded-b-lg bg-white shadow-lg border-t border-gray-200 z-[9999]"
 >
-  <ul class="flex flex-col p-4 space-y-3 text-green-700 font-semibold text-[16px]">
+  <ul class="flex flex-col p-4 space-y-3 text-green-700 font-semibold text-[24px]">
 
     <li>
-      <button class="w-full text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('sen')">
+      <button class="w-2/3 text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('sen')">
         La SEN-CSU ▾
       </button>
       <div *ngIf="mobileDropdown.sen" class="pl-4 space-y-2">
@@ -368,9 +368,8 @@
         <button (click)="goToAppelsOffre(); closeMobileMenu()">Appels d'offres</button>
       </div>
     </li>
-
     <li>
-      <button class="w-full text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('assistance')">
+      <button class="w-2/3 text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('assistance')">
         Assistance médicale ▾
       </button>
       <div *ngIf="mobileDropdown.assistance" class="pl-4 space-y-2">
@@ -380,9 +379,11 @@
         <button (click)="goToPlanSesame(); closeMobileMenu()">Plan Sésame</button>
       </div>
     </li>
-
     <li>
-      <button class="w-full text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('media')">
+           <button   (click)="goToAssuranceMaladie();closeMobileMenu()" class="text-green-700 hover:text-green-900 transition">Assurance maladie</button>
+    </li>
+    <li>
+      <button class="w-2/3 text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('media')">
         Espace Média ▾
       </button>
       <div *ngIf="mobileDropdown.media" class="pl-4 space-y-2">
@@ -393,7 +394,7 @@
     </li>
 
     <li>
-      <button class="w-full text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('contact')">
+      <button class="w-2/3 text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('contact')">
         Assistance & Contact ▾
       </button>
       <div *ngIf="mobileDropdown.contact" class="pl-4 space-y-2">
@@ -403,12 +404,12 @@
       </div>
     </li>
 
-    <li><a class="block py-2" href="#">Carrière</a></li>
+    <li><button (click)="closeMobileMenu()" class="block py-2" href="#"> Carrière</button></li>
 
     <li>
       <button
         (click)="openDonation.emit()"
-        class="border-2 border-yellow-500 text-yellow-500 font-semibold px-3 py-2 rounded-full bg-white hover:bg-yellow-400 hover:text-white transition w-full"
+        class="border-2 border-yellow-500 text-yellow-500 font-semibold px-3 py-2 rounded-full bg-white hover:bg-yellow-400 hover:text-white transition w-2/3 ml-16"
       >
         Nous soutenir
       </button>
