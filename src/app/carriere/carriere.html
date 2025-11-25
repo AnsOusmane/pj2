@@ -1,0 +1,91 @@
+<div class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+  <!--  COLONNE GAUCHE : OFFRES D’EMPLOI -->
+  <div class="lg:col-span-2 space-y-6">
+
+    <h2 class="text-2xl font-bold text-green-700">Offres d’emploi</h2>
+
+    <!-- Barre de recherche -->
+    <input
+      type="text"
+      placeholder="Rechercher un poste…"
+      class="w-full p-3 border rounded mb-2"
+      (input)="filtre = $event.target.value"
+    />
+
+    <!-- LISTE DES OFFRES -->
+    <div class="grid md:grid-cols-2 gap-5">
+      <div
+        *ngFor="let offre of offresFiltrees"
+        class="border rounded-xl p-5 shadow hover:shadow-lg cursor-pointer transition bg-green-100"
+        (click)="afficherDetails(offre)"
+      >
+        <h3 class="text-lg font-semibold">{{ offre.titre }}</h3>
+        <p class="text-sm text-gray-600">{{ offre.type }} — {{ offre.lieu }}</p>
+        <p class="text-xs text-green-600 mt-3 underline">Voir la description</p>
+      </div>
+    </div>
+
+    <!-- 🟩 DESCRIPTION DÉTAILLÉE -->
+    <div
+      id="details-section"
+      *ngIf="offreSelectionnee"
+      class="mt-10 p-6 rounded-xl bg-gray-50 border shadow"
+    >
+      <h3 class="text-xl font-bold mb-2">{{ offreSelectionnee.titre }}</h3>
+      <p class="text-gray-600 mb-4">
+        {{ offreSelectionnee.type }} — {{ offreSelectionnee.lieu }}
+      </p>
+
+      <p class="text-gray-700 leading-relaxed whitespace-pre-line">
+        {{ offreSelectionnee.description }}
+      </p>
+
+      <button
+        class="px-4 py-2 mt-5 bg-black text-white rounded"
+        (click)="offreSelectionnee = null"
+      >
+        Fermer
+      </button>
+    </div>
+
+  </div>
+
+
+  <!-- 🟩 COLONNE DROITE : CANDIDATURE SPONTANÉE -->
+  <div class="bg-white rounded-xl p-6 shadow-xl h-fit sticky top-5">
+    <h2 class="text-xl font-bold mb-4 text-green-700">Candidature spontanée</h2>
+
+    <form [formGroup]="form" (ngSubmit)="envoyer()" class="space-y-4">
+
+      <input type="text" placeholder="Nom complet"
+             formControlName="nom"
+             class="w-full p-3 border rounded">
+
+      <input type="email" placeholder="Email"
+             formControlName="email"
+             class="w-full p-3 border rounded">
+
+      <input type="text" placeholder="Téléphone"
+             formControlName="telephone"
+             class="w-full p-3 border rounded">
+
+      <input type="text" placeholder="Poste souhaité"
+             formControlName="poste"
+             class="w-full p-3 border rounded">
+
+      <div>
+        <label class="text-sm font-semibold mb-1 block">Déposer votre CV :</label>
+        <input type="file" (change)="onFileChange($event)" class="w-full">
+      </div>
+
+      <button
+        type="submit"
+        class="w-full py-3 bg-green-600 text-white rounded font-semibold"
+      >
+        Envoyer
+      </button>
+    </form>
+  </div>
+
+</div>

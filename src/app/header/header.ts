@@ -148,5 +148,6 @@ closeMobileMenu() {
   goToCesarienne() { this.router.navigate(['/cesarienne']); }
   goToAssuranceMaladie() { this.router.navigate(['/assurance-maladie']); }
   goToAppelsOffre() { this.router.navigate(['/appels-offre']); }
+  goToCarriere() { this.router.navigate(['/carriere']); }
 
 }
