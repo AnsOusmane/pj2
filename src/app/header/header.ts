@@ -111,6 +111,18 @@ export class HeaderComponent implements AfterViewInit {
     this.startPartnerAuto();
   }
 
+mobileDropdown = {
+  sen: false,
+  assistance: false,
+  media: false,
+  contact: false
+};
+
+toggleMobileDropdown(menu: keyof typeof this.mobileDropdown) {
+  this.mobileDropdown[menu] = !this.mobileDropdown[menu];
+}
+
+  
   // ✅ Navigation
   onAboutClick() { this.openAboutTimeline.emit(); }
   showOrganigrammeClick() { this.openOrganigramme.emit(); }

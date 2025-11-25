@@ -85,7 +85,7 @@
       </a>
 
       <!-- Instagram -->
-      <a class="w-6 h-6 md:w-5 md:h-5 rotate-45 rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center hover:rotate-[340deg] ">
+      <a class="w-6 h-6 md:w-5 md:h-5 rotate-45 rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center hover:rotate-[300deg] ">
         <div class="-rotate-45">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 md:w-3.5 md:h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
             <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm0 7.3A2.8 2.8 0 1 1 14.8 12 2.8 2.8 0 0 1 12 14.8zM17.3 6a1.1 1.1 0 1 1-1.1 1.1A1.1 1.1 0 0 1 17.3 6z"/>
@@ -110,6 +110,16 @@
 
 <header class="bg-white shadow-sm">
   <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 h-16 relative">
+    <!-- Bouton menu mobile -->
+<button
+  class="lg:hidden flex flex-col gap-1 p-2 border rounded-md text-green-700"
+  (click)="toggleMenu()"
+>
+  <span class="block w-6 h-0.5 bg-green-700"></span>
+  <span class="block w-6 h-0.5 bg-green-700"></span>
+  <span class="block w-6 h-0.5 bg-green-700"></span>
+</button>
+
     <!-- Menu desktop -->
     <div class="hidden lg:flex items-center gap-x-6 text-[17px] font-semibold ml-auto">
 <!-- Dropdown La SEN-CSU -->
@@ -335,45 +345,73 @@
   </button>
 
 </div>
+               <!-- Affichage mobile -->
+   <div
+  *ngIf="isMenuOpen"
+  class="lg:hidden absolute top-16 left-0 w-full bg-white shadow-lg border-t border-gray-200 z-[9999]"
+>
+  <ul class="flex flex-col p-4 space-y-3 text-green-700 font-semibold text-[16px]">
 
-    <!-- Bouton mobile -->
-    <button
-      class="lg:hidden text-green-700 text-3xl"
-      (click)="toggleMenu()"
-    >
-      ☰
-    </button>
+    <li>
+      <button class="w-full text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('sen')">
+        La SEN-CSU ▾
+      </button>
+      <div *ngIf="mobileDropdown.sen" class="pl-4 space-y-2">
+        <button (click)="onAboutClick()">A propos</button> <br>
+        <button (click)="openMissionsvision.emit()">Vision & Missions</button><br>
+        <button (click)="showOrganigrammeClick()">Organigramme</button><br>
+        <button (click)="goToAppelsOffre()">Appels d'offres</button>
+      </div>
+    </li>
 
-    <!-- Menu mobile -->
-    <div
-      *ngIf="isMenuOpen"
-      class="lg:hidden absolute top-16 left-0 w-full bg-white shadow-lg border-t border-gray-200 z-50"
-    >
-      <ul class="flex flex-col p-4 space-y-3 text-green-700 font-semibold text-[16px]">
+    <li>
+      <button class="w-full text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('assistance')">
+        Assistance médicale ▾
+      </button>
+      <div *ngIf="mobileDropdown.assistance" class="pl-4 space-y-2">
+        <button (click)="goToZero5ans()">0 à 5 ans</button> <br>
+        <button (click)="goToCesarienne()">Césarienne</button> <br>
+        <button (click)="goToDialyse()">Dialyse</button> <br>
+        <button (click)="goToPlanSesame()">Plan Sésame</button>
+      </div>
+    </li>
 
-        <li><button (click)="onAboutClick()" class="w-full text-left py-2">La SEN-CSU</button></li>
+    <li>
+      <button class="w-full text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('media')">
+        Espace Média ▾
+      </button>
+      <div *ngIf="mobileDropdown.media" class="pl-4 space-y-2">
+        <button (click)="goToComuPresse()">Communiqués</button> <br>
+        <button (click)="goToMedia()">Dossiers média</button> <br>
+        <button (click)="goToBankImg()">Banque d’images</button>
+      </div>
+    </li>
 
-        <li><a class="block py-2" href="#">Assurance maladie</a></li>
+    <li>
+      <button class="w-full text-left py-2 cursor-pointer" (click)="toggleMobileDropdown('contact')">
+        Assistance & Contact ▾
+      </button>
+      <div *ngIf="mobileDropdown.contact" class="pl-4 space-y-2">
+        <button (click)="goToContact()">Formulaire de contact</button><br>
+        <button (click)="goToSr()">Localiser une agence</button><br>
+        <button (click)="goToContact()">Formulaire à télécharger</button>
+      </div>
+    </li>
 
-        <li><button class="w-full text-left py-2">Assistance médicale</button></li>
+    <li><a class="block py-2" href="#">Carrière</a></li>
 
-        <li><button class="w-full text-left py-2">Espace Média</button></li>
+    <li>
+      <button
+        (click)="openDonation.emit()"
+        class="border-2 border-yellow-500 text-yellow-500 font-semibold px-3 py-2 rounded-full bg-white hover:bg-yellow-400 hover:text-white transition w-full"
+      >
+        Nous soutenir
+      </button>
+    </li>
 
-        <li><button class="w-full text-left py-2">Assistance & Contact</button></li>
+  </ul>
+</div>
 
-        <li><a class="block py-2" href="#">Carrière</a></li>
-
-        <li>
-          <button
-            (click)="openDonation.emit()"
-            class="border-2 border-yellow-500 text-yellow-500 font-semibold px-3 py-2 rounded-full bg-white hover:bg-yellow-400 hover:text-white transition w-full"
-          >
-            Nous soutenir
-          </button>
-        </li>
-
-      </ul>
-    </div>
 
   </nav>
 </header>
