@@ -121,6 +121,10 @@ mobileDropdown = {
 toggleMobileDropdown(menu: keyof typeof this.mobileDropdown) {
   this.mobileDropdown[menu] = !this.mobileDropdown[menu];
 }
+closeMobileMenu() {
+  this.isMenuOpen = false;
+  this.mobileDropdown = { sen: false, assistance: false, media: false, contact: false };
+}
 
   
   // ✅ Navigation
