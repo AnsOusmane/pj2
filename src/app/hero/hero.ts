@@ -1,36 +1,24 @@
 import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
+  imports: [NgIf],
   templateUrl: './hero.html',
   styleUrls: ['./hero.css'],
 })
 export class HeroComponent implements AfterViewInit {
-  headerHeight = 64;
-  showGreenBlock = false;
-  showBtn1 = false;
-  showBtn2 = false;
-  showBtn3 = false;
+
+  currentHero: number = 0; // 0 = hero1, 1 = hero2
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      // Calcule la hauteur du header
-      setTimeout(() => {
-        const header = document.querySelector('header');
-        if (header) this.headerHeight = header.offsetHeight;
-      }, 100);
+    if (!isPlatformBrowser(this.platformId)) return;
 
-      // Animation en cascade
-      setTimeout(() => {
-        this.showGreenBlock = true;
-        setTimeout(() => this.showBtn1 = true, 300);
-        setTimeout(() => this.showBtn2 = true, 600);
-        setTimeout(() => this.showBtn3 = true, 900);
-      }, 500);
-    }
+    setInterval(() => {
+      this.currentHero = this.currentHero === 0 ? 1 : 0;
+    }, 5500);
   }
 }
