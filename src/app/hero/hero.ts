@@ -19,6 +19,6 @@ export class HeroComponent implements AfterViewInit {
 
     setInterval(() => {
       this.currentHero = this.currentHero === 0 ? 1 : 0;
-    }, 5500);
+    }, 135500);
   }
 }

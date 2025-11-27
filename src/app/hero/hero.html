@@ -3,7 +3,7 @@
      class="relative w-full bg-green-500 text-white overflow-hidden"
      style="height: calc(100vh - 176px);">
 
-  <!-- Courbure cuvette -->
+<!-- Courbure cuvette -->
   <svg class="absolute bottom-0 left-0 w-full z-10"
        viewBox="0 0 1440 320"
        preserveAspectRatio="none">
@@ -13,10 +13,10 @@
              V320H0Z"/>
   </svg>
 
-  <!-- Contenu -->
+<!-- Contenu -->
   <div class="max-w-6xl mx-auto px-6 py-9 flex flex-col md:flex-row items-center gap-10 relative z-20">
 
-    <!-- Texte + bouton -->
+<!-- Texte + bouton -->
     <div class="flex-1 flex flex-col items-center gap-6 relative z-30">
       <h1 class="text-5xl font-bold mb-4 text-center md:text-left">
          Dalal ak Jam ci CSU !
@@ -40,32 +40,26 @@
     </div>
 
     <!-- IMAGE au milieu -->
-    <div class="flex-1 flex justify-center items-center">
-      <img src="assets/hero6.png"
+    <div class=" mt-6 flex-1 flex justify-center items-center">
+      <img src="assets/fam.png"
            class="w-[420px] object-contain object-bottom z-20 pointer-events-none"/>
     </div>
-
   </div>
 </div>
-
 
 <!-- hero 2 / Image de fond -->
 <div  *ngIf="currentHero === 1"
   class="relative w-full   bg-cover bg-center bg-no-repeat"
   style="background-image: url('/assets/bg.png');
-         height: calc(100vh - 176px);"
->
+         height: calc(100vh - 176px);">
   <div class="absolute inset-0"></div>
-
   <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between 
               h-full px-6 sm:px-8 lg:px-16 py-8">
-
     <!-- Partie gauche -->
-    <div class="flex flex-col items-center lg:items-start 
+      <div class="flex flex-col items-center lg:items-start 
                 text-center lg:text-left 
                 space-y-6 lg:space-y-8 
                 w-full lg:w-1/2">
-
       <h1 class="text-white text-3xl sm:text-4xl lg:text-4xl 
                  font-bold leading-tight drop-shadow-lg">
         Protégez votre santé et <br class="hidden sm:inline" />
@@ -73,7 +67,6 @@
         Inscrivez-vous dès <br class="hidden lg:inline" />
         aujourd’hui !
       </h1>
-
       <a
         href="https://sunucsu.sn/auth/create-account"
         class="skew-x-[20deg] bg-gradient-to-r from-orange-500 to-yellow-500
@@ -125,5 +118,165 @@
   </div>
 </div>
 
+<section 
+  class="relative w-full h-screen flex items-start justify-center overflow-hidden">
 
+  <!-- BACKGROUND -->
+  <div class="absolute inset-0 bg-white"></div>
 
+  <div class="relative z-10 max-w-7xl mx-auto px-6 py-10 w-full">
+
+    <!-- TITRE -->
+    <h2 class="text-5xl csu-title text-center font-extrabold text-green-700 mt-6 mb-12">
+      Pourquoi s’inscrire ?
+    </h2>
+
+    <!-- GRILLE DES 4 POINTS -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+
+      <!-- ============ ITEM 1 ============ -->
+      <div class="flex flex-col items-center text-center">
+
+        <div class="w-44 h-60 mb-4 mt-3 relative">
+          <svg viewBox="0 0 200 260" class="w-full h-full relative z-10">
+
+            <!-- Image clipée -->
+            <defs>
+              <clipPath id="clip1">
+                <path d="M100 10 
+                         C 130 30, 160 60, 170 110
+                         C 180 160, 150 230, 100 250
+                         C 50 230, 20 160, 30 110
+                         C 40 60, 70 30, 100 10 Z"/>
+              </clipPath>
+            </defs>
+
+            <image href="assets/dady.png"
+                   x="20" y="40" width="160" height="190"
+                   clip-path="url(#clip1)"
+                   preserveAspectRatio="xMidYMid slice" />
+
+            <!-- Explosion en 3 morceaux -->
+            <path d="M70 0 L100 25 L85 45 Z" fill="#e11d48" opacity="0.7"/>
+            <path d="M100 0 L120 25 L105 45 Z" fill="#0a6847" opacity="0.7"/>
+            <path d="M130 0 L100 25 L115 45 Z" fill="#ffffff" opacity="0.7"/>
+
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-bold text-green-700 csu-body mb-1">
+          Accès aux soins
+        </h3>
+        <p class="text-gray-700 csu-muted text-sm max-w-[220px]">
+          Accès rapide dans tous les postes et centres de santé.
+        </p>
+      </div>
+
+      <!-- ============ ITEM 2 ============ -->
+      <div class="flex flex-col items-center text-center">
+
+        <div class="w-44 h-60 mb-4 mt-3 relative">
+          <svg viewBox="0 0 200 260" class="w-full h-full">
+
+            <defs>
+              <clipPath id="clip2">
+                <path d="M100 10 
+                         C 130 30, 160 60, 170 110
+                         C 180 160, 150 230, 100 250
+                         C 50 230, 20 160, 30 110
+                         C 40 60, 70 30, 100 10 Z"/>
+              </clipPath>
+            </defs>
+
+            <image href="assets/herormv.png"
+                   x="20" y="40" width="160" height="190"
+                   clip-path="url(#clip2)"
+                   preserveAspectRatio="xMidYMid slice" />
+
+            <path d="M70 0 L100 25 L85 45 Z" fill="#e11d48" opacity="0.7"/>
+            <path d="M100 0 L120 25 L105 45 Z" fill="#0a6847" opacity="0.7"/>
+            <path d="M130 0 L100 25 L115 45 Z" fill="#ffffff" opacity="0.7"/>
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-bold text-green-700 csu-body mb-1">
+          Prix accessibles
+        </h3>
+        <p class="text-gray-700 csu-muted text-sm max-w-[220px]">
+          Tarifs très bas et subventionnés pour tous.
+        </p>
+      </div>
+
+      <!-- ============ ITEM 3 ============ -->
+      <div class="flex flex-col items-center text-center">
+
+        <div class="w-44 h-60 mb-4 mt-3 relative">
+          <svg viewBox="0 0 200 260" class="w-full h-full">
+
+            <defs>
+              <clipPath id="clip3">
+                <path d="M100 10 
+                         C 130 30, 160 60, 170 110
+                         C 180 160, 150 230, 100 250
+                         C 50 230, 20 160, 30 110
+                         C 40 60, 70 30, 100 10 Z"/>
+              </clipPath>
+            </defs>
+
+            <image href="assets/fam.png"
+                   x="20" y="40" width="160" height="190"
+                   clip-path="url(#clip3)"
+                   preserveAspectRatio="xMidYMid slice" />
+
+            <path d="M70 0 L100 25 L85 45 Z" fill="#e11d48" opacity="0.7"/>
+            <path d="M100 0 L120 25 L105 45 Z" fill="#0a6847" opacity="0.7"/>
+            <path d="M130 0 L100 25 L115 45 Z" fill="#ffffff" opacity="0.7"/>
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-bold text-green-700 csu-body mb-1">
+          Démarches simples
+        </h3>
+        <p class="text-gray-700 csu-muted text-sm max-w-[220px]">
+          Inscription claire, rapide et sans stress.
+        </p>
+      </div>
+
+      <!-- ============ ITEM 4 ============ -->
+      <div class="flex flex-col items-center text-center">
+
+        <div class="w-44 h-60 mb-4 mt-3 relative">
+          <svg viewBox="0 0 200 260" class="w-full h-full">
+
+            <defs>
+              <clipPath id="clip4">
+                <path d="M100 10 
+                         C 130 30, 160 60, 170 110
+                         C 180 160, 150 230, 100 250
+                         C 50 230, 20 160, 30 110
+                         C 40 60, 70 30, 100 10 Z"/>
+              </clipPath>
+            </defs>
+
+            <image href="assets/dady.png"
+                   x="20" y="40" width="160" height="190"
+                   clip-path="url(#clip4)"
+                   preserveAspectRatio="xMidYMid slice" />
+
+            <path d="M70 0 L100 25 L85 45 Z" fill="#e11d48" opacity="0.7"/>
+            <path d="M100 0 L120 25 L105 45 Z" fill="#0a6847" opacity="0.7"/>
+            <path d="M130 0 L100 25 L115 45 Z" fill="#ffffff" opacity="0.7"/>
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-bold text-green-700 csu-body mb-1">
+          Protection prioritaire
+        </h3>
+        <p class="text-gray-700 csu-muted text-sm max-w-[220px]">
+          Couverture spéciale pour enfants, âgés et vulnérables.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>

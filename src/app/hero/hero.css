@@ -23,3 +23,42 @@
 .opacity-0 {
   opacity: 0;
 }
+
+/* global / component css */
+:root {
+  --csu-green: #0a6847;
+  --csu-red: #e11d48;
+}
+
+/* Titres : Baloo 2 (gros et fun) */
+.csu-title {
+  font-family: "Baloo 2", cursive;
+  letter-spacing: -0.5px;
+}
+
+/* Sous-titres & paragraphes : Poppins propre */
+.csu-body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Petits textes / légendes : Quicksand */
+.csu-muted {
+  font-family: "Quicksand", sans-serif;
+}
+
+/* Exemple d'ajustements visuels */
+.csu-number {
+  background: var(--csu-red);
+  color: white;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  font-weight: 700;
+}
+
+/* Responsiveness (optionnel) */
+@media (min-width: 768px) {
+  .csu-title { font-size: 2.25rem; } /* md */
+}
