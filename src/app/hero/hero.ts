@@ -21,4 +21,10 @@ export class HeroComponent implements AfterViewInit {
       this.currentHero = this.currentHero === 0 ? 1 : 0;
     },5500);
   }
+  accordionOpen = 1; // étape ouverte par défaut
+
+toggleAccordion(n: number) {
+  this.accordionOpen = this.accordionOpen === n ? 0 : n;
+}
+
 }

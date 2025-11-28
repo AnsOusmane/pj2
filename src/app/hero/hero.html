@@ -231,67 +231,83 @@
 
       <div class="space-y-4 w-full">
 
-        <!-- ========= ÉTAPE 1 (OUVERTE PAR DÉFAUT) ========= -->
-        <div class="border border-gray-200 rounded-lg overflow-hidden">
-          <button class="w-full flex justify-between items-center p-4 text-left" onclick="toggleAccordion(1)">
-            <span class="text-xl font-bold text-green-700">1. Création du compte</span>
-            <span id="arrow1" class="transition-transform text-2xl rotate-180">⌄</span>
-          </button>
-          <div id="content1" class="p-4 text-gray-700">
-            Rendez-vous sur la plateforme d’inscription et remplissez vos informations de base.
-            Cela crée votre espace personnel pour suivre toute la procédure.
-          </div>
-        </div>
+  <!-- ========= ÉTAPE 1 ========= -->
+  <div class="border border-gray-200 rounded-lg overflow-hidden">
+    <button class="w-full flex justify-between items-center p-4 text-left"
+            (click)="toggleAccordion(1)">
+      <span class="text-xl font-bold text-green-700">1. Création du compte</span>
+      <span class="text-2xl transition-transform transform"
+            [class.rotate-180]="accordionOpen === 1">⌄</span>
+    </button>
 
-        <!-- ========= ÉTAPE 2 ========= -->
-        <div class="border border-gray-200 rounded-lg overflow-hidden">
-          <button class="w-full flex justify-between items-center p-4 text-left" onclick="toggleAccordion(2)">
-            <span class="text-xl font-bold text-green-700">2. Informations personnelles</span>
-            <span id="arrow2" class="transition-transform text-2xl">⌄</span>
-          </button>
-          <div id="content2" class="hidden p-4 text-gray-700">
-            Vous renseignez votre identité, votre adresse et votre situation familiale.
-            Ces données permettent une prise en charge conforme à votre profil.
-          </div>
-        </div>
+    <div class="p-4 text-gray-700"
+         *ngIf="accordionOpen === 1">
+      Rendez-vous sur la plateforme d’inscription...
+    </div>
+  </div>
 
-        <!-- ========= ÉTAPE 3 ========= -->
-        <div class="border border-gray-200 rounded-lg overflow-hidden">
-          <button class="w-full flex justify-between items-center p-4 text-left" onclick="toggleAccordion(3)">
-            <span class="text-xl font-bold text-green-700">3. Choix du mode de paiement</span>
-            <span id="arrow3" class="transition-transform text-2xl">⌄</span>
-          </button>
-          <div id="content3" class="hidden p-4 text-gray-700">
-            Vous choisissez votre mode de paiement : mobile money, carte bancaire ou guichet.
-            Le tarif appliqué est automatiquement ajusté selon votre situation.
-          </div>
-        </div>
+  <!-- ========= ÉTAPE 2 ========= -->
+  <div class="border border-gray-200 rounded-lg overflow-hidden">
+    <button class="w-full flex justify-between items-center p-4 text-left"
+            (click)="toggleAccordion(2)">
+      <span class="text-xl font-bold text-green-700">2. Informations personnelles</span>
+      <span class="text-2xl transition-transform transform"
+            [class.rotate-180]="accordionOpen === 2">⌄</span>
+    </button>
 
-        <!-- ========= ÉTAPE 4 ========= -->
-        <div class="border border-gray-200 rounded-lg overflow-hidden">
-          <button class="w-full flex justify-between items-center p-4 text-left" onclick="toggleAccordion(4)">
-            <span class="text-xl font-bold text-green-700">4. Validation de la demande</span>
-            <span id="arrow4" class="transition-transform text-2xl">⌄</span>
-          </button>
-          <div id="content4" class="hidden p-4 text-gray-700">
-            Vérifiez vos informations et validez votre demande.
-            Vous recevez une notification dès que votre inscription est confirmée.
-          </div>
-        </div>
+    <div class="p-4 text-gray-700"
+         *ngIf="accordionOpen === 2">
+      Vous renseignez votre identité...
+    </div>
+  </div>
 
-        <!-- ========= ÉTAPE 5 ========= -->
-        <div class="border border-gray-200 rounded-lg overflow-hidden">
-          <button class="w-full flex justify-between items-center p-4 text-left" onclick="toggleAccordion(5)">
-            <span class="text-xl font-bold text-green-700">5. Activation de la couverture</span>
-            <span id="arrow5" class="transition-transform text-2xl">⌄</span>
-          </button>
-          <div id="content5" class="hidden p-4 text-gray-700">
-            Une fois votre compte actif, vous pouvez utiliser immédiatement vos services CSU.
-            Votre numéro CSU devient votre identifiant unique dans les structures agréées.
-          </div>
-        </div>
+  <!-- ========= ÉTAPE 3 ========= -->
+  <div class="border border-gray-200 rounded-lg overflow-hidden">
+    <button class="w-full flex justify-between items-center p-4 text-left"
+            (click)="toggleAccordion(3)">
+      <span class="text-xl font-bold text-green-700">3. Choix du mode de paiement</span>
+      <span class="text-2xl transition-transform transform"
+            [class.rotate-180]="accordionOpen === 3">⌄</span>
+    </button>
 
-      </div>
+    <div class="p-4 text-gray-700"
+         *ngIf="accordionOpen === 3">
+      Choisissez votre mode de paiement...
+    </div>
+  </div>
+
+  <!-- ========= ÉTAPE 4 ========= -->
+  <div class="border border-gray-200 rounded-lg overflow-hidden">
+    <button class="w-full flex justify-between items-center p-4 text-left"
+            (click)="toggleAccordion(4)">
+      <span class="text-xl font-bold text-green-700">4. Validation de la demande</span>
+      <span class="text-2xl transition-transform transform"
+            [class.rotate-180]="accordionOpen === 4">⌄</span>
+    </button>
+
+    <div class="p-4 text-gray-700"
+         *ngIf="accordionOpen === 4">
+      Vérifiez vos informations...
+    </div>
+  </div>
+
+  <!-- ========= ÉTAPE 5 ========= -->
+  <div class="border border-gray-200 rounded-lg overflow-hidden">
+    <button class="w-full flex justify-between items-center p-4 text-left"
+            (click)="toggleAccordion(5)">
+      <span class="text-xl font-bold text-green-700">5. Activation de la couverture</span>
+      <span class="text-2xl transition-transform transform"
+            [class.rotate-180]="accordionOpen === 5">⌄</span>
+    </button>
+
+    <div class="p-4 text-gray-700"
+         *ngIf="accordionOpen === 5">
+      Une fois votre compte actif...
+    </div>
+  </div>
+
+</div>
+
     </div>
   </div>
 </section>
