@@ -11,6 +11,7 @@ import { DonationComponent } from './donation/donation';
 import { OrganigrammeComponent } from './organigramme/organigramme';
 import { AccueilsunuComponent } from './accueilsunu/accueilsunu';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
+import { ContactFormComponent } from "./contact-form/contact-form";
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,8 @@ import { MissionsvisionComponent } from './missionsvision/missionsvision';
     OrganigrammeComponent,
     AccueilsunuComponent,
     MissionsvisionComponent,
-  ],
+    ContactFormComponent
+],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
 })

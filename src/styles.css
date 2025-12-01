@@ -26,3 +26,8 @@
 .animate-fadeIn {
   animation: fadeIn .35s ease-out;
 }
+/* Titres : Baloo 2 (gros et fun) */
+.csu-title {
+  font-family: "Baloo 2", cursive;
+  letter-spacing: -0.5px;
+}
