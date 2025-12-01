@@ -20,11 +20,30 @@ export class MediaComponent {
     { title: "CSU Info - Édition #13", date: "20 Septembre 2025", excerpt: "Témoignages de bénéficiaires dans les régions rurales.", link: "#" },
   ];
 
-  videos = [
-    { title: "Comment s'inscrire à la CSU ?", thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg", duration: "3:45", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Guide pas à pas pour s'inscrire en ligne ou en centre." },
-    { title: "Les avantages de la CSU expliqués", thumbnail: "https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg", duration: "5:12", embedUrl: "https://www.youtube.com/embed/9bZkp7q19f0", description: "Tout savoir sur les soins gratuits." },
-    { title: "Témoignage : Awa, bénéficiaire à Thiès", thumbnail: "https://img.youtube.com/vi/3JZ_D3J4d1s/maxresdefault.jpg", duration: "2:30", embedUrl: "https://www.youtube.com/embed/3JZ_D3J4d1s", description: "Une mère de famille raconte son expérience." },
-  ];
+ videos = [
+  {
+    title: "CSU - Inscription en ligne (Tutoriel complet)",
+    thumbnail: "https://img.youtube.com/vi/2ZIXBCfPwRQ/maxresdefault.jpg",
+    duration: "4:01",
+    embedUrl: "https://www.youtube.com/watch?v=2ZIXBCfPwRQ",
+    description: "Guide complet pour s'inscrire à la Couverture Santé Universelle."
+  },
+  {
+    title: "Comment fonctionne la couverture santé universelle ?",
+    thumbnail: "https://img.youtube.com/vi/Xo2-K_Cj0w0/maxresdefault.jpg",
+    duration: "6:22",
+    embedUrl: "https://www.youtube.com/watch?v=Xo2-K_Cj0w0",
+    description: "Explication détaillée du système de CSU et de ses avantages."
+  },
+  {
+    title: "CSU : Procédure d’enrôlement pas à pas",
+    thumbnail: "https://img.youtube.com/vi/8O0JeT-zVx8/maxresdefault.jpg",
+    duration: "3:55",
+    embedUrl: "https://www.youtube.com/watch?v=8O0JeT-zVx8",
+    description: "Un tutoriel clair sur le processus d'enrôlement."
+  }
+];
+
 
   temoignages = [
     { name: "Fatou Diop", location: "Dakar", photo: "https://randomuser.me/api/portraits/women/32.jpg", quote: "Grâce à la CSU, j'ai pu faire soigner mon fils sans payer un centime.", date: "5 Nov. 2025" },

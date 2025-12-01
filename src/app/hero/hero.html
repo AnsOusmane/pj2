@@ -42,7 +42,7 @@
     </div>
 
     <!-- IMAGE -->
-    <div class="flex-1 flex justify-center items-center mt-6 md:mt-0">
+    <div class="flex-1 flex justify-center items-center mt-2 sm:mt-6">
       <img src="assets/fam.png"
            class="w-[260px] sm:w-[340px] md:w-[420px] 
                   object-contain object-bottom z-20 pointer-events-none"/>
@@ -258,12 +258,10 @@
             <span class="text-2xl transition-transform transform"
                   [class.rotate-180]="accordionOpen === 1">⌄</span>
           </button>
-
           <div class="p-4 text-gray-700" *ngIf="accordionOpen === 1">
             Ouvrir un compte sur la plateforme SunuCsu.sn
           </div>
         </div>
-
         <!-- ========= ÉTAPE 2 ========= -->
         <div class="border border-gray-200 rounded-lg overflow-hidden">
           <button class="w-full flex justify-between items-center p-4 text-left"
@@ -327,8 +325,6 @@ résidence
 
   </div>
 </section>
-
-
 
 <!-- ========== SCRIPT ACCORDÉON ========== -->
 <script>

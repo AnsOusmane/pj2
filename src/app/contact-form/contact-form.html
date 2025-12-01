@@ -1,92 +1,136 @@
-<section
-  class="min-h-screen flex items-center justify-center
-         bg-gradient-to-br from-[#ffffff] to-[#3CB371]
-         px-4 py-10">
-
-  <div
-    class="w-full max-w-xl p-6
-           bg-white/10 backdrop-blur-xl
-           border border-white/20
-           rounded-2xl shadow-2xl shadow-black/20">
-
-    <!-- TITRE -->
-    <h2 class="text-center text-3xl md:text-4xl font-bold mb-6
-               text-green-600 drop-shadow">
-      Contact SEN-CSU
-    </h2>
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-5">
-
-      <!-- NOM -->
-      <div class="flex flex-col">
-        <label class="text-green-600 font-semibold text-sm mb-1">Nom</label>
-        <input
-          type="text"
-          formControlName="name"
-          class="p-3 rounded-xl bg-white/20 text-white
-                 border border-white/30
-                 placeholder-white/60
-                 focus:outline-none focus:border-green-600
-                 focus:ring-1 focus:ring-green-600
-                 transition"
-          placeholder="Votre nom"
-        />
-      </div>
-
-      <!-- EMAIL -->
-      <div class="flex flex-col">
-        <label class="text-green-600 font-semibold text-sm mb-1">Email</label>
-        <input
-          type="email"
-          formControlName="email"
-          class="p-3 rounded-xl bg-white/20 text-white
-                 border border-white/30
-                 placeholder-white/60
-                 focus:outline-none focus:border-green-600
-                 focus:ring-1 focus:ring-green-600
-                 transition"
-          placeholder="Votre email"
-        />
-
-        <p
-          *ngIf="form.controls.email.invalid && form.controls.email.touched"
-          class="text-red-600 text-xs pt-1">
-          Email invalide
-        </p>
-      </div>
-
-      <!-- MESSAGE -->
-      <div class="flex flex-col">
-        <label class="text-green-600 font-semibold text-sm mb-1">Message</label>
-        <textarea
-          formControlName="message"
-          rows="4"
-          class="p-3 rounded-xl bg-white/20 text-white
-                 border border-white/30
-                 placeholder-white/60
-                 focus:outline-none focus:border-green-600
-                 focus:ring-1 focus:ring-green-600
-                 transition"
-          placeholder="Votre message"></textarea>
-      </div>
-
-      <!-- BOUTON -->
-      <button
-        type="submit"
-        class="w-full py-3 mt-3 rounded-xl
-               bg-gradient-to-r from-[#0A5C36] via-[#0F7444] to-[#3CB371]
-               text-white font-semibold uppercase tracking-wide
-               shadow-lg hover:shadow-xl hover:scale-[1.02]
-               transition-all">
-        Envoyer
-      </button>
-
-      <!-- CONFIRMATION -->
-      @if (submitted) {
-        <p class="text-center text-green-600 font-semibold pt-2">
-          Merci ! Votre message a été envoyé.
-        </p>
-      }
-    </form>
+ <!-- MAP GOOGLE EN BAS -->
+  <div class="w-full h-[250px] mt-10">
+    <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3870.002146368698!2d-17.47284098510295!3d14.714638250457847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec112c3a6f2c041%3A0x9cf1220581c85055!2sAgence%20de%20la%20CMU%20(SEN-CSU)!5e0!3m2!1sfr!2ssn!4v1735747999999"
+      width="100%" height="100%" style="border:0;"
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
   </div>
-</section>
+<!-- SECTION CONTACT AVEC BG FULL TOP -->
+<div class="w-full">
+
+  <!-- BACKGROUND FULL WIDTH
+  <div class="w-full h-[270px] bg-cover bg-center"
+       style="background-image: url('assets/immcsu.jpg');">
+  </div>
+ -->
+  <!-- CONTENU PRINCIPAL -->
+  <div class="w-full bg-white flex justify-center py-16 px-4">
+    <div class="max-w-6xl w-full flex flex-col lg:flex-row gap-12">
+
+      <!-- TEXTE GAUCHE -->
+      <div class="flex-1">
+
+        <p class="text-gray-700 leading-relaxed max-w-md">
+          Merci de nous contacter si vous avez une question,
+          souhaitez laisser un commentaire ou désirez obtenir
+          plus d’informations sur la
+          <span class="font-semibold text-green-700">SEN-CSU</span>.
+        </p>
+
+        <!-- LOGO -->
+        <img src="assets/logo.png"
+             alt="Logo SEN-CSU"
+             class="w-56 my-7">
+
+        <!-- Séparateur -->
+        <div class="w-2/3 h-[2px] bg-green-700 my-7"></div>
+
+        <div class="text-xl font-semibold text-green-700 mb-4">
+          Coordonnées de contact
+        </div>
+
+        <!-- Adresse -->
+        <div class="flex items-start gap-3 text-gray-800 mb-4">
+          <span class="text-green-600 text-xl">📍</span>
+          <p>
+            <a href="https://maps.google.com/?q=Cité+Keur+Gorgui,+Lot+N°4,+Immeuble+SEN-CSU,+Dakar"
+               target="_blank"
+               class="text-green-700 hover:underline">
+               Cité Keur Gorgui, Lot N°4, Immeuble El Hadji Serigne Mérina SYLLA<br />Dakar, Sénégal
+            </a>
+          </p>
+        </div>
+
+        <!-- Téléphone -->
+        <div class="flex items-center gap-3 text-gray-800 mb-4">
+          <span class="text-green-600 text-xl">📞</span>
+          <p>
+            <a href="tel:+221338591515"
+               class="text-green-700 hover:underline">
+               +221 33 869 15 15
+            </a>
+          </p>
+        </div>
+
+        <!-- Email -->
+        <div class="flex items-center gap-3 text-gray-800">
+          <span class="text-green-600 text-xl">✉️</span>
+          <p>
+            <a href="mailto:contact@sunucsu.sn"
+               class="text-green-700 hover:underline">
+               contact@sunucsu.sn
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <!-- FORMULAIRE À DROITE -->
+      <div
+        class="flex-1 bg-gray-100 p-8 rounded-xl shadow-2xl"
+      >
+        <form class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+          <!-- Message -->
+          <textarea
+            placeholder="Votre message *"
+            class="col-span-1 sm:col-span-2 w-full h-40 p-4 
+                   bg-gray-200 border border-gray-200 rounded-md 
+                   resize-none text-gray-700"
+          ></textarea>
+
+          <!-- Nom -->
+          <input
+            type="text"
+            placeholder="Nom complet *"
+            class="w-full p-4 bg-gray-200 border border-gray-200 
+                   rounded-md text-gray-700"
+          />
+
+          <!-- Email -->
+          <input
+            type="email"
+            placeholder="E-mail *"
+            class="w-full p-4 bg-gray-200 border border-gray-200 
+                   rounded-md text-gray-700"
+          />
+
+          <!-- Téléphone -->
+          <input
+            type="text"
+            placeholder="Téléphone "
+            class="w-full p-4 bg-gray-200 border border-gray-200 
+                   rounded-md text-gray-700"
+          />
+
+          <!-- Bouton -->
+          <button
+            type="submit"
+            class="col-span-1 sm:col-span-2 mt-3 
+                   bg-green-700 text-white 
+                   px-10 py-3 rounded-md font-semibold 
+                   flex justify-center items-center gap-3 hover:bg-green-800 
+                   transition shadow-lg"
+          >
+            <span>Envoyer</span>
+            <span class="text-lg">➜</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</div>
