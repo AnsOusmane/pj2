@@ -142,50 +142,74 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
-      <!-- ITEM -->
-      <div class="flex flex-col items-center text-center">
-        <div class="w-32 sm:w-40 md:w-44 mb-4 mt-3">
-          <img src="assets/ps1.png" class="w-full h-full object-contain"/>
-        </div>
-        <h3 class="text-xl font-bold text-green-700">Accès aux soins</h3>
-        <p class="text-gray-700 text-sm max-w-[230px]">
-          Accès rapide dans tous les postes, centres de santé et hôpitaux du Sénégal.
-        </p>
+      <!-- ITEM 1 -->
+<!-- ITEM 1 -->
+    <div class="why-card group cursor-pointer" (click)="onCardClick('acces')">
+      <div class="why-img">
+        <img src="assets/ps1.png" class="w-full h-full object-contain"/>
       </div>
+      <h3 class="why-title">Accès aux soins</h3>
+        <p class="why-text">Accès rapide dans tous les postes, centres de santé et hôpitaux du Sénégal.</p>
+    </div>
 
-      <div class="flex flex-col items-center text-center">
-        <div class="w-32 sm:w-40 md:w-44 mb-4 mt-3">
+      <!-- ITEM 2 -->
+     <div class="why-card group cursor-pointer" (click)="onCardClick('prix')">
+        <div class="why-img">
           <img src="assets/ps2.png" class="w-full h-full object-contain"/>
         </div>
-        <h3 class="text-xl font-bold text-green-700">Prix accessibles</h3>
-        <p class="text-gray-700 text-sm max-w-[230px]">
-          Tarifs très bas et subventionnés pour tous.
-        </p>
+        <h3 class="why-title">Prix accessibles</h3>
+        <p class="why-text">Tarifs très bas et subventionnés pour tous.</p>
       </div>
 
-      <div class="flex flex-col items-center text-center">
-        <div class="w-32 sm:w-40 md:w-44 mb-4 mt-3">
+      <!-- ITEM 3 -->
+      <div class="why-card group cursor-pointer" (click)="onCardClick('demarches')">
+        <div class="why-img">
           <img src="assets/ps3.png" class="w-full h-full object-contain"/>
         </div>
-        <h3 class="text-xl font-bold text-green-700">Démarches simples</h3>
-        <p class="text-gray-700 text-sm max-w-[230px]">
-          Inscription claire, rapide et sans stress.
-        </p>
+        <h3 class="why-title">Démarches simples</h3>
+        <p class="why-text">Inscription claire, rapide et sans stress.</p>
       </div>
 
-      <div class="flex flex-col items-center text-center">
-        <div class="w-32 sm:w-40 md:w-44 mb-4 mt-3">
+      <!-- ITEM 4 -->
+      <div class="why-card group cursor-pointer" (click)="onCardClick('protection')">
+        <div class="why-img">
           <img src="assets/ps4.png" class="w-full h-full object-contain"/>
         </div>
-        <h3 class="text-xl font-bold text-green-700">Protection prioritaire</h3>
-        <p class="text-gray-700 text-sm max-w-[230px]">
-          Couverture pour enfants, personnes âgées et vulnérables.
-        </p>
+        <h3 class="why-title">Protection prioritaire</h3>
+        <p class="why-text">Couverture pour enfants, personnes âgées et vulnérables.</p>
       </div>
 
     </div>
   </div>
 </section>
+<!-- POPUP OVERLAY -->
+<!-- ========================================= -->
+<!--                POPUP                      -->
+<!-- ========================================= -->
+<div *ngIf="showPopup"
+     class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-md 
+            flex items-center justify-center z-[9999] p-6"
+     (click)="onPopupClick($event)">
+
+  <div class="relative max-w-xl w-full bg-white rounded-xl p-8 text-center
+              shadow-2xl border border-green-700 glitch-box">
+
+    <button (click)="closePopup()"
+            class="absolute top-3 right-3 text-gray-600 hover:text-black text-2xl">
+      ✕
+    </button>
+
+    <h2 class="text-3xl font-extrabold text-green-700 mb-4 glitch-text">
+      {{popupTitle}}
+    </h2>
+
+    <!-- ZONE DE TEXTE RICH HTML -->
+    <div class="text-gray-700 leading-relaxed text-lg text-left space-y-4"
+         [innerHTML]="popupText">
+    </div>
+
+  </div>
+</div>
 
 
 
@@ -315,3 +339,4 @@
 
   </div>
 </section>
+  <app-contact-form></app-contact-form>
