@@ -26,5 +26,14 @@ export class HeroComponent implements AfterViewInit {
 toggleAccordion(n: number) {
   this.accordionOpen = this.accordionOpen === n ? 0 : n;
 }
+scrollTo(target: string) {
+  const el = document.getElementById(target);
+  if (!el) return;
+
+  el.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
 
 }

@@ -1,33 +1,69 @@
+/* ============================================================
+   TAILWIND
+   ============================================================ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
+/* ============================================================
+   ANIMATIONS PERSONNALISÉES
+   ============================================================ */
+
+/* 🔸 Fade + Slide Up */
 @keyframes fade-slide-up {
   0% { opacity: 0; transform: translateY(30px); }
   100% { opacity: 1; transform: translateY(0); }
 }
-
 .animate-fade-slide-up {
   animation: fade-slide-up 0.9s ease forwards;
 }
+
+/* 🔸 Défilement horizontal (marquee) */
 @keyframes scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* Défilement de la moitié du bloc pour boucle infinie */
+  100% { transform: translateX(-50%); }
 }
-
 .animate-scroll {
   animation: scroll 20s linear infinite;
 }
+
+/* 🔸 Fade In (léger upward) */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.35s ease-out;
 }
 
-.animate-fadeIn {
-  animation: fadeIn .35s ease-out;
-}
-/* Titres : Baloo 2 (gros et fun) */
+
+/* ============================================================
+   TYPOGRAPHIE
+   ============================================================ */
+
+/* 🔸 Titres fun (Baloo 2) */
 .csu-title {
   font-family: "Baloo 2", cursive;
   letter-spacing: -0.5px;
+}
+
+
+/* ============================================================
+   SCROLL SMOOTH + EFFET FUTURISTE
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Glow futuriste au focus d'une section ciblée */
+section:target {
+  animation: focusGlow 1s ease-out;
+}
+
+@keyframes focusGlow {
+  0%   { box-shadow: 0 0 0px rgba(0,255,180,0); }
+  50%  { box-shadow: 0 0 30px rgba(0,255,180,0.5); }
+  100% { box-shadow: 0 0 0px rgba(0,255,180,0); }
 }
