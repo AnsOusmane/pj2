@@ -3,26 +3,26 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}"
   ],
-theme: {
-  extend: {
-    screens: {
-      'xxl': '1600px',
-      'xxxl': '1920px',
-      'xxxxl': '2560px',
-      'uw': '3440px', // ultrawide
-    },
-    maxWidth: {
-      'xxl': '1600px',
-      'xxxl': '1920px',
-      'xxxxl': '2560px',
-      'uw': '3200px',
-    },
-    spacing: {
-      'section': '7rem',   // Pour py-section
-      'section-lg': '10rem'
+  theme: {
+    extend: {
+      screens: {
+        '2xl': '1536px',   // Tailwind natif
+        '3xl': '1800px',
+        '4xl': '2200px',
+        '5xl': '2560px',
+        'uw': '3440px'     // ultrawide 21:9
+      },
+      maxWidth: {
+        '3xl': '1600px',
+        '4xl': '1800px',
+        '5xl': '2100px',
+        'uw': '3200px'
+      },
+      spacing: {
+        'section': '7rem',
+        'section-lg': '10rem'
+      }
     }
-  }
-}
-,
+  },
   plugins: [],
 };
