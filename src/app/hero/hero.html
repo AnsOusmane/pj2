@@ -142,9 +142,7 @@
 <!-- ========================================= -->
 <!--           SECTION — POURQUOI ?            -->
 <!-- ========================================= -->
-<!-- ========================================= -->
-<!--           SECTION — POURQUOI ?            -->
-<!-- ========================================= -->
+
 <section id="why"
   class="relative w-full min-h-screen bg-white flex items-center justify-center overflow-hidden">
 
@@ -156,42 +154,47 @@
               5xl:max-w-[2300px]
               mx-auto px-6 py-20
               flex flex-col items-center justify-center
-              3xl:py-32 4xl:py-40 5xl:py-48">
+              3xl:py-40 4xl:py-48 5xl:py-56">
 
     <!-- TITRE -->
     <h2
       class="text-4xl sm:text-5xl csu-title text-center font-extrabold text-green-700 mb-16
-             3xl:text-6xl 4xl:text-7xl
-             3xl:mb-24 4xl:mb-28 5xl:mb-32">
+             3xl:text-7xl 4xl:text-8xl 5xl:text-9xl
+             3xl:mb-24 4xl:mb-32 5xl:mb-36">
       Pourquoi s’inscrire ?
     </h2>
 
-    <!-- GRID CENTRÉE -->
+    <!-- GRID -->
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
              gap-12
-             3xl:gap-16 4xl:gap-24 5xl:gap-32
+             3xl:gap-24 4xl:gap-32 5xl:gap-40
              w-full place-items-center"
     >
 
-      <!-- ITEM 1-->
+      <!-- ITEM 1 -->
       <div class="why-card group cursor-pointer flex flex-col items-center text-center"
            (click)="onCardClick('acces')">
 
+        <!-- IMAGE x2 -->
         <div class="why-img w-full flex justify-center">
-          <img src="assets/ps1.png"
-               class="w-40 sm:w-48 lg:w-52
-                      3xl:w-60 4xl:w-72 5xl:w-80
-                      object-contain transition-transform" />
+        <img src="assets/ps1.png"
+     class="w-48 sm:w-56 lg:w-64 xl:w-72
+            3xl:w-96 4xl:w-[28rem] 5xl:w-[32rem]
+            object-contain transition-transform" />
+
         </div>
 
+        <!-- TITRE x2 -->
         <h3 class="why-title text-xl font-bold mt-4
-                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl">
+                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
           Accès aux soins
         </h3>
 
-        <p class="why-text text-base mt-2
-                  3xl:text-lg 4xl:text-xl 5xl:text-2xl max-w-xs">
+        <!-- TEXTE x2 -->
+        <p class="why-text text-base mt-2 max-w-xs
+                  3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
+                  3xl:max-w-sm 5xl:max-w-md">
           Accès rapide dans tous les postes, centres de santé et hôpitaux du Sénégal.
         </p>
       </div>
@@ -202,21 +205,22 @@
 
         <div class="why-img w-full flex justify-center">
           <img src="assets/ps2.png"
-               class="w-40 sm:w-55 lg:w-52
-                      3xl:w-60 4xl:w-72 5xl:w-80
-                      object-contain transition-transform" />
+     class="w-48 sm:w-56 lg:w-64 xl:w-72
+            3xl:w-96 4xl:w-[28rem] 5xl:w-[32rem]
+            object-contain transition-transform" />
+
         </div>
 
         <h3 class="why-title text-xl font-bold mt-4
-                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl">
+                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
           Prix accessibles
         </h3>
 
-        <p class="why-text text-base mt-2
-                  3xl:text-lg 4xl:text-xl 5xl:text-2xl max-w-xs">
+        <p class="why-text text-base mt-2 max-w-xs
+                  3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
+                  3xl:max-w-sm 5xl:max-w-md">
           Tarifs très bas et subventionnés pour tous.
         </p>
-
       </div>
 
       <!-- ITEM 3 -->
@@ -224,22 +228,23 @@
            (click)="onCardClick('demarches')">
 
         <div class="why-img w-full flex justify-center">
-          <img src="assets/ps3.png"
-               class="w-40 sm:w-48 lg:w-52
-                      3xl:w-60 4xl:w-72 5xl:w-80
-                      object-contain transition-transform" />
+         <img src="assets/ps3.png"
+     class="w-48 sm:w-56 lg:w-64 xl:w-72
+            3xl:w-96 4xl:w-[28rem] 5xl:w-[32rem]
+            object-contain transition-transform" />
+
         </div>
 
         <h3 class="why-title text-xl font-bold mt-4
-                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl">
+                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
           Démarches simples
         </h3>
 
-        <p class="why-text text-base mt-2
-                  3xl:text-lg 4xl:text-xl 5xl:text-2xl max-w-xs">
+        <p class="why-text text-base mt-2 max-w-xs
+                  3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
+                  3xl:max-w-sm 5xl:max-w-md">
           Inscription claire, rapide et sans stress.
         </p>
-
       </div>
 
       <!-- ITEM 4 -->
@@ -247,27 +252,29 @@
            (click)="onCardClick('protection')">
 
         <div class="why-img w-full flex justify-center">
-          <img src="assets/ps4.png"
-               class="w-40 sm:w-48 lg:w-52
-                      3xl:w-60 4xl:w-72 5xl:w-80
-                      object-contain transition-transform" />
+        <img src="assets/ps4.png"
+     class="w-48 sm:w-56 lg:w-64 xl:w-72
+            3xl:w-96 4xl:w-[28rem] 5xl:w-[32rem]
+            object-contain transition-transform" />
+
         </div>
 
         <h3 class="why-title text-xl font-bold mt-4
-                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl">
+                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
           Protection prioritaire
         </h3>
 
-        <p class="why-text text-base mt-2
-                  3xl:text-lg 4xl:text-xl 5xl:text-2xl max-w-xs">
+        <p class="why-text text-base mt-2 max-w-xs
+                  3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
+                  3xl:max-w-sm 5xl:max-w-md">
           Couverture pour enfants, personnes âgées et vulnérables.
         </p>
-
       </div>
 
     </div>
   </div>
 </section>
+
 
 
 <!-- POPUP OVERLAY -->

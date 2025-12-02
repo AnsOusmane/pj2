@@ -68,7 +68,7 @@
            hover:-translate-y-2 hover:scale-105 relative;
   }
 
-  .why-img { @apply w-32 sm:w-40 md:w-44 mb-4 mt-3; }
+.why-img { @apply mb-4 mt-3; }
   .why-title { @apply text-xl font-bold text-green-700; }
   .why-text { @apply text-gray-700 text-sm max-w-[230px]; }
 
