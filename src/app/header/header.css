@@ -61,3 +61,10 @@ a {
 .hex-icon:hover {
   transform: scale(1.15) rotate(5deg);
 }
+@media (min-width: 1600px) {
+  .mega-menu {
+    transform: translateX(0) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+}
