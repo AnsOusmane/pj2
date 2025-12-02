@@ -142,101 +142,134 @@
 <!-- ========================================= -->
 <!--           SECTION — POURQUOI ?            -->
 <!-- ========================================= -->
+<!-- ========================================= -->
+<!--           SECTION — POURQUOI ?            -->
+<!-- ========================================= -->
 <section id="why"
   class="relative w-full min-h-screen bg-white flex items-center justify-center overflow-hidden">
 
   <div class="relative z-10 
+              w-full
               max-w-7xl 
-              3xl:max-w-[1600px] 
+              3xl:max-w-[1600px]
               4xl:max-w-[1900px]
               5xl:max-w-[2300px]
-              mx-auto px-6 py-10 w-full
-              flex flex-col justify-center"> <!-- 👉 CENTRAGE VERTICAL -->
+              mx-auto px-6 py-20
+              flex flex-col items-center justify-center
+              3xl:py-32 4xl:py-40 5xl:py-48">
 
     <!-- TITRE -->
     <h2
-      class="text-4xl sm:text-5xl csu-title text-center font-extrabold text-green-700 mb-10
-             3xl:text-6xl 4xl:text-7xl">
+      class="text-4xl sm:text-5xl csu-title text-center font-extrabold text-green-700 mb-16
+             3xl:text-6xl 4xl:text-7xl
+             3xl:mb-24 4xl:mb-28 5xl:mb-32">
       Pourquoi s’inscrire ?
     </h2>
 
-    <!-- GRID DES 4 ITEMS CENTRÉE -->
+    <!-- GRID CENTRÉE -->
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10
-             3xl:gap-14 4xl:gap-20"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
+             gap-12
+             3xl:gap-16 4xl:gap-24 5xl:gap-32
+             w-full place-items-center"
     >
 
-      <!-- ITEM 1 -->
-      <div class="why-card group cursor-pointer" (click)="onCardClick('acces')">
-        <div class="why-img">
+      <!-- ITEM (structure identique pour les 4) -->
+      <div class="why-card group cursor-pointer flex flex-col items-center text-center"
+           (click)="onCardClick('acces')">
+
+        <div class="why-img w-full flex justify-center">
           <img src="assets/ps1.png"
-               class="w-full h-full object-contain
-                      3xl:scale-[1.3] 4xl:scale-[1.4] origin-center transition-transform" />
+               class="w-40 sm:w-48 lg:w-52
+                      3xl:w-60 4xl:w-72 5xl:w-80
+                      object-contain transition-transform" />
         </div>
-        <h3 class="why-title text-xl font-bold
-                   3xl:text-2xl 4xl:text-3xl mt-4">
+
+        <h3 class="why-title text-xl font-bold mt-4
+                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl">
           Accès aux soins
         </h3>
-        <p class="why-text text-base
-                  3xl:text-lg 4xl:text-xl mt-2">
+
+        <p class="why-text text-base mt-2
+                  3xl:text-lg 4xl:text-xl 5xl:text-2xl max-w-xs">
           Accès rapide dans tous les postes, centres de santé et hôpitaux du Sénégal.
         </p>
+
       </div>
 
       <!-- ITEM 2 -->
-      <div class="why-card group cursor-pointer" (click)="onCardClick('prix')">
-        <div class="why-img">
+      <div class="why-card group cursor-pointer flex flex-col items-center text-center"
+           (click)="onCardClick('prix')">
+
+        <div class="why-img w-full flex justify-center">
           <img src="assets/ps2.png"
-               class="w-full h-full object-contain
-                      3xl:scale-[1.3] 4xl:scale-[1.4] origin-center transition-transform" />
+               class="w-40 sm:w-48 lg:w-52
+                      3xl:w-60 4xl:w-72 5xl:w-80
+                      object-contain transition-transform" />
         </div>
-        <h3 class="why-title text-xl font-bold
-                   3xl:text-2xl 4xl:text-3xl mt-4">
+
+        <h3 class="why-title text-xl font-bold mt-4
+                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl">
           Prix accessibles
         </h3>
-        <p class="why-text text-base
-                  3xl:text-lg 4xl:text-xl mt-2">
+
+        <p class="why-text text-base mt-2
+                  3xl:text-lg 4xl:text-xl 5xl:text-2xl max-w-xs">
           Tarifs très bas et subventionnés pour tous.
         </p>
+
       </div>
 
       <!-- ITEM 3 -->
-      <div class="why-card group cursor-pointer" (click)="onCardClick('demarches')">
-        <div class="why-img">
+      <div class="why-card group cursor-pointer flex flex-col items-center text-center"
+           (click)="onCardClick('demarches')">
+
+        <div class="why-img w-full flex justify-center">
           <img src="assets/ps3.png"
-               class="w-full h-full object-contain
-                      3xl:scale-[1.3] 4xl:scale-[1.4] origin-center transition-transform" />
+               class="w-40 sm:w-48 lg:w-52
+                      3xl:w-60 4xl:w-72 5xl:w-80
+                      object-contain transition-transform" />
         </div>
-        <h3 class="why-title text-xl font-bold
-                   3xl:text-2xl 4xl:text-3xl mt-4">
+
+        <h3 class="why-title text-xl font-bold mt-4
+                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl">
           Démarches simples
         </h3>
-        <p class="why-text text-base
-                  3xl:text-lg 4xl:text-xl mt-2">
+
+        <p class="why-text text-base mt-2
+                  3xl:text-lg 4xl:text-xl 5xl:text-2xl max-w-xs">
           Inscription claire, rapide et sans stress.
         </p>
+
       </div>
 
       <!-- ITEM 4 -->
-      <div class="why-card group cursor-pointer" (click)="onCardClick('protection')">
-        <div class="why-img">
+      <div class="why-card group cursor-pointer flex flex-col items-center text-center"
+           (click)="onCardClick('protection')">
+
+        <div class="why-img w-full flex justify-center">
           <img src="assets/ps4.png"
-               class="w-full h-full object-contain
-                      3xl:scale-[1.3] 4xl:scale-[1.4] origin-center transition-transform" />
+               class="w-40 sm:w-48 lg:w-52
+                      3xl:w-60 4xl:w-72 5xl:w-80
+                      object-contain transition-transform" />
         </div>
-        <h3 class="why-title text-xl font-bold
-                   3xl:text-2xl 4xl:text-3xl mt-4">
+
+        <h3 class="why-title text-xl font-bold mt-4
+                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl">
           Protection prioritaire
         </h3>
-        <p class="why-text text-base
-                  3xl:text-lg 4xl:text-xl mt-2">
+
+        <p class="why-text text-base mt-2
+                  3xl:text-lg 4xl:text-xl 5xl:text-2xl max-w-xs">
           Couverture pour enfants, personnes âgées et vulnérables.
         </p>
+
       </div>
 
     </div>
   </div>
 </section>
+
 
 <!-- POPUP OVERLAY -->
 <!-- ========================================= -->
@@ -273,84 +306,106 @@
 <!--           SECTION — COMMENT ?             -->
 <!-- ========================================= -->
 <section id="how"
- class="w-full min-h-screen bg-white flex items-center py-10">
+  class="w-full min-h-screen bg-white flex items-center py-14 lg:py-20">
 
-<div class="max-w-7xl 
-            3xl:max-w-[1600px] 
-            4xl:max-w-[1900px] 
-            mx-auto 
-            grid grid-cols-1 lg:grid-cols-2 gap-12 px-6 w-full">
-
+  <div class="max-w-7xl 
+              3xl:max-w-[1600px]
+              4xl:max-w-[1900px]
+              5xl:max-w-[2300px]
+              mx-auto 
+              grid grid-cols-1 lg:grid-cols-2 gap-16 
+              px-6 w-full">
 
     <!-- TITRE MOBILE -->
-    <h2 class="order-1 lg:order-none text-3xl sm:text-4xl csu-title font-extrabold text-green-700 mb-4 lg:hidden">
+    <h2 class="order-1 lg:order-none 
+               text-3xl sm:text-4xl font-extrabold csu-title text-green-700 
+               mb-6 lg:hidden text-center">
       Comment s’inscrire ?
     </h2>
 
-    <!-- Vidéo dans iPhone -->
+    <!-- iPhone Vidéo -->
     <div class="order-2 lg:order-none flex justify-center items-center">
 
-      <div 
-        class="relative 
-          w-[90vw]
-          max-w-[400px]
-          aspect-[9/18]
-          rounded-[40px] 
-          bg-black 
-          shadow-2xl 
-          overflow-hidden
-          mx-auto
+      <div class="relative 
+                  w-[85vw]
+                  max-w-[420px]
+                  aspect-[9/18]
+                  rounded-[40px]
+                  bg-black shadow-2xl 
+                  overflow-hidden mx-auto
 
-          lg:w-[280px]
-          lg:h-[560px]
-          lg:rounded-[50px]"
-      >
+                  lg:w-[300px]
+                  lg:h-[600px]
+                  lg:rounded-[50px]
 
-        <div class="absolute inset-0 rounded-[40px] lg:rounded-[50px] border-4 border-gray-800 z-20 pointer-events-none"></div>
+                  4xl:w-[360px]
+                  4xl:h-[720px]
+                  4xl:rounded-[60px]">
 
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 lg:w-32 h-4 lg:h-6 bg-black rounded-b-2xl lg:rounded-b-3xl z-30"></div>
+        <!-- Cadre extérieur -->
+        <div class="absolute inset-0 
+                    rounded-[40px] 
+                    lg:rounded-[50px] 
+                    4xl:rounded-[60px]
+                    border-4 border-gray-800 
+                    z-20 pointer-events-none"></div>
 
-        <video src="assets/videos/1.mp4"
-               controls
-               playsinline
-               class="w-full h-full object-cover rounded-[36px] lg:rounded-[45px]">
+        <!-- Notch -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 
+                    w-28 lg:w-32 4xl:w-40 
+                    h-4 lg:h-6 4xl:h-7 
+                    bg-black rounded-b-2xl lg:rounded-b-3xl z-30"></div>
+
+        <!-- Vidéo -->
+        <video 
+          src="assets/videos/1.mp4"
+          controls
+          playsinline
+          class="w-full h-full object-cover 
+                 rounded-[36px] 
+                 lg:rounded-[45px] 
+                 4xl:rounded-[55px]">
         </video>
 
       </div>
     </div>
 
     <!-- ACCORDÉON -->
-    <div class="order-3 lg:order-none flex flex-col">
+    <div class="order-3 lg:order-none flex flex-col justify-center">
 
       <!-- TITRE DESKTOP -->
-      <h2 class="hidden lg:block text-3xl sm:text-4xl csu-title font-extrabold text-green-700 mb-8">
+      <h2 class="hidden lg:block 
+                 text-4xl 3xl:text-5xl 4xl:text-6xl 
+                 font-extrabold csu-title text-green-700 
+                 mb-10">
         Comment s’inscrire ?
       </h2>
 
-      <div class="space-y-4 w-full">
+      <div class="space-y-5 w-full">
 
-        <!-- ÉTAPE 1 -->
+        <!-- ÉTAPE TEMPLATE -->
         <div class="border border-gray-200 rounded-lg overflow-hidden">
-          <button class="w-full flex justify-between items-center p-4 text-left"
+          <button class="w-full flex justify-between items-center 
+                         p-5 text-left bg-white"
                   (click)="toggleAccordion(1)">
-            <span class="text-xl font-bold text-green-700">1. Créer un compte</span>
+            <span class="text-xl 3xl:text-2xl font-bold text-green-700">1. Créer un compte</span>
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 1">⌄</span>
           </button>
-          <div class="p-4 text-gray-700" *ngIf="accordionOpen === 1">
+          <div class="p-5 text-gray-700 3xl:text-lg" *ngIf="accordionOpen === 1">
             Créez votre compte sur SunuCsu.sn
           </div>
         </div>
 
         <!-- ÉTAPE 2 -->
         <div class="border border-gray-200 rounded-lg overflow-hidden">
-          <button class="w-full flex justify-between items-center p-4 text-left"
+          <button class="w-full flex justify-between items-center p-5 text-left bg-white"
                   (click)="toggleAccordion(2)">
-            <span class="text-xl font-bold text-green-700">2. Informations personnelles</span>
+            <span class="text-xl 3xl:text-2xl font-bold text-green-700">2. Informations personnelles</span>
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 2">⌄</span>
           </button>
-          <div class="p-4 text-gray-700" *ngIf="accordionOpen === 2">
+          <div class="p-5 text-gray-700 3xl:text-lg" *ngIf="accordionOpen === 2">
             Renseignez votre profil (individu, entreprise ou groupement), 
             vos pièces d'identité et votre département.
           </div>
@@ -358,46 +413,46 @@
 
         <!-- ÉTAPE 3 -->
         <div class="border border-gray-200 rounded-lg overflow-hidden">
-          <button class="w-full flex justify-between items-center p-4 text-left"
+          <button class="w-full flex justify-between items-center p-5 text-left bg-white"
                   (click)="toggleAccordion(3)">
-            <span class="text-xl font-bold text-green-700">3. Documents</span>
+            <span class="text-xl 3xl:text-2xl font-bold text-green-700">3. Documents</span>
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 3">⌄</span>
           </button>
-          <div class="p-4 text-gray-700" *ngIf="accordionOpen === 3">
+          <div class="p-5 text-gray-700 3xl:text-lg" *ngIf="accordionOpen === 3">
             Téléversez vos documents requis.
           </div>
         </div>
 
         <!-- ÉTAPE 4 -->
         <div class="border border-gray-200 rounded-lg overflow-hidden">
-          <button class="w-full flex justify-between items-center p-4 text-left"
+          <button class="w-full flex justify-between items-center p-5 text-left bg-white"
                   (click)="toggleAccordion(4)">
-            <span class="text-xl font-bold text-green-700">4. Paiement</span>
+            <span class="text-xl 3xl:text-2xl font-bold text-green-700">4. Paiement</span>
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 4">⌄</span>
           </button>
-          <div class="p-4 text-gray-700" *ngIf="accordionOpen === 4">
+          <div class="p-5 text-gray-700 3xl:text-lg" *ngIf="accordionOpen === 4">
             Payez avec Wave, Orange Money, Free Money…
           </div>
         </div>
 
         <!-- ÉTAPE 5 -->
         <div class="border border-gray-200 rounded-lg overflow-hidden">
-          <button class="w-full flex justify-between items-center p-4 text-left"
+          <button class="w-full flex justify-between items-center p-5 text-left bg-white"
                   (click)="toggleAccordion(5)">
-            <span class="text-xl font-bold text-green-700">5. Vérification & Validation</span>
+            <span class="text-xl 3xl:text-2xl font-bold text-green-700">5. Vérification & Validation</span>
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 5">⌄</span>
           </button>
-          <div class="p-4 text-gray-700" *ngIf="accordionOpen === 5">
+          <div class="p-5 text-gray-700 3xl:text-lg" *ngIf="accordionOpen === 5">
             Vérifiez vos données puis validez votre souscription.
           </div>
         </div>
 
       </div>
     </div>
-
   </div>
 </section>
+
   <app-contact-form></app-contact-form>
