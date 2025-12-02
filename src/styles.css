@@ -37,6 +37,46 @@
   animation: fadeIn 0.35s ease-out;
 }
 
+/* Pour écrans très grands (≥1600px) */
+@media (min-width: 1600px) {
+  .xxl-container {
+    max-width: 1600px !important;
+  }
+}
+
+/* Pour écrans ultra grands (≥1920px) */
+@media (min-width: 1920px) {
+  .xxxl-container {
+    max-width: 1800px !important;
+  }
+
+  .hero-big-text {
+    font-size: 4.5rem !important; /* ~72px */
+  }
+
+  .hero-medium-text {
+    font-size: 2.8rem !important;
+  }
+
+  .hero-img-big {
+    width: 520px !important;
+  }
+}
+
+/* Écrans 4K (≥2560px) */
+@media (min-width: 2560px) {
+  .xxxxl-container {
+    max-width: 2200px !important;
+  }
+
+  .hero-big-text {
+    font-size: 5rem !important; /* 80px */
+  }
+
+  .hero-img-big {
+    width: 620px !important;
+  }
+}
 
 /* ============================================================
    TYPOGRAPHIE
