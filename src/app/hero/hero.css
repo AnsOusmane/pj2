@@ -72,4 +72,42 @@
   .why-title { @apply text-xl font-bold text-green-700; }
   .why-text { @apply text-gray-700 text-sm max-w-[230px]; }
 
- 
+ /* TOP BAR demi-largeur alignée à GAUCHE */
+.cute-window-topbar {
+  position: absolute;
+  top: -38px;
+  left: 0;                 
+
+  width: 50%;              /* <= S’ARRÊTE EXACTEMENT AU MILIEU */
+  height: 38px;
+
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid #16a34a;
+  border-bottom: none;
+
+  /* Coupe du coin supérieur gauche */
+  clip-path: polygon(
+    18px 0%,      /* arrondi / coupe */
+    100% 0%,      /* bord droit pile au milieu */
+    100% 100%, 
+    0% 100%, 
+    0% 18px       /* coin coupé */
+  );
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 14px;
+  z-index: 30;
+}
+
+/* Points */
+.cute-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.cute-dot.red    { background: #ff5f5700; }
+.cute-dot.yellow { background: #ff5f5700; }
+.cute-dot.green  { background: #ff5f5700; }

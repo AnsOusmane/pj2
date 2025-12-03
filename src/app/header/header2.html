@@ -1,0 +1,97 @@
+<header class="bg-white shadow-sm">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 h-16 relative">
+
+    <!-- Menu mobile -->
+    <button
+      class="lg:hidden flex flex-col gap-1 p-2 border rounded-md text-green-700 font-sharetech"
+      (click)="toggleMenu()"
+    >
+      <span class="block w-6 h-0.5 bg-green-700"></span>
+      <span class="block w-6 h-0.5 bg-green-700"></span>
+      <span class="block w-6 h-0.5 bg-green-700"></span>
+    </button>
+
+    <!-- Menu desktop -->
+    <div class="hidden lg:flex items-center gap-x-6 text-[21px] font-sharetech ml-auto">
+
+      <!-- Dropdown La SEN-CSU -->
+      <div class="relative group">
+        <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+          La SEN-CSU ▾
+        </button>
+        <div class="absolute left-0 mt-2 hidden group-hover:block w-48 bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
+          <ul class="flex flex-col text-green-700 font-medium">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="onAboutClick()">A propos de l'agence</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="openMissionsvision.emit()">Vision & Missions</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="showOrganigrammeClick()">Organigramme</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToAppelsOffre()">Appels d'offres</button></li>
+          </ul>
+        </div>
+      </div>
+
+      <a href="#" class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">Assurance maladie</a>
+
+      <!-- Dropdown Assistance médicale -->
+      <div class="relative group">
+        <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+          Assistance médicale ▾
+        </button>
+        <div class="absolute left-0 mt-2 hidden group-hover:block w-48 bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
+          <ul class="flex flex-col text-green-700 font-medium">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToZero5ans()">0 à 5 ans</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToCesarienne()">Césarienne</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToDialyse()">Dialyse</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToPlanSesame()">Plan Sésame</button></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Dropdown Espace Média -->
+      <div class="relative group">
+  <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+          Espace Média ▾
+        </button>
+        <div class="absolute left-0 mt-2 hidden group-hover:block w-48 bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
+          <ul class="flex flex-col text-green-700 font-medium">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToComuPresse()">Communiqués</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToMedia()">Dossiers média</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToBankImg()">Banque d’images</button></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Dropdown Assistance & Contact -->
+      <div class="relative group">
+        <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+          Assistance & Contact ▾
+        </button>
+        <div class="absolute left-0 mt-2 hidden group-hover:block w-48 bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
+          <ul class="flex flex-col text-green-700 font-medium">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToContact()">Formulaire de contact</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToSr()">Localiser une agence</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToContact()">Formulaires</button></li>
+          </ul>
+        </div>
+      </div>
+
+      <a href="#" class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">Carrière</a>
+
+      <button
+        (click)="openDonation.emit()"
+        class="border-2 border-yellow-500 text-yellow-500 font-semibold px-3 py-2 rounded-full bg-white hover:bg-yellow-400 hover:text-white transition"
+      >
+        Nous soutenir
+      </button>
+
+    </div>
+
+    <!-- Menu mobile -->
+    <div
+      *ngIf="isMenuOpen"
+      class="lg:hidden absolute top-16 left-0 w-full bg-white shadow-lg border-t border-gray-200 z-[9999]"
+    >
+      <!-- Mobile menu items ici (similaire au code précédent, avec dropdown textuels) -->
+    </div>
+
+  </nav>
+</header>

@@ -157,12 +157,11 @@
 
     <!-- TITRE PRINCIPAL -->
     <h2
-      class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-green-700 text-center mb-16
+      class="text-4xl sm:text-4xl lg:text-5xl font-extrabold text-green-700 text-center mb-16
              3xl:text-6xl 4xl:text-7xl 5xl:text-[8rem]
              3xl:mb-18 4xl:mb-26 5xl:mb-36  csu-title">
       Pourquoi s’inscrire ?
     </h2>
-
     <!-- GRID -->
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
@@ -172,7 +171,8 @@
 
       <!-- ITEM 1 -->
       <div class="flex flex-col items-center text-center cursor-pointer transition-transform
-                  hover:-translate-y-2 hover:scale-105 h-full">
+                  hover:-translate-y-2 hover:scale-105 h-full"
+           (click)="onCardClick('acces')">
         <div class="w-full flex justify-center mb-4 mt-3">
           <img src="assets/ps1.png"
                class="w-56 sm:w-64 lg:w-72 xl:w-80
@@ -194,7 +194,8 @@
 
       <!-- ITEM 2 -->
       <div class="flex flex-col items-center text-center cursor-pointer transition-transform
-                  hover:-translate-y-2 hover:scale-105 h-full">
+                  hover:-translate-y-2 hover:scale-105 h-full"
+           (click)="onCardClick('prix')">
         <div class="w-full flex justify-center mb-4 mt-3">
           <img src="assets/ps2.png"
                class="w-56 sm:w-64 lg:w-72 xl:w-80
@@ -216,7 +217,8 @@
 
       <!-- ITEM 3 -->
       <div class="flex flex-col items-center text-center cursor-pointer transition-transform
-                  hover:-translate-y-2 hover:scale-105 h-full">
+                  hover:-translate-y-2 hover:scale-105 h-full"
+           (click)="onCardClick('demarches')">
         <div class="w-full flex justify-center mb-4 mt-3">
           <img src="assets/ps3.png"
                class="w-56 sm:w-64 lg:w-72 xl:w-80
@@ -238,7 +240,8 @@
 
       <!-- ITEM 4 -->
       <div class="flex flex-col items-center text-center cursor-pointer transition-transform
-                  hover:-translate-y-2 hover:scale-105 h-full">
+                  hover:-translate-y-2 hover:scale-105 h-full"
+           (click)="onCardClick('protection')">
         <div class="w-full flex justify-center mb-4 mt-3">
           <img src="assets/ps4.png"
                class="w-56 sm:w-64 lg:w-72 xl:w-80
@@ -260,42 +263,41 @@
 
     </div>
   </div>
+
 </section>
 
-
-
 <!-- POPUP OVERLAY -->
-<!-- ========================================= -->
-<!-- POPUP -->
 <div *ngIf="showPopup"
-     class="fixed inset-0 
-            flex items-center justify-center z-[9999] p-6"
+     class="fixed inset-0 flex items-center justify-center z-[9999] p-6"
      (click)="onPopupClick($event)">
 
-  <!-- OUTER BOX -->
-  <div class="relative w-3/5 max-w-4xl 
-              bg-white/20
-              border-2 border-green-600 
-              backdrop-blur-0
-              p-3 shadow-2xl rounded-0 font-sharetech"
+  <div class="cute-window-container 
+              relative w-3/5 max-w-4xl bg-white/20 
+              border-2 border-green-600 p-3 shadow-2xl font-sharetech"
        (click)="$event.stopPropagation()">
+
+<!-- TOP BAR DEMI LARGEUR ALIGNÉE À GAUCHE 
+<div class="cute-window-topbar">
+  <span class="cute-dot red"></span>
+  <span class="cute-dot yellow"></span>
+  <span class="cute-dot green"></span>
+</div>-->
+
 
     <!-- CLOSE BUTTON -->
     <button (click)="closePopup()"
             class="absolute top-3 right-3 text-white hover:text-gray-200 
-                   text-2xl font-bold drop-shadow-lg font-sharetech">
+                   text-3xl font-bold drop-shadow-lg font-sharetech">
       ✕
     </button>
 
-    <!-- GREEN INNER BOX -->
-    <div class="bg-green-600 rounded-0 p-10 max-h-[70vh] overflow-y-auto">
+    <!-- INNER CONTENT -->
+    <div class="bg-green-600 rounded-sm p-10 max-h-[70vh] overflow-y-auto">
 
-      <!-- TITLE -->
       <h2 class="text-3xl font-extrabold text-white text-center mb-8 font-sharetech">
         {{ popupTitle }}
       </h2>
 
-      <!-- CONTENT -->
       <div class="text-white text-lg leading-relaxed font-sharetech"
            [innerHTML]="popupText">
       </div>
@@ -303,6 +305,9 @@
     </div>
   </div>
 </div>
+
+
+
 
 
 

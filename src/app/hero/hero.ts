@@ -25,14 +25,14 @@ popupData = {
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-full max-h-[70vh] overflow-y-auto text-left">
       
       <div class="space-y-4">
-        <h3 class="text-lg font-bold text-green-700">🩺 Accès immédiat</h3>
+        <h3 class="text-lg font-bold text-white">🩺 Accès immédiat</h3>
         <p class="text-base leading-relaxed">
           En vous inscrivant à la CSU, vous bénéficiez d’un <span class="font-semibold">accès immédiat et prioritaire</span> aux postes de santé, centres de santé et hôpitaux sur tout le territoire national.
         </p>
       </div>
 
       <div class="space-y-4">
-        <h3 class="text-lg font-bold text-green-700">🏥 Prise en charge des maladies</h3>
+        <h3 class="text-lg font-bold text-white">🏥 Prise en charge des maladies</h3>
         <p class="text-base leading-relaxed">
           Toute personne atteinte d’une maladie incluse dans le programme bénéficie d’une <span class="font-semibold">prise en charge complète</span> dans n’importe quel établissement du réseau sanitaire.
         </p>
@@ -41,7 +41,7 @@ popupData = {
       <div class="space-y-4">
       <button 
   (click)="goToComuPresse()" 
-  class="text-left w-full text-lg font-bold text-green-700 hover:underline hover:text-green-800 transition-colors duration-300">
+  class="text-left w-full font-semibold text-lg font-bold text-white hover:underline hover:text-green-800 transition-colors duration-300">
   Césariennes gratuites
 </button>
 
@@ -52,21 +52,21 @@ popupData = {
       </div>
 
       <div class="space-y-4">
-        <h3 class="text-lg font-bold text-green-700"> Soins enfants & nourrissons</h3>
+        <h3 class="text-lg font-bold text-white"> Soins enfants & nourrissons</h3>
         <p class="text-base leading-relaxed">
           Accès gratuit aux soins essentiels pour tous les enfants sénégalais de moins de 5 ans.
         </p>
       </div>
 
       <div class="space-y-4">
-        <h3 class="text-lg font-bold text-green-700"> Insuffisance rénale</h3>
+        <h3 class="text-lg font-bold text-white"> Insuffisance rénale</h3>
         <p class="text-base leading-relaxed">
           Prise en charge gratuite sur prescription d’un néphrologue pour tout patient souffrant d’insuffisance rénale chronique.
         </p>
       </div>
 
       <div class="space-y-4">
-        <h3 class="text-lg font-bold text-green-700"> Personnes âgées</h3>
+        <h3 class="text-lg font-bold text-white"> Personnes âgées</h3>
         <p class="text-base leading-relaxed">
           Prise en charge totale ou partielle des soins destinés aux personnes âgées, selon la pyramide sanitaire.
         </p>
@@ -83,12 +83,12 @@ popupData = {
       <div class="space-y-6">
         <p class="text-lg">
           Grâce aux subventions de l’État, les tarifs médicaux sont 
-          <span class="font-semibold text-green-700">fortement réduits</span> 
+          <span class="font-semibold text-white">fortement réduits</span> 
           pour permettre à chaque citoyen d’accéder aux services essentiels.
         </p>
 
         <section>
-          <h3 class="text-xl font-bold text-green-700 flex items-center gap-2">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
             <span>💳</span> Abordabilité garantie
           </h3>
           <p>
@@ -98,7 +98,7 @@ popupData = {
         </section>
 
         <section>
-          <h3 class="text-xl font-bold text-green-700 flex items-center gap-2">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
             <span>🏥</span> Subventions nationales
           </h3>
           <p>
@@ -116,12 +116,12 @@ popupData = {
       <div class="space-y-6">
         <p class="text-lg">
           L’inscription a été pensée pour être 
-          <span class="font-semibold text-green-700">simple, fluide et rapide</span>, 
+          <span class="font-semibold text-white">simple, fluide et rapide</span>, 
           afin de faciliter votre accès à la CSU.
         </p>
 
         <section>
-          <h3 class="text-xl font-bold text-green-700 flex items-center gap-2">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
             <span>📝</span> Procédure intuitive
           </h3>
           <p>
@@ -131,7 +131,7 @@ popupData = {
         </section>
 
         <section>
-          <h3 class="text-xl font-bold text-green-700 flex items-center gap-2">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
             <span>⚡</span> Validation rapide
           </h3>
           <p>
@@ -149,11 +149,11 @@ popupData = {
       <div class="space-y-6">
         <p class="text-lg">
           La CSU accorde une attention renforcée aux citoyens les plus vulnérables, 
-          en offrant une <span class="font-semibold text-green-700">protection sanitaire prioritaire</span>.
+          en offrant une <span class="font-semibold text-white">protection sanitaire prioritaire</span>.
         </p>
 
         <section>
-          <h3 class="text-xl font-bold text-green-700 flex items-center gap-2">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
             <span></span> Enfants & nourrissons
           </h3>
           <p>
@@ -163,7 +163,7 @@ popupData = {
         </section>
 
         <section>
-          <h3 class="text-xl font-bold text-green-700 flex items-center gap-2">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
             <span></span> Personnes âgées
           </h3>
           <p>
@@ -173,7 +173,7 @@ popupData = {
         </section>
 
         <section>
-          <h3 class="text-xl font-bold text-green-700 flex items-center gap-2">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
             <span>🤝</span> Familles vulnérables
           </h3>
           <p>
