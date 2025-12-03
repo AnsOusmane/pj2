@@ -173,7 +173,7 @@
     >
 
       <!-- ITEM 1 -->
-      <div class="why-card group cursor-pointer flex flex-col items-center text-center"
+      <div class="why-card group cursor-pointer flex flex-col items-center text-center font-isidora"
            (click)="onCardClick('acces')">
 
         <!-- IMAGE x2 -->
@@ -186,13 +186,13 @@
         </div>
 
         <!-- TITRE x2 -->
-        <h3 class="why-title text-xl font-bold mt-4
+        <h3 class="why-title text-xl font-isidora font-bold mt-4
                    3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
           Accès aux soins
         </h3>
 
         <!-- TEXTE x2 -->
-        <p class="why-text text-base mt-2 max-w-xs
+        <p class="why-text text-base font-isidora mt-2 max-w-xs
                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
                   3xl:max-w-sm 5xl:max-w-md">
           Accès rapide dans tous les postes, centres de santé et hôpitaux du Sénégal.
@@ -200,7 +200,7 @@
       </div>
 
       <!-- ITEM 2 -->
-      <div class="why-card group cursor-pointer flex flex-col items-center text-center"
+      <div class="why-card group cursor-pointer flex flex-col items-center font-isidora text-center"
            (click)="onCardClick('prix')">
 
         <div class="why-img w-full flex justify-center">
@@ -211,12 +211,12 @@
 
         </div>
 
-        <h3 class="why-title text-xl font-bold mt-4
+        <h3 class="why-title text-xl font-isidora font-bold mt-4
                    3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
           Prix accessibles
         </h3>
 
-        <p class="why-text text-base mt-2 max-w-xs
+        <p class="why-text font-isidora text-base mt-2 max-w-xs
                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
                   3xl:max-w-sm 5xl:max-w-md">
           Tarifs très bas et subventionnés pour tous.
@@ -235,12 +235,12 @@
 
         </div>
 
-        <h3 class="why-title text-xl font-bold mt-4
+        <h3 class="why-title font-isidora text-xl font-bold mt-4
                    3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
           Démarches simples
         </h3>
 
-        <p class="why-text text-base mt-2 max-w-xs
+        <p class="why-text font-isidora text-base mt-2 max-w-xs
                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
                   3xl:max-w-sm 5xl:max-w-md">
           Inscription claire, rapide et sans stress.
@@ -259,12 +259,12 @@
 
         </div>
 
-        <h3 class="why-title text-xl font-bold mt-4
+        <h3 class="why-title font-isidora text-xl font-bold mt-4
                    3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
           Protection prioritaire
         </h3>
 
-        <p class="why-text text-base mt-2 max-w-xs
+        <p class="why-text font-isidora text-base mt-2 max-w-xs
                   3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
                   3xl:max-w-sm 5xl:max-w-md">
           Couverture pour enfants, personnes âgées et vulnérables.
@@ -275,34 +275,43 @@
   </div>
 </section>
 
-
-
 <!-- POPUP OVERLAY -->
 <!-- ========================================= -->
-<!--                POPUP                      -->
-<!-- ========================================= -->
+<!-- POPUP -->
 <div *ngIf="showPopup"
-     class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-md 
+     class="fixed inset-0 
             flex items-center justify-center z-[9999] p-6"
      (click)="onPopupClick($event)">
 
-  <div class="relative max-w-xl w-full bg-white rounded-xl p-8 text-center
-              shadow-2xl border border-green-700 glitch-box">
+  <!-- OUTER BOX -->
+  <div class="relative w-3/5 max-w-4xl 
+              bg-white/20
+              border-2 border-green-600 
+              backdrop-blur-0
+              p-3 shadow-2xl rounded-0 font-isidora"
+       (click)="$event.stopPropagation()">
 
+    <!-- CLOSE BUTTON -->
     <button (click)="closePopup()"
-            class="absolute top-3 right-3 text-gray-600 hover:text-black text-2xl">
+            class="absolute top-3 right-3 text-white hover:text-gray-200 
+                   text-2xl font-bold drop-shadow-lg font-isidora">
       ✕
     </button>
 
-    <h2 class="text-3xl font-extrabold text-green-700 mb-4 glitch-text">
-      {{popupTitle}}
-    </h2>
+    <!-- GREEN INNER BOX -->
+    <div class="bg-green-600 rounded-0 p-10 max-h-[70vh] overflow-y-auto">
 
-    <!-- ZONE DE TEXTE RICH HTML -->
-    <div class="text-gray-700 leading-relaxed text-lg text-left space-y-4"
-         [innerHTML]="popupText">
+      <!-- TITLE -->
+      <h2 class="text-3xl font-extrabold text-white text-center mb-8 font-isidora">
+        {{ popupTitle }}
+      </h2>
+
+      <!-- CONTENT -->
+      <div class="text-white text-lg leading-relaxed font-isidora"
+           [innerHTML]="popupText">
+      </div>
+
     </div>
-
   </div>
 </div>
 

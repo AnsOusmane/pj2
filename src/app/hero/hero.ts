@@ -11,7 +11,7 @@ import { ContactFormComponent } from "../contact-form/contact-form";
 })
 export class HeroComponent implements AfterViewInit, OnInit, OnDestroy {
   currentHero: number = 0; // 0 = hero1, 1 = hero2
-  accordionOpen = 1; // étape ouverte par défaut
+  accordionOpen = 0; // étape ouverte par défaut
  // Variables pour les popups
 showPopup = false;
 popupTitle = '';

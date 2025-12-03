@@ -21,7 +21,19 @@ module.exports = {
       spacing: {
         'section': '7rem',
         'section-lg': '10rem'
-      }
+      },
+           fontFamily: {
+        oswald: ['Oswald', 'sans-serif'],
+        kanit: ['Kanit', 'sans-serif'],
+        ubuntu: ['Ubuntu', 'sans-serif'],
+        playfair: ['"Playfair Display"', 'serif'],
+        sharetech: ['"Share Tech"', 'sans-serif'],
+        exo2: ['"Exo 2"', 'sans-serif'],
+        teko: ['Teko', 'sans-serif'],
+        play: ['Play', 'sans-serif'],
+        orbitron: ['Orbitron', 'sans-serif'],
+        sciencegothic: ['"Science Gothic"', 'sans-serif'],
+      },
     }
   },
   plugins: [],
