@@ -25,11 +25,11 @@
 
     <div class="flex-1 flex flex-col items-center md:items-start gap-6">
 
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-center md:text-left">
-        Dalal ak Jam ci CSU !
+      <h1 class="text-5xl font-sharetech align-middle sm:text-6xl lg:text-7xl font-bold text-center md:text-left">
+      Dalal ak Jam ci CSU
       </h1>
 
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold 
+      <h2 class="text-2xl font-ubuntu sm:text-3xl lg:text-4xl 
                 bg-white text-yellow-400 px-4 py-2 rounded">
         Bindul gàw waw key!
       </h2>
@@ -37,7 +37,7 @@
       <a href="https://sunucsu.sn/auth/create-account"
          class="w-[150px] sm:w-[170px] h-[44px]
                 bg-yellow-200 animate-pulse hover:animate-none
-                text-green-600 text-xl font-semibold flex justify-center items-center
+                text-green-600 text-2xl font-oswald font-semibold flex justify-center items-center
                 shadow-xl rounded-md cursor-pointer
                 transition-transform duration-300 hover:scale-110">
         Bindu
@@ -76,11 +76,11 @@
 
     <!-- Texte -->
     <div class="flex flex-col items-center lg:items-start
-                text-center lg:text-left
+                font-play text-center lg:text-left
                 space-y-5 lg:space-y-7 w-full lg:w-1/2">
 
-      <h1 class="text-white text-3xl sm:text-4xl lg:text-5xl 
-                 font-bold leading-tight drop-shadow-xl">
+      <h1 class="text-white font-exo2 text-3xl sm:text-4xl lg:text-5xl 
+                 font-semibold leading-tight drop-shadow-xl">
         Protégez votre santé et <br class="hidden sm:inline" />
         celle de vos proches. <br class="hidden lg:inline" />
         Inscrivez-vous dès <br class="hidden lg:inline" />
@@ -91,7 +91,7 @@
          class="inline-block skew-x-[20deg] 
                 bg-gradient-to-r from-orange-500 to-yellow-500
                 animate-pulse hover:animate-none
-                text-white text-lg sm:text-xl lg:text-2xl font-semibold
+                text-white font-play text-lg sm:text-xl lg:text-2xl font-semibold
                 px-6 sm:px-8 lg:px-10 py-3 sm:py-4
                 shadow-2xl rounded-md cursor-pointer
                 transition-transform duration-300 hover:scale-110">
@@ -106,7 +106,7 @@
                 p-5 sm:p-6 border border-green-500
                 w-full max-w-xs sm:max-w-sm lg:w-[260px]
                 flex flex-col space-y-4
-                text-center lg:text-right
+                font-exo2 text-center lg:text-right
                 mt-8 lg:mt-0">
 
       <button 
@@ -142,7 +142,6 @@
 <!-- ========================================= -->
 <!--           SECTION — POURQUOI ?            -->
 <!-- ========================================= -->
-
 <section id="why"
   class="relative w-full min-h-screen bg-white flex items-center justify-center overflow-hidden">
 
@@ -152,121 +151,109 @@
               3xl:max-w-[1600px]
               4xl:max-w-[1900px]
               5xl:max-w-[2300px]
-              mx-auto px-6 py-20
+              mx-auto px-6 py-24
               flex flex-col items-center justify-center
-              3xl:py-40 4xl:py-48 5xl:py-56">
+              3xl:py-48 4xl:py-56 5xl:py-64">
 
-    <!-- TITRE -->
+    <!-- TITRE PRINCIPAL -->
     <h2
-      class="text-4xl sm:text-5xl csu-title text-center font-extrabold text-green-700 mb-16
-             3xl:text-7xl 4xl:text-8xl 5xl:text-9xl
-             3xl:mb-24 4xl:mb-32 5xl:mb-36">
+      class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-green-700 text-center mb-16
+             3xl:text-6xl 4xl:text-7xl 5xl:text-[8rem]
+             3xl:mb-18 4xl:mb-26 5xl:mb-36  csu-title">
       Pourquoi s’inscrire ?
     </h2>
 
     <!-- GRID -->
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
-             gap-12
-             3xl:gap-24 4xl:gap-32 5xl:gap-40
-             w-full place-items-center"
-    >
+             gap-16
+             3xl:gap-28 4xl:gap-32 5xl:gap-40
+             w-full place-items-stretch">
 
       <!-- ITEM 1 -->
-      <div class="why-card group cursor-pointer flex flex-col items-center text-center font-isidora"
-           (click)="onCardClick('acces')">
-
-        <!-- IMAGE x2 -->
-        <div class="why-img w-full flex justify-center">
-        <img src="assets/ps1.png"
-     class="w-48 sm:w-56 lg:w-64 xl:w-72
-            3xl:w-96 4xl:w-[28rem] 5xl:w-[32rem]
-            object-contain transition-transform" />
-
+      <div class="flex flex-col items-center text-center cursor-pointer transition-transform
+                  hover:-translate-y-2 hover:scale-105 h-full">
+        <div class="w-full flex justify-center mb-4 mt-3">
+          <img src="assets/ps1.png"
+               class="w-56 sm:w-64 lg:w-72 xl:w-80
+                      3xl:w-[28rem] 4xl:w-[30rem] 5xl:w-[32rem]
+                      object-contain transition-transform" />
         </div>
 
-        <!-- TITRE x2 -->
-        <h3 class="why-title text-xl font-isidora font-bold mt-4
-                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
+        <h3 class="mt-6 font-bold text-green-700 text-xl sm:text-2xl lg:text-3xl
+                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl font-sharetech min-h-[3rem]">
           Accès aux soins
         </h3>
 
-        <!-- TEXTE x2 -->
-        <p class="why-text text-base font-isidora mt-2 max-w-xs
-                  3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
-                  3xl:max-w-sm 5xl:max-w-md">
+        <p class="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg
+                  3xl:text-xl 4xl:text-2xl 5xl:text-3xl
+                  max-w-xs 3xl:max-w-sm 4xl:max-w-md 5xl:max-w-lg font-sharetech min-h-[4rem]">
           Accès rapide dans tous les postes, centres de santé et hôpitaux du Sénégal.
         </p>
       </div>
 
       <!-- ITEM 2 -->
-      <div class="why-card group cursor-pointer flex flex-col items-center font-isidora text-center"
-           (click)="onCardClick('prix')">
-
-        <div class="why-img w-full flex justify-center">
+      <div class="flex flex-col items-center text-center cursor-pointer transition-transform
+                  hover:-translate-y-2 hover:scale-105 h-full">
+        <div class="w-full flex justify-center mb-4 mt-3">
           <img src="assets/ps2.png"
-     class="w-48 sm:w-56 lg:w-64 xl:w-72
-            3xl:w-96 4xl:w-[28rem] 5xl:w-[32rem]
-            object-contain transition-transform" />
-
+               class="w-56 sm:w-64 lg:w-72 xl:w-80
+                      3xl:w-[28rem] 4xl:w-[30rem] 5xl:w-[32rem]
+                      object-contain transition-transform" />
         </div>
 
-        <h3 class="why-title text-xl font-isidora font-bold mt-4
-                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
+        <h3 class="mt-6 font-bold text-green-700 text-xl sm:text-2xl lg:text-3xl
+                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl font-sharetech min-h-[3rem]">
           Prix accessibles
         </h3>
 
-        <p class="why-text font-isidora text-base mt-2 max-w-xs
-                  3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
-                  3xl:max-w-sm 5xl:max-w-md">
+        <p class="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg
+                  3xl:text-xl 4xl:text-2xl 5xl:text-3xl
+                  max-w-xs 3xl:max-w-sm 4xl:max-w-md 5xl:max-w-lg font-sharetech min-h-[4rem]">
           Tarifs très bas et subventionnés pour tous.
         </p>
       </div>
 
       <!-- ITEM 3 -->
-      <div class="why-card group cursor-pointer flex flex-col items-center text-center"
-           (click)="onCardClick('demarches')">
-
-        <div class="why-img w-full flex justify-center">
-         <img src="assets/ps3.png"
-     class="w-48 sm:w-56 lg:w-64 xl:w-72
-            3xl:w-96 4xl:w-[28rem] 5xl:w-[32rem]
-            object-contain transition-transform" />
-
+      <div class="flex flex-col items-center text-center cursor-pointer transition-transform
+                  hover:-translate-y-2 hover:scale-105 h-full">
+        <div class="w-full flex justify-center mb-4 mt-3">
+          <img src="assets/ps3.png"
+               class="w-56 sm:w-64 lg:w-72 xl:w-80
+                      3xl:w-[28rem] 4xl:w-[30rem] 5xl:w-[32rem]
+                      object-contain transition-transform" />
         </div>
 
-        <h3 class="why-title font-isidora text-xl font-bold mt-4
-                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
+        <h3 class="mt-6 font-bold text-green-700 text-xl sm:text-2xl lg:text-3xl
+                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl font-sharetech min-h-[3rem]">
           Démarches simples
         </h3>
 
-        <p class="why-text font-isidora text-base mt-2 max-w-xs
-                  3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
-                  3xl:max-w-sm 5xl:max-w-md">
+        <p class="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg
+                  3xl:text-xl 4xl:text-2xl 5xl:text-3xl
+                  max-w-xs 3xl:max-w-sm 4xl:max-w-md 5xl:max-w-lg font-sharetech min-h-[4rem]">
           Inscription claire, rapide et sans stress.
         </p>
       </div>
 
       <!-- ITEM 4 -->
-      <div class="why-card group cursor-pointer flex flex-col items-center text-center"
-           (click)="onCardClick('protection')">
-
-        <div class="why-img w-full flex justify-center">
-        <img src="assets/ps4.png"
-     class="w-48 sm:w-56 lg:w-64 xl:w-72
-            3xl:w-96 4xl:w-[28rem] 5xl:w-[32rem]
-            object-contain transition-transform" />
-
+      <div class="flex flex-col items-center text-center cursor-pointer transition-transform
+                  hover:-translate-y-2 hover:scale-105 h-full">
+        <div class="w-full flex justify-center mb-4 mt-3">
+          <img src="assets/ps4.png"
+               class="w-56 sm:w-64 lg:w-72 xl:w-80
+                      3xl:w-[28rem] 4xl:w-[30rem] 5xl:w-[32rem]
+                      object-contain transition-transform" />
         </div>
 
-        <h3 class="why-title font-isidora text-xl font-bold mt-4
-                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl">
+        <h3 class="mt-6 font-bold text-green-700 text-xl sm:text-2xl lg:text-3xl
+                   3xl:text-4xl 4xl:text-5xl 5xl:text-6xl font-sharetech min-h-[3rem]">
           Protection prioritaire
         </h3>
 
-        <p class="why-text font-isidora text-base mt-2 max-w-xs
-                  3xl:text-2xl 4xl:text-3xl 5xl:text-4xl
-                  3xl:max-w-sm 5xl:max-w-md">
+        <p class="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg
+                  3xl:text-xl 4xl:text-2xl 5xl:text-3xl
+                  max-w-xs 3xl:max-w-sm 4xl:max-w-md 5xl:max-w-lg font-sharetech min-h-[4rem]">
           Couverture pour enfants, personnes âgées et vulnérables.
         </p>
       </div>
@@ -274,6 +261,8 @@
     </div>
   </div>
 </section>
+
+
 
 <!-- POPUP OVERLAY -->
 <!-- ========================================= -->
@@ -288,13 +277,13 @@
               bg-white/20
               border-2 border-green-600 
               backdrop-blur-0
-              p-3 shadow-2xl rounded-0 font-isidora"
+              p-3 shadow-2xl rounded-0 font-sharetech"
        (click)="$event.stopPropagation()">
 
     <!-- CLOSE BUTTON -->
     <button (click)="closePopup()"
             class="absolute top-3 right-3 text-white hover:text-gray-200 
-                   text-2xl font-bold drop-shadow-lg font-isidora">
+                   text-2xl font-bold drop-shadow-lg font-sharetech">
       ✕
     </button>
 
@@ -302,12 +291,12 @@
     <div class="bg-green-600 rounded-0 p-10 max-h-[70vh] overflow-y-auto">
 
       <!-- TITLE -->
-      <h2 class="text-3xl font-extrabold text-white text-center mb-8 font-isidora">
+      <h2 class="text-3xl font-extrabold text-white text-center mb-8 font-sharetech">
         {{ popupTitle }}
       </h2>
 
       <!-- CONTENT -->
-      <div class="text-white text-lg leading-relaxed font-isidora"
+      <div class="text-white text-lg leading-relaxed font-sharetech"
            [innerHTML]="popupText">
       </div>
 
@@ -403,11 +392,11 @@
           <button class="w-full flex justify-between items-center 
                          p-5 text-left bg-white"
                   (click)="toggleAccordion(1)">
-            <span class="text-xl 3xl:text-2xl font-bold text-green-700">1. Créer un compte</span>
+            <span class=" font-exo2 text-xl 3xl:text-2xl font-bold text-green-700">1. Créer un compte</span>
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 1">⌄</span>
           </button>
-          <div class="p-5 text-gray-700 3xl:text-lg" *ngIf="accordionOpen === 1">
+          <div class="p-5 text-gray-700 font-exo2 3xl:text-lg" *ngIf="accordionOpen === 1">
             Créez votre compte sur SunuCsu.sn
           </div>
         </div>
@@ -416,7 +405,7 @@
         <div class="border border-gray-200 rounded-lg overflow-hidden">
           <button class="w-full flex justify-between items-center p-5 text-left bg-white"
                   (click)="toggleAccordion(2)">
-            <span class="text-xl 3xl:text-2xl font-bold text-green-700">2. Informations personnelles</span>
+            <span class="text-xl font-exo2 3xl:text-2xl font-bold text-green-700">2. Informations personnelles</span>
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 2">⌄</span>
           </button>
@@ -430,7 +419,7 @@
         <div class="border border-gray-200 rounded-lg overflow-hidden">
           <button class="w-full flex justify-between items-center p-5 text-left bg-white"
                   (click)="toggleAccordion(3)">
-            <span class="text-xl 3xl:text-2xl font-bold text-green-700">3. Documents</span>
+            <span class="text-xl font-exo2 3xl:text-2xl font-bold text-green-700">3. Documents</span>
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 3">⌄</span>
           </button>
@@ -443,7 +432,7 @@
         <div class="border border-gray-200 rounded-lg overflow-hidden">
           <button class="w-full flex justify-between items-center p-5 text-left bg-white"
                   (click)="toggleAccordion(4)">
-            <span class="text-xl 3xl:text-2xl font-bold text-green-700">4. Paiement</span>
+            <span class="text-xl font-exo2 3xl:text-2xl font-bold text-green-700">4. Paiement</span>
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 4">⌄</span>
           </button>
@@ -456,7 +445,7 @@
         <div class="border border-gray-200 rounded-lg overflow-hidden">
           <button class="w-full flex justify-between items-center p-5 text-left bg-white"
                   (click)="toggleAccordion(5)">
-            <span class="text-xl 3xl:text-2xl font-bold text-green-700">5. Vérification & Validation</span>
+            <span class="text-xl font-exo2 3xl:text-2xl font-bold text-green-700">5. Vérification & Validation</span>
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 5">⌄</span>
           </button>
