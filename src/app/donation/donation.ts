@@ -13,8 +13,10 @@ export class DonationComponent {
 
   oneTimeAmounts = [1000, 2000, 5000, 10000, 25000, 50000, 100000];
   monthlyAmounts = [1000, 5000, 25000];
+
   selectedOneTime: number | null = null;
   selectedMonthly: number | null = null;
+
   customOneTime: number | null = null;
   customMonthly: number | null = null;
 
@@ -26,22 +28,33 @@ export class DonationComponent {
     phone: '',
   };
 
-  paymentMethod = '';
+  paymentMethod: string = '';
 
   selectOneTime(amount: number) {
     this.selectedOneTime = amount;
+    this.customOneTime = null;
   }
 
   selectMonthly(amount: number) {
     this.selectedMonthly = amount;
+    this.customMonthly = null;
+  }
+
+  /** ✔️ Fermeture fiable sur clic extérieur */
+  onBackdropClick(event: MouseEvent) {
+    if (event.target === event.currentTarget) {
+      this.close.emit();
+    }
   }
 
   submitDonation() {
-    console.log('Détails du don:', {
-      oneTime: this.selectedOneTime || this.customOneTime,
-      monthly: this.selectedMonthly || this.customMonthly,
+    const payload = {
+      oneTime: this.selectedOneTime ?? this.customOneTime,
+      monthly: this.selectedMonthly ?? this.customMonthly,
       donor: this.donor,
       payment: this.paymentMethod,
-    });
+    };
+
+    console.log('Détails du don:', payload);
   }
 }

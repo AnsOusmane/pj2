@@ -28,9 +28,9 @@ export class HeaderComponent implements AfterViewInit {
   
   bannerImages: string[] = [
     'assets/pub/1.png',
-    'assets/pub/2.PNG',
-    'assets/pub/3.PNG',
-    'assets/pub/4.PNG',
+    'assets/pub/2.png',
+    'assets/pub/3.png',
+    'assets/pub/4.png',
   ];
 
   bannerLinks: string[] = [
