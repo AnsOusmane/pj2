@@ -4,7 +4,6 @@ import { HeroComponent } from './hero/hero';
 import { ProgrammeComponent } from './programme/programme';
 import { MediaComponent } from './media/media';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
-import { AccueilsunuComponent } from './accueilsunu/accueilsunu';
 import { BanqueDImageComponent } from './banque-d-image/banque-d-image';
 import { CommuniquesPresseComponent } from './communiques-presse/communiques-presse';
 import { RapportsOfficielsComponent } from './rapports-officiels/rapports-officiels';
@@ -26,7 +25,6 @@ export const routes: Routes = [
   { path: 'programme/:id', component: ProgrammeComponent },
   { path: 'media', component: MediaComponent },    
   { path: 'missionsvision', component: MissionsvisionComponent },
-  { path: '', component: AccueilsunuComponent },
   { path: 'banque-images', component: BanqueDImageComponent },
   { path: 'communiques-presse', component: CommuniquesPresseComponent },
   { path: 'rapports-officiels', component: RapportsOfficielsComponent },
