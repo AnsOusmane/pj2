@@ -1,6 +1,11 @@
-<div class="organigramme-container flex flex-col items-center">
-  <div class="relative w-full max-w-xl rounded-lg shadow-lg overflow-hidden bg-white">
-    <img [src]="currentMembre.photo" class="w-full h-80 object-cover transition-transform duration-300" alt="{{currentMembre.nom}}">
+<div class="organigramme-container flex flex-col items-center mt-7">
+  <div class="relative w-full max-w-xl rounded-lg shadow-lg overflow-hidden mt-6 bg-white">
+<img
+  [src]="currentMembre.photo"
+  class="w-full h-80 object-cover object-top transition-transform duration-300"
+  alt="{{ currentMembre.nom }}"
+>
+
     <div class="p-4 text-center">
       <h3 class="text-lg font-bold text-green-700">{{ currentMembre.nom }}</h3>
       <p class="text-sm font-semibold text-gray-600">{{ currentMembre.poste }}</p>

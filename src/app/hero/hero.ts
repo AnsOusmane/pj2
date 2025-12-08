@@ -1,11 +1,13 @@
 import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { isPlatformBrowser, NgIf } from '@angular/common';
 import { ContactFormComponent } from "../contact-form/contact-form";
+//import { ActusPageComponent } from '../actus/actus-page';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
   imports: [NgIf, ContactFormComponent],
+  //ActusPageComponent
   templateUrl: './hero.html',
   styleUrls: ['./hero.css'],
 })

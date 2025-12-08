@@ -40,6 +40,16 @@ export const routes: Routes = [
   { path: 'assurance-maladie', component: AssuranceMaladieComponent },
   { path: 'appels-offre', component: AppelsOffreComponent },
   { path: 'carriere', component: CarriereComponent },
+//{
+//   path: 'actus',
+//   loadComponent: () =>
+//     import('./actus/actus-page').then(m => m.ActusPageComponent)
+// },
+// {
+//   path: 'actus/:id',
+//   loadComponent: () =>
+//     import('./actus/actus-detail').then(m => m.ActuDetailComponent)
+// }
 
   { path: '**', redirectTo: '', pathMatch: 'full' }, // 404
 ];

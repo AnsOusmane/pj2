@@ -1,7 +1,7 @@
 <footer class="w-full bg-green-700 text-white pt-10 pb-14 px-4">
 
   <!-- Barre recherche -->
-  <div class="max-w-6xl mx-auto">
+  <!-- <div class="max-w-6xl mx-auto">
       <div class="w-full flex justify-center">
           <div class="flex items-center bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 w-[480px]">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -15,10 +15,10 @@
                   Rechercher
               </button>
           </div>
-      </div>
+      </div> 
 
       <hr class="border-white/20 my-8">
-  </div>
+  </div>-->
 
   <!-- Partenaires -->
   <div class="max-w-6xl mx-auto text-center mt-5 text-white/80 text-sm">
@@ -61,8 +61,8 @@
               <li><button (click)="goToCesarienne()" class="hover:underline">La césarienne</button></li>
               <li><button (click)="goToDialyse()" class="hover:underline">La dialyse</button></li>
               <li><button (click)="goToPlanSesame()" class="hover:underline">Le plan Sésame des 60 ans et plus</button></li>
-              <li><button (click)="goToPlanSesame()" class="hover:underline">La carte d'égalité des chances</button></li>
-              <li><button (click)="goToPlanSesame()" class="hover:underline">Les bénéficiaires PNBSF</button></li>
+              <li><button class="hover:underline">La carte d'égalité des chances</button></li>
+              <li><button class="hover:underline">Les bénéficiaires PNBSF</button></li>
           </ul>
       </div>
 
@@ -94,18 +94,29 @@
               </ul>
           </div>
 
-          <!-- Icônes réseaux -->
-          <div class="space-y-4">
-              <div class="flex gap-4 text-xl">
-                  <i class="fab fa-facebook"></i>
-                  <i class="fab fa-twitter"></i>
-                  <i class="fab fa-instagram"></i>
-              </div>
-              <div class="flex gap-4 text-xl">
-                  <i class="fab fa-linkedin"></i>
-                  <i class="fab fa-youtube"></i>
-              </div>
-          </div>
+        <!-- Icônes réseaux pour le footer--> 
+<div class="space-y-4">
+    <div class="flex gap-4 text-xl">
+        <a href="https://facebook.com/CouvertureSanitaitrUniverselle" target="_blank" class="text-white hover:text-gray-300">
+            <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://x.com/sen_csu?s=21&t=6JWMaLzG-CZUjsMrrvT5Ag" target="_blank" class="text-white hover:text-gray-300">
+            <i class="fab fa-x"></i>
+        </a>
+        <a href="https://www.instagram.com/sen_csu_" target="_blank" class="text-white hover:text-gray-300">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
+    <div class="flex gap-4 text-xl">
+        <a href="https://linkedin.com/company/sen-csu" target="_blank" class="text-white hover:text-gray-300">
+            <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://youtube.com/@sen_csu" target="_blank" class="text-white hover:text-gray-300">
+            <i class="fab fa-youtube"></i>
+        </a>
+    </div>
+</div>
+
       </div>
 
   </div>

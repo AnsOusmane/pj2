@@ -210,24 +210,24 @@
 </div>
 
       </div>
-
-      <button (click)="goToAssuranceMaladie()"class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">Assurance maladie</button>
+  <!-- Assurance maladie -->
+      <button (click)="goToAssuranceMaladie()"class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">Assurance maladie▾</button>
 
       <!-- Dropdown Assistance médicale -->
       <div class="relative group">
         <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
-          Assistance médicale ▾
+          Assistance médicale▾
         </button>
-        <div class="absolute left-0 mt-2 hidden group-hover:block w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
+        <div class="absolute left-0 mt-2 hidden group-hover:block w-[264PX] bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
           <ul class="flex flex-col text-green-700 font-medium">
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToZero5ans()">0 à 5 ans</button></li>
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToCesarienne()">Césarienne</button></li>
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToDialyse()">Dialyse</button></li>
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToPlanSesame()">Plan Sésame</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToPlanSesame()">Bénéficiaires PNBSF </button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToPlanSesame()">Carte Egalité des chances </button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50">Bénéficiaires PNBSF </button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50">Carte Egalité des chances </button></li>
             <a href="https://sunucsu.sn/pharmacies" target="_blank" >
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToPlanSesame()">Nos pharmacies partenaires</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50">Nos pharmacies partenaires</button></li>
              </a>
           </ul>
         </div>
@@ -236,7 +236,7 @@
       <!-- Dropdown Espace Média -->
       <div class="relative group">
   <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
-          Espace Média ▾
+          Espace Média▾
         </button>
         <div class="absolute left-0 mt-2 hidden group-hover:block w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
           <ul class="flex flex-col text-green-700 font-medium">
@@ -250,18 +250,18 @@
       <!-- Dropdown Assistance & Contact -->
       <div class="relative group">
         <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
-          Assistance et Contact ▾
+          Assistance et Contact▾
         </button>
         <div class="absolute left-0 mt-2 hidden group-hover:block w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
           <ul class="flex flex-col text-green-700 font-medium">
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToContact()">Formulaire de contact</button></li>
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToSr()">Localiser une agence</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToContact()">Formulaires</button></li>
+            <!-- <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToContact()">Formulaires</button></li> -->
           </ul>
         </div>
       </div>
 
-      <button (click)="goToCarriere()" class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">Carrière</button> 
+      <button (click)="goToCarriere()" class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">Carrière▾</button> 
 
       <button
         (click)="openDonation.emit()"
@@ -347,7 +347,7 @@
       <div *ngIf="mobileDropdown.contact" class="pl-4 space-y-2 text-[16px]">
         <button (click)="goToContact(); closeMobileMenu()">Formulaire de contact</button><br>
         <button (click)="goToSr(); closeMobileMenu()">Localiser une agence</button><br>
-        <button (click)="goToContact(); closeMobileMenu()">Formulaires</button>
+        <!-- <button (click)="goToContact(); closeMobileMenu()">Formulaires</button> -->
       </div>
     </li>
 

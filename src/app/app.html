@@ -104,6 +104,9 @@
   </div>
 </div>
 <!-- Composant accueil -->
-<!-- <app-accueilsunu *ngIf="router.url === '' || router.url === '/'"></app-accueilsunu> -->
-
-<app-footer> </app-footer>
+<!-- <app-accueilsunu *ngIf="router.url === '' || router.url === '/'"></app-accueilsunu> --><app-footer
+  (openAboutTimeline)="openAbout()"
+  (openMissionsvision)="openMissionsvision()"
+  (openOrganigramme)="openOrganigramme()"
+  (openDonation)="openDonation()"
+></app-footer>
