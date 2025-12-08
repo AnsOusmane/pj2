@@ -352,9 +352,17 @@
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 1">⌄</span>
           </button>
-          <div class="p-5 text-gray-700 font-exo2 3xl:text-lg" *ngIf="accordionOpen === 1">
-            Créez votre compte sur SunuCsu.sn
-          </div>
+<div class="p-5 font-exo2 3xl:text-lg" *ngIf="accordionOpen === 1">
+   Créez votre compte sur 
+  <a 
+    href="https://sunuCsu.sn" 
+    target="_blank" 
+    class="text-gray-700 hover:text-green-700 underline transition"
+  >
+   SunuCsu.sn
+  </a>
+</div>
+
         </div>
 
         <!-- ÉTAPE 2 -->
