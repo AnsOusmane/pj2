@@ -120,156 +120,160 @@
       <span class="block w-6 h-0.5 bg-green-700"></span>
       <span class="block w-6 h-0.5 bg-green-700"></span>
     </button>
+<!-- Menu desktop -->
+<div class="hidden lg:flex items-center gap-x-6 text-[21px] font-sharetech ml-auto">
 
-    <!-- Menu desktop -->
-    <div class="hidden lg:flex items-center gap-x-6 text-[21px] font-sharetech ml-auto">
-
-      <!-- Dropdown La SEN-CSU -->
-      <div class="relative group">
-        <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
-          La SEN-CSU ▾
-        </button>
-<div class="absolute left-0 mt-2 hidden group-hover:block w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
-  <ul class="flex flex-col text-green-700 font-medium">
-
-    <li>
-      <button class="w-full text-left px-4 py-2 hover:bg-green-50"
-              (click)="onAboutClick()">
-        A propos de l'agence
-      </button>
-    </li>
-
-    <li>
-      <button class="w-full text-left px-4 py-2 hover:bg-green-50"
-              (click)="openMissionsvision.emit()">
-        Vision et Missions
-      </button>
-    </li>
-
-    <li>
-      <button class="w-full text-left px-4 py-2 hover:bg-green-50"
-              (click)="showOrganigrammeClick()">
-        Organigramme
-      </button>
-    </li>
-
-    <li>
-      <button class="w-full text-left px-4 py-2 hover:bg-green-50"
-              (click)="goToAppelsOffre()">
-        Appels d'offres
-      </button>
-    </li>
-    <li class="relative group/publications">
-
-      <!-- Bouton principal -->
-      <button
-        class="w-full text-left px-4 py-2 hover:bg-green-50 flex justify-between items-center"
-      >
-        Publications
-        <span class="text-sm">></span>
-      </button>
-
-      <!-- Sous-menu -->
-      <ul
-        class="absolute left-full top-0 ml-1 w-56 bg-white border border-gray-200 shadow-lg
-               opacity-0 group-hover/publications:opacity-100 invisible group-hover/publications:visible
-               transition-all duration-200 z-50"
-      >
+  <!-- Dropdown La SEN-CSU -->
+  <div class="relative group">
+    <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+      La SEN-CSU ▾
+    </button>
+    <div
+      class="absolute left-0 top-full w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50
+             opacity-0 invisible group-hover:opacity-100 group-hover:visible
+             transition-all duration-200"
+    >
+      <ul class="flex flex-col text-green-700 font-medium">
         <li>
-          <button class="w-full text-left px-4 py-2 hover:bg-green-50"
-                  (click)="goToRapports()">
-            Rapports officiels
+          <button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="onAboutClick()">
+            A propos de l'agence
+          </button>
+        </li>
+        <li>
+          <button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="openMissionsvision.emit()">
+            Vision et Missions
+          </button>
+        </li>
+        <li>
+          <button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="showOrganigrammeClick()">
+            Organigramme
+          </button>
+        </li>
+        <li>
+          <button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToAppelsOffre()">
+            Appels d'offres
           </button>
         </li>
 
-        <li>
-          <button class="w-full text-left px-4 py-2 hover:bg-green-50"
-                  (click)="goToGuide()">
-            Guides
+        <!-- Sous-dropdown Publications -->
+        <li class="relative group/publications">
+          <button class="w-full text-left px-4 py-2 hover:bg-green-50 flex justify-between items-center">
+            Publications <span class="text-sm">></span>
           </button>
-        </li>
-
-        <li>
-          <button class="w-full text-left px-4 py-2 hover:bg-green-50"
-                  (click)="goToDecret()">
-            Décrets
-          </button>
-        </li>
-
-        <li>
-          <button class="w-full text-left px-4 py-2 hover:bg-green-50"
-                  (click)="goToManuel()">
-            Manuels d’audit
-          </button>
+          <ul
+            class="absolute left-full top-0 ml-1 w-56 bg-white border border-gray-200 shadow-lg
+                   opacity-0 invisible group-hover/publications:opacity-100 group-hover/publications:visible
+                   transition-all duration-200 z-50"
+          >
+            <li>
+              <button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToRapports()">
+                Rapports officiels
+              </button>
+            </li>
+            <li>
+              <button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToGuide()">
+                Guides
+              </button>
+            </li>
+            <li>
+              <button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToDecret()">
+                Décrets
+              </button>
+            </li>
+            <li>
+              <button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToManuel()">
+                Manuels d’audit
+              </button>
+            </li>
+          </ul>
         </li>
       </ul>
+    </div>
+  </div>
 
-    </li>
+  <!-- Assurance maladie -->
+  <button
+    (click)="goToAssuranceMaladie()"
+    class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500"
+  >
+    Assurance maladie▾
+  </button>
 
-  </ul>
+  <!-- Dropdown Assistance médicale -->
+  <div class="relative group">
+    <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+      Assistance médicale▾
+    </button>
+    <div
+      class="absolute left-0 top-full w-[264px] bg-white shadow-lg ring-1 ring-gray-900/10 z-50
+             opacity-0 invisible group-hover:opacity-100 group-hover:visible
+             transition-all duration-200"
+    >
+      <ul class="flex flex-col text-green-700 font-medium">
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToZero5ans()">0 à 5 ans</button></li>
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToCesarienne()">Césarienne</button></li>
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToDialyse()">Dialyse</button></li>
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToPlanSesame()">Plan Sésame</button></li>
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50">Bénéficiaires PNBSF</button></li>
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50">Carte Egalité des chances</button></li>
+        <li>
+          <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block w-full">
+            <button class="w-full text-left px-4 py-2 hover:bg-green-50">Nos pharmacies partenaires</button>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Dropdown Espace Média -->
+  <div class="relative group">
+    <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+      Espace Média▾
+    </button>
+    <div
+      class="absolute left-0 top-full w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50
+             opacity-0 invisible group-hover:opacity-100 group-hover:visible
+             transition-all duration-200"
+    >
+      <ul class="flex flex-col text-green-700 font-medium">
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToComuPresse()">Communiqués</button></li>
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToMedia()">Dossiers média</button></li>
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToBankImg()">Banque d’images</button></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Dropdown Assistance & Contact -->
+  <div class="relative group">
+    <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+      Assistance et Contact▾
+    </button>
+    <div
+      class="absolute left-0 top-full w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50
+             opacity-0 invisible group-hover:opacity-100 group-hover:visible
+             transition-all duration-200"
+    >
+      <ul class="flex flex-col text-green-700 font-medium">
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToContact()">Formulaire de contact</button></li>
+        <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToSr()">Localiser une agence</button></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Carrière -->
+  <button (click)="goToCarriere()" class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">
+    Carrière▾
+  </button> 
+
+  <!-- Bouton Nous soutenir -->
+  <button
+    (click)="openDonation.emit()"
+    class="border-2 border-yellow-500 text-yellow-500 font-semibold px-3 py-2 rounded-full bg-white hover:bg-yellow-400 hover:text-white transition"
+  >
+    Nous soutenir
+  </button>
 </div>
 
-      </div>
-  <!-- Assurance maladie -->
-      <button (click)="goToAssuranceMaladie()"class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">Assurance maladie▾</button>
-
-      <!-- Dropdown Assistance médicale -->
-      <div class="relative group">
-        <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
-          Assistance médicale▾
-        </button>
-        <div class="absolute left-0 mt-2 hidden group-hover:block w-[264PX] bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
-          <ul class="flex flex-col text-green-700 font-medium">
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToZero5ans()">0 à 5 ans</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToCesarienne()">Césarienne</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToDialyse()">Dialyse</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToPlanSesame()">Plan Sésame</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50">Bénéficiaires PNBSF </button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50">Carte Egalité des chances </button></li>
-            <a href="https://sunucsu.sn/pharmacies" target="_blank" >
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50">Nos pharmacies partenaires</button></li>
-             </a>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Dropdown Espace Média -->
-      <div class="relative group">
-  <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
-          Espace Média▾
-        </button>
-        <div class="absolute left-0 mt-2 hidden group-hover:block w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
-          <ul class="flex flex-col text-green-700 font-medium">
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToComuPresse()">Communiqués</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToMedia()">Dossiers média</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToBankImg()">Banque d’images</button></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Dropdown Assistance & Contact -->
-      <div class="relative group">
-        <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
-          Assistance et Contact▾
-        </button>
-        <div class="absolute left-0 mt-2 hidden group-hover:block w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50">
-          <ul class="flex flex-col text-green-700 font-medium">
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToContact()">Formulaire de contact</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToSr()">Localiser une agence</button></li>
-            <!-- <li><button class="w-full text-left px-4 py-2 hover:bg-green-50" (click)="goToContact()">Formulaires</button></li> -->
-          </ul>
-        </div>
-      </div>
-
-      <button (click)="goToCarriere()" class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">Carrière▾</button> 
-
-      <button
-        (click)="openDonation.emit()"
-        class="border-2 border-yellow-500 text-yellow-500 font-semibold px-3 py-2 rounded-full bg-white hover:bg-yellow-400 hover:text-white transition"
-      >
-        Nous soutenir
-      </button>
-    </div>
 
                  <!-- Affichage mobile -->
  <!-- Affichage Mobile Optimisé -->
