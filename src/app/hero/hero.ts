@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, PLATFORM_ID, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { isPlatformBrowser, NgIf } from '@angular/common';
 import { ContactFormComponent } from "../contact-form/contact-form";
 
@@ -9,15 +9,14 @@ import { ContactFormComponent } from "../contact-form/contact-form";
   templateUrl: './hero.html',
   styleUrls: ['./hero.css'],
 })
-export class HeroComponent implements AfterViewInit, OnInit, OnDestroy {
-  currentHero: number = 0; // 0 = hero1, 1 = hero2
-  accordionOpen = 0; // étape ouverte par défaut
- // Variables pour les popups
-showPopup = false;
-popupTitle = '';
-popupText = '';
+export class HeroComponent implements OnInit {
 
-// Données des popups avec HTML stylé
+  accordionOpen = 0;
+
+  // POPUP
+  showPopup = false;
+  popupTitle = '';
+  popupText = '';
 popupData = {
  acces: {
   title: "Accès aux soins",
@@ -186,48 +185,29 @@ popupData = {
   }
 };
 
-  private intervalId: any;
-
+  
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {
     if (!isPlatformBrowser(this.platformId)) return;
-    
-    // Initialiser les écouteurs d'événements
-    this.initializePopupListeners();
   }
 
-  ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    this.intervalId = setInterval(() => {
-      this.currentHero = this.currentHero === 0 ? 1 : 0;
-    }, 5500);
-  }
-
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  }
-
+  // ACCORDÉON
   toggleAccordion(n: number) {
     this.accordionOpen = this.accordionOpen === n ? 0 : n;
   }
 
+  // SCROLL
   scrollTo(target: string) {
     if (!isPlatformBrowser(this.platformId)) return;
-    
+
     const el = document.getElementById(target);
     if (!el) return;
 
-    el.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // Méthodes pour gérer les popups
+  // POPUPS
   openPopup(key: keyof typeof this.popupData) {
     this.popupTitle = this.popupData[key].title;
     this.popupText = this.popupData[key].text;
@@ -239,19 +219,16 @@ popupData = {
   }
 
   onPopupClick(event: Event) {
-    if (event.target === event.currentTarget) {
-      this.closePopup();
-    }
+    if (event.target === event.currentTarget) this.closePopup();
   }
 
-  private initializePopupListeners() {
-    // Cette méthode n'est plus nécessaire car nous utilisons le binding Angular
-    // Mais nous la gardons pour compatibilité si nécessaire
-  }
-
-  // Méthode pour gérer le clic sur les cartes
+  // CLICS
   onCardClick(key: string) {
     const popupKey = key as keyof typeof this.popupData;
     this.openPopup(popupKey);
+  }
+
+  goToComuPresse() {
+    console.log("Lien vers communiqué de presse");
   }
 }
