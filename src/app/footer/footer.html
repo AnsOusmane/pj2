@@ -1,0 +1,112 @@
+<footer class="w-full bg-green-700 text-white pt-10 pb-14 px-4">
+
+  <!-- Barre recherche -->
+  <div class="max-w-6xl mx-auto">
+      <div class="w-full flex justify-center">
+          <div class="flex items-center bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 w-[480px]">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z" />
+              </svg>
+              <input type="text"
+                  placeholder="Rechercher sur SEN-CSU"
+                  class="bg-transparent text-white/90 placeholder-white/60 outline-none px-3 flex-1">
+              <button class="bg-white text-green-700 font-semibold px-4 py-1 rounded-md hover:bg-gray-200 transition">
+                  Rechercher
+              </button>
+          </div>
+      </div>
+
+      <hr class="border-white/20 my-8">
+  </div>
+
+  <!-- Partenaires -->
+  <div class="max-w-6xl mx-auto text-center mt-5 text-white/80 text-sm">
+      <a href="https://sunucsu.sn" class="hover:underline mx-2">Sunu CSU</a> |
+      <a href="https://femme.gouv.sn" class="hover:underline mx-2">Ministère de la famille et des solidarités</a> |
+      <a href="https://sante.gouv.sn" class="hover:underline mx-2">Ministère de la santé et de l'action sociale</a>
+  </div>
+
+  <hr class="max-w-6xl mx-auto border-white/20 my-8">
+
+  <!-- Grille -->
+  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+
+      <!-- Colonne 1 -->
+      <div>
+          <h3 class="font-semibold mb-3">La Sen-CSU</h3>
+          <ul class="space-y-1 text-white/80">
+
+              <li><button (click)="openAboutTimeline.emit()" class="hover:underline">A propos</button></li>
+
+              <li><button (click)="openMissionsvision.emit()" class="hover:underline">Vision et missions</button></li>
+
+              <li><button (click)="openOrganigramme.emit()" class="hover:underline">Organnigramme</button></li>
+
+              <li><button (click)="goToAppelsOffre()" class="hover:underline">Appels d'offres</button></li>
+
+              <!-- Publications regroupe tout -->
+              <li>
+                <button class="hover:underline" (click)="goToRapports()">Publications</button>
+              </li>
+
+          </ul>
+      </div>
+
+      <!-- Colonne 2 -->
+      <div>
+          <h3 class="font-semibold mb-3">Assistance médicale</h3>
+          <ul class="space-y-1 text-white/80">
+              <li><button (click)="goToZero5ans()" class="hover:underline">Les enfants de 0 à 5 ans</button></li>
+              <li><button (click)="goToCesarienne()" class="hover:underline">La césarienne</button></li>
+              <li><button (click)="goToDialyse()" class="hover:underline">La dialyse</button></li>
+              <li><button (click)="goToPlanSesame()" class="hover:underline">Le plan Sésame des 60 ans et plus</button></li>
+              <li><button (click)="goToPlanSesame()" class="hover:underline">La carte d'égalité des chances</button></li>
+              <li><button (click)="goToPlanSesame()" class="hover:underline">Les bénéficiaires PNBSF</button></li>
+          </ul>
+      </div>
+
+      <!-- Colonne 3 -->
+      <div>
+          <h3 class="font-semibold mb-3">ESPACE MEDIA</h3>
+          <ul class="space-y-1 text-white/80">
+              <li><button (click)="goToComuPresse()" class="hover:underline">Communiqués de presse</button></li>
+              <li><button (click)="goToMedia()" class="hover:underline">Dossiers médias</button></li>
+              <li><button (click)="goToBankImg()" class="hover:underline">Banque d'image</button></li>
+          </ul>
+      </div>
+
+      <!-- Colonne 4 -->
+      <div class="flex justify-between">
+          <div>
+              <h3 class="font-semibold mb-3">ASSISTANCE ET CONTACT</h3>
+              <ul class="space-y-1 text-white/80">
+                  <li><button (click)="goToContact()" class="hover:underline">Formulaires de contact</button></li>
+                  <li><button (click)="goToSr()" class="hover:underline">Localiser une agence</button></li>
+
+                  <li>
+                    <a href="https://sunucsu.sn/pharmacies" target="_blank" class="hover:underline">
+                        Pharmacies partenaires
+                    </a>
+                  </li>
+
+                  <li><button (click)="goToContact()" class="hover:underline">Formulaires</button></li>
+              </ul>
+          </div>
+
+          <!-- Icônes réseaux -->
+          <div class="space-y-4">
+              <div class="flex gap-4 text-xl">
+                  <i class="fab fa-facebook"></i>
+                  <i class="fab fa-twitter"></i>
+                  <i class="fab fa-instagram"></i>
+              </div>
+              <div class="flex gap-4 text-xl">
+                  <i class="fab fa-linkedin"></i>
+                  <i class="fab fa-youtube"></i>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</footer>

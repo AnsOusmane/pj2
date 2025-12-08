@@ -11,6 +11,7 @@ import { DonationComponent } from './donation/donation';
 import { OrganigrammeComponent } from './organigramme/organigramme';
 import { AccueilsunuComponent } from './accueilsunu/accueilsunu';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
+import { Footer } from './footer/footer';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ import { MissionsvisionComponent } from './missionsvision/missionsvision';
     OrganigrammeComponent,
     AccueilsunuComponent,
     MissionsvisionComponent,
+    Footer,
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
