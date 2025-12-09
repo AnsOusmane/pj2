@@ -12,7 +12,7 @@ export class AssuranceMaladieComponent {
   selected: string | null = null;
 
   data: any = {
-    poste: `<h2 class="text-3xl font-bold text-green-700 mb-4">CSU Solidarité</h2>
+    poste: `<h2 class="text-3xl font-bold text-green-700 mb-4">CSU</h2>
 
 <p class="mb-4">
   <strong>Qu’est-ce que l’assurance maladie universelle ?</strong><br>
