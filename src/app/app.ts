@@ -4,12 +4,10 @@ import { RouterOutlet, Router } from '@angular/router';
 
 // Composants
 import { HeaderComponent } from './header/header';
-import { HeroComponent } from './hero/hero';
 import { TutoScreenComponent } from './tuto-screen-component/tuto-screen-component';
 import { AboutTimelineComponent } from './about-timeline/about-timeline';
 import { DonationComponent } from './donation/donation';
 import { OrganigrammeComponent } from './organigramme/organigramme';
-import { AccueilsunuComponent } from './accueilsunu/accueilsunu';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
 import { Footer } from './footer/footer';
 
@@ -24,7 +22,6 @@ import { Footer } from './footer/footer';
     AboutTimelineComponent,
     DonationComponent,
     OrganigrammeComponent,
-    AccueilsunuComponent,
     MissionsvisionComponent,
     Footer,
   ],

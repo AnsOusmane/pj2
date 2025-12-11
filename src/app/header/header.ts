@@ -1,4 +1,3 @@
-// ✅ HeaderComponent complet à jour avec carrousel PUB + carrousel Partenaires
 
 import { Component, EventEmitter, Output, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
@@ -149,5 +148,6 @@ closeMobileMenu() {
   goToAssuranceMaladie() { this.router.navigate(['/assurance-maladie']); }
   goToAppelsOffre() { this.router.navigate(['/appels-offre']); }
   goToCarriere() { this.router.navigate(['/carriere']); }
+  goToAdmin() { this.router.navigate(['/admin']); }
 
 }

@@ -19,6 +19,7 @@ import { CesarienneComponent } from './cesarienne/cesarienne';
 import { AssuranceMaladieComponent } from './assurance-maladie/assurance-maladie';
 import { AppelsOffreComponent } from './appels-offre/appels-offre';
 import { CarriereComponent } from './carriere/carriere';
+import { AdminComponent } from './admin/admin';
 
 export const routes: Routes = [
   { path: '', component: HeroComponent }, 
@@ -40,6 +41,7 @@ export const routes: Routes = [
   { path: 'assurance-maladie', component: AssuranceMaladieComponent },
   { path: 'appels-offre', component: AppelsOffreComponent },
   { path: 'carriere', component: CarriereComponent },
+  { path: 'admin', component: AdminComponent },
 //{
 //   path: 'actus',
 //   loadComponent: () =>
