@@ -1,16 +1,12 @@
-<!-- Bande Publicitaire -->
-<div class="max-w-6xl mx-auto 2xl:mx-0
-            flex flex-col md:flex-row 
-            items-center justify-between gap-4
-            px-2 py-3 md:py-5">
+<div class="promo-banner w-full bg-white border-b border-gray-200 relative">
 
-
-  <div class="max-w-6xl mx-auto 
+  <div class="max-w-6xl mx-auto 2xl:mx-0 2xl:max-w-full
               flex flex-col md:flex-row 
               items-center justify-between gap-4
               px-2 py-3 md:py-5">
-                  <!-- Logo -->
-<div class="hidden lg:flex items-center shrink-0 cursor-pointer"
+
+    <!-- Logo -->
+    <div class="hidden lg:flex items-center shrink-0 cursor-pointer"
          (click)="GoHomeClick()">
       <img src="assets/logo.png"
            class="h-16 w-auto md:h-24 object-contain"
@@ -21,7 +17,6 @@
     <div class="relative w-full md:flex-1 
                 h-16 md:h-24 
                 overflow-hidden rounded-xl shadow bg-white">
-
       <a [href]="bannerLinks[bannerIndex]" target="_blank" class="block w-full h-full">
         <img
           [src]="bannerImages[bannerIndex]"
@@ -47,6 +42,7 @@
         ›
       </button>
     </div>
+
 
     <!-- Icônes réseaux sociaux -->
 <div class="hidden sm:flex items-center gap-3 shrink-0
