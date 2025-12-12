@@ -5,6 +5,14 @@
               flex flex-col md:flex-row 
               items-center justify-between gap-4
               px-2 py-3 md:py-5">
+                  <!-- Logo -->
+<div class="hidden lg:flex items-center shrink-0 cursor-pointer"
+         (click)="GoHomeClick()">
+      <img src="assets/logo.png"
+           class="h-16 w-auto md:h-24 object-contain"
+           alt="Logo Agence" />
+    </div>
+
     <!-- Carrousel Publicitaire -->
     <div class="relative w-full md:flex-1 
                 h-16 md:h-24 
