@@ -101,7 +101,18 @@ export class AssuranceMaladieComponent {
     daara: `
       <h2 class="text-3xl text-green-700  font-bold mb-4">CSU Daara</h2>
       <p>Une assurance dédiée aux daaras du Sénégal, garantissant une couverture santé 
-      pour les apprenants dans les structures publiques.</p>
+      pour les apprenants dans les structures publiques jusqu'à 80% des dépenses de santé des apprenants.</p>
+      <p><strong>Exemple :</strong> Facture 2500 F → Mutuelle 2000 F, Parent 500 F.</p>
+      <p><strong>Médicaments privés :</strong> couverture 50%.</p>
+
+      <p class="font-semibold mt-3">Inscription :</p>
+      <p>Dans l’établissement de l'apprenant.</p>
+
+      <p class="font-semibold mt-3">Cotisation :</p>
+      <ul class="list-disc ml-6">
+        <li>1000 F/an/enfant + État 3500 F</li>
+        <li>Option premium : 3500 F + État 3500 F → couverture complète jusqu’à l’hôpital</li>
+      </ul>
     `
   };
 
