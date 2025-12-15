@@ -1,8 +1,7 @@
-
   <!-- Bande Publicitaire -->
   <div class="promo-banner w-full border-b border-gray-200 relative">
     <div class="w-full max-w-[1920px] mx-auto
-                flex flex-col md:flex-row 
+                flex flex-col md:flex-row
                 items-start justify-start gap-4
                 px-6 md:px-8 py-3 md:py-5">
       <!-- Logo -->
@@ -103,15 +102,25 @@
           </div>
         </a>
       </div>
-      
+      <!-- Hamburger Desktop -->
+<div class="hidden lg:flex absolute bottom-3 right-3">
+  <button (click)="toggleDesktopMenu()"
+          class="flex flex-col gap-1 p-2 border rounded-md text-green-700 bg-white shadow-md">
+    <span class="block w-6 h-0.5 bg-green-700"></span>
+    <span class="block w-6 h-0.5 bg-green-700"></span>
+    <span class="block w-6 h-0.5 bg-green-700"></span>
+  </button>
+</div>
+
       <!-- Bouton Admin (conservé pour test) -->
       <button class="text-white hidden sm:block" (click)="goToAdmin()">Admin</button>
     </div>
   </div>
-
   <!-- Menu Desktop -->
-  <nav class="hidden lg:flex items-center justify-start px-6 md:px-8 h-16 relative
-              w-full max-w-[1920px] mx-auto">
+<nav *ngIf="isDesktopMenuOpen"
+     class="hidden lg:flex flex-col absolute top-0 left-0 w-full bg-white shadow-lg z-50 px-6 md:px-8 mt-32">
+
+
     
     <!-- Navigation principale desktop -->
     <div class="flex items-center gap-x-6 text-[21px] font-sharetech w-full">

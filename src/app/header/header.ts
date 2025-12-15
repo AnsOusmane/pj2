@@ -124,6 +124,11 @@ closeMobileMenu() {
   this.isMenuOpen = false;
   this.mobileDropdown = { sen: false, assistance: false, media: false, contact: false };
 }
+isDesktopMenuOpen = false;
+
+toggleDesktopMenu() {
+  this.isDesktopMenuOpen = !this.isDesktopMenuOpen;
+}
 
   
   // ✅ Navigation
