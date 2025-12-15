@@ -1,28 +1,49 @@
-<div class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-10">
+<div
+  class="max-w-screen-2xl 2xl:max-w-[1600px] mx-auto
+         p-6 xl:p-10 2xl:p-14
+         grid grid-cols-1 lg:grid-cols-3
+         gap-8 xl:gap-12 2xl:gap-16">
 
-  <!--  COLONNE GAUCHE : OFFRES D’EMPLOI -->
-  <div class="lg:col-span-2 space-y-6">
+  <!-- 🟩 COLONNE GAUCHE : OFFRES D’EMPLOI -->
+  <div class="lg:col-span-2 space-y-8 xl:space-y-10">
 
-    <h2 class="text-2xl font-bold text-green-700">Offres d’emploi</h2>
+    <h2 class="text-2xl xl:text-3xl 2xl:text-4xl font-bold text-green-700">
+      Offres d’emploi
+    </h2>
 
     <!-- Barre de recherche -->
     <input
       type="text"
       placeholder="Rechercher un poste…"
-      class="w-full p-3 border rounded mb-2"
+      class="w-full p-3 xl:p-4 2xl:p-5
+             border rounded-lg
+             text-base xl:text-lg 2xl:text-xl"
       (input)="filtre = $event.target.value"
     />
 
     <!-- LISTE DES OFFRES -->
-    <div class="grid md:grid-cols-2 gap-5">
+    <div class="grid md:grid-cols-2 2xl:grid-cols-3 gap-5 xl:gap-8 2xl:gap-10">
       <div
         *ngFor="let offre of offresFiltrees"
-        class="border rounded-xl p-5 shadow hover:shadow-lg cursor-pointer transition bg-green-100"
+        class="border rounded-2xl
+               p-5 xl:p-7 2xl:p-8
+               shadow hover:shadow-xl
+               cursor-pointer transition
+               bg-green-100"
         (click)="afficherDetails(offre)"
       >
-        <h3 class="text-lg font-semibold">{{ offre.titre }}</h3>
-        <p class="text-sm text-gray-600">{{ offre.type }} — {{ offre.lieu }}</p>
-        <p class="text-xs text-green-600 mt-3 underline">Voir la description</p>
+        <h3 class="text-lg xl:text-xl 2xl:text-2xl font-semibold">
+          {{ offre.titre }}
+        </h3>
+
+        <p class="text-sm xl:text-base 2xl:text-lg text-gray-600 mt-1">
+          {{ offre.type }} — {{ offre.lieu }}
+        </p>
+
+        <p class="text-xs xl:text-sm 2xl:text-base
+                  text-green-700 mt-4 underline">
+          Voir la description
+        </p>
       </div>
     </div>
 
@@ -30,19 +51,31 @@
     <div
       id="details-section"
       *ngIf="offreSelectionnee"
-      class="mt-10 p-6 rounded-xl bg-gray-50 border shadow"
+      class="mt-12
+             p-6 xl:p-8 2xl:p-10
+             rounded-2xl
+             bg-gray-50 border shadow-lg"
     >
-      <h3 class="text-xl font-bold mb-2">{{ offreSelectionnee.titre }}</h3>
-      <p class="text-gray-600 mb-4">
+      <h3 class="text-xl xl:text-2xl 2xl:text-3xl font-bold mb-2">
+        {{ offreSelectionnee.titre }}
+      </h3>
+
+      <p class="text-gray-600 xl:text-lg 2xl:text-xl mb-4">
         {{ offreSelectionnee.type }} — {{ offreSelectionnee.lieu }}
       </p>
 
-      <p class="text-gray-700 leading-relaxed whitespace-pre-line">
+      <p class="text-gray-700 leading-relaxed
+                text-base xl:text-lg 2xl:text-xl
+                whitespace-pre-line">
         {{ offreSelectionnee.description }}
       </p>
 
       <button
-        class="px-4 py-2 mt-5 bg-black text-white rounded"
+        class="px-5 xl:px-6 2xl:px-8
+               py-2 xl:py-3 2xl:py-4
+               mt-6
+               bg-black text-white rounded-lg
+               text-base xl:text-lg 2xl:text-xl"
         (click)="offreSelectionnee = null"
       >
         Fermer
@@ -51,37 +84,70 @@
 
   </div>
 
-
   <!-- 🟩 COLONNE DROITE : CANDIDATURE SPONTANÉE -->
-  <div class="bg-white rounded-xl p-6 shadow-xl h-fit sticky top-5">
-    <h2 class="text-xl font-bold mb-4 text-green-700">Candidature spontanée</h2>
+  <div
+    class="bg-white rounded-2xl
+           p-6 xl:p-8 2xl:p-10
+           shadow-2xl
+           h-fit sticky top-6"
+  >
+    <h2 class="text-xl xl:text-2xl 2xl:text-3xl
+               font-bold mb-6 text-green-700">
+      Candidature spontanée
+    </h2>
 
-    <form [formGroup]="form" (ngSubmit)="envoyer()" class="space-y-4">
+    <form [formGroup]="form" (ngSubmit)="envoyer()" class="space-y-4 xl:space-y-6">
 
-      <input type="text" placeholder="Nom complet"
-             formControlName="nom"
-             class="w-full p-3 border rounded">
+      <input
+        type="text"
+        placeholder="Nom complet"
+        formControlName="nom"
+        class="w-full p-3 xl:p-4 2xl:p-5
+               border rounded-lg
+               text-base xl:text-lg 2xl:text-xl"
+      >
 
-      <input type="email" placeholder="Email"
-             formControlName="email"
-             class="w-full p-3 border rounded">
+      <input
+        type="email"
+        placeholder="Email"
+        formControlName="email"
+        class="w-full p-3 xl:p-4 2xl:p-5
+               border rounded-lg
+               text-base xl:text-lg 2xl:text-xl"
+      >
 
-      <input type="text" placeholder="Téléphone"
-             formControlName="telephone"
-             class="w-full p-3 border rounded">
+      <input
+        type="text"
+        placeholder="Téléphone"
+        formControlName="telephone"
+        class="w-full p-3 xl:p-4 2xl:p-5
+               border rounded-lg
+               text-base xl:text-lg 2xl:text-xl"
+      >
 
-      <input type="text" placeholder="Poste souhaité"
-             formControlName="poste"
-             class="w-full p-3 border rounded">
+      <input
+        type="text"
+        placeholder="Poste souhaité"
+        formControlName="poste"
+        class="w-full p-3 xl:p-4 2xl:p-5
+               border rounded-lg
+               text-base xl:text-lg 2xl:text-xl"
+      >
 
       <div>
-        <label class="text-sm font-semibold mb-1 block">Déposer votre CV :</label>
+        <label class="text-sm xl:text-base 2xl:text-lg font-semibold mb-2 block">
+          Déposer votre CV :
+        </label>
         <input type="file" (change)="onFileChange($event)" class="w-full">
       </div>
 
       <button
         type="submit"
-        class="w-full py-3 bg-green-600 text-white rounded font-semibold"
+        class="w-full
+               py-3 xl:py-4 2xl:py-5
+               bg-green-600 text-white rounded-lg
+               font-semibold
+               text-base xl:text-lg 2xl:text-xl"
       >
         Envoyer
       </button>
