@@ -2,6 +2,7 @@
 import { Component, EventEmitter, Output, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { truncate } from 'node:fs';
 
 @Component({
   selector: 'app-header',
@@ -124,7 +125,7 @@ closeMobileMenu() {
   this.isMenuOpen = false;
   this.mobileDropdown = { sen: false, assistance: false, media: false, contact: false };
 }
-isDesktopMenuOpen = false;
+isDesktopMenuOpen = true;
 
 toggleDesktopMenu() {
   this.isDesktopMenuOpen = !this.isDesktopMenuOpen;
