@@ -13,15 +13,24 @@
       </div>
 
       <!-- Carrousel Publicitaire -->
-      <div class="relative w-full md:flex-1 
-                  h-16 md:h-24 
-                  overflow-hidden rounded-xl shadow bg-white">
+<!-- Carrousel Publicitaire -->
+<div class="relative
+            w-full md:flex-1 2xl:w-fit
+            h-16 md:h-24
+            overflow-hidden rounded-xl shadow bg-white
+            mx-auto">
+
         <a [href]="bannerLinks[bannerIndex]" target="_blank" class="block w-full h-full">
-          <img
-            [src]="bannerImages[bannerIndex]"
-            class="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
-            [style.opacity]="imageOpacity"
-            alt="Offres CSU">
+        <img
+  [src]="bannerImages[bannerIndex]"
+  class="absolute inset-0
+         w-full 2xl:w-auto
+         h-full
+         object-contain
+         transition-opacity duration-500"
+  [style.opacity]="imageOpacity"
+  alt="Offres CSU">
+
         </a>
 
         <!-- Boutons -->

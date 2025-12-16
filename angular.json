@@ -16,6 +16,8 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
+              "baseHref": "/angular/",
+              "deployUrl": "/angular/",
             "assets": [
               "src/favicon.ico",
               "src/assets",
