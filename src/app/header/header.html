@@ -12,43 +12,45 @@
              alt="Logo Agence" />
       </div>
 
-      <!-- Carrousel Publicitaire -->
 <!-- Carrousel Publicitaire -->
 <div class="relative
-            w-full md:flex-1 2xl:w-fit
+            inline-flex
             h-16 md:h-24
-            overflow-hidden rounded-xl shadow bg-white
+            overflow-hidden
+            rounded-xl shadow bg-white
             mx-auto">
 
-        <a [href]="bannerLinks[bannerIndex]" target="_blank" class="block w-full h-full">
-        <img
-  [src]="bannerImages[bannerIndex]"
-  class="absolute inset-0
-         w-full 2xl:w-auto
-         h-full
-         object-contain
-         transition-opacity duration-500"
-  [style.opacity]="imageOpacity"
-  alt="Offres CSU">
-        </a>
+  <a [href]="bannerLinks[bannerIndex]"
+     target="_blank"
+     class="block h-full">
 
-        <!-- Boutons -->
-        <button
-          (click)="previousBanner()"
-          class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/85 
-                 hover:bg-white text-green-700 px-2 py-1 md:px-3 md:py-1.5 
-                 rounded-full shadow-md text-sm md:text-base">
-          ‹
-        </button>
+    <img
+      [src]="bannerImages[bannerIndex]"
+      class="h-full w-auto object-contain
+             transition-opacity duration-500"
+      [style.opacity]="imageOpacity"
+      alt="Offres CSU">
+  </a>
 
-        <button
-          (click)="nextBanner()"
-          class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/85 
-                 hover:bg-white text-green-700 px-2 py-1 md:px-3 md:py-1.5 
-                 rounded-full shadow-md text-sm md:text-base">
-          ›
-        </button>
-      </div>
+  <!-- Boutons -->
+  <button
+    (click)="previousBanner()"
+    class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/85 
+           hover:bg-white text-green-700 px-2 py-1 md:px-3 md:py-1.5 
+           rounded-full shadow-md text-sm md:text-base">
+    ‹
+  </button>
+
+  <button
+    (click)="nextBanner()"
+    class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/85 
+           hover:bg-white text-green-700 px-2 py-1 md:px-3 md:py-1.5 
+           rounded-full shadow-md text-sm md:text-base">
+    ›
+  </button>
+
+</div>
+
 
       <!-- Icônes réseaux sociaux -->
       <div class="hidden sm:flex items-center gap-3 shrink-0
@@ -119,11 +121,12 @@
     <span class="block w-6 h-0.5 bg-green-700"></span>
   </button>
 </div>
-
-      <!-- Bouton Admin (conservé pour test) -->
+      <!-- Bouton Admin (test) -->
       <button class="text-white hidden sm:block" (click)="goToAdmin()">Admin</button>
     </div>
   </div>
+
+
   <!-- Menu Desktop -->
 <nav *ngIf="isDesktopMenuOpen"
      class="hidden lg:flex flex-col absolute top-0 left-0 w-full bg-white shadow-lg z-50 px-6 md:px-8 mt-32">
