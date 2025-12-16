@@ -2,7 +2,8 @@
 import { Component, EventEmitter, Output, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
-import { truncate } from 'node:fs';
+import { NavigationEnd } from '@angular/router';
+
 
 @Component({
   selector: 'app-header',
@@ -61,6 +62,12 @@ export class HeaderComponent implements AfterViewInit {
     private router: Router
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+      this.router.events.subscribe(event => {
+    if (event instanceof NavigationEnd) {
+      this.closeAllMenus();
+    }
+  });
+
   }
 
   toggleMenu() {
@@ -119,7 +126,11 @@ mobileDropdown = {
 };
 
 toggleMobileDropdown(menu: keyof typeof this.mobileDropdown) {
-  this.mobileDropdown[menu] = !this.mobileDropdown[menu];
+  Object.keys(this.mobileDropdown).forEach(key => {
+    this.mobileDropdown[key as keyof typeof this.mobileDropdown] = false;
+  });
+
+  this.mobileDropdown[menu] = true;
 }
 closeMobileMenu() {
   this.isMenuOpen = false;
@@ -130,7 +141,14 @@ isDesktopMenuOpen = true;
 toggleDesktopMenu() {
   this.isDesktopMenuOpen = !this.isDesktopMenuOpen;
 }
+closeAllMenus() {
+  this.isMenuOpen = false;
+  this.isDesktopMenuOpen = false;
 
+  Object.keys(this.mobileDropdown).forEach(key => {
+    this.mobileDropdown[key as keyof typeof this.mobileDropdown] = false;
+  });
+}
   
   // ✅ Navigation
   onAboutClick() { this.openAboutTimeline.emit(); }
