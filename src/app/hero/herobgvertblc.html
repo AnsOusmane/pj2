@@ -124,13 +124,30 @@
     </div>
   </div>
 </div>
+<section class="relative overflow-hidden">
 
+  <!-- BACKGROUND SHAPE -->
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <svg
+      viewBox="0 0 1440 900"
+      preserveAspectRatio="none"
+      class="w-full h-full">
+      <path
+        d="M1440 0
+           L1100 120
+           L800 380
+           L500 600
+           L200 820
+           L0 900
+           L0 0 Z"
+        fill="#16a34a" />
+    </svg>
+  </div>
 
-<!-- ========================================= -->
+ <!-- ========================================= -->
 <!--           SECTION — POURQUOI ?            -->
 <!-- ========================================= -->
-<section id="why"
-  class="relative w-full bg-white overflow-hidden pt-1">
+<section id="why" class="relative w-full bg-transparent overflow-hidden pt-1">
 
   <div class="relative z-10 
               w-full
@@ -247,7 +264,7 @@
   </div>
 
 </section>
-
+  </section>
 <!-- POPUP OVERLAY -->
 <div *ngIf="showPopup"
      class="fixed inset-0 flex items-center justify-center z-[9999] p-6"
@@ -292,8 +309,9 @@
 <!-- ========================================= -->
 <!--           SECTION — COMMENT ?             -->
 <!-- ========================================= -->
-<section id="how"
-  class="w-full bg-white flex items-center py-8 lg:py-12">
+ 
+<section id="how" 
+        class="w-full bg-transparent flex items-center py-8 lg:py-12">
 
   <div class="max-w-7xl 
               3xl:max-w-[1600px]
@@ -398,7 +416,6 @@
    SunuCsu.sn
   </a>
 </div>
-
         </div>
 
         <!-- ÉTAPE 2 -->
@@ -454,5 +471,4 @@
     </div>
   </div>
 </section>
-  <app-actualites></app-actualites>
-  <app-contact-form></app-contact-form>
+<app-contact-form></app-contact-form>

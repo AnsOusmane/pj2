@@ -20,6 +20,8 @@ import { AssuranceMaladieComponent } from './assurance-maladie/assurance-maladie
 import { AppelsOffreComponent } from './appels-offre/appels-offre';
 import { CarriereComponent } from './carriere/carriere';
 import { AdminComponent } from './admin/admin';
+import { ActualitesComponent } from './pages/actualites/actualites';
+import { NewsFormComponent } from './admin/news-form/news-form';
 
 export const routes: Routes = [
   { path: '', component: HeroComponent }, 
@@ -42,6 +44,8 @@ export const routes: Routes = [
   { path: 'appels-offre', component: AppelsOffreComponent },
   { path: 'carriere', component: CarriereComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'actualites', component: ActualitesComponent },
+  { path: 'admin/news', component: NewsFormComponent },
 //{
 //   path: 'actus',
 //   loadComponent: () =>

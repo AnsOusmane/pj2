@@ -1,13 +1,15 @@
 import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { isPlatformBrowser, NgIf } from '@angular/common';
 import { ContactFormComponent } from "../contact-form/contact-form";
-//import { ActusPageComponent } from '../actus/actus-page';
+import { ActualitesComponent } from '../pages/actualites/actualites'; 
+import { NewsFormComponent } from '../admin/news-form/news-form';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [NgIf, ContactFormComponent],
-  //ActusPageComponent
+  imports: [NgIf, ContactFormComponent,
+    ActualitesComponent,
+    NewsFormComponent],
   templateUrl: './hero.html',
   styleUrls: ['./hero.css'],
 })

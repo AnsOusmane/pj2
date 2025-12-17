@@ -1,0 +1,47 @@
+<section class="max-w-7xl mx-auto px-4 py-16">
+  <h1 class="text-3xl font-bold text-green-700 mb-8">Actualités</h1>
+
+  <swiper-container
+    #swiper
+    slides-per-view="3"
+    centered-slides="true"
+    loop="true"
+    speed="800"
+    autoplay-delay="5000"
+    autoplay-disable-on-interaction="false"
+    autoplay="true"
+    navigation
+    pagination
+    class="relative"
+    style="--swiper-navigation-color: #16a34a; --swiper-pagination-color: #16a34a;"
+  >
+    <swiper-slide *ngFor="let n of news; let i = index" class="cursor-pointer select-none">
+      <div
+        class="relative rounded-lg overflow-hidden shadow-lg border-4 border-green-600/60 hover:border-green-600 transition-transform duration-500"
+        [class.scale-110]="swiperActiveIndex === i"
+        style="will-change: transform;"
+      >
+        <img
+          *ngIf="n.image"
+          [src]="'http://localhost:3000' + n.image"
+          alt="{{ n.title }}"
+          class="w-full h-64 object-cover"
+        />
+        <div
+          class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 p-4 text-white flex flex-col gap-2"
+        >
+          <button
+            *ngIf="swiperActiveIndex === i"
+            class="bg-white text-green-700 font-bold px-4 py-2 rounded-full w-max mb-2 hover:bg-green-100 transition"
+          >
+            Stream now
+          </button>
+          <div>
+            <strong class="text-lg">{{ n.title }}</strong>
+            <p class="text-sm line-clamp-2">{{ n.content }}</p>
+          </div>
+        </div>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+</section>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -8,4 +8,11 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
   templateUrl: './admin.html',
 })
-export class AdminComponent {}
+export class AdminComponent {
+
+  constructor(private router: Router) {}
+
+  goToAddNews() {
+    this.router.navigate(['/admin/news']);
+  }
+}
