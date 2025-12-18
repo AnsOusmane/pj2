@@ -136,14 +136,8 @@ closeMobileMenu() {
   this.isMenuOpen = false;
   this.mobileDropdown = { sen: false, assistance: false, media: false, contact: false };
 }
-isDesktopMenuOpen = true;
-
-toggleDesktopMenu() {
-  this.isDesktopMenuOpen = !this.isDesktopMenuOpen;
-}
 closeAllMenus() {
   this.isMenuOpen = false;
-  this.isDesktopMenuOpen = false;
 
   Object.keys(this.mobileDropdown).forEach(key => {
     this.mobileDropdown[key as keyof typeof this.mobileDropdown] = false;
