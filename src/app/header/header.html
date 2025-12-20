@@ -11,16 +11,16 @@
       <div class="hidden lg:flex items-center shrink-0 cursor-pointer"
            (click)="GoHomeClick()">
         <img src="assets/logo.png"
-             class="h-16 w-auto md:h-24 object-contain"
+             class="h-16 w-auto md:h-32 object-contain"
              alt="Logo Agence" />
       </div>
 
 <!-- Carrousel Publicitaire -->
 <div class="relative
             inline-flex
-            h-16 md:h-24
+            h-14 md:h-20 mt-4
             overflow-hidden
-            rounded-xl shadow bg-white
+            rounded-md shadow bg-white
             mx-auto">
 
   <a [href]="bannerLinks[bannerIndex]"
@@ -38,16 +38,16 @@
   <!-- Boutons -->
   <button
     (click)="previousBanner()"
-    class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/85 
-           hover:bg-white text-green-700 px-2 py-1 md:px-3 md:py-1.5 
+    class="absolute left-2 top-1/2 -translate-y-1/2 bg-green-600/85 
+           hover:bg-green-600 text-white px-2 py-1 md:px-3 md:py-1.5 
            rounded-full shadow-md text-sm md:text-base">
     ‹
   </button>
 
   <button
     (click)="nextBanner()"
-    class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/85 
-           hover:bg-white text-green-700 px-2 py-1 md:px-3 md:py-1.5 
+    class="absolute right-2 top-1/2 -translate-y-1/2 bg-green-600/85 
+           hover:bg-green-600 text-white px-2 py-1 md:px-3 md:py-1.5 
            rounded-full shadow-md text-sm md:text-base">
     ›
   </button>
@@ -58,7 +58,7 @@
       <!-- Icônes réseaux sociaux -->
       <div class="hidden sm:flex items-center gap-3 shrink-0
                   px-3 py-2 mt-4 rounded-xl
-                  bg-white/60 md:bg-white/20
+                  bg-white md:bg-white
                   backdrop-blur-md border border-white/30 shadow-md">
 
         <!-- Facebook -->
@@ -124,69 +124,70 @@
   <!-- Menu Desktop -->
 <nav
   class="hidden lg:flex flex-col
-         w-full bg-white shadow-lg z-40
-         px-6 md:px-8 pt-1">
+         bg-green-600 z-40
+         pl-4 mr-10 md:pl-8 pt-1 mt-1
+         ml-10 pr-70 rounded-xl">
     <!-- Navigation principale desktop -->
-    <div class="flex items-center gap-x-6 text-[21px] font-sharetech w-full">
+    <div class="flex items-center gap-x-6 text-[21px] font-sharetech">
       <!-- Dropdown La SEN-CSU -->
       <div class="relative group">
-        <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+        <button class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-white">
           La Sen-CSU ▾
         </button>
         <div
-          class="absolute left-0 top-full w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50
+          class="absolute left-0 top-full w-56 bg-green-600 shadow-lg ring-1 ring-gray-900/10 z-50
                  opacity-0 invisible group-hover:opacity-100 group-hover:visible
                  transition-all duration-200"
         >
-          <ul class="flex flex-col text-green-700 font-medium">
+          <ul class="flex flex-col text-white font-medium">
             <li>
-              <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="onAboutClick()">
+              <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="onAboutClick()">
                 A propos de l'agence
               </button>
             </li>
             <li>
-              <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="openMissionsvision.emit()">
+              <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="openMissionsvision.emit()">
                 Vision et Missions
               </button>
             </li>
             <li>
-              <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="showOrganigrammeClick()">
+              <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="showOrganigrammeClick()">
                 Organigramme
               </button>
             </li>
             <li>
-              <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToAppelsOffre()">
+              <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToAppelsOffre()">
                 Appels d'offres
               </button>
             </li>
 
             <!-- Sous-dropdown Publications -->
             <li class="relative group/publications">
-              <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white flex justify-between items-center">
+              <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700 flex justify-between items-center">
                 Publications <span class="text-sm">></span>
               </button>
               <ul
-                class="absolute left-full top-0 ml-1 w-56 bg-white border border-gray-200 shadow-lg
+                class="absolute left-full top-0 ml-1 w-56 bg-green-600 border border-gray-200 shadow-lg
                        opacity-0 invisible group-hover/publications:opacity-100 group-hover/publications:visible
                        transition-all duration-200 z-50"
               >
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToRapports()">
+                  <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToRapports()">
                     Rapports officiels
                   </button>
                 </li>
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToGuide()">
+                  <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToGuide()">
                     Guides
                   </button>
                 </li>
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToDecret()">
+                  <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToDecret()">
                     Décrets
                   </button>
                 </li>
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToManuel()">
+                  <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToManuel()">
                     Manuels d'audit
                   </button>
                 </li>
@@ -199,31 +200,31 @@
       <!-- Assurance maladie -->
       <button
         (click)="goToAssuranceMaladie()"
-        class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500"
+        class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500"
       >
         Assurance maladie ▾
       </button>
 
       <!-- Dropdown Assistance médicale -->
       <div class="relative group">
-        <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+        <button class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-white">
           Assistance médicale ▾
         </button>
         <div
-          class="absolute left-0 top-full w-[264px] bg-white shadow-lg ring-1 ring-gray-900/10 z-50
+          class="absolute left-0 top-full w-[264px] bg-green-600 shadow-lg ring-1 ring-gray-900/10 z-50
                  opacity-0 invisible group-hover:opacity-100 group-hover:visible
                  transition-all duration-200"
         >
-          <ul class="flex flex-col text-green-700 font-medium">
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToZero5ans()">0 à 5 ans</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToCesarienne()">Césarienne</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToDialyse()">Dialyse</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToPlanSesame()">Plan Sésame</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white">Bénéficiaires PNBSF</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white">Carte Égalité des chances</button></li>
+          <ul class="flex flex-col text-white font-medium">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToZero5ans()">0 à 5 ans</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToCesarienne()">Césarienne</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToDialyse()">Dialyse</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToPlanSesame()">Plan Sésame</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700">Bénéficiaires PNBSF</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700">Carte Égalité des chances</button></li>
             <li>
               <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block w-full">
-                <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white">Nos pharmacies partenaires</button>
+                <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700">Nos pharmacies partenaires</button>
               </a>
             </li>
           </ul>
@@ -232,47 +233,47 @@
       
       <!-- Dropdown Espace Média -->
       <div class="relative group">
-        <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+        <button class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-white">
           Espace Média ▾
         </button>
         <div
-          class="absolute left-0 top-full w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50
+          class="absolute left-0 top-full w-56 bg-green-600 shadow-lg ring-1 ring-gray-900/10 z-50
                  opacity-0 invisible group-hover:opacity-100 group-hover:visible
                  transition-all duration-200"
         >
-          <ul class="flex flex-col text-green-700 font-medium">
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToComuPresse()">Communiqués</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToMedia()">Dossiers média</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToBankImg()">Banque d'images</button></li>
+          <ul class="flex flex-col text-white font-medium">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToComuPresse()">Communiqués</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToMedia()">Dossiers média</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToBankImg()">Banque d'images</button></li>
           </ul>
         </div>
       </div>
       
       <!-- Dropdown Assistance & Contact -->
       <div class="relative group">
-        <button class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-green-500">
+        <button class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-white">
           Assistance et Contact ▾
         </button>
         <div
-          class="absolute left-0 top-full w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50
+          class="absolute left-0 top-full w-56 bg-green-600 shadow-lg ring-1 ring-gray-900/10 z-50
                  opacity-0 invisible group-hover:opacity-100 group-hover:visible
                  transition-all duration-200"
         >
-          <ul class="flex flex-col text-green-700 font-medium">
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToContact()">Nous contacter</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white" (click)="goToSr()">Localiser une agence</button></li>
+          <ul class="flex flex-col text-white font-medium">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToContact()">Nous contacter</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToSr()">Localiser une agence</button></li>
           </ul>
         </div>
       </div>
 
       <!-- Carrière -->
-      <button (click)="goToCarriere()" class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">
+      <button (click)="goToCarriere()" class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">
         Carrière
       </button> 
 
       <!-- Bouton Nous soutenir -->
       <a href="https://sunucsu.sn/initiatives"
-        class="border-2 border-yellow-500 text-yellow-500 font-semibold px-2.5 py-1.5 rounded-full mb-2 bg-white hover:bg-yellow-400 hover:text-white transition text-[18px]"
+        class="border-2 border-yellow-500 text-yellow-500 font-semibold px-2.5 py-1.5 rounded-full mb-2 bg-green-600 hover:bg-yellow-400 hover:text-green-700 transition text-[18px]"
       >
         Nous soutenir
       </a>
@@ -293,7 +294,7 @@
     
     <!-- Bouton menu hamburger -->
     <button
-      class="flex flex-col gap-1 p-2 border rounded-md text-green-700 font-sharetech"
+      class="flex flex-col gap-1 p-2 border rounded-md text-white font-sharetech"
       (click)="toggleMenu()"
     >
       <span class="block w-6 h-0.5 bg-green-700"></span>
@@ -305,9 +306,9 @@
   <!-- Menu Mobile Optimisé -->
   <div
     *ngIf="isMenuOpen"
-    class="lg:hidden absolute top-16 left-0 w-full rounded-b-lg bg-white shadow-lg border-t border-gray-200 z-50"
+    class="lg:hidden absolute top-16 left-0 w-full rounded-b-lg bg-green-600 shadow-lg border-t border-gray-200 z-50"
   >
-    <ul class="flex flex-col p-4 space-y-3 text-green-700 font-semibold text-[18px]">
+    <ul class="flex flex-col p-4 space-y-3 text-white font-semibold text-[18px]">
       <!-- SEN-CSU -->
       <li>
         <button class="w-full text-left py-2 cursor-pointer flex justify-between items-center"
@@ -406,7 +407,7 @@
       <li class="pt-3">
         <a href="https://sunucsu.sn/initiatives"
           class="border-2 border-yellow-500 text-yellow-500 font-semibold px-3 py-2 
-                 rounded-full w-full text-center bg-white hover:bg-yellow-400 hover:text-white transition"
+                 rounded-full w-full text-center bg-green-600 hover:bg-yellow-400 hover:text-green-700 transition"
         >
           Nous soutenir
         </a>

@@ -1,4 +1,4 @@
-<div class="relative w-full">
+<div class="relative w-full bg-white">
 
   <!-- Version Mobile -->
   <section class="block md:hidden w-full bg-white">
@@ -31,9 +31,9 @@
   </section>
 
   <!-- Version Desktop -->
-<div class="hidden md:flex w-full pb-14 2xl:pb-52 ">
+<div class="hidden md:flex w-full pb-14 2xl:pb-52 mt-3">
   <!-- Cadre blanc arrondi avec border -->
-  <div class="relative w-full border-t-[10px] 2xl:border-t-[10px] border-l-[40px] 2xl:border-l-[40px] border-r-[40px] 2xl:border-r-[40px] border-white flex flex-col bg-white">
+  <div class="relative w-full border-t-[0px] 2xl:border-t-[10px] border-l-[40px] 2xl:border-l-[40px] border-r-[40px] 2xl:border-r-[40px] border-white flex flex-col bg-white">
     
     <!-- Background full -->
     <div class=" rounded-[20px] absolute  inset-0 bg-cover bg-center z-0 h-[calc(100vh-190px)] 2xl:h-[calc(100vh-278px)]" style="background-image: url('/assets/bg.png');"></div>
@@ -79,13 +79,12 @@
 <!-- ========================================= -->
 <section
   id="why"
-  class="relative w-full bg-transparent overflow-hidden
+  class="relative bg-transparent overflow-hidden
          mt-24 2xl:mt-[66px]
          before:absolute before:inset-0
          before:rounded-[3rem]
          before:border before:border-green-700/10
-         before:shadow-[0_0_60px_rgba(21,128,61,0.08)]
-         before:pointer-events-none">
+         before:pointer-events-none mx-8 mb-2">
 
 
   <div class="relative z-10 
@@ -100,9 +99,9 @@
 
     <!-- TITRE PRINCIPAL -->
     <h2
-      class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-green-700 text-center mb-16
+      class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white text-center mb-16
              3xl:text-6xl 4xl:text-7xl 5xl:text-[8rem]
-             3xl:mb-18 4xl:mb-26 5xl:mb-36  csu-title">
+             3xl:mb-18 4xl:mb-26 5xl:mb-36  csu-title bg-green-600 rounded-xl p-3">
       Pourquoi s’inscrire ?
     </h2>
     <!-- GRID -->
@@ -113,7 +112,7 @@
              w-full place-items-stretch">
       <!-- ITEM 1 -->
       <div class="flex flex-col items-center text-center cursor-pointer transition-transform
-                  hover:-translate-y-2 hover:scale-105 h-full"
+                  hover:-translate-y-2 hover:scale-105 h-full border 2 border-green-600 rounded-xl p-4"
            (click)="onCardClick('acces')">
         <div class="w-full flex justify-center mb-4 mt-3">
           <img src="assets/ps1.png"
@@ -136,7 +135,7 @@
 
       <!-- ITEM 2 -->
       <div class="flex flex-col items-center text-center cursor-pointer transition-transform
-                  hover:-translate-y-2 hover:scale-105 h-full"
+                  hover:-translate-y-2 hover:scale-105 h-full border 2 border-green-600 rounded-xl p-4"
            (click)="onCardClick('prix')">
         <div class="w-full flex justify-center mb-4 mt-3">
           <img src="assets/ps2.png"
@@ -159,7 +158,7 @@
 
       <!-- ITEM 3 -->
       <div class="flex flex-col items-center text-center cursor-pointer transition-transform
-                  hover:-translate-y-2 hover:scale-105 h-full"
+                  hover:-translate-y-2 hover:scale-105 h-full border 2 border-green-600 rounded-xl p-4"
            (click)="onCardClick('demarches')">
         <div class="w-full flex justify-center mb-4 mt-3">
           <img src="assets/ps3.png"
@@ -181,7 +180,7 @@
       </div>
       <!-- ITEM 4 -->
       <div class="flex flex-col items-center text-center cursor-pointer transition-transform
-                  hover:-translate-y-2 hover:scale-105 h-full"
+                  hover:-translate-y-2 hover:scale-105 h-full border 2 border-green-600 rounded-xl p-4"
            (click)="onCardClick('protection')">
         <div class="w-full flex justify-center mb-4 mt-3">
           <img src="assets/ps4.png"
@@ -249,7 +248,9 @@
 <!--           SECTION — COMMENT ?             -->
 <!-- ========================================= -->
 <section id="how"
-  class="w-full bg-white flex items-center py-8 lg:py-12">
+  class="bg-white flex items-center py-8 lg:py-12
+border 1 border-green-700/10 rounded-3xl mx-8"
+  >
 
   <div class="max-w-7xl 
               3xl:max-w-[1600px]
@@ -327,9 +328,9 @@
 
       <!-- TITRE DESKTOP -->
       <h2 class="hidden lg:block 
-                 text-4xl 3xl:text-5xl 4xl:text-6xl 
-                 font-extrabold csu-title text-green-700 
-                 mb-10">
+          text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white text-center 
+             3xl:text-6xl 4xl:text-7xl 5xl:text-[8rem]
+             3xl:mb-18 4xl:mb-26 5xl:mb-36  csu-title bg-green-600 rounded-xl p-3 mb-10">
         Comment s’inscrire ?
       </h2>
 

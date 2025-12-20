@@ -94,7 +94,7 @@ export class HeaderComponent implements AfterViewInit {
   startBannerAuto() {
     this.bannerInterval = setInterval(() => {
       this.nextBanner();
-    }, 3000);
+    }, 18000);
   }
 
   // ✅ Partenaires
