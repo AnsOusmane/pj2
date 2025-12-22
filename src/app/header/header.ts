@@ -120,6 +120,7 @@ export class HeaderComponent implements AfterViewInit {
 
 mobileDropdown = {
   sen: false,
+    assurance: false,
   assistance: false,
   media: false,
   contact: false
@@ -134,7 +135,7 @@ toggleMobileDropdown(menu: keyof typeof this.mobileDropdown) {
 }
 closeMobileMenu() {
   this.isMenuOpen = false;
-  this.mobileDropdown = { sen: false, assistance: false, media: false, contact: false };
+  this.mobileDropdown = { sen: false,   assurance: false, assistance: false, media: false, contact: false };
 }
 closeAllMenus() {
   this.isMenuOpen = false;
@@ -167,5 +168,24 @@ closeAllMenus() {
   goToAppelsOffre() { this.router.navigate(['/appels-offre']); }
   goToCarriere() { this.router.navigate(['/carriere']); }
   goToAdmin() { this.router.navigate(['/admin']); }
+
+  goToCSU() {
+  this.router.navigate(['/assurance-maladie'], {
+    queryParams: { type: 'poste' }
+  });
+}
+
+goToCSUEleve() {
+  this.router.navigate(['/assurance-maladie'], {
+    queryParams: { type: 'eleve' }
+  });
+}
+
+goToCSUDaara() {
+  this.router.navigate(['/assurance-maladie'], {
+    queryParams: { type: 'daara' }
+  });
+}
+
 
 }

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-assurance-maladie',
@@ -7,13 +8,16 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './assurance-maladie.html',
 })
-export class AssuranceMaladieComponent {
+export class AssuranceMaladieComponent implements OnInit {
 
   selected: string | null = null;
+  selectedKey: string | null = null;
 
-  data: any = {
-    poste: `<h2 class="text-3xl font-bold text-green-700 mb-4">CSU</h2>
+  constructor(private route: ActivatedRoute) {}
 
+  data: Record<string, string> = {
+    poste: `
+    <h2 class="text-3xl font-bold text-green-700 mb-4">CSU</h2>
 <p class="mb-4">
   <strong>Qu’est-ce que l’assurance maladie universelle ?</strong><br>
   L’assurance maladie est un dispositif qui vise à protéger les individus contre le risque financier lié à la maladie.
@@ -116,11 +120,19 @@ export class AssuranceMaladieComponent {
     `
   };
 
- selectedKey: string | null = null;
+  ngOnInit(): void {
+    // ✅ Écoute les paramètres venant du header
+    this.route.queryParams.subscribe(params => {
+      const type = params['type'];
 
-showContent(key: string) {
-  this.selectedKey = key;
-  this.selected = this.data[key];
-}
+      if (type && this.data[type]) {
+        this.showContent(type);
+      }
+    });
+  }
 
+  showContent(key: string): void {
+    this.selectedKey = key;
+    this.selected = this.data[key];
+  }
 }

@@ -120,7 +120,6 @@
     </div>
   </div>
 
-
   <!-- Menu Desktop -->
 <nav
   class="hidden lg:flex flex-col
@@ -197,13 +196,50 @@
         </div>
       </div>
 
-      <!-- Assurance maladie -->
-      <button
-        (click)="goToAssuranceMaladie()"
-        class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500"
-      >
-        Assurance maladie ▾
-      </button>
+<!-- Dropdown Assurance Maladie -->
+<div class="relative group">
+  <button
+    class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-white"
+  >
+    Assurance Maladie ▾
+  </button>
+
+  <div
+    class="absolute left-0 top-full w-56 bg-green-600 shadow-lg ring-1 ring-gray-900/10 z-50
+           opacity-0 invisible group-hover:opacity-100 group-hover:visible
+           transition-all duration-200"
+  >
+    <ul class="flex flex-col text-white font-medium">
+      <li>
+        <button
+          class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700"
+          (click)="goToCSU()"
+        >
+          CSU
+        </button>
+      </li>
+
+      <li>
+        <button
+          class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700"
+          (click)="goToCSUEleve()"
+        >
+          CSU Élève
+        </button>
+      </li>
+
+      <li>
+        <button
+          class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700"
+          (click)="goToCSUDaara()"
+        >
+          CSU Daara
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
 
       <!-- Dropdown Assistance médicale -->
       <div class="relative group">
@@ -362,10 +398,36 @@
 
       <!-- Assurance Maladie -->
       <li>
-        <button (click)="goToAssuranceMaladie(); closeMobileMenu()"
-                class="block w-full text-left py-2">
-          Assurance maladie
-        </button>
+<!-- Mobile Assurance Maladie -->
+<button
+  (click)="toggleMobileDropdown('assurance')"
+  class="w-full text-left py-3 text-white font-semibold"
+>
+  Assurance Maladie ▾
+</button>
+
+<div *ngIf="mobileDropdown.assurance" class="pl-4 space-y-2">
+  <button
+    (click)="goToCSU(); closeMobileMenu()"
+    class="block text-white/90"
+  >
+    CSU
+  </button>
+
+  <button
+    (click)="goToCSUEleve(); closeMobileMenu()"
+    class="block text-white/90"
+  >
+    CSU Élève
+  </button>
+
+  <button
+    (click)="goToCSUDaara(); closeMobileMenu()"
+    class="block text-white/90"
+  >
+    CSU Daara
+  </button>
+</div>
       </li>
 
       <!-- Espace Média -->
