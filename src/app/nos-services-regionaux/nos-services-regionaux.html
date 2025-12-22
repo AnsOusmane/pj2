@@ -9,7 +9,7 @@
   @if (nearest) {
     <div class="nearest-box mb-6">
       <h2 class="text-xl font-semibold text-green-700 mb-2">
-        📍 SR le plus proche : {{ nearest.region }}
+        📍 Service Régional le plus proche : {{ nearest.region }}
       </h2>
 
       <p><strong>Adresse : </strong>{{ nearest.adresse }}</p>
@@ -31,7 +31,7 @@
  <!-- Carte Leaflet -->
   <div id="map" class="map mb-6"></div>
 
-  <h2 class="text-2xl font-semibold text-green-700 mt-8 mb-4">Tous nos SR</h2>
+  <h2 class="text-2xl font-semibold text-green-700 mt-8 mb-4">Tous nos Services Régionaux</h2>
 
   <div class="grid md:grid-cols-2 gap-6">
     @for (sr of services; track $index) {

@@ -35,24 +35,38 @@
       alt="Offres CSU">
   </a>
 
-  <!-- Boutons -->
+  <!-- Bouton précédent -->
   <button
     (click)="previousBanner()"
-    class="absolute left-2 top-1/2 -translate-y-1/2 bg-green-600/85 
-           hover:bg-green-600 text-white px-2 py-1 md:px-3 md:py-1.5 
-           rounded-full shadow-md text-sm md:text-base">
+    aria-label="Précédent"
+    class="absolute left-0 top-1/2 -translate-y-1/2
+           w-10 h-10 md:w-14 md:h-14
+           flex items-center justify-center
+           hover:bg-green-700
+           text-green-600
+           transition-all duration-300
+           hover:scale-110
+           text-4xl md:text-8xl pb-8">
     ‹
   </button>
 
+  <!-- Bouton suivant -->
   <button
     (click)="nextBanner()"
-    class="absolute right-2 top-1/2 -translate-y-1/2 bg-green-600/85 
-           hover:bg-green-600 text-white px-2 py-1 md:px-3 md:py-1.5 
-           rounded-full shadow-md text-sm md:text-base">
+    aria-label="Suivant"
+    class="absolute right-0 top-1/2 -translate-y-1/2
+           w-10 h-10 md:w-14 md:h-14
+           flex items-center justify-center
+          hover:bg-green-700
+           text-green-600
+           transition-all duration-300
+           hover:scale-110
+           text-4xl md:text-8xl pb-8">
     ›
   </button>
 
 </div>
+
 
 
       <!-- Icônes réseaux sociaux -->
