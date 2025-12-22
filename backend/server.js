@@ -5,8 +5,6 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/uploads', express.static('uploads')); // 👉 permet à Angular d’accéder aux images
-
-app.use('/api/news', require('./routes/news.routes'));
-
+app.use('/uploads', express.static('uploads'));
+app.use('/api/rapports_officiels', require('./routes/rapportsofficiels.routes'));
 app.listen(3000, () => console.log('🚀 API sur http://localhost:3000'));

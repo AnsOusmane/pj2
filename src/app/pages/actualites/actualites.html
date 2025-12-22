@@ -7,21 +7,22 @@
          bg-green-600 rounded-xl px-6 py-3 csu-title">
   Actualités
 </h2>
+<swiper-container
+  *ngIf="news.length > 0"
+  #swiper
+  slides-per-view="3"
+  centered-slides="true"
+  loop="true"
+  speed="800"
+  autoplay-delay="5000"
+  autoplay-disable-on-interaction="false"
+  autoplay="true"
+  navigation
+  pagination
+  class="relative"
+  style="--swiper-navigation-color: #16a34a; --swiper-pagination-color: #16a34a;"
+>
 
-  <swiper-container
-    #swiper
-    slides-per-view="3"
-    centered-slides="true"
-    loop="true"
-    speed="800"
-    autoplay-delay="5000"
-    autoplay-disable-on-interaction="false"
-    autoplay="true"
-    navigation
-    pagination
-    class="relative"
-    style="--swiper-navigation-color: #16a34a; --swiper-pagination-color: #16a34a;"
-  >
     <swiper-slide *ngFor="let n of news; let i = index" class="cursor-pointer select-none">
       <div
         class="relative rounded-lg overflow-hidden shadow-lg border-2 border-green-600/60 hover:border-green-600 transition-transform duration-500"
