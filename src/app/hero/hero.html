@@ -70,10 +70,6 @@
   </div>
 </div>
 
-
-
-
-
 <!-- ========================================= -->
 <!--           SECTION — POURQUOI ?            -->
 <!-- ========================================= -->
@@ -200,7 +196,6 @@
       </div>
     </div>
   </div>
-
 </section>
 
 <!-- POPUP OVERLAY -->
@@ -219,8 +214,6 @@
   <span class="cute-dot yellow"></span>
   <span class="cute-dot green"></span>
 </div>-->
-
-
     <!-- CLOSE BUTTON -->
     <button (click)="closePopup()"
             class="absolute top-3 right-3 text-white hover:text-gray-200 
@@ -237,12 +230,9 @@
       <div class="text-white text-lg leading-relaxed font-sharetech"
            [innerHTML]="popupText">
       </div>
-
     </div>
   </div>
 </div>
-
-
 
 <!-- ========================================= -->
 <!--           SECTION — COMMENT ?             -->
@@ -251,15 +241,13 @@
   class="bg-white flex items-center py-8 lg:py-12
 border 1 border-green-700/10 rounded-3xl mx-8"
   >
-
   <div class="max-w-7xl 
               3xl:max-w-[1600px]
               4xl:max-w-[1900px]
               5xl:max-w-[2300px]
-              mx-auto 
-              grid grid-cols-1 lg:grid-cols-2 gap-16 
+              mx-auto
+              grid grid-cols-1 lg:grid-cols-2 gap-16
               px-6 w-full">
-
     <!-- TITRE MOBILE -->
     <h2 class="order-1 lg:order-none 
                text-3xl sm:text-4xl font-extrabold csu-title text-green-700 
@@ -267,7 +255,6 @@ border 1 border-green-700/10 rounded-3xl mx-8"
       Comment s’inscrire ?
     </h2>
 <div class="order-2 lg:order-none flex justify-center items-center">
-
   <div class="relative 
               w-[85vw]
               max-w-[420px]
@@ -285,13 +272,12 @@ border 1 border-green-700/10 rounded-3xl mx-8"
               4xl:rounded-[60px]">
 
     <!-- Cadre extérieur -->
-    <div class="absolute inset-0 
-                rounded-[40px] 
-                lg:rounded-[50px] 
+    <div class="absolute inset-0
+                rounded-[40px]
+                lg:rounded-[50px]
                 4xl:rounded-[60px]
-                border-4 border-gray-800 
+                border-4 border-gray-800
                 z-20 pointer-events-none"></div>
-
     <!-- Notch -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 
                 w-28 lg:w-32 4xl:w-40 
@@ -345,17 +331,16 @@ border 1 border-green-700/10 rounded-3xl mx-8"
             <span class="text-2xl transition-transform"
                   [class.rotate-180]="accordionOpen === 1">⌄</span>
           </button>
-<div class="p-5 font-exo2 3xl:text-lg" *ngIf="accordionOpen === 1">
+  <div class="p-5 font-exo2 3xl:text-lg" *ngIf="accordionOpen === 1">
    Créez votre compte sur 
-  <a 
-    href="https://sunuCsu.sn" 
+    <a 
+    href="https://sunucsu.sn" 
     target="_blank" 
     class="text-gray-700 hover:text-green-700 underline transition"
-  >
+    >
    SunuCsu.sn
-  </a>
-</div>
-
+    </a>
+  </div>
         </div>
 
         <!-- ÉTAPE 2 -->
@@ -411,5 +396,5 @@ border 1 border-green-700/10 rounded-3xl mx-8"
     </div>
   </div>
 </section>
-  <app-actualites></app-actualites>
+  <!-- <app-actualites></app-actualites> -->
   <app-contact-form></app-contact-form>

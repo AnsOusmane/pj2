@@ -46,6 +46,7 @@ export const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'actualites', component: ActualitesComponent },
   { path: 'admin/news', component: NewsFormComponent },
+  { path: 'pages/actualites', component: ActualitesComponent },
 //{
 //   path: 'actus',
 //   loadComponent: () =>

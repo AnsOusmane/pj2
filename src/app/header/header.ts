@@ -168,6 +168,7 @@ closeAllMenus() {
   goToAppelsOffre() { this.router.navigate(['/appels-offre']); }
   goToCarriere() { this.router.navigate(['/carriere']); }
   goToAdmin() { this.router.navigate(['/admin']); }
+  goToActualites() { this.router.navigate(['pages/actualites']); }
 
   goToCSU() {
   this.router.navigate(['/assurance-maladie'], {
@@ -186,6 +187,5 @@ goToCSUDaara() {
     queryParams: { type: 'daara' }
   });
 }
-
 
 }

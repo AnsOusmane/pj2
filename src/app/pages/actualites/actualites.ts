@@ -20,16 +20,24 @@ export class ActualitesComponent implements AfterViewInit {
 
   constructor(private newsService: NewsService) {}
 
-  ngOnInit() {
-    this.newsService.getNews().subscribe(data => {
-      this.news = data;
-    });
-  }
+ngOnInit() {
+  this.newsService.getNews().subscribe(data => {
+    this.news = data;
 
-  ngAfterViewInit() {
-    const swiperEl = this.swiperRef.nativeElement;
-    swiperEl.addEventListener('slidechange', (event: any) => {
-      this.swiperActiveIndex = event.detail[0].realIndex;
+    setTimeout(() => {
+      if (this.swiperRef?.nativeElement?.swiper) {
+        this.swiperRef.nativeElement.swiper.update();
+      }
     });
-  }
+  });
+}
+ ngAfterViewInit() {
+  if (!this.swiperRef) return;
+
+  const swiperEl = this.swiperRef.nativeElement;
+
+  swiperEl.addEventListener('slidechange', (event: any) => {
+    this.swiperActiveIndex = event.detail[0].realIndex;
+  });
+}
 }
