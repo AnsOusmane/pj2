@@ -21,4 +21,10 @@ export class AdminComponent {
      goToAddDecret() {
     this.router.navigate(['/admin/decrets-form']);
   }
+         goToAddCom() {
+    this.router.navigate(['/admin/communiques-form']);
+  }
+           goToAddImg() {
+    this.router.navigate(['/admin/banque_d_image-form']);
+  }
 }

@@ -8,7 +8,7 @@ const db = require('../db');
 // Configuration du stockage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = 'uploads/decrets';
+    const dir = 'uploads/communiques';
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// POST : ajouter un décret officiel
+// POST : ajouter un communiqué officiel
 router.post('/', upload.single('file'), (req, res) => {
   const { title, description } = req.body;
   const file = req.file?.filename;
@@ -29,7 +29,7 @@ router.post('/', upload.single('file'), (req, res) => {
   }
 
   const sql = `
-    INSERT INTO decrets (title, description, file)
+    INSERT INTO communiques (title, description, file)
     VALUES (?, ?, ?)
   `;
 
@@ -39,10 +39,10 @@ router.post('/', upload.single('file'), (req, res) => {
       return res.status(500).json({ message: 'Erreur lors de l’enregistrement' });
     }
 
-    console.log('✅ Décret enregistré ID:', result.insertId);
+    console.log('✅ communiqué enregistré ID:', result.insertId);
 
     res.json({
-      message: 'Décret ajouté avec succès',
+      message: 'communiqué ajouté avec succès',
       id: result.insertId,
       data: { title, description, file }
     });

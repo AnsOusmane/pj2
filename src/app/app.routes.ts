@@ -23,6 +23,8 @@ import { AdminComponent } from './admin/admin';
 // import { ActualitesComponent } from './pages/actualites/actualites';
 import { RapportsOfficielsFormComponent } from './admin/rapports-officiels-form/rapports-officiels-form';
 import { DecretsOfficielsFormComponent } from './admin/decrets-form/decrets-form';
+import { communiquesOfficielsFormComponent } from './admin/communiques-form/communiques-form';
+import { BanqueImagesFormComponent } from './admin/banque-d-image-form/banque-d-image-form';
 
 export const routes: Routes = [
   { path: '', component: HeroComponent }, 
@@ -49,7 +51,10 @@ export const routes: Routes = [
   // { path: 'pages/actualites', component: ActualitesComponent },
   { path: 'admin/rapports-officiels-form', component: RapportsOfficielsFormComponent },
   { path: 'admin/decrets-form', component: DecretsOfficielsFormComponent },
-//{
+  { path: 'admin/communiques-form', component: communiquesOfficielsFormComponent },
+  { path: 'admin/banque_d_image-form', component: BanqueImagesFormComponent },
+
+  //{
 //   path: 'actus',
 //   loadComponent: () =>
 //     import('./actus/actus-page').then(m => m.ActusPageComponent)
