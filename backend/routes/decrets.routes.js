@@ -1,15 +1,14 @@
-// backend/routes/rapportsofficiels.routes.js
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const db = require('../db');
+const db = require('../db'); // 🔴 MANQUAIT
 
 // Configuration du stockage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = 'uploads/rapports';
+    const dir = 'uploads/decrets';
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
@@ -20,7 +19,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// POST : ajouter un rapport officiel
+// POST : ajouter un décret officiel
 router.post('/', upload.single('file'), (req, res) => {
   const { title, description } = req.body;
   const file = req.file?.filename;
@@ -30,7 +29,7 @@ router.post('/', upload.single('file'), (req, res) => {
   }
 
   const sql = `
-    INSERT INTO rapports_officiels (title, description, file)
+    INSERT INTO decrets (title, description, file)
     VALUES (?, ?, ?)
   `;
 
@@ -40,10 +39,10 @@ router.post('/', upload.single('file'), (req, res) => {
       return res.status(500).json({ message: 'Erreur lors de l’enregistrement' });
     }
 
-    console.log('✅ Rapport enregistré ID:', result.insertId);
+    console.log('✅ Décret enregistré ID:', result.insertId);
 
     res.json({
-      message: 'Rapport ajouté avec succès',
+      message: 'Décret ajouté avec succès',
       id: result.insertId,
       data: { title, description, file }
     });

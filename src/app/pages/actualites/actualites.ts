@@ -1,43 +1,43 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
-import { NewsService } from '../../services/news';
-import { register } from 'swiper/element/bundle';
+// import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+// import { CommonModule, DatePipe } from '@angular/common';
+// import { NewsService } from '../../services/news';
+// import { register } from 'swiper/element/bundle';
 
-register();
+// register();
 
-@Component({
-  selector: 'app-actualites',
-  standalone: true,
-  imports: [CommonModule, DatePipe],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './actualites.html',
-})
-export class ActualitesComponent implements AfterViewInit {
-  news: any[] = [];
-  swiperActiveIndex = 0;
+// @Component({
+//   selector: 'app-actualites',
+//   standalone: true,
+//   imports: [CommonModule, DatePipe],
+//   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+//   templateUrl: './actualites.html',
+// })
+// export class ActualitesComponent implements AfterViewInit {
+//   news: any[] = [];
+//   swiperActiveIndex = 0;
 
-  @ViewChild('swiper', { static: false }) swiperRef!: ElementRef;
+//   @ViewChild('swiper', { static: false }) swiperRef!: ElementRef;
 
-  constructor(private newsService: NewsService) {}
+//   // constructor(private newsService: NewsService) {}
 
-ngOnInit() {
-  this.newsService.getNews().subscribe(data => {
-    this.news = data;
+// ngOnInit() {
+//   // this.newsService.getNews().subscribe(data => {
+//     this.news = data;
 
-    setTimeout(() => {
-      if (this.swiperRef?.nativeElement?.swiper) {
-        this.swiperRef.nativeElement.swiper.update();
-      }
-    });
-  });
-}
- ngAfterViewInit() {
-  if (!this.swiperRef) return;
+//     setTimeout(() => {
+//       if (this.swiperRef?.nativeElement?.swiper) {
+//         this.swiperRef.nativeElement.swiper.update();
+//       }
+//     });
+//   });
+// }
+//  ngAfterViewInit() {
+//   if (!this.swiperRef) return;
 
-  const swiperEl = this.swiperRef.nativeElement;
+//   const swiperEl = this.swiperRef.nativeElement;
 
-  swiperEl.addEventListener('slidechange', (event: any) => {
-    this.swiperActiveIndex = event.detail[0].realIndex;
-  });
-}
-}
+//   swiperEl.addEventListener('slidechange', (event: any) => {
+//     this.swiperActiveIndex = event.detail[0].realIndex;
+//   });
+// }
+// }

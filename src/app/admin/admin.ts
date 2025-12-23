@@ -18,4 +18,7 @@ export class AdminComponent {
     goToAddRapportsOff() {
     this.router.navigate(['/admin/rapports-officiels-form']);
   }
+     goToAddDecret() {
+    this.router.navigate(['/admin/decrets-form']);
+  }
 }

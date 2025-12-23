@@ -10,8 +10,6 @@ import { DonationComponent } from './donation/donation';
 import { OrganigrammeComponent } from './organigramme/organigramme';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
 import { Footer } from './footer/footer';
-import { ActualitesComponent } from './pages/actualites/actualites';
-import { NewsFormComponent } from './admin/news-form/news-form';
 
 @Component({
   selector: 'app-root',
@@ -26,8 +24,6 @@ import { NewsFormComponent } from './admin/news-form/news-form';
     OrganigrammeComponent,
     MissionsvisionComponent,
     Footer,
-    ActualitesComponent,
-    NewsFormComponent,
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],

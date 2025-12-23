@@ -22,6 +22,7 @@ import { CarriereComponent } from './carriere/carriere';
 import { AdminComponent } from './admin/admin';
 // import { ActualitesComponent } from './pages/actualites/actualites';
 import { RapportsOfficielsFormComponent } from './admin/rapports-officiels-form/rapports-officiels-form';
+import { DecretsOfficielsFormComponent } from './admin/decrets-form/decrets-form';
 
 export const routes: Routes = [
   { path: '', component: HeroComponent }, 
@@ -47,6 +48,7 @@ export const routes: Routes = [
   // { path: 'actualites', component: ActualitesComponent },
   // { path: 'pages/actualites', component: ActualitesComponent },
   { path: 'admin/rapports-officiels-form', component: RapportsOfficielsFormComponent },
+  { path: 'admin/decrets-form', component: DecretsOfficielsFormComponent },
 //{
 //   path: 'actus',
 //   loadComponent: () =>
