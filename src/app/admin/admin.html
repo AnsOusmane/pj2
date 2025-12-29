@@ -7,68 +7,39 @@
       <p class="text-sm text-gray-500">Panneau de gestion</p>
     </div>
 
-    <nav class="flex-1 p-4 space-y-2">
+    <nav class="flex-1 p-4 space-y-6">
 
-      <a routerLink="dashboard"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         📊 Dashboard
-      </a>
-      <button (click)="goToAddNews()"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         📄 News
-      </button>
-      <a routerLink="pages"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         📄 Pages
-      </a>
+      <!-- Général -->
+      <div>
+        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Général</p>
+        <a routerLink="dashboard" class="btn-admin">📊 Dashboard</a>
+        <a routerLink="utilisateurs" class="btn-admin">👤 Utilisateurs</a>
+      </div>
 
-      <a routerLink="media"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         🖼️ Médiathèque
-      </a>
+      <!-- Gestion de contenu -->
+      <div>
+        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Contenu</p>
+        <button (click)="goToAddNews()" class="btn-admin">📰 News</button>
+        <a routerLink="pages" class="btn-admin">📄 Pages</a>
+        <button (click)="goToAddRapportsOff()" class="btn-admin">📑 Rapports officiels</button>
+        <button (click)="goToAddDecret()" class="btn-admin">⚖️ Décrets</button>
+        <button (click)="goToAddCom()" class="btn-admin">📢 Communiqués</button>
+      </div>
 
-      <a routerLink="emplois"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         💼 Offres d’emploi
-      </a>
+      <!-- Médias -->
+      <div>
+        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Media</p>
+        <a routerLink="media" class="btn-admin">🎞️ Dossiers médias</a>
+        <button (click)="goToAddImg()" class="btn-admin">🖼️ Banque d'images</button>
+      </div>
 
-      <a routerLink="candidatures"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         📝 Candidatures
-      </a>
+      <!-- Carrière -->
+      <div>
+        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Carrière</p>
+        <a routerLink="emplois" class="btn-admin">💼 Offres d’emploi</a>
+        <a routerLink="candidatures" class="btn-admin">📄 Candidatures</a>
+      </div>
 
-      <a routerLink="utilisateurs"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         💼 Utilisateurs
-      </a>
- 
-     <button (click)="goToAddRapportsOff()"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         💼 Rapport
-     </button>
-         <button (click)="goToAddDecret()"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         💼 Decret
-     </button>
-           <button (click)="goToAddCom()"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         💼 Com
-     </button>
-                <button (click)="goToAddImg()"
-         routerLinkActive="bg-green-600 text-white"
-         class="block px-4 py-3 rounded-lg hover:bg-green-50 text-gray-700 font-medium">
-         💼 Images
-     </button>
     </nav>
 
     <button class="p-4 bg-red-600 text-white text-center font-semibold hover:bg-red-700">
@@ -77,7 +48,7 @@
   </aside>
 
   <!-- CONTENU -->
-  <main class="flex-1 p-8 overflow-y-auto">
+  <main class="flex-1 p-8 overflow-y-auto bg-gray-50 rounded-l-lg">
     <router-outlet></router-outlet>
   </main>
 

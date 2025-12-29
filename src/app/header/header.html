@@ -143,63 +143,63 @@
     <div class="flex items-center gap-x-6 text-[21px] font-sharetech">
       <!-- Dropdown La SEN-CSU -->
       <div class="relative group">
-        <button class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-white">
+        <button class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-green-300">
           La Sen-CSU ▾
         </button>
         <div
-          class="absolute left-0 top-full w-56 bg-green-600 shadow-lg ring-1 ring-gray-900/10 z-50
+          class="absolute left-0 top-full w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50
                  opacity-0 invisible group-hover:opacity-100 group-hover:visible
                  transition-all duration-200"
         >
-          <ul class="flex flex-col text-white font-medium">
+          <ul class="flex flex-col text-green-600 font-medium">
             <li>
-              <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="onAboutClick()">
+              <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="onAboutClick()">
                 A propos de l'agence
               </button>
             </li>
             <li>
-              <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="openMissionsvision.emit()">
+              <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="openMissionsvision.emit()">
                 Vision et Missions
               </button>
             </li>
             <li>
-              <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="showOrganigrammeClick()">
+              <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="showOrganigrammeClick()">
                 Organigramme
               </button>
             </li>
             <li>
-              <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToAppelsOffre()">
+              <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToAppelsOffre()">
                 Appels d'offres
               </button>
             </li>
 
             <!-- Sous-dropdown Publications -->
             <li class="relative group/publications">
-              <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700 flex justify-between items-center">
+              <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white flex justify-between items-center">
                 Publications <span class="text-sm">></span>
               </button>
               <ul
-                class="absolute left-full top-0 ml-1 w-56 bg-green-600 border border-gray-200 shadow-lg
+                class="absolute left-full top-0 ml-1 w-56 bg-white border border-gray-200 shadow-lg
                        opacity-0 invisible group-hover/publications:opacity-100 group-hover/publications:visible
                        transition-all duration-200 z-50"
               >
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToRapports()">
+                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToRapports()">
                     Rapports officiels
                   </button>
                 </li>
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToGuide()">
+                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToGuide()">
                     Guides
                   </button>
                 </li>
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToDecret()">
+                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToDecret()">
                     Décrets
                   </button>
                 </li>
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToManuel()">
+                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToManuel()">
                     Manuels d'audit
                   </button>
                 </li>
@@ -212,20 +212,20 @@
 <!-- Dropdown Assurance Maladie -->
 <div class="relative group">
   <button
-    class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-white"
+    class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-green-300"
   >
     Assurance Maladie ▾
   </button>
 
   <div
-    class="absolute left-0 top-full w-56 bg-green-600 shadow-lg ring-1 ring-gray-900/10 z-50
+    class="absolute left-0 top-full w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50
            opacity-0 invisible group-hover:opacity-100 group-hover:visible
            transition-all duration-200"
   >
-    <ul class="flex flex-col text-white font-medium">
+    <ul class="flex flex-col text-green-600 font-medium">
       <li>
         <button
-          class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700"
+          class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white"
           (click)="goToCSU()"
         >
           CSU
@@ -234,7 +234,7 @@
 
       <li>
         <button
-          class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700"
+          class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white"
           (click)="goToCSUEleve()"
         >
           CSU Élève
@@ -243,7 +243,7 @@
 
       <li>
         <button
-          class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700"
+          class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white"
           (click)="goToCSUDaara()"
         >
           CSU Daara
@@ -256,24 +256,24 @@
 
       <!-- Dropdown Assistance médicale -->
       <div class="relative group">
-        <button class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-white">
+        <button class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-green-300">
           Assistance médicale ▾
         </button>
         <div
-          class="absolute left-0 top-full w-[264px] bg-green-600 shadow-lg ring-1 ring-gray-900/10 z-50
+          class="absolute left-0 top-full w-[264px] bg-white shadow-lg ring-1 ring-gray-900/10 z-50
                  opacity-0 invisible group-hover:opacity-100 group-hover:visible
                  transition-all duration-200"
         >
-          <ul class="flex flex-col text-white font-medium">
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToZero5ans()">0 à 5 ans</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToCesarienne()">Césarienne</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToDialyse()">Dialyse</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToPlanSesame()">Plan Sésame</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToActualites()">Bénéficiaires PNBSF</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700">Carte Égalité des chances</button></li>
+          <ul class="flex flex-col text-green-600 font-medium">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToZero5ans()">0 à 5 ans</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToCesarienne()">Césarienne</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToDialyse()">Dialyse</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToPlanSesame()">Plan Sésame</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToActualites()">Bénéficiaires PNBSF</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white">Carte Égalité des chances</button></li>
             <li>
               <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block w-full">
-                <button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700">Nos pharmacies partenaires</button>
+                <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white">Nos pharmacies partenaires</button>
               </a>
             </li>
           </ul>
@@ -282,41 +282,41 @@
       
       <!-- Dropdown Espace Média -->
       <div class="relative group">
-        <button class=" text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-white">
+        <button class=" text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-green-300">
           Espace Média ▾
         </button>
         <div
-          class="absolute left-0 top-full w-56 bg-green-600 shadow-lg ring-1 ring-gray-900/10 z-50
+          class="absolute left-0 top-full w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50
                  opacity-0 invisible group-hover:opacity-100 group-hover:visible
                  transition-all duration-200"
         >
-          <ul class="flex flex-col text-white font-medium">
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToComuPresse()">Communiqués</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToMedia()">Dossiers média</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToBankImg()">Banque d'images</button></li>
+          <ul class="flex flex-col text-green-600 font-medium">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToComuPresse()">Communiqués</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToMedia()">Dossiers média</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToBankImg()">Banque d'images</button></li>
           </ul>
         </div>
       </div>
       
       <!-- Dropdown Assistance & Contact -->
       <div class="relative group">
-        <button class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent group-hover:border-white">
+        <button class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-green-300">
           Assistance et Contact ▾
         </button>
         <div
-          class="absolute left-0 top-full w-56 bg-green-600 shadow-lg ring-1 ring-gray-900/10 z-50
+          class="absolute left-0 top-full w-56 bg-white shadow-lg ring-1 ring-gray-900/10 z-50
                  opacity-0 invisible group-hover:opacity-100 group-hover:visible
                  transition-all duration-200"
         >
-          <ul class="flex flex-col text-white font-medium">
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToContact()">Nous contacter</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-white hover:text-green-700" (click)="goToSr()">Localiser une agence</button></li>
+          <ul class="flex flex-col text-green-600 font-medium">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToContact()">Nous contacter</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToSr()">Localiser une agence</button></li>
           </ul>
         </div>
       </div>
 
       <!-- Carrière -->
-      <button (click)="goToCarriere()" class="text-white hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500">
+      <button (click)="goToCarriere()" class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent hover:border-green-500">
         Carrière
       </button> 
 

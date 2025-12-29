@@ -1,0 +1,19 @@
+.btn-admin {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  color: #374151;
+  transition: 0.2s;
+}
+.btn-admin:hover {
+  background:#e8ffe9;
+  color: #065f46;
+}
+.btn-admin.active {
+  background:#059669;
+  color: white;
+}
+.btn-admin {
+  @apply block w-full text-left px-4 py-3 rounded-lg font-medium text-gray-700 hover:bg-green-100 hover:text-green-800 transition;
+}
