@@ -187,5 +187,8 @@ goToCSUDaara() {
     queryParams: { type: 'daara' }
   });
 }
+  goToMaintenance() {
+    this.router.navigate(['/maintenance']);
+  }
 
 }

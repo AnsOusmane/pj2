@@ -1,6 +1,7 @@
 import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { isPlatformBrowser, NgIf } from '@angular/common';
 import { ContactFormComponent } from "../contact-form/contact-form";
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-hero',
   standalone: true,
@@ -16,8 +17,8 @@ export class HeroComponent implements OnInit {
   showPopup = false;
   popupTitle = '';
   popupText = '';
-popupData = {
- acces: {
+  popupData = {
+  acces: {
   title: "Accès aux soins",
   text: `
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-full max-h-[70vh] overflow-y-auto text-left">
@@ -185,10 +186,18 @@ popupData = {
 };
 
   
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     if (!isPlatformBrowser(this.platformId)) return;
+  }
+
+  // 🔧 REDIRECTION MAINTENANCE
+  goToMaintenance() {
+    this.router.navigate(['/maintenance']);
   }
 
   // ACCORDÉON

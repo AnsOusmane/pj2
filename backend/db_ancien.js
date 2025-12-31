@@ -2,10 +2,10 @@
 const mysql = require('mysql2'); 
 
 const db = mysql.createConnection({
-  host: 'ftp.sencsu.sn',
-  user: 'sencsudb_sencsusn68332658',
-  password: 'SenCSU2542!',
-  database: 'sencsudb_sencsusn68332658'
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'sencsudb'
 });
 
 db.connect(err => {

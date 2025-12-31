@@ -38,7 +38,7 @@
     <div
   class="rounded-[20px] absolute inset-0 bg-cover bg-center z-0
          h-[calc(100vh-220px)] 2xl:h-[calc(100vh-345px)]"
-  style="background-image: url('/assets/bg.webp');"
+style="background-image: url('assets/bg.webp');"
 >
   <!-- Overlay noir seulement en 2xl -->
   <div class="hidden 2xl:block absolute inset-0 rounded-[20px]"></div>
@@ -55,10 +55,26 @@
           Inscrivez-vous dès <br class="hidden lg:inline" />
           aujourd’hui !
         </h1>
+<button
+  type="button"
+  (click)="goToMaintenance()"
+  class="inline-block skew-x-[20deg]
+         bg-gradient-to-r from-orange-500 to-yellow-500
+         animate-pulse hover:animate-none
+         text-white font-play font-semibold
+         text-lg sm:text-xl lg:text-2xl
+         px-6 sm:px-8 lg:px-10
+         py-3 sm:py-4
+         shadow-lg rounded-md
+         cursor-pointer
+         transition-transform duration-300
+         hover:scale-110"
+>
+  <div class="skew-x-[-20deg]">
+    Je m'inscris à la CSU
+  </div>
+</button>
 
-        <a href="https://sunucsu.sn/auth/create-account" class="inline-block skew-x-[20deg] bg-gradient-to-r from-orange-500 to-yellow-500 animate-pulse hover:animate-none text-white font-play text-lg sm:text-xl lg:text-2xl font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 shadow-lg rounded-md cursor-pointer transition-transform duration-300 hover:scale-110">
-          <div class="skew-x-[-20deg]">Je m'inscris à la CSU</div>
-        </a>
       </div>
 
       <!-- BLOC VERT -->
@@ -67,9 +83,8 @@
 
         <button class="w-full bg-transparent text-white font-semibold py-3 rounded-lg hover:bg-green-300 hover:text-green-800 hover:scale-[1.03] transition-all duration-300 shadow-lg" (click)="scrollTo('how')">Comment s’inscrire ?</button>
 
-        <a href="https://sunucsu.sn/auth/create-account">
-          <button class="w-full bg-white text-green-800 font-semibold py-3 rounded-lg hover:bg-green-100 hover:scale-[1.05] transition-all duration-300 shadow-xl">S’inscrire à la SEN-CSU</button>
-        </a>
+          <button   (click)="goToMaintenance()" class="w-full bg-white text-green-800 font-semibold py-3 rounded-lg hover:bg-green-100 hover:scale-[1.05] transition-all duration-300 shadow-xl">S’inscrire à la SEN-CSU</button>
+    
       </div>
 
     </div>
