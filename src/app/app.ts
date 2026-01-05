@@ -1,4 +1,4 @@
-import { Component, signal, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, signal, Inject, PLATFORM_ID, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { DonationComponent } from './donation/donation';
 import { OrganigrammeComponent } from './organigramme/organigramme';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
 import { Footer } from './footer/footer';
+import { LoaderComponent } from './core/loader/loader';
 
 @Component({
   selector: 'app-root',
@@ -24,52 +25,46 @@ import { Footer } from './footer/footer';
     OrganigrammeComponent,
     MissionsvisionComponent,
     Footer,
+    LoaderComponent
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
 })
-export class App {
+export class App implements AfterViewInit {
+  isLoading = signal(true); 
   showTuto = signal(false);
   showAbout = signal(false);
   showDonation = signal(false);
   showOrganigramme = signal(false);
   showMissionsvision = signal(false);
 
+  @ViewChild('logo', { static: false }) logo!: ElementRef<HTMLImageElement>;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     public router: Router
-  ) {
+  ) {}
+
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      document.body.addEventListener('closeTuto', () => this.showTuto.set(false));
-      document.body.addEventListener('closeAbout', () => this.showAbout.set(false));
-      document.body.addEventListener('closeDonation', () => this.showDonation.set(false));
+      // Appliquer l'animation "grow" après 0.2s
+      setTimeout(() => {
+        if (this.logo) {
+          this.logo.nativeElement.classList.add('animate-grow-logo');
+        }
+
+        // Supprimer le loader après la fin de l'animation (0.8s)
+        setTimeout(() => this.isLoading.set(false), 800);
+      }, 200);
     }
   }
 
-  openTuto() {
-    this.showTuto.set(true);
-  }
-  openAbout() {
-    this.showAbout.set(true);
-  }
-  openDonation() {
-    this.showDonation.set(true);
-  }
-
-  openOrganigramme() {
-    this.showOrganigramme.set(true);
-  }
-  closeOrganigramme() {
-    this.showOrganigramme.set(false);
-  }
-  openMissionsvision() {
-    this.showMissionsvision.set(true);
-  }
-  closeMissionsvision() {
-    this.showMissionsvision.set(false);
-  }
-  goHome() {
-  this.router.navigate(['/']);
-
-}
+  openTuto() { this.showTuto.set(true); }
+  openAbout() { this.showAbout.set(true); }
+  openDonation() { this.showDonation.set(true); }
+  openOrganigramme() { this.showOrganigramme.set(true); }
+  closeOrganigramme() { this.showOrganigramme.set(false); }
+  openMissionsvision() { this.showMissionsvision.set(true); }
+  closeMissionsvision() { this.showMissionsvision.set(false); }
+  goHome() { this.router.navigate(['/']); }
 }

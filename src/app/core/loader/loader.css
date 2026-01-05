@@ -1,0 +1,4 @@
+/* Glow autour du logo */
+.glow-logo {
+  filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.6));
+}

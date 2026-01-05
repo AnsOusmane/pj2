@@ -14,11 +14,11 @@ export class BanqueDImageComponent {
   activeCategory = 'Toutes';
 
   images = [
-    { src: 'assets/bank/1.png', category: 'Evénements', title: 'Forum santé' },
-    { src: 'assets/bank/2.png', category: 'Pharmacies', title: 'Partenariat' },
-    { src: 'assets/bank/3.png', category: 'Santé', title: 'Vaccination' },
-    { src: 'assets/bank/4.png', category: 'Projets', title: 'Extension' },
-    { src: 'assets/bank/5.png', category: 'Divers', title: 'Journée mondiale' },
+    { src: 'assets/bank/1.webp', category: 'Evénements', title: 'Forum santé' },
+    { src: 'assets/bank/2.webp', category: 'Pharmacies', title: 'Partenariat' },
+    { src: 'assets/bank/3.webp', category: 'Santé', title: 'Vaccination' },
+    { src: 'assets/bank/4.webp', category: 'Projets', title: 'Extension' },
+    { src: 'assets/bank/5.webp', category: 'Divers', title: 'Journée mondiale' },
   ];
 
   lightboxImage: string | null = null;
