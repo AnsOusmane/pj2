@@ -36,11 +36,11 @@ app.use('/api/auth', require('./routes/auth.routes'));
 // ----------------------
 // SERVIR ANGULAR DANS /angular
 // ----------------------
-const angularDistPath = path.join(__dirname, 'public');
-app.use('/', express.static(angularDistPath));
+const angularDistPath = path.join(__dirname, 'public/angular');
+app.use('/angular', express.static(angularDistPath));
 
 // Redirige toutes les requêtes non-API vers Angular (pour SPA routing)
-app.get('/*', (req, res) => {
+app.get('/angular/*', (req, res) => {
   res.sendFile(path.join(angularDistPath, 'index.html'));
 });
 
