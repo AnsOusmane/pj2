@@ -54,7 +54,7 @@ export class App implements AfterViewInit {
         }
 
         // Supprimer le loader après la fin de l'animation (0.8s)
-        setTimeout(() => this.isLoading.set(false), 800);
+        setTimeout(() => this.isLoading.set(false), 400);
       }, 200);
     }
   }
