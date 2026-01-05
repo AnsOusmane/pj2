@@ -36,4 +36,7 @@ export class Footer {
   goToCesarienne() { this.router.navigate(['/cesarienne']); }
   goToContact() { this.router.navigate(['/contact']); }
   goToSr() { this.router.navigate(['/nos-services-regionaux']); }
+    goToMaintenance() {
+    this.router.navigate(['/maintenance']);
+  }
 }

@@ -25,11 +25,10 @@
               }
             ],
 "styles": [
+  "src/styles.css",
   "node_modules/leaflet/dist/leaflet.css",
    "node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css",
-     "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-     
-  "src/styles.css"
+     "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
 ],
 "outputPath": "dist/pj2",
 "prerender": false

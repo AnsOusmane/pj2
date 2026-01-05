@@ -28,7 +28,6 @@ import { LoaderComponent } from './core/loader/loader';
     LoaderComponent
   ],
   templateUrl: './app.html',
-  styleUrls: ['./app.css'],
 })
 export class App implements AfterViewInit {
   isLoading = signal(true); 

@@ -22,7 +22,7 @@
 
   <!-- Partenaires -->
   <div class="max-w-6xl mx-auto text-center mt-5 text-white/80 text-sm">
-      <a href="https://sunucsu.sn" class="hover:underline mx-2">Sunu CSU</a> |
+     <button (click)="goToMaintenance()">class="hover:underline mx-2">Sunu CSU</button> |
       <a href="https://femme.gouv.sn" class="hover:underline mx-2">Ministère de la famille et des solidarités</a> |
       <a href="https://sante.gouv.sn" class="hover:underline mx-2">Ministère de la santé et de l'action sociale</a>
   </div>
@@ -85,9 +85,9 @@
                   <li><button (click)="goToSr()" class="hover:underline">Localiser une agence</button></li>
 
                   <li>
-                    <a href="https://sunucsu.sn/pharmacies" target="_blank" class="hover:underline">
+                 <button (click)="goToMaintenance()"  target="_blank" class="hover:underline"> 
                         Pharmacies partenaires
-                    </a>
+                </button>
                   </li>
 
                   <li><button (click)="goToContact()" class="hover:underline">Formulaires</button></li>

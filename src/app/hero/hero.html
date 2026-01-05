@@ -16,17 +16,17 @@
     <div class="absolute top-3 left-3 mt-64 ml-2 bg-green-600 text-white px-3 py-2 rounded-md text-sm leading-tight shadow-md font-exo2">
       <button class="whitespace-nowrap block w-full text-left" (click)="scrollTo('why')">Pourquoi s'inscrire ?</button><br>
       <button class="whitespace-nowrap block w-full text-left" (click)="scrollTo('how')">Comment s'inscrire ?</button><br>
-      <a href="https://sunucsu.sn/auth/create-account" class="block">
+     <button class="block">
         <button class="whitespace-nowrap block w-full text-left">S’inscrire à la SEN-CSU</button>
-      </a>
+      </button> 
     </div>
 
     <div class="w-full px-4 mb-6 mt-24">
-      <a href="https://sunucsu.sn/auth/create-account">
+  <button (click)="goToMaintenance()">
         <button class="w-full inline-block skew-x-[20deg] bg-gradient-to-r from-orange-500 to-yellow-500 animate-pulse hover:animate-none text-white font-play font-semibold py-3 rounded-md transition-transform duration-300 hover:scale-110">
           <div class="skew-x-[-20deg] text-center">Je m'inscris à la CSU</div>
         </button>
-      </a>
+      </button>
     </div>
   </section>
   <!-- Version Desktop -->
@@ -353,13 +353,12 @@ border 1 border-green-700/10 rounded-3xl mx-8"
           </button>
   <div class="p-5 font-exo2 3xl:text-lg" *ngIf="accordionOpen === 1">
    Créez votre compte sur 
-    <a 
-    href="https://sunucsu.sn" 
+    <button  (click)="goToMaintenance()"
     target="_blank" 
     class="text-gray-700 hover:text-green-700 underline transition"
     >
    SunuCsu.sn
-    </a>
+    </button>
   </div>
         </div>
 
