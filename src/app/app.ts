@@ -51,8 +51,7 @@ export class App implements AfterViewInit {
       setTimeout(() => {
         if (this.logo) {
           this.logo.nativeElement.classList.add('animate-grow-logo');
-        }
-
+        }        
         // Supprimer le loader après la fin de l'animation (0.8s)
         setTimeout(() => this.isLoading.set(false), 400);
       }, 200);

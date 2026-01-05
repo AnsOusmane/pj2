@@ -6,11 +6,11 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        '2xl': '1536px',
+        '2xl': '1536px',   // Tailwind natif
         '3xl': '1800px',
         '4xl': '2200px',
         '5xl': '2560px',
-        'uw': '3440px'
+        'uw': '3440px'     // ultrawide 21:9
       },
       maxWidth: {
         '3xl': '1600px',
@@ -22,7 +22,7 @@ module.exports = {
         'section': '7rem',
         'section-lg': '10rem'
       },
-      fontFamily: {
+           fontFamily: {
         oswald: ['Oswald', 'sans-serif'],
         kanit: ['Kanit', 'sans-serif'],
         ubuntu: ['Ubuntu', 'sans-serif'],
@@ -34,15 +34,6 @@ module.exports = {
         orbitron: ['Orbitron', 'sans-serif'],
         sciencegothic: ['"Science Gothic"', 'sans-serif'],
       },
-      keyframes: {
-        growLogo: {
-          '0%': { transform: 'scale(0.1)' },
-          '100%': { transform: 'scale(1)' },
-        },
-      },
-      animation: {
-        'grow-logo': 'growLogo 0.8s ease-out forwards',
-      }
     }
   },
   plugins: [],
