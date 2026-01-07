@@ -30,7 +30,10 @@ import { LoaderComponent } from './core/loader/loader';
   templateUrl: './app.html',
 })
 export class App implements AfterViewInit {
-  isLoading = signal(true); 
+
+  isLoading = signal(true);
+  showNewYearWish = signal(false);
+
   showTuto = signal(false);
   showAbout = signal(false);
   showDonation = signal(false);
@@ -45,16 +48,27 @@ export class App implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      // Appliquer l'animation "grow" après 0.2s
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    /* 🎉 VOEUX NOUVEL AN */
+    const alreadyShown = localStorage.getItem('newYear2026Shown');
+
+    if (!alreadyShown) {
+      this.showNewYearWish.set(true);
+
       setTimeout(() => {
-        if (this.logo) {
-          this.logo.nativeElement.classList.add('animate-grow-logo');
-        }        
-        // Supprimer le loader après la fin de l'animation (0.8s)
-        setTimeout(() => this.isLoading.set(false), 400);
-      }, 200);
+        this.showNewYearWish.set(false);
+        localStorage.setItem('newYear2026Shown', 'true');
+      }, 4500);
     }
+
+    /* ⏳ LOADER */
+    setTimeout(() => {
+      if (this.logo) {
+        this.logo.nativeElement.classList.add('animate-grow-logo');
+      }
+      this.isLoading.set(false);
+    }, 400);
   }
 
   openTuto() { this.showTuto.set(true); }
@@ -66,3 +80,4 @@ export class App implements AfterViewInit {
   closeMissionsvision() { this.showMissionsvision.set(false); }
   goHome() { this.router.navigate(['/']); }
 }
+

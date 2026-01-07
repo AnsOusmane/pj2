@@ -342,22 +342,59 @@
       />
     </div>
     
-    <!-- Bouton menu hamburger -->
-    <button
-      class="flex flex-col gap-1 p-2 border rounded-md text-white font-sharetech"
-      (click)="toggleMenu()"
-    >
+  <!-- Burger / Quitter -->
+  <button
+    class="p-2 border rounded-md font-sharetech"
+    (click)="toggleMenu()"
+    aria-label="Menu"
+  >
+    <!-- Burger -->
+    <div *ngIf="!isMenuOpen" class="flex flex-col gap-1">
       <span class="block w-6 h-0.5 bg-green-700"></span>
       <span class="block w-6 h-0.5 bg-green-700"></span>
       <span class="block w-6 h-0.5 bg-green-700"></span>
-    </button>
+    </div>
+
+    <!-- Quitter -->
+    <span *ngIf="isMenuOpen" class="text-2xl text-green-700 font-bold leading-none">
+      ✕
+    </span>
+  </button>
   </div>
 
   <!-- Menu Mobile Optimisé -->
-  <div
-    *ngIf="isMenuOpen"
-    class="lg:hidden absolute top-16 left-0 w-full rounded-b-lg bg-green-600 shadow-lg border-t border-gray-200 z-50"
-  >
+<div
+  *ngIf="isMenuOpen"
+  class="lg:hidden fixed inset-0 z-40"
+  (click)="closeMobileMenu()"
+>
+
+  <!-- Fond sombre cliquable -->
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+<!-- Menu Mobile -->
+<div
+  class="absolute top-20 left-0 w-full
+         rounded-b-lg bg-green-600 shadow-lg
+         border-t border-gray-200 z-50"
+  (click)="$event.stopPropagation()"
+>
+
+  <!-- Header du menu (zone dédiée) -->
+  <div class="relative flex items-center justify-end px-4 py-3 border-b border-white/20">
+    <button
+      (click)="closeMobileMenu()"
+      class="w-10 h-10 rounded-full
+             bg-white/20 hover:bg-white/30
+             text-white text-2xl font-bold
+             flex items-center justify-center
+             transition"
+      aria-label="Fermer le menu"
+    >
+      ✕
+    </button>
+  </div>
+
+  <!-- Contenu du menu -->
     <ul class="flex flex-col p-4 space-y-3 text-white font-semibold text-[18px]">
       <!-- SEN-CSU -->
       <li>

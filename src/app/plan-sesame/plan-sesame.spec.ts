@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlanSesame } from './plan-sesame';
+import { PlanSesameComponent } from './plan-sesame';
 
-describe('PlanSesame', () => {
-  let component: PlanSesame;
-  let fixture: ComponentFixture<PlanSesame>;
+describe('PlanSesameComponent', () => {
+  let component: PlanSesameComponent;
+  let fixture: ComponentFixture<PlanSesameComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlanSesame]
+      imports: [PlanSesameComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlanSesame);
+    fixture = TestBed.createComponent(PlanSesameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
