@@ -134,7 +134,6 @@ toggleMobileDropdown(menu: keyof typeof this.mobileDropdown) {
     this.mobileDropdown[key as keyof typeof this.mobileDropdown] = false;
   });
 
-  // Si le menu n'était pas ouvert, on l'ouvre ; sinon, il reste fermé
   this.mobileDropdown[menu] = !isAlreadyOpen;
 }
 
