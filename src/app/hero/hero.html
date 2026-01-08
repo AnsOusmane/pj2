@@ -1,45 +1,62 @@
 <div class="relative w-full bg-white">
 
-  <!-- Version Mobile -->
-  <section class="block md:hidden w-full bg-white">
-<div class="bg-white h-10" ></div>
-    <div class="text-center px-4 pt-1 pb-2">
-      <h1 class="text-white bg-green-600 text-base font-exo2 leading-snug">
-        Protégez votre santé et celle de vos proches. <br>
-        Inscrivez-vous dès aujourd'hui !
-      </h1>
-    </div>
+<!-- Version Mobile -->
+<section class="block md:hidden w-full bg-white overflow-x-hidden">
+  <div class="text-center px-4 pt-1 pb-2">
+    <h1 class="text-white bg-green-600 text-base font-exo2 leading-snug rounded-md">
+      Protégez votre santé et celle de vos proches. <br>
+      Inscrivez-vous dès aujourd'hui !
+    </h1>
+  </div>
 
-    <div class="relative w-full mt-6 mx-4 ">
-      <img src="/assets/bgsm.webp" alt="hero" class="w-full object-contain bg-white rounded-2xl">
-    </div>
+  <!-- Image -->
+  <div class="relative w-full mt-6">
+    <img
+      src="/assets/bgsm.webp"
+      alt="hero"
+      class="w-full object-contain bg-white rounded-2xl"
+    >
 
-    <div class="absolute top-3 left-3 mt-64 ml-2 bg-white text-green-600 px-3 py-2 rounded-md text-sm leading-tight shadow-md font-exo2">
-      <button class="whitespace-nowrap block w-full text-left" (click)="scrollTo('why')">Pourquoi s'inscrire ?</button><br>
-      <button class="whitespace-nowrap block w-full text-left" (click)="scrollTo('how')">Comment s'inscrire ?</button><br>
-     <button class="block">
-        <button class="whitespace-nowrap block w-full text-left">S’inscrire à la Sen-CSU</button>
-      </button> 
+    <!-- Carte flottante -->
+    <div
+      class="absolute top-4 left-4
+             bg-green-600 text-white
+             px-3 py-2 rounded-md
+             text-sm leading-tight shadow-md font-exo2"
+    >
+      <button class="block w-full text-left" (click)="scrollTo('why')">
+        Pourquoi s'inscrire ?
+      </button>
+      <button class="block w-full text-left mt-1" (click)="scrollTo('how')">
+        Comment s'inscrire ?
+      </button>
+      <button class="block w-full text-left mt-1">
+        S’inscrire à la Sen-CSU
+      </button>
     </div>
-<div class="w-full flex justify-center mt-28 mb-6 px-6">
-  <button
-    (click)="goToMaintenance()"
-    class="w-full max-w-md
-           skew-x-[20deg]
-           bg-gradient-to-r from-orange-500 to-yellow-500
-           animate-pulse hover:animate-none
-           text-white text-2xl font-play font-semibold
-           py-3 rounded-md
-           transition-transform duration-300
-           hover:scale-[1.03]"
-  >
-    <div class="skew-x-[-20deg] text-center">
-      Je m'inscris à la CSU
-    </div>
-  </button>
-</div>
+  </div>
 
-  </section>
+  <!-- Bouton CTA -->
+  <div class="w-full flex justify-center mt-28 mb-6 px-6">
+    <button
+      (click)="goToMaintenance()"
+      class="w-full max-w-md
+             skew-x-[20deg]
+             bg-gradient-to-r from-orange-500 to-yellow-500
+             animate-pulse hover:animate-none
+             text-white text-2xl font-play font-semibold
+             py-3 rounded-md
+             transition-transform duration-300
+             hover:scale-[1.03]"
+    >
+      <div class="skew-x-[-20deg] text-center">
+        Je m'inscris à la CSU
+      </div>
+    </button>
+  </div>
+
+</section>
+
   <!-- Version Desktop -->
 <div class="hidden md:flex w-full mb-16 2xl:mb-72 mt-3">
   <!-- Cadre blanc arrondi avec border -->
