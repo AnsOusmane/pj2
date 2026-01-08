@@ -127,12 +127,17 @@ mobileDropdown = {
 };
 
 toggleMobileDropdown(menu: keyof typeof this.mobileDropdown) {
+  const isAlreadyOpen = this.mobileDropdown[menu];
+
+  // On ferme tous les menus
   Object.keys(this.mobileDropdown).forEach(key => {
     this.mobileDropdown[key as keyof typeof this.mobileDropdown] = false;
   });
 
-  this.mobileDropdown[menu] = true;
+  // Si le menu n'était pas ouvert, on l'ouvre ; sinon, il reste fermé
+  this.mobileDropdown[menu] = !isAlreadyOpen;
 }
+
 closeMobileMenu() {
   this.isMenuOpen = false;
   this.mobileDropdown = { sen: false,   assurance: false, assistance: false, media: false, contact: false };
