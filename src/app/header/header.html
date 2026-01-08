@@ -1,137 +1,147 @@
-  <!-- Bande Publicitaire -->
 <div class="promo-banner w-full border-b border-gray-200 relative">
   <div class="w-full max-w-[1920px] mx-auto
               flex flex-col md:flex-row
-              items-start justify-start gap-4
-              px-6 md:px-8
-              pt-1 md:pt-1  2xl:pt-20
-              pb-1">
+              items-center justify-between
+              gap-3 md:gap-6
+              px-4 sm:px-6 md:px-8
+              py-2 md:py-3 2xl:py-6">
 
-      <!-- Logo -->
-      <div class="hidden lg:flex items-center shrink-0 cursor-pointer"
-           (click)="GoHomeClick()">
-        <img src="assets/logo.png"
-             class="h-16 w-auto md:h-32 object-contain"
-             alt="Logo Agence" />
-      </div>
+    <!-- Logo -->
+    <div class="hidden lg:flex items-center shrink-0 cursor-pointer"
+         (click)="GoHomeClick()">
+      <img src="assets/logo.png"
+           class="h-14 xl:h-20 object-contain"
+           alt="Logo Agence" />
+    </div>
 
-<!-- Carrousel Publicitaire -->
-<div class="relative
-            inline-flex
-            h-14 md:h-20 mt-4
-            overflow-hidden
-            rounded-md shadow bg-white
-            mx-auto">
+    <!-- Carrousel -->
+    <div class="relative flex items-center justify-center
+                h-14 sm:h-16 md:h-20
+                overflow-hidden rounded-lg shadow bg-white
+                w-full md:w-auto max-w-full md:max-w-[700px]
+                mx-auto">
 
-  <a [href]="bannerLinks[bannerIndex]"
-     target="_blank"
-     class="block h-full">
+      <a [href]="bannerLinks[bannerIndex]" target="_blank" class="block h-full">
+        <img
+          [src]="bannerImages[bannerIndex]"
+          class="h-full w-auto object-contain transition-opacity duration-500"
+          [style.opacity]="imageOpacity"
+          alt="Offres CSU">
+      </a>
 
-    <img
-      [src]="bannerImages[bannerIndex]"
-      class="h-full w-auto object-contain
-             transition-opacity duration-500"
-      [style.opacity]="imageOpacity"
-      alt="Offres CSU">
-  </a>
+      <button (click)="previousBanner()"
+              class="absolute left-1 top-1/2 -translate-y-1/2
+                     w-8 h-8 md:w-12 md:h-12
+                     flex items-center justify-center
+                     text-green-600 hover:text-white
+                     hover:bg-green-600 rounded-full transition">
+        ‹
+      </button>
 
-  <!-- Bouton précédent -->
+      <button (click)="nextBanner()"
+              class="absolute right-1 top-1/2 -translate-y-1/2
+                     w-8 h-8 md:w-12 md:h-12
+                     flex items-center justify-center
+                     text-green-600 hover:text-white
+                     hover:bg-green-600 rounded-full transition">
+        ›
+      </button>
+    </div>
+
+<!-- Zone RSX -->
+<div class="relative flex items-center ml-auto shrink-0">
+
+  <!-- Bouton @ -->
   <button
-    (click)="previousBanner()"
-    aria-label="Précédent"
-    class="absolute left-0 top-1/2 -translate-y-1/2
-           w-10 h-10 md:w-14 md:h-14
-           flex items-center justify-center
-          hover:bg-green-600/90 hover:rounded-full hover:text-white
-           text-green-600
-           transition-all duration-300
-           hover:scale-110
-           text-4xl md:text-8xl pb-8">
-    ‹
+    (click)="toggleSocials()"
+    aria-label="Réseaux sociaux"
+    class="w-9 h-9 flex items-center justify-center
+           rounded-full bg-green-600 text-white
+           text-lg font-bold shadow-md
+           hover:scale-110 transition">
+    @
   </button>
 
-  <!-- Bouton suivant -->
-  <button
-    (click)="nextBanner()"
-    aria-label="Suivant"
-    class="absolute right-0 top-1/2 -translate-y-1/2
-           w-10 h-10 md:w-14 md:h-14
-           flex items-center justify-center
-          hover:bg-green-600/90 hover:rounded-full hover:text-white
-           text-green-600
-           transition-all duration-300
-           hover:scale-110
-           text-4xl md:text-8xl pb-8">
-    ›
-  </button>
-</div>
-
-
-
-      <!-- Icônes réseaux sociaux -->
-      <div class="hidden sm:flex items-center gap-3 shrink-0
-                  px-3 py-2 mt-4 rounded-xl
-                  bg-white md:bg-white
-                  backdrop-blur-md border border-white/30 shadow-md">
+      <!-- Réseaux sociaux -->
+      <div *ngIf="showSocials"
+           class="absolute right-0 top-12
+                  flex items-center gap-3
+                  px-3 py-2
+                  rounded-xl bg-white shadow-lg
+                  z-50">
 
         <!-- Facebook -->
-        <a href="https://facebook.com/CouvertureSanitaitrUniverselle" 
-           class="w-6 h-6 md:w-5 md:h-5 rotate-45 transition-transform hover:rotate-[340deg] 
-                  flex items-center justify-center rounded-lg bg-blue-600">
-          <div class="-rotate-45">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
-                 class="w-3.5 h-3.5 fill-white md:w-3 md:h-3">
-              <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 
-                12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 
-                0-121.36 44.38-121.36 124.72v70.62H22.89V288h81.11v224h100.2V288z"/>
-            </svg>
-          </div>
+        <a href="https://facebook.com/CouvertureSanitaitrUniverselle"
+           class="w-6 h-6 rotate-45 bg-blue-600 rounded-lg flex items-center justify-center">
+          <svg viewBox="0 0 320 512" class="w-3.5 h-3.5 fill-white -rotate-45">
+            <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 
+            12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 
+            225.36 0c-73.22 0-121.36 44.38-121.36 
+            124.72v70.62H22.89V288h81.11v224h100.2V288z"/>
+          </svg>
         </a>
 
         <!-- YouTube -->
         <a href="https://youtube.com/@sen_csu"
-           class="w-6 h-6 md:w-5 md:h-5 rotate-45 bg-red-600 flex items-center justify-center rounded-lg hover:rotate-[340deg]">
-          <div class="-rotate-45">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 md:w-3.5 md:h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M21.8 8.001a2.756 2.756 0 0 0-1.94-1.948C17.924 5.5 12 5.5 12 5.5s-5.924 0-7.86.553A2.756 2.756 0 0 0 2.2 8.001 28.54 28.54 0 0 0 1.5 12a28.54 28.54 0 0 0 .7 3.999 2.756 2.756 0 0 0 1.94 1.948C6.076 18.5 12 18.5 12 18.5s5.924 0 7.86-.553A2.756 2.756 0 0 0 21.8 15.999 28.54 28.54 0 0 0 22.5 12a28.54 28.54 0 0 0-.7-3.999zM10 15.5v-7l6 3.5-6 3.5z"/>
-            </svg>
-          </div>
+           class="w-6 h-6 rotate-45 bg-red-600 rounded-lg flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-white -rotate-45">
+            <path d="M21.8 8s-.2-1.5-.8-2.1c-.8-.8-1.7-.8-2.1-.9C15.4 4.5 
+            12 4.5 12 4.5h0s-3.4 0-5.9.5c-.4.1-1.3.1-2.1.9C3.4 
+            6.5 3.2 8 3.2 8S3 9.7 3 11.4v1.2C3 
+            14.3 3.2 16 3.2 16s.2 1.5.8 2.1c.8.8 
+            1.9.8 2.4.9 1.7.2 5.6.5 5.6.5s3.4 
+            0 5.9-.5c.4-.1 1.3-.1 2.1-.9.6-.6.8-2.1.8-2.1s.2-1.7.2-3.4v-1.2c0-1.7-.2-3.4-.2-3.4zM10 14.5v-5l4 2.5-4 2.5z"/>
+          </svg>
         </a>
 
-        <!-- X (Twitter) -->
-        <a href="https://x.com/sen_csu?s=21&t=6JWMaLzG-CZUjsMrrvT5Ag"
-           class="w-6 h-6 md:w-5 md:h-5 bg-black rotate-45 rounded-lg flex items-center justify-center hover:rotate-[340deg]">
-          <div class="-rotate-45">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 md:w-3.5 md:h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M18.9 2H22l-7.7 8.8L22 22h-7l-5.5-7L4.4 22H2l8.5-9.8L2 2h7l5 6.5L18.9 2z"/>
-            </svg>
-          </div>
+        <!-- X -->
+        <a href="https://x.com/sen_csu"
+           class="w-6 h-6 rotate-45 bg-black rounded-lg flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-white -rotate-45">
+            <path d="M18.9 2H22l-7.7 8.8L22 22h-7l-5.5-7L4.4 
+            22H2l8.5-9.8L2 2h7l5 6.5L18.9 2z"/>
+          </svg>
         </a>
 
         <!-- Instagram -->
         <a href="https://www.instagram.com/sen_csu_"
-           class="w-6 h-6 md:w-5 md:h-5 rotate-45 rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center hover:rotate-[300deg]">
-          <div class="-rotate-45">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 md:w-3.5 md:h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm0 7.3A2.8 2.8 0 1 1 14.8 12 2.8 2.8 0 0 1 12 14.8zM17.3 6a1.1 1.1 0 1 1-1.1 1.1A1.1 1.1 0 0 1 17.3 6z"/>
-            </svg>
-          </div>
+           class="w-6 h-6 rotate-45 rounded-lg
+                  bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600
+                  flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-white -rotate-45">
+            <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 
+            5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm5 4.5A5.5 5.5 
+            0 1 1 6.5 12 5.5 5.5 0 0 1 12 6.5zm0 9A3.5 3.5 0 1 0 8.5 
+            12 3.5 3.5 0 0 0 12 15.5zM18 6.5a1.5 1.5 0 1 1-1.5-1.5A1.5 
+            1.5 0 0 1 18 6.5z"/>
+          </svg>
         </a>
 
         <!-- LinkedIn -->
         <a href="https://linkedin.com/company/sen-csu"
-           class="w-6 h-6 md:w-5 md:h-5 bg-blue-500 rotate-45 rounded-lg flex items-center justify-center hover:rotate-[340deg]">
-          <div class="-rotate-45">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 md:w-3.5 md:h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7 0h3.8v2.2h.1c.5-1 1.8-2.2 3.8-2.2 4 0 4.7 2.7 4.7 6.2V24h-4v-7.8c0-1.9 0-4.4-2.7-4.4-2.7 0-3.1 2.1-3.1 4.3V24h-4V8z"/>
-            </svg>
-          </div>
+           class="w-6 h-6 rotate-45 bg-blue-500 rounded-lg flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-white -rotate-45">
+            <path d="M4.98 3.5A2.5 2.5 0 1 1 2.5 1 
+            2.5 2.5 0 0 1 4.98 3.5zM1 8h3v15H1zm6 
+            0h3v2h.1c.4-.8 1.5-2 3.5-2 3.7 0 
+            4.4 2.4 4.4 5.5V23h-3v-6.8c0-1.6 
+            0-3.7-2.3-3.7-2.3 0-2.7 1.8-2.7 
+            3.6V23H7z"/>
+          </svg>
         </a>
+
       </div>
-      <!-- Bouton Admin (test) -->
-      <button class="text-white hidden sm:block" (click)="goToAdmin()">Admin</button>
     </div>
+
+    <!-- Admin -->
+    <button class="hidden sm:block text-green-700 font-semibold"
+            (click)="goToAdmin()">
+      Admin
+    </button>
+
   </div>
+</div>
+
 
   <!-- Menu Desktop -->
 <nav

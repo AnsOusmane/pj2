@@ -190,5 +190,10 @@ goToCSUDaara() {
   goToMaintenance() {
     this.router.navigate(['/maintenance']);
   }
+showSocials = false;
+
+toggleSocials() {
+  this.showSocials = !this.showSocials;
+}
 
 }
