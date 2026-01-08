@@ -24,14 +24,14 @@ export class HeroComponent implements OnInit {
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-full max-h-[70vh] overflow-y-auto text-left">
       
       <div class="space-y-4">
-        <h3 class="text-lg font-bold text-white">🩺 Accès immédiat</h3>
+        <h3 class="text-lg font-bold text-white">Accès immédiat</h3>
         <p class="text-base leading-relaxed">
           En vous inscrivant à la CSU, vous bénéficiez d’un <span class="font-semibold">accès immédiat et prioritaire</span> aux postes de santé, centres de santé et hôpitaux sur tout le territoire national.
         </p>
       </div>
 
       <div class="space-y-4">
-        <h3 class="text-lg font-bold text-white">🏥 Prise en charge des maladies</h3>
+        <h3 class="text-lg font-bold text-white">Prise en charge des maladies</h3>
         <p class="text-base leading-relaxed">
           Toute personne atteinte d’une maladie incluse dans le programme bénéficie d’une <span class="font-semibold">prise en charge complète</span> dans n’importe quel établissement du réseau sanitaire.
         </p>
@@ -88,7 +88,7 @@ export class HeroComponent implements OnInit {
 
         <section>
           <h3 class="text-xl font-bold text-white flex items-center gap-2">
-            <span>💳</span> Abordabilité garantie
+            Abordabilité garantie
           </h3>
           <p>
             Les coûts des prestations sont ajustés pour rester accessibles à tous, y compris 
@@ -98,7 +98,7 @@ export class HeroComponent implements OnInit {
 
         <section>
           <h3 class="text-xl font-bold text-white flex items-center gap-2">
-            <span>🏥</span> Subventions nationales
+             Subventions nationales
           </h3>
           <p>
             Les soins sont largement subventionnés afin de réduire la charge médicale 
@@ -121,7 +121,7 @@ export class HeroComponent implements OnInit {
 
         <section>
           <h3 class="text-xl font-bold text-white flex items-center gap-2">
-            <span>📝</span> Procédure intuitive
+            Procédure intuitive
           </h3>
           <p>
             Les étapes d’enregistrement sont clairement guidées et accessibles à tous, 
@@ -131,7 +131,7 @@ export class HeroComponent implements OnInit {
 
         <section>
           <h3 class="text-xl font-bold text-white flex items-center gap-2">
-            <span>⚡</span> Validation rapide
+            Validation rapide
           </h3>
           <p>
             Votre dossier est traité rapidement afin que vous puissiez bénéficier des 
@@ -173,7 +173,7 @@ export class HeroComponent implements OnInit {
 
         <section>
           <h3 class="text-xl font-bold text-white flex items-center gap-2">
-            <span>🤝</span> Familles vulnérables
+           Familles vulnérables
           </h3>
           <p>
             Les ménages les plus fragiles bénéficient d’un soutien prioritaire pour leur 
