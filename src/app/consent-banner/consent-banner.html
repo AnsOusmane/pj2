@@ -1,0 +1,43 @@
+<div
+  *ngIf="show()"
+  class="fixed bottom-0 inset-x-0 z-[9999]
+         bg-white border-t border-gray-200
+         shadow-2xl px-4 py-4 sm:px-8"
+>
+
+  <div class="max-w-6xl mx-auto
+              flex flex-col sm:flex-row
+              items-start sm:items-center
+              justify-between gap-4">
+
+    <p class="text-sm text-gray-700 leading-relaxed">
+      Ce site utilise des cookies et des technologies similaires
+      pour améliorer votre expérience et mesurer l’audience.
+      <br class="hidden sm:block">
+      En poursuivant votre navigation, vous acceptez leur utilisation.
+    </p>
+
+    <div class="flex gap-3 shrink-0">
+      <button
+        (click)="refuse()"
+        class="px-4 py-2 text-sm
+               border border-gray-300
+               rounded-md text-gray-700
+               hover:bg-gray-100 transition"
+      >
+        Refuser
+      </button>
+
+      <button
+        (click)="accept()"
+        class="px-4 py-2 text-sm
+               bg-green-700 text-white
+               rounded-md
+               hover:bg-green-800 transition"
+      >
+        Accepter
+      </button>
+    </div>
+
+  </div>
+</div>

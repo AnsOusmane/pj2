@@ -11,6 +11,7 @@ import { OrganigrammeComponent } from './organigramme/organigramme';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
 import { Footer } from './footer/footer';
 import { LoaderComponent } from './core/loader/loader';
+import { ConsentBannerComponent } from './consent-banner/consent-banner';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,8 @@ import { LoaderComponent } from './core/loader/loader';
     OrganigrammeComponent,
     MissionsvisionComponent,
     Footer,
-    LoaderComponent
+    LoaderComponent,
+    ConsentBannerComponent,
   ],
   templateUrl: './app.html',
 })
