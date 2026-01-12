@@ -70,83 +70,74 @@
 
       </div>
 
-      <!-- ===== FORMULAIRE ===== -->
 <!-- ===== FORMULAIRE ===== -->
-<div
-  class="flex-1
-         max-w-[600px] 2xl:max-w-[720px]
-         bg-gray-100
-         p-6 sm:p-8 2xl:p-10
-         rounded-md"
->
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
-  <form
-    [formGroup]="form"
-    (ngSubmit)="onSubmit()"
-    class="grid grid-cols-1 sm:grid-cols-2 gap-5"
+  <!-- Message -->
+  <textarea
+    formControlName="message"
+    placeholder="Votre message *"
+    class="sm:col-span-2 w-full h-36 sm:h-44 2xl:h-52 p-4 bg-white border border-gray-200 rounded-md resize-none"
+  ></textarea>
+  <div *ngIf="hasError('message', 'required')" class="sm:col-span-2 text-red-600 text-sm">
+    Le message est requis.
+  </div>
+
+  <!-- Nom -->
+  <input
+    type="text"
+    formControlName="fullname"
+    placeholder="Nom complet *"
+    class="w-full p-4 bg-white border border-gray-200 rounded-md"
+  />
+  <div *ngIf="hasError('fullname', 'required')" class="text-red-600 text-sm">
+    Le nom est requis.
+  </div>
+
+  <!-- Email -->
+  <input
+    type="email"
+    formControlName="email"
+    placeholder="E-mail *"
+    class="w-full p-4 bg-white border border-gray-200 rounded-md"
+  />
+  <div *ngIf="hasError('email', 'required')" class="text-red-600 text-sm">
+    L’e-mail est requis.
+  </div>
+  <div *ngIf="hasError('email', 'email')" class="text-red-600 text-sm">
+    L’e-mail n’est pas valide.
+  </div>
+
+  <!-- Téléphone -->
+  <input
+    type="text"
+    formControlName="phone"
+    placeholder="Téléphone"
+    class="w-full p-4 bg-white border border-gray-200 rounded-md"
+  />
+
+  <!-- Bouton -->
+  <button
+    type="submit"
+    [disabled]="loading"
+    class="sm:col-span-2 mt-3 bg-green-700 text-white py-3 2xl:py-4 rounded-md font-semibold hover:bg-green-800 transition flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
   >
+    <span *ngIf="!loading">Envoyer ➜</span>
+    <span *ngIf="loading">Envoi...</span>
+  </button>
 
-    <!-- Message -->
-    <textarea
-      formControlName="message"
-      placeholder="Votre message *"
-      class="sm:col-span-2 w-full
-             h-36 sm:h-44 2xl:h-52
-             p-4 bg-white
-             border border-gray-200
-             rounded-md resize-none"
-    ></textarea>
+  <!-- Confirmation -->
+  <p *ngIf="submitted" class="sm:col-span-2 text-green-700 text-center font-medium mt-2">
+    ✔️ Message envoyé avec succès
+  </p>
 
-    <!-- Nom -->
-    <input
-      type="text"
-      formControlName="name"
-      placeholder="Nom complet *"
-      class="w-full p-4 bg-white border border-gray-200 rounded-md"
-    />
+  <!-- Erreur serveur -->
+  <p *ngIf="errorMsg" class="sm:col-span-2 text-red-600 text-center font-medium mt-2">
+    ❌ {{ errorMsg }}
+  </p>
 
-    <!-- Email -->
-    <input
-      type="email"
-      formControlName="email"
-      placeholder="E-mail *"
-      class="w-full p-4 bg-white border border-gray-200 rounded-md"
-    />
+</form>
 
-    <!-- Téléphone -->
-    <input
-      type="text"
-      formControlName="phone"
-      placeholder="Téléphone"
-      class="w-full p-4 bg-white border border-gray-200 rounded-md"
-    />
-
-    <!-- Bouton -->
-    <button
-      type="submit"
-      [disabled]="loading"
-      class="sm:col-span-2 mt-3
-             bg-green-700 text-white
-             py-3 2xl:py-4
-             rounded-md font-semibold
-             hover:bg-green-800 transition
-             flex items-center justify-center gap-2
-             disabled:opacity-60 disabled:cursor-not-allowed"
-    >
-      <span *ngIf="!loading">Envoyer ➜</span>
-      <span *ngIf="loading">Envoi...</span>
-    </button>
-
-    <!-- Confirmation -->
-    <p
-      *ngIf="submitted"
-      class="sm:col-span-2 text-green-700 text-center font-medium mt-2"
-    >
-      ✔️ Message envoyé avec succès
-    </p>
-
-  </form>
-</div>
 
 
     </div>
