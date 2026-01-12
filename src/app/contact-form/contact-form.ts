@@ -35,7 +35,11 @@ export class ContactFormComponent {
     this.errorMsg = null;
 
     // POST vers ton backend contact-api
-    this.http.post('http://localhost:3000/api/contact', this.form.value)
+    this.http.post(
+  'https://contact-api-z25i.onrender.com/api/contact',
+  this.form.value
+)
+
       .subscribe({
         next: () => {
           this.loading = false;
