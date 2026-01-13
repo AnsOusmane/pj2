@@ -1,16 +1,18 @@
-// db.js
-const mysql = require('mysql2'); 
+const mysql = require('mysql2');
 
 const db = mysql.createConnection({
-  host: 'ftp.sencsu.sn',
-  user: 'sencsudb_sencsusn68332658',
-  password: 'SenCSU2542!',
-  database: 'sencsudb_sencsusn68332658'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 db.connect(err => {
-  if (err) throw err;
-  console.log('✅ MySQL connecté');
+  if (err) {
+    console.error('❌ MySQL error:', err.message);
+  } else {
+    console.log('✅ MySQL connecté');
+  }
 });
 
 module.exports = db;

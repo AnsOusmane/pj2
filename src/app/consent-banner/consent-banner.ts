@@ -2,8 +2,6 @@ import { Component, signal, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AnalyticsService } from 'core/services/analytics.service/analytics.service';
 
-
-
 @Component({
   selector: 'app-consent-banner',
   standalone: true,
@@ -13,6 +11,8 @@ import { AnalyticsService } from 'core/services/analytics.service/analytics.serv
 export class ConsentBannerComponent implements OnInit {
 
   show = signal(false);
+
+  private readonly DELAY_MS = 1500;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -24,18 +24,23 @@ export class ConsentBannerComponent implements OnInit {
 
     const consent = localStorage.getItem('siteConsent');
 
+    // Si déjà accepté → on charge directement Analytics
     if (consent === 'accepted') {
-      this.analytics.load(); // ✅ GA chargé automatiquement
+      this.analytics.load();
+      return;
     }
 
+    // S'il n'y a PAS de consentement → on affiche après un délai
     if (!consent) {
-      this.show.set(true); // ✅ affiche le bandeau
+      setTimeout(() => {
+        this.show.set(true);
+      }, this.DELAY_MS);
     }
   }
 
   accept() {
     localStorage.setItem('siteConsent', 'accepted');
-    this.analytics.load(); // ✅ charge GA après clic
+    this.analytics.load();
     this.show.set(false);
   }
 

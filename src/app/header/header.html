@@ -322,7 +322,7 @@
         >
           <ul class="flex flex-col text-green-600 font-medium">
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToContact()">Nous contacter</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToSr()">Localiser une agence</button></li>
+            <!-- <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToSr()">Localiser une agence</button></li> -->
           </ul>
         </div>
       </div>
@@ -516,7 +516,7 @@
 
         <div *ngIf="mobileDropdown.contact" class="pl-4 space-y-2 text-[16px]">
           <button (click)="goToContact(); closeMobileMenu()">Formulaire de contact</button><br>
-          <button (click)="goToSr(); closeMobileMenu()">Localiser une agence</button><br>
+          <!-- <button (click)="goToSr(); closeMobileMenu()">Localiser une agence</button><br> -->
         </div>
       </li>
 

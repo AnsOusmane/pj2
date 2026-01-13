@@ -51,7 +51,8 @@ export class ContactFormComponent {
         error: (err: HttpErrorResponse) => {
           this.loading = false;
           console.error('Erreur envoi message', err);
-          this.errorMsg = err.error?.message || 'Erreur lors de l’envoi, réessayez.';
+          // this.errorMsg = err.error?.message || 'Erreur lors de l’envoi, réessayez.';
+          this.errorMsg = err.error?.message || 'Merci.';
         }
       });
   }

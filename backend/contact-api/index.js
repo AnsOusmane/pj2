@@ -35,7 +35,7 @@ app.post("/api/contact", async (req, res) => {
 
     const info = await transporter.sendMail({
       from: `"SEN-CSU" <${process.env.MAIL_USER}>`,
-      to: "ansouousmanendiaye@gmail.com",
+      to: "contact@agencecmu.sn",
       subject: "📩 Nouveau message site SEN-CSU",
       html: `
         <h3>Nouveau message</h3>
@@ -46,7 +46,7 @@ app.post("/api/contact", async (req, res) => {
       `,
     });
 
-    console.log("Email envoyé :", info.messageId);
+    console.log("Message envoyé :", info.messageId);
     res.json({ success: true, messageId: info.messageId });
   } catch (err) {
     console.error("Erreur Nodemailer :", err);

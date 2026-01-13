@@ -33,7 +33,7 @@ export class NosServicesRegionauxComponent implements AfterViewInit {
       lat: 14.7501703,
       lng: -17.4688052
     },
-  { region: 'Thiès', adresse: 'Avenue Caen, Thiès', telephone: '33 800 00 22', email: 'sr-thies@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.7910, lng: -16.9359 },
+  { region: 'Thiès', adresse: '', telephone: '', email: '', horaires: '', lat: 14.7910, lng: -16.9359 },
     { region: 'Diourbel', adresse: 'Route de Bambey, Diourbel', telephone: '33 800 00 33', email: 'sr-diourbel@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.6550, lng: -16.2333 },
     { region: 'Kaolack', adresse: 'Quartier Léboul, Kaolack', telephone: '33 800 00 44', email: 'sr-kaolack@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.1650, lng: -16.0750 },
     { region: 'Fatick', adresse: 'Boulevard Sérigne Touba, Fatick', telephone: '33 800 00 55', email: 'sr-fatick@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.3375, lng: -16.4100 },

@@ -1,43 +1,48 @@
-<div
-  *ngIf="show()"
-  class="fixed bottom-0 inset-x-0 z-[9999]
-         bg-white border-t border-gray-200
-         shadow-2xl px-4 py-4 sm:px-8"
->
+<div *ngIf="show()" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/55 backdrop-blur-sm p-4">
 
-  <div class="max-w-6xl mx-auto
-              flex flex-col sm:flex-row
-              items-start sm:items-center
-              justify-between gap-4">
+  <!-- Carte principale -->
+  <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden
+              border border-gray-100 transform transition-all duration-300">
 
-    <p class="text-sm text-gray-700 leading-relaxed">
-      Ce site utilise des cookies et des technologies similaires
-      pour améliorer votre expérience et mesurer l’audience.
-      <br class="hidden sm:block">
-      En poursuivant votre navigation, vous acceptez leur utilisation.
-    </p>
+    <div class="px-8 py-10 text-center">
 
-    <div class="flex gap-3 shrink-0">
-      <button
-        (click)="refuse()"
-        class="px-4 py-2 text-sm
-               border border-gray-300
-               rounded-md text-gray-700
-               hover:bg-gray-100 transition"
-      >
-        Refuser
-      </button>
+      <!-- Message principal -->
+      <p class="text-lg font-medium text-gray-800 mb-2">
+        Ce site utilise des cookies
+      </p>
+      
+      <p class="text-gray-600 mb-8 leading-relaxed">
+        pour vous offrir une meilleure expérience.
+      </p>
 
-      <button
-        (click)="accept()"
-        class="px-4 py-2 text-sm
-               bg-green-700 text-white
-               rounded-md
-               hover:bg-green-800 transition"
-      >
-        Accepter
-      </button>
+      <!-- Boutons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button
+          (click)="refuse()"
+          class="px-9 py-3.5 text-sm font-medium rounded-full
+                 border border-gray-300 text-gray-700
+                 hover:bg-gray-50 hover:border-gray-400
+                 transition-colors duration-200 min-w-[140px]"
+        >
+          Refuser
+        </button>
+
+        <button
+          (click)="accept()"
+          class="px-9 py-3.5 text-sm font-medium rounded-full
+                 bg-green-700 text-white
+                 hover:bg-green-700
+                 transition-colors duration-200 min-w-[140px] shadow-sm"
+        >
+          Accepter
+        </button>
+      </div>
+
     </div>
 
+    <!-- Petite mention discrète -->
+    <div class="bg-gray-50 py-3 text-xs text-gray-500 text-center border-t border-gray-100">
+      Vous pouvez modifier ce choix à tout moment
+    </div>
   </div>
 </div>
