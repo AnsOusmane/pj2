@@ -4,9 +4,13 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
+  // 🔹 DEBUG : afficher le body reçu
+  console.log('Body reçu :', req.body);
+
   const { fullname, email, phone, message } = req.body;
 
   if (!fullname || !email || !message) {
+    console.log('❌ Champs requis manquants', { fullname, email, message });
     return res.status(400).json({ error: 'Champs requis manquants' });
   }
 
@@ -14,13 +18,14 @@ router.post('/', async (req, res) => {
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
-      secure: false,
+      secure: false, // true si port 465
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
       },
     });
 
+    // 🔹 Vérifier la connexion SMTP avant l'envoi
     await transporter.verify();
     console.log('SMTP connecté ✅');
 
@@ -37,10 +42,15 @@ router.post('/', async (req, res) => {
       `,
     });
 
+    console.log('Message envoyé ✅', info.messageId);
+
     res.json({ success: true, messageId: info.messageId });
   } catch (err) {
     console.error('Erreur mail ❌', err);
-    res.status(500).json({ error: 'Erreur envoi email' });
+    res.status(500).json({
+      error: 'Erreur envoi email',
+      details: err.message || err.toString(),
+    });
   }
 });
 
