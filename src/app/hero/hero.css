@@ -111,3 +111,11 @@
 .cute-dot.red    { background: #ff5f5700; }
 .cute-dot.yellow { background: #ff5f5700; }
 .cute-dot.green  { background: #ff5f5700; }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -119,24 +119,20 @@
   <!-- Bouton -->
   <button
     type="submit"
-    [disabled]="loading"
+    [disabled]="loading || form.invalid"
     class="sm:col-span-2 mt-3 bg-green-700 text-white py-3 2xl:py-4 rounded-md font-semibold hover:bg-green-800 transition flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
   >
     <span *ngIf="!loading">Envoyer ➜</span>
-    <span *ngIf="loading">Envoi...</span>
+    <span *ngIf="loading">Envoi en cours...</span>
   </button>
 
-  <!-- Confirmation -->
-  <p *ngIf="submitted" class="sm:col-span-2 text-green-700 text-center font-medium mt-2">
-    ✔️ Message envoyé avec succès
+  <!-- Messages feedback -->
+  <p *ngIf="submitted && !errorMsg" class="sm:col-span-2 text-green-700 text-center font-medium mt-2">
+    ✔️ Message envoyé avec succès !
   </p>
 
-  <!-- Erreur serveur -->
-  <!-- <p *ngIf="errorMsg" class="sm:col-span-2 text-red-600 text-center font-medium mt-2">
+  <p *ngIf="errorMsg" class="sm:col-span-2 text-red-600 text-center font-medium mt-2">
     ❌ {{ errorMsg }}
-  </p> -->
-    <p *ngIf="errorMsg" class="sm:col-span-2 text-green-600 text-center font-medium mt-2">
-     {{ errorMsg }}
   </p>
 
 </form>
