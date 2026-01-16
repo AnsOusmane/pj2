@@ -46,7 +46,7 @@ export class ContactFormComponent {
       message: this.form.value.message,
       
       // Optionnels mais très recommandés
-      subject: 'Nouveau message depuis le site - Sen-CSU',
+      subject: '📩 Nouveau message depuis le site - Sen-CSU',
       from_name: this.form.value.fullname || 'Visiteur',
       // replyto: this.form.value.email,                    // décommente si tu veux répondre directement
     };
