@@ -1,18 +1,23 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-carriere',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './carriere.html',
 })
 export class CarriereComponent {
 
   private fb = inject(FormBuilder);
+  private http = inject(HttpClient);
 
-  // Formulaire de candidature spontanée
+  envoiEnCours = false;
+  messageSucces = '';
+  messageErreur = '';
+
   form: FormGroup = this.fb.group({
     nom: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
@@ -21,8 +26,7 @@ export class CarriereComponent {
     cv: [null]
   });
 
-  // Liste des offres
-  offres = [
+  offres: any[] = [
     {
       id: 1,
       titre: "Directeur des systemes d'information",
@@ -130,9 +134,7 @@ recrutement@agencecmu.sn
 
 Seuls les candidats présélectionnés seront contactés pour un entretien.`
 }
-
   ];
-
   filtre = '';
   offreSelectionnee: any = null;
 
@@ -142,10 +144,8 @@ Seuls les candidats présélectionnés seront contactés pour un entretien.`
     );
   }
 
-  // Afficher détails + scroll automatique
   afficherDetails(offre: any) {
     this.offreSelectionnee = offre;
-
     setTimeout(() => {
       document.getElementById('details-section')?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
@@ -153,13 +153,91 @@ Seuls les candidats présélectionnés seront contactés pour un entretien.`
 
   onFileChange(event: any) {
     const file = event.target.files[0];
+    if (!file) return;
+
+    const maxSize = 10 * 1024 * 1024;
+    if (file.size > maxSize) {
+      this.messageErreur = 'Le fichier dépasse la taille maximale de 10 Mo ❌';
+      return;
+    }
+
     this.form.patchValue({ cv: file });
+    this.messageErreur = '';
   }
 
-  envoyer() {
-    if (this.form.invalid) return this.form.markAllAsTouched();
+  // 🔹 Upload CV vers Cloudinary en mode raw (PDF / DOC / DOCX)
+  async uploadCV(file: File): Promise<string> {
+    const cloudName = 'djyelsta1'; // 🔁 remplace si besoin
+    const uploadPreset = 'cv_upload';   // 🔁 ton preset Cloudinary
 
-    alert('Candidature envoyée avec succès !');
-    this.form.reset();
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', uploadPreset);
+
+    // Utiliser /raw/upload pour que le fichier soit téléchargeable directement
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/raw/upload`, {
+      method: 'POST',
+      body: data
+    });
+
+    const result = await response.json();
+
+    if (!result.secure_url) throw new Error('Erreur upload Cloudinary');
+
+    return result.secure_url;
+  }
+
+  // 🚀 Envoi formulaire
+  async envoyer() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.envoiEnCours = true;
+    this.messageSucces = '';
+    this.messageErreur = '';
+
+    try {
+      let cvLink = 'Non fourni';
+
+      // 1️⃣ Upload CV si présent
+      if (this.form.value.cv) {
+        cvLink = await this.uploadCV(this.form.value.cv);
+      }
+
+      // 2️⃣ Préparation Web3Forms
+      const formData = new FormData();
+      formData.append('access_key', 'a3837e05-3557-4015-b3b1-12f93727837f'); // 🔁 remplace par ta clé valide
+      formData.append('name', this.form.value.nom);
+      formData.append('email', this.form.value.email);
+      formData.append('subject', 'Nouvelle candidature spontanée');
+      formData.append('from_name', 'Site Carrières');
+      formData.append('botcheck', '');
+
+      formData.append('message',
+`Nouvelle candidature reçue :
+
+Nom : ${this.form.value.nom}
+Email : ${this.form.value.email}
+Téléphone : ${this.form.value.telephone || 'Non renseigné'}
+Poste souhaité : ${this.form.value.poste || 'Non précisé'}
+
+📎 CV du candidat :
+${cvLink}
+`);
+
+      // 3️⃣ Envoi email
+      await this.http.post('https://api.web3forms.com/submit', formData).toPromise();
+
+      this.messageSucces = 'Candidature envoyée avec succès ✅';
+      this.form.reset();
+
+    } catch (err: any) {
+      console.error(err);
+      this.messageErreur = "Erreur lors de l'envoi ❌";
+    }
+
+    this.envoiEnCours = false;
   }
 }

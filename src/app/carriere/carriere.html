@@ -39,7 +39,7 @@
         <p class="text-sm xl:text-base 2xl:text-lg text-gray-600 mt-1">
           {{ offre.type }} — {{ offre.lieu }}
         </p>
-          <P> Valable jusqu'au 13 Janvier 2026</P>
+          <P class="text-red-700"> Limite des dépôts le 13 Janvier 2026</P>
         <p class="text-xs xl:text-sm 2xl:text-base
                   text-green-700 mt-4 underline">
           Voir la description
@@ -85,73 +85,98 @@
   </div>
 
   <!-- 🟩 COLONNE DROITE : CANDIDATURE SPONTANÉE -->
-  <div
-    class="bg-white rounded-2xl
-           p-6 xl:p-8 2xl:p-10
-           shadow-2xl
-           h-fit sticky top-6"
+<div
+  class="bg-white rounded-2xl
+         p-6 xl:p-8 2xl:p-10
+         shadow-2xl
+         h-fit sticky top-6"
+>
+  <h2 class="text-xl xl:text-2xl 2xl:text-3xl font-bold mb-6 text-green-700">
+    Candidature spontanée
+  </h2>
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="envoyer()"
+    enctype="multipart/form-data"
+    class="space-y-4 xl:space-y-6"
   >
-    <h2 class="text-xl xl:text-2xl 2xl:text-3xl
-               font-bold mb-6 text-green-700">
-      Candidature spontanée
-    </h2>
+    <!-- Honeypot anti-spam -->
+    <input type="checkbox" name="botcheck" class="hidden" style="display:none">
 
-    <form [formGroup]="form" (ngSubmit)="envoyer()" class="space-y-4 xl:space-y-6">
+    <!-- Nom -->
+    <input
+      type="text"
+      placeholder="Nom complet"
+      formControlName="nom"
+      class="w-full p-3 xl:p-4 2xl:p-5 border rounded-lg text-base xl:text-lg 2xl:text-xl"
+      [class.border-red-500]="form.get('nom')?.invalid && form.get('nom')?.touched"
+    />
 
+    <!-- Email -->
+    <input
+      type="email"
+      placeholder="Email"
+      formControlName="email"
+      class="w-full p-3 xl:p-4 2xl:p-5 border rounded-lg text-base xl:text-lg 2xl:text-xl"
+      [class.border-red-500]="form.get('email')?.invalid && form.get('email')?.touched"
+    />
+
+    <!-- Téléphone -->
+    <input
+      type="text"
+      placeholder="Téléphone"
+      formControlName="telephone"
+      class="w-full p-3 xl:p-4 2xl:p-5 border rounded-lg text-base xl:text-lg 2xl:text-xl"
+    />
+
+    <!-- Poste souhaité -->
+    <input
+      type="text"
+      placeholder="Poste souhaité"
+      formControlName="poste"
+      class="w-full p-3 xl:p-4 2xl:p-5 border rounded-lg text-base xl:text-lg 2xl:text-xl"
+    />
+
+    <!-- CV Upload -->
+    <div>
+      <label class="text-sm xl:text-base 2xl:text-lg font-semibold mb-2 block">
+        Déposer votre CV :
+      </label>
       <input
-        type="text"
-        placeholder="Nom complet"
-        formControlName="nom"
-        class="w-full p-3 xl:p-4 2xl:p-5
-               border rounded-lg
-               text-base xl:text-lg 2xl:text-xl"
-      >
+        type="file"
+        (change)="onFileChange($event)"
+        accept=".pdf,.doc,.docx"
+        class="w-full"
+      />
+      <p class="text-xs text-gray-500 mt-1">
+        Formats acceptés : PDF, DOC, DOCX
+      </p>
+    </div>
 
-      <input
-        type="email"
-        placeholder="Email"
-        formControlName="email"
-        class="w-full p-3 xl:p-4 2xl:p-5
-               border rounded-lg
-               text-base xl:text-lg 2xl:text-xl"
-      >
+    <!-- Messages -->
+    <p *ngIf="messageSucces" class="text-green-600 font-semibold text-sm">
+      {{ messageSucces }}
+    </p>
 
-      <input
-        type="text"
-        placeholder="Téléphone"
-        formControlName="telephone"
-        class="w-full p-3 xl:p-4 2xl:p-5
-               border rounded-lg
-               text-base xl:text-lg 2xl:text-xl"
-      >
+    <p *ngIf="messageErreur" class="text-red-600 font-semibold text-sm">
+      {{ messageErreur }}
+    </p>
 
-      <input
-        type="text"
-        placeholder="Poste souhaité"
-        formControlName="poste"
-        class="w-full p-3 xl:p-4 2xl:p-5
-               border rounded-lg
-               text-base xl:text-lg 2xl:text-xl"
-      >
+    <!-- Bouton -->
+    <button
+      type="submit"
+      [disabled]="form.invalid || envoiEnCours"
+      class="w-full py-3 xl:py-4 2xl:py-5
+             bg-green-600 hover:bg-green-700
+             transition text-white rounded-lg font-semibold
+             text-base xl:text-lg 2xl:text-xl
+             disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      {{ envoiEnCours ? 'Envoi en cours...' : 'Envoyer ma candidature' }}
+    </button>
+  </form>
+</div>
 
-      <div>
-        <label class="text-sm xl:text-base 2xl:text-lg font-semibold mb-2 block">
-          Déposer votre CV :
-        </label>
-        <input type="file" (change)="onFileChange($event)" class="w-full">
-      </div>
-
-      <button
-        type="submit"
-        class="w-full
-               py-3 xl:py-4 2xl:py-5
-               bg-green-600 text-white rounded-lg
-               font-semibold
-               text-base xl:text-lg 2xl:text-xl"
-      >
-        Envoyer
-      </button>
-    </form>
-  </div>
 
 </div>
