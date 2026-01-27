@@ -26,6 +26,8 @@ import { DecretsOfficielsFormComponent } from './admin/decrets-form/decrets-form
 import { communiquesOfficielsFormComponent } from './admin/communiques-form/communiques-form';
 import { BanqueImagesFormComponent } from './admin/banque-d-image-form/banque-d-image-form';
 import { MaintenanceComponent } from './maintenance/maintenance';
+import { CecComponent } from './cec/cec';
+import { PnbsfComponent } from './pnbsf/pnbsf';
 
 export const routes: Routes = [
   { path: '', component: HeroComponent }, 
@@ -55,6 +57,8 @@ export const routes: Routes = [
   { path: 'admin/communiques-form', component: communiquesOfficielsFormComponent },
   { path: 'admin/banque_d_image-form', component: BanqueImagesFormComponent },
   { path: 'maintenance', component: MaintenanceComponent },
+  { path: 'cec', component: CecComponent },
+  { path: 'pnbsf', component: PnbsfComponent },
 
   //{
 //   path: 'actus',

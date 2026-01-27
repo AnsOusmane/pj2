@@ -173,7 +173,8 @@ closeAllMenus() {
   goToCarriere() { this.router.navigate(['/carriere']); }
   goToAdmin() { this.router.navigate(['/admin']); }
   goToActualites() { this.router.navigate(['pages/actualites']); }
-
+  goToCEC() { this.router.navigate(['/cec']); }
+  goToPNBSF() { this.router.navigate(['/pnbsf']); }
   goToCSU() {
   this.router.navigate(['/assurance-maladie'], {
     queryParams: { type: 'poste' }

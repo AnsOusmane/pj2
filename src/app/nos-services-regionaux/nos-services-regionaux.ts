@@ -27,25 +27,25 @@ export class NosServicesRegionauxComponent implements AfterViewInit {
     {
       region: 'Dakar',
       adresse: 'Ouest Foire, Dakar',
-      telephone: '33 800 00 11',
+      telephone: '77 762 67 48',
       email: 'sr-dakar@csu.sn',
       horaires: 'Lun–Ven : 08h–17h',
       lat: 14.7501703,
       lng: -17.4688052
     },
-  { region: 'Thiès', adresse: '', telephone: '', email: '', horaires: '', lat: 14.7910, lng: -16.9359 },
-    { region: 'Diourbel', adresse: 'Route de Bambey, Diourbel', telephone: '33 800 00 33', email: 'sr-diourbel@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.6550, lng: -16.2333 },
-    { region: 'Kaolack', adresse: 'Quartier Léboul, Kaolack', telephone: '33 800 00 44', email: 'sr-kaolack@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.1650, lng: -16.0750 },
-    { region: 'Fatick', adresse: 'Boulevard Sérigne Touba, Fatick', telephone: '33 800 00 55', email: 'sr-fatick@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.3375, lng: -16.4100 },
-    { region: 'Kaffrine', adresse: 'Route de Malem Hodar, Kaffrine', telephone: '33 800 00 66', email: 'sr-kaffrine@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.1050, lng: -15.5500 },
-    { region: 'Louga', adresse: 'Rue de la Gouvernance, Louga', telephone: '33 800 00 77', email: 'sr-louga@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 15.6100, lng: -16.2222 },
-    { region: 'Matam', adresse: 'Route de Ourossogui, Matam', telephone: '33 800 00 88', email: 'sr-matam@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 15.6560, lng: -13.2572 },
-    { region: 'Kédougou', adresse: 'Centre-ville administratif, Kédougou', telephone: '33 800 00 99', email: 'sr-kedougou@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 12.5600, lng: -12.1800 },
-    { region: 'Kolda', adresse: 'Route de Médina Chérif, Kolda', telephone: '33 800 01 10', email: 'sr-kolda@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 12.8833, lng: -14.9500 },
-    { region: 'Saint-Louis', adresse: 'Île Nord, Saint-Louis', telephone: '33 800 01 11', email: 'sr-saintlouis@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 16.0500, lng: -16.5000 },
-    { region: 'Sédhiou', adresse: 'Boulevard du Fleuve, Sédhiou', telephone: '33 800 01 12', email: 'sr-sedhiou@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 12.7081, lng: -15.5569 },
-    { region: 'Tambacounda', adresse: 'Route de Goudiry, Tambacounda', telephone: '33 800 01 13', email: 'sr-tambacounda@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 13.7700, lng: -13.6800 },
-    { region: 'Ziguinchor', adresse: 'Boulevard de France, Ziguinchor', telephone: '33 800 01 14', email: 'sr-ziguinchor@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 12.5600, lng: -16.2800 }
+    { region: 'Thiès', adresse: 'Thies', telephone: '77 762 63 29', email: 'sr-thies@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.7910, lng: -16.9359 },
+    { region: 'Diourbel', adresse: ' Diourbel', telephone: '77 762 66 14', email: 'sr-diourbel@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.6550, lng: -16.2333 },
+    { region: 'Kaolack', adresse: 'Kaolack', telephone: '77 762 72 67', email: 'sr-kaolack@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.1650, lng: -16.0750 },
+    { region: 'Fatick', adresse: 'Fatick', telephone: '77 762 75 99', email: 'sr-fatick@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.3375, lng: -16.4100 },
+    { region: 'Kaffrine', adresse: 'Kaffrine', telephone: '77 762 73 28', email: 'sr-kaffrine@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 14.1050, lng: -15.5500 },
+    { region: 'Louga', adresse: 'Louga', telephone: '77 762 73 52', email: 'sr-louga@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 15.6100, lng: -16.2222 },
+    { region: 'Matam', adresse: 'Matam', telephone: '77 762 70 31', email: 'sr-matam@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 15.6560, lng: -13.2572 },
+    { region: 'Kédougou', adresse: 'Kédougou', telephone: '77 763 02 88', email: 'sr-kedougou@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 12.5600, lng: -12.1800 },
+    { region: 'Kolda', adresse: 'Kolda', telephone: '77 762 68 04', email: 'sr-kolda@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 12.8833, lng: -14.9500 },
+    { region: 'Saint-Louis', adresse: 'Saint-Louis', telephone: '77 763 11 76', email: 'sr-saintlouis@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 16.0500, lng: -16.5000 },
+    { region: 'Sédhiou', adresse: 'Sédhiou', telephone: '77 763 07 34', email: 'sr-sedhiou@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 12.7081, lng: -15.5569 },
+    { region: 'Tambacounda', adresse: 'Tambacounda', telephone: '77 762 62 55', email: 'sr-tambacounda@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 13.7700, lng: -13.6800 },
+    { region: 'Ziguinchor', adresse: 'Ziguinchor', telephone: '77 763 09 59', email: 'sr-ziguinchor@csu.sn', horaires: 'Lun–Ven : 08h–17h', lat: 12.5600, lng: -16.2800 }
   ];
 
   userLat: number | null = null;
