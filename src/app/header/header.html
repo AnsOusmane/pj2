@@ -24,26 +24,29 @@
       <a [href]="bannerLinks[bannerIndex]" target="_blank" class="block h-full">
         <img
           [src]="bannerImages[bannerIndex]"
-          class="h-full w-auto object-contain transition-opacity duration-500"
+          class="h-full w-auto object-contain transition-opacity duration-500 mx-1"
           [style.opacity]="imageOpacity"
           alt="Offres CSU">
       </a>
-
-      <button (click)="previousBanner()"
-        class="absolute left-1 top-1/2 -translate-y-1/2
-               w-32 h-32 md:w-12 md:h-12
-               flex items-center justify-center
-               text-7xl text-green-600 hover:text-white
-               hover:bg-green-600 rounded-full transition">
+<button (click)="previousBanner()"
+  class="absolute left-[1px] md:left-1 top-1/2 -translate-y-1/2
+         w-32 h-32 md:w-12 md:h-12
+         flex items-center justify-start md:justify-center
+         md:pl-0
+         text-7xl text-green-600
+         md:hover:text-white md:hover:bg-green-600
+         rounded-full transition">
   ‹
 </button>
 
 <button (click)="nextBanner()"
-        class="absolute right-1 top-1/2 -translate-y-1/2
-               w-32 h-32 md:w-12 md:h-12
-               flex items-center justify-center
-               text-7xl text-green-600 hover:text-white
-               hover:bg-green-600 rounded-full transition">
+  class="absolute right-[1px] md:right-1 top-1/2 -translate-y-1/2
+         w-32 h-32 md:w-12 md:h-12
+         flex items-center justify-end md:justify-center
+         md:pr-0
+         text-7xl text-green-600
+         md:hover:text-white md:hover:bg-green-600
+         rounded-full transition">
   ›
 </button>
 
@@ -134,16 +137,14 @@
       </div>
     </div>
 
-    <!-- Admin -->
+    <!-- Admin 
     <button class="hidden sm:block text-white"
             (click)="goToAdmin()">
       Admin
-    </button>
+    </button> -->
 
   </div>
 </div>
-
-
   <!-- Menu Desktop -->
 <nav
   class="hidden lg:flex flex-col
@@ -282,7 +283,7 @@
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToDialyse()">Dialyse</button></li>
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToPlanSesame()">Plan Sésame</button></li>
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToPNBSF()">Bénéficiaires PNBSF</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToCEC()">Carte Égalité des chances</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToCEC()">Carte d'Égalité des chances</button></li>
             <li>
               <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block w-full">
                 <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white">Nos pharmacies partenaires</button>
@@ -451,7 +452,7 @@
           <button (click)="goToDialyse(); closeMobileMenu()">Dialyse</button><br>
           <button (click)="goToPlanSesame(); closeMobileMenu()">Plan Sésame</button><br>
           <button (click)="goToPNBSF();closeMobileMenu()">Bénéficiaires PNBSF</button><br>
-          <button (click)="goToCEC(); closeMobileMenu()">Carte égalité des chances</button><br>
+          <button (click)="goToCEC(); closeMobileMenu()">Carte d'Égalité des Chances</button><br>
           <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block w-full">
             <button class="w-full text-left py-2 hover:text-green-600">Nos pharmacies partenaires</button>
           </a>

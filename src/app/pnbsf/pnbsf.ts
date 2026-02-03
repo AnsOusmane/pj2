@@ -20,7 +20,7 @@ export class PnbsfComponent {
       ]
     },
     {
-      title: 'Enrôlement à la CMU',
+      title: 'Enrôlement à la CSU',
       content: [
         'Immatriculation automatique à la Couverture Sanitaire Universelle',
         'Basée sur les données officielles de la DGPSN'

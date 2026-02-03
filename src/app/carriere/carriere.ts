@@ -208,11 +208,11 @@ Seuls les candidats présélectionnés seront contactés pour un entretien.`
 
       // 2️⃣ Préparation Web3Forms
       const formData = new FormData();
-      formData.append('access_key', 'a3837e05-3557-4015-b3b1-12f93727837f'); // 🔁 remplace par ta clé valide
+      formData.append('access_key', 'a3837e05-3557-4015-b3b1-12f93727837f'); //clé 
       formData.append('name', this.form.value.nom);
       formData.append('email', this.form.value.email);
       formData.append('subject', 'Nouvelle candidature spontanée');
-      formData.append('from_name', 'Site Carrières');
+      formData.append('from_name', 'Site Sen-CSU');
       formData.append('botcheck', '');
 
       formData.append('message',

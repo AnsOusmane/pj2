@@ -1,27 +1,59 @@
-<div class="organigramme-container flex flex-col items-center mt-7">
-  <div class="relative w-full max-w-xl rounded-lg shadow-lg overflow-hidden mt-6 bg-white">
-<img
+<div class="organigramme-container flex flex-col items-center mt-7 px-4">
+  
+  <div class="mb-10 relative w-full max-w-xl rounded-2xl shadow-xl overflow-hidden mt-6 bg-white border border-gray-100">
+    
+    <div class="flex flex-col items-center justify-center h-80 text-center px-6">
+      
+      <!-- Icône -->
+      <div class="mb-4 text-green-500">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="w-14 h-14"
+             fill="none" 
+             viewBox="0 0 24 24"
+             stroke="currentColor" 
+             stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" 
+                d="M11.25 9v2.25m0 3h.008v.008H11.25v-.008ZM21 12a9 9 0 11-18 0 9 9 0 0118 0Z" />
+        </svg>
+      </div>
+
+      <!-- Titre -->
+      <h2 class="text-xl font-semibold text-gray-800 mb-2">
+        Page en rédaction
+      </h2>
+
+      <!-- Description -->
+      <p class="text-gray-500 max-w-sm">
+        Cette section est actuellement en cours de mise à jour.  
+        Merci de revenir un peu plus tard.
+      </p>
+    </div>
+
+
+  <!-- 
+    <img
   [src]="currentMembre.photo"
   class="w-full h-80 object-cover object-top transition-transform duration-300"
   alt="{{ currentMembre.nom }}"
->
-
+> -->
+     <!--
     <div class="p-4 text-center">
       <h3 class="text-lg font-bold text-green-700">{{ currentMembre.nom }}</h3>
       <p class="text-sm font-semibold text-gray-600">{{ currentMembre.poste }}</p>
       <p class="mt-2 text-gray-700">{{ currentMembre.bio }}</p>
-    </div>
+    </div> -->
     <!-- Flèches -->
-    <button (click)="prev()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition">‹</button>
+<!--    <button (click)="prev()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition">‹</button>
     <button (click)="next()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition">›</button>
-  </div>
+  </div> -->
 
   <!-- Miniatures hover -->
-  <div class="mt-4 flex gap-3 overflow-x-auto">
+  <!-- <div class="mt-4 flex gap-3 overflow-x-auto">
     <div *ngFor="let membre of membres; let i = index"
          (mouseenter)="currentIndex = i"
          class="w-20 h-20 rounded-full overflow-hidden cursor-pointer border-2 border-green-300 hover:border-green-600 transition">
       <img [src]="membre.photo" class="w-full h-full object-cover" alt="{{membre.nom}}">
-    </div>
-  </div>
+     </div> 
+     -->
+  </div> 
 </div>

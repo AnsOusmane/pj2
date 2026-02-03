@@ -37,7 +37,7 @@ export class DialyseComponent {
       icon: "🏥",
       content: [
         "Séances d’hémodialyse à tarif réduit dans les cliniques privées",
-        "Valable uniquement dans les structures privées conventionnées CMU",
+        "Valable uniquement dans les structures privées conventionnées CSU",
         "Selon la disponibilité des places"
       ]
     },

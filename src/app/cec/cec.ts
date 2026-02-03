@@ -21,7 +21,7 @@ export class CecComponent {
     {
       title: 'Enregistrement et immatriculation',
       content: [
-        'Enrôlement automatique à la CMU',
+        'Enrôlement automatique à la CSU',
         'Basé sur les bases de données de la DGPSN et de la DGAS'
       ]
     },
