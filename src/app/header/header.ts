@@ -175,6 +175,7 @@ closeAllMenus() {
   goToActualites() { this.router.navigate(['pages/actualites']); }
   goToCEC() { this.router.navigate(['/cec']); }
   goToPNBSF() { this.router.navigate(['/pnbsf']); }
+  goToReclamation() { this.router.navigate(['/reclamation-form']); }
   goToCSU() {
   this.router.navigate(['/assurance-maladie'], {
     queryParams: { type: 'poste' }

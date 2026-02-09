@@ -28,6 +28,7 @@ import { BanqueImagesFormComponent } from './admin/banque-d-image-form/banque-d-
 import { MaintenanceComponent } from './maintenance/maintenance';
 import { CecComponent } from './cec/cec';
 import { PnbsfComponent } from './pnbsf/pnbsf';
+import { ReclamationFormComponent } from './reclamation-form/reclamation-form';
 
 export const routes: Routes = [
   { path: '', component: HeroComponent }, 
@@ -59,6 +60,7 @@ export const routes: Routes = [
   { path: 'maintenance', component: MaintenanceComponent },
   { path: 'cec', component: CecComponent },
   { path: 'pnbsf', component: PnbsfComponent },
+  { path: 'reclamation-form', component: ReclamationFormComponent },
 
   //{
 //   path: 'actus',
