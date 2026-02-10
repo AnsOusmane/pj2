@@ -102,6 +102,7 @@
           <span *ngIf="loading">Envoi en cours...</span>
         </button>
 
+        <!-- ERREURS GLOBALES -->
         <div *ngIf="showErrorSummary" class="sm:col-span-2 mt-5 p-4 bg-red-50 border border-red-300 rounded-lg">
           <ul class="list-disc list-inside text-red-700 space-y-1.5 text-sm">
             <li *ngIf="hasError('fullname', 'required')">→ Nom complet manquant</li>

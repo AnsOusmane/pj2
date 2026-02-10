@@ -33,12 +33,8 @@ export class ReclamationFormComponent {
     message:       new FormControl<string>('', Validators.required),
   }, { validators: [this.customSubjectValidator] });
 
-  private readonly WEB3FORMS_URL = 'https://api.web3forms.com/submit';
-  private readonly ACCESS_KEY = 'a3837e05-3557-4015-b3b1-12f93727837f';
-
   constructor(private http: HttpClient) {}
 
-  // Validateur : si sujet = "Autres", customSubject doit être rempli
   customSubjectValidator(group: AbstractControl): ValidationErrors | null {
     const subject = group.get('subject')?.value;
     const custom = group.get('customSubject')?.value?.trim?.() || '';
@@ -50,7 +46,6 @@ export class ReclamationFormComponent {
 
   onSubmit(): void {
     this.showErrorSummary = false;
-
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.showErrorSummary = true;
@@ -60,7 +55,6 @@ export class ReclamationFormComponent {
     this.loading = true;
     this.errorMsg = null;
     this.submitted = false;
-    this.showErrorSummary = false;
 
     const finalSubject = this.form.value.subject === 'Autres'
       ? `Autres : ${this.form.value.customSubject?.trim() || 'non précisé'}`
@@ -72,43 +66,33 @@ export class ReclamationFormComponent {
       timeStyle: 'short'
     });
 
+    // Envoi via backend Vercel (endpoint /api/send-reclamation)
     const payload = {
-      access_key: this.ACCESS_KEY,
       name: this.form.value.fullname,
       email: this.form.value.email || 'Non renseigné',
       phone: this.form.value.phone,
-      message: 
-        `📌 Objet : ${finalSubject}\n` +
-        `🕒 Date d’envoi : ${formattedDate}\n` +
-        `🏙️ Ville : ${this.form.value.city}\n` +
-        `💳 N° Carte assuré : ${this.form.value.cardNumber || 'Non renseigné'}\n\n` +
-        `Message :\n${this.form.value.message || ''}`,
-      subject: `⚠️ Nouvelle réclamation SEN-CSU - ${finalSubject}`,
-      from_name: this.form.value.fullname,
+      city: this.form.value.city,
+      cardNumber: this.form.value.cardNumber || 'Non renseigné',
+      subject: finalSubject,
+      message: this.form.value.message,
+      date: formattedDate
     };
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    });
-
-    this.http.post<any>(this.WEB3FORMS_URL, payload, { headers }).subscribe({
-      next: (response) => {
-        if (response?.success) {
+    this.http.post('/api/send-reclamation', payload).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
           this.submitted = true;
           this.form.reset();
           setTimeout(() => this.submitted = false, 7000);
         } else {
-          this.errorMsg = response?.message || 'Erreur lors de l’envoi de la réclamation.';
+          this.errorMsg = res?.message || 'Erreur lors de l’envoi de la réclamation.';
         }
         this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
         this.loading = false;
-        console.error('Erreur Web3Forms:', err);
-        this.errorMsg = err.status === 0
-          ? 'Problème de connexion. Vérifiez votre réseau internet.'
-          : err.error?.message || 'Une erreur inattendue est survenue. Réessayez plus tard.';
+        console.error('Erreur backend:', err);
+        this.errorMsg = 'Une erreur inattendue est survenue. Réessayez plus tard.';
       }
     });
   }
