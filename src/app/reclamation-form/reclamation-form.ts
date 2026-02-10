@@ -27,10 +27,14 @@ export class ReclamationFormComponent {
     customSubject: new FormControl(''),
     message: new FormControl('', Validators.required),
     fullname: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.email),
-    phone: new FormControl(''),
+
+    city: new FormControl('', Validators.required),
+    cardNumber: new FormControl('', Validators.required),
+
+    email: new FormControl('', Validators.email), // facultatif
+    phone: new FormControl('', Validators.required), // ✅ obligatoire
   }, {
-    validators: [this.contactRequiredValidator, this.customSubjectValidator]
+    validators: [this.customSubjectValidator]
   });
 
   private readonly WEB3FORMS_URL = 'https://api.web3forms.com/submit';
@@ -38,15 +42,7 @@ export class ReclamationFormComponent {
 
   constructor(private http: HttpClient) {}
 
-  /** ✅ Au moins email OU téléphone */
-  contactRequiredValidator(group: AbstractControl): ValidationErrors | null {
-    const email = group.get('email')?.value;
-    const phone = group.get('phone')?.value;
-    if (!email && !phone) return { contactRequired: true };
-    return null;
-  }
-
-  /** ✅ Champ précision obligatoire si "Autres" */
+  /** Si "Autres", précision obligatoire */
   customSubjectValidator(group: AbstractControl): ValidationErrors | null {
     const subject = group.get('subject')?.value;
     const custom = group.get('customSubject')?.value;
@@ -69,7 +65,6 @@ export class ReclamationFormComponent {
         ? `Autres : ${this.form.value.customSubject}`
         : this.form.value.subject;
 
-    // 📅 Date et heure locale
     const now = new Date();
     const formattedDate = now.toLocaleString('fr-FR', {
       dateStyle: 'full',
@@ -78,17 +73,19 @@ export class ReclamationFormComponent {
 
     const payload = {
       access_key: this.ACCESS_KEY,
-      name: this.form.value.fullname || 'Anonyme',
-      email: this.form.value.email || 'non-renseigné',
-      phone: this.form.value.phone || 'Non renseigné',
+      name: this.form.value.fullname,
+      email: this.form.value.email || 'Non renseigné',
+      phone: this.form.value.phone,
 
       message:
         `📌 Objet : ${finalSubject}\n` +
-        `🕒 Date d’envoi : ${formattedDate}\n\n` +
+        `🕒 Date d’envoi : ${formattedDate}\n` +
+        `🏙️ Ville : ${this.form.value.city}\n` +
+        `💳 N° Carte assuré : ${this.form.value.cardNumber}\n\n` +
         `${this.form.value.message}`,
 
       subject: `⚠️ Nouvelle réclamation - ${finalSubject}`,
-      from_name: this.form.value.fullname || 'Usager',
+      from_name: this.form.value.fullname,
     };
 
     const headers = new HttpHeaders({

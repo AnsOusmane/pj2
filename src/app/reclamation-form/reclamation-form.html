@@ -1,27 +1,19 @@
 <div class="font-exo2">
-
   <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-green-700 text-center mt-6 mb-10">
     Réclamation
   </h2>
-
   <div class="w-full bg-white lg:py-14 px-4">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 px-6">
-
       <!-- ===== COLONNE GAUCHE ===== -->
       <div class="flex-1 max-w-[600px] text-gray-700 leading-relaxed text-lg">
-
         <p class="max-w-xl">
           Vous avez rencontré un problème avec les services de la
           <span class="font-semibold text-green-700">SEN-CSU&nbsp;?</span>
           Déposez votre réclamation ici et notre équipe vous répondra rapidement.
         </p>
-
         <img src="assets/logo.png" alt="Logo SEN-CSU" class="w-80 my-8">
-
         <div class="w-80 h-[2px] bg-green-700 my-6"></div>
-
         <h3 class="text-2xl font-semibold text-green-700 mb-4">Coordonnées de contact</h3>
-
         <div class="flex items-start gap-3 mb-5">
           <span class="text-green-600 text-2xl">📍</span>
           <a href="https://www.google.com/maps/place/Agence+de+la+CMU" target="_blank"
@@ -30,25 +22,56 @@
             Dakar, Sénégal
           </a>
         </div>
-
         <div class="flex items-center gap-3 mb-5">
           <span class="text-green-600 text-2xl">📞</span>
           <a href="tel:+221338591515" class="text-green-700 hover:underline">
             +221 33 859 15 15
           </a>
         </div>
-
         <div class="flex items-center gap-3">
           <span class="text-green-600 text-2xl">✉️</span>
           <a href="mailto:contact@agencecmu.sn" class="text-green-700 hover:underline">
             contact@agencecmu.sn
           </a>
         </div>
-
       </div>
 
-      <!-- ===== FORMULAIRE ===== -->
+      <!-- ===== FORMULAIRE (style avant + champs mis à jour) ===== -->
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-1 sm:grid-cols-2 gap-5 flex-1">
+        <!-- Nom complet -->
+        <input type="text" formControlName="fullname" placeholder="Nom complet *"
+          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <div *ngIf="hasError('fullname', 'required')" class="text-red-600 text-sm">
+          Le nom est requis.
+        </div>
+
+        <!-- Ville -->
+        <input type="text" formControlName="city" placeholder="Ville *"
+          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <div *ngIf="hasError('city', 'required')" class="text-red-600 text-sm">
+          La ville est requise.
+        </div>
+
+        <!-- Numéro carte d’assuré -->
+        <input type="text" formControlName="cardNumber" placeholder="Numéro de carte d’assuré *"
+          class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <div *ngIf="hasError('cardNumber', 'required')" class="sm:col-span-2 text-red-600 text-sm">
+          Le numéro de carte est requis.
+        </div>
+
+        <!-- Téléphone -->
+        <input type="tel" formControlName="phone" placeholder="Téléphone *"
+          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <div *ngIf="hasError('phone', 'required')" class="text-red-600 text-sm">
+          Le téléphone est obligatoire.
+        </div>
+
+        <!-- Email (facultatif) -->
+        <input type="email" formControlName="email" placeholder="Email (facultatif)"
+          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <div *ngIf="hasError('email', 'email')" class="text-red-600 text-sm">
+          Email invalide.
+        </div>
 
         <!-- Objet -->
         <select formControlName="subject"
@@ -67,38 +90,24 @@
         <input *ngIf="form.get('subject')?.value === 'Autres'"
                type="text"
                formControlName="customSubject"
-               placeholder="Veuillez préciser l’objet *"
+               placeholder="Précisez l’objet *"
                class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md" />
         <div *ngIf="form.hasError('customRequired') && form.touched"
              class="sm:col-span-2 text-red-600 text-sm">
-          Veuillez préciser l’objet de votre réclamation.
+          Veuillez préciser l’objet.
         </div>
 
         <!-- Message -->
-        <textarea formControlName="message" placeholder="Décrivez votre problème *"
-          class="sm:col-span-2 w-full h-36 p-4 bg-white border border-gray-200 rounded-md resize-none"></textarea>
+        <textarea formControlName="message" rows="5" placeholder="Décrivez votre problème *"
+          class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md resize-none"></textarea>
         <div *ngIf="hasError('message', 'required')" class="sm:col-span-2 text-red-600 text-sm">
           Le message est requis.
         </div>
 
-        <!-- Nom -->
-        <input type="text" formControlName="fullname" placeholder="Nom complet *"
-          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
-        <div *ngIf="hasError('fullname', 'required')" class="text-red-600 text-sm">Le nom est requis.</div>
-
-        <!-- Email -->
-        <input type="email" formControlName="email" placeholder="E-mail"
-          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
-        <div *ngIf="hasError('email', 'email')" class="text-red-600 text-sm">L’e-mail n’est pas valide.</div>
-
-        <!-- Téléphone -->
-        <input type="text" formControlName="phone" placeholder="Téléphone"
-          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
-
-        <!-- Erreur contact obligatoire -->
+        <!-- Erreur contact obligatoire (si vous avez gardé cette validation) -->
         <div *ngIf="form.hasError('contactRequired') && form.touched"
              class="sm:col-span-2 text-red-600 text-sm text-center">
-          Veuillez renseigner au moins un moyen de contact : e-mail ou téléphone.
+          Veuillez renseigner au moins un moyen de contact : téléphone ou email.
         </div>
 
         <!-- Bouton -->
@@ -108,15 +117,14 @@
           <span *ngIf="loading">Envoi en cours...</span>
         </button>
 
+        <!-- Messages de succès / erreur -->
         <p *ngIf="submitted && !errorMsg" class="sm:col-span-2 text-green-700 text-center font-medium mt-2">
           ✔️ Réclamation envoyée avec succès !
         </p>
         <p *ngIf="errorMsg" class="sm:col-span-2 text-red-600 text-center font-medium mt-2">
           ❌ {{ errorMsg }}
         </p>
-
       </form>
-
     </div>
   </div>
 </div>
