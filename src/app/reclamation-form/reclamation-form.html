@@ -41,39 +41,33 @@
       <!-- FORMULAIRE -->
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-1 sm:grid-cols-2 gap-5 flex-1">
 
-        <!-- Prénom et Nom -->
         <input type="text" formControlName="fullname" placeholder="Prénom et Nom *"
                class="w-full p-4 bg-white border border-gray-200 rounded-md" />
         <div *ngIf="hasError('fullname', 'required')" class="text-red-600 text-sm sm:col-span-2">
           Le nom complet est requis.
         </div>
 
-        <!-- Ville -->
         <input type="text" formControlName="city" placeholder="Ville *"
                class="w-full p-4 bg-white border border-gray-200 rounded-md" />
         <div *ngIf="hasError('city', 'required')" class="text-red-600 text-sm sm:col-span-2">
           La ville est requise.
         </div>
 
-        <!-- Numéro carte (facultatif) -->
         <input type="text" formControlName="cardNumber" placeholder="Numéro de carte d’assuré (facultatif)"
                class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md" />
 
-        <!-- Téléphone -->
         <input type="tel" formControlName="phone" placeholder="Téléphone *"
                class="w-full p-4 bg-white border border-gray-200 rounded-md" />
         <div *ngIf="hasError('phone', 'required')" class="text-red-600 text-sm sm:col-span-2">
           Le téléphone est obligatoire.
         </div>
 
-        <!-- Email -->
         <input type="email" formControlName="email" placeholder="Email (facultatif)"
                class="w-full p-4 bg-white border border-gray-200 rounded-md" />
         <div *ngIf="hasError('email', 'email')" class="text-red-600 text-sm sm:col-span-2">
           L’email saisi n’est pas valide.
         </div>
 
-        <!-- Objet -->
         <select formControlName="subject"
                 [ngClass]="{'text-gray-400': !form.get('subject')?.value, 'text-black': form.get('subject')?.value}"
                 class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md">
@@ -86,42 +80,47 @@
           L’objet de la réclamation est requis.
         </div>
 
-        <!-- Précision si "Autres" -->
         <input *ngIf="form.get('subject')?.value === 'Autres'"
                type="text" formControlName="customSubject"
                placeholder="Précisez l’objet *"
                class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md" />
         <div *ngIf="form.hasError('customRequired') && form.touched"
              class="sm:col-span-2 text-red-600 text-sm">
-          Veuillez préciser l’objet quand vous choisissez « Autres ».
+          Veuillez préciser l’objet quand « Autres » est choisi.
         </div>
 
-        <!-- Message -->
         <textarea formControlName="message" rows="5" placeholder="Le message de votre réclamation *"
                   class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md resize-none"></textarea>
         <div *ngIf="hasError('message', 'required')" class="sm:col-span-2 text-red-600 text-sm">
           Le message est requis.
         </div>
 
-        <!-- BOUTON ENVOI -->
-        <button type="submit" [disabled]="loading || form.invalid"
-                class="sm:col-span-2 mt-6 bg-green-700 text-white py-3 px-6 rounded-md font-semibold hover:bg-green-800 transition duration-200">
+        <button type="submit" 
+                [disabled]="loading"
+                class="sm:col-span-2 mt-6 bg-green-700 text-white py-3 px-6 rounded-md font-semibold hover:bg-green-800 transition duration-200 w-full md:w-auto">
           <span *ngIf="!loading">Envoyer la réclamation →</span>
           <span *ngIf="loading">Envoi en cours...</span>
         </button>
 
-        <!-- MESSAGE ERREUR GLOBAL → juste en dessous du bouton -->
-        <div *ngIf="showGlobalError" class="sm:col-span-2 mt-4 text-center">
-          <div class="inline-block bg-red-50 border border-red-400 text-red-700 px-6 py-3 rounded-md text-base font-medium">
-            Veuillez remplir tous les champs obligatoires avant d'envoyer.
-          </div>
+        <div *ngIf="showErrorSummary" class="sm:col-span-2 mt-5 p-4 bg-red-50 border border-red-300 rounded-lg">
+          <ul class="list-disc list-inside text-red-700 space-y-1.5 text-sm">
+            <li *ngIf="hasError('fullname', 'required')">→ Nom complet manquant</li>
+            <li *ngIf="hasError('city', 'required')">→ Ville manquante</li>
+            <li *ngIf="hasError('phone', 'required')">→ Numéro de téléphone manquant</li>
+            <li *ngIf="hasError('subject', 'required')">→ Objet de la réclamation non sélectionné</li>
+            <li *ngIf="form.hasError('customRequired')">→ Précision de l’objet obligatoire quand « Autres » est choisi</li>
+            <li *ngIf="hasError('message', 'required')">→ Message / description manquant</li>
+            <li *ngIf="hasError('email', 'email')">→ Format de l’email invalide</li>
+          </ul>
         </div>
 
-        <!-- Succès / Erreur serveur -->
-        <p *ngIf="submitted && !errorMsg" class="sm:col-span-2 text-green-700 text-center font-medium mt-6">
+        <p *ngIf="submitted && !errorMsg" 
+           class="sm:col-span-2 mt-6 text-green-700 text-center font-medium">
           ✔️ Votre réclamation a bien été envoyée !
         </p>
-        <p *ngIf="errorMsg" class="sm:col-span-2 text-red-600 text-center font-medium mt-6">
+
+        <p *ngIf="errorMsg" 
+           class="sm:col-span-2 mt-6 text-red-600 text-center font-medium">
           ❌ {{ errorMsg }}
         </p>
 
