@@ -1,68 +1,46 @@
 <div class="font-exo2">
 
-  <!-- ===== TITRE ===== -->
-  <h2 class="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl
-             csu-title font-extrabold text-green-700 text-center
-             mt-2 lg:mt-6 2xl:mt-12 mb-4 lg:mb-10 2xl:mb-16">
+  <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-green-700 text-center mt-6 mb-10">
     Réclamation
   </h2>
 
   <div class="w-full bg-white lg:py-14 px-4">
-    <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto
-                flex flex-col lg:flex-row
-                gap-4 lg:gap-12 2xl:gap-20
-                px-4 sm:px-6 lg:px-8 xl:px-16 2xl:px-24">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 px-6">
 
       <!-- ===== COLONNE GAUCHE ===== -->
-      <div class="flex-1
-                  max-w-[600px] 2xl:max-w-[720px]
-                  text-gray-700 leading-relaxed
-                  text-base sm:text-lg xl:text-xl 2xl:text-2xl">
+      <div class="flex-1 max-w-[600px] text-gray-700 leading-relaxed text-lg">
 
-<p class="max-w-xl 2xl:max-w-none">
-  Vous avez rencontré un problème avec les services <br> de la
-  <span class="font-semibold text-green-700">SEN-CSU&nbsp;?</span> <br>
-  Déposez votre réclamation ici et notre équipe vous <br> répondra rapidement.
-</p>
+        <p class="max-w-xl">
+          Vous avez rencontré un problème avec les services de la
+          <span class="font-semibold text-green-700">SEN-CSU&nbsp;?</span>
+          Déposez votre réclamation ici et notre équipe vous répondra rapidement.
+        </p>
 
-
-        <img src="assets/logo.png" 
-             alt="Logo SEN-CSU"
-             class="w-80 sm:w-80 2xl:w-80 my-8">
+        <img src="assets/logo.png" alt="Logo SEN-CSU" class="w-80 my-8">
 
         <div class="w-80 h-[2px] bg-green-700 my-6"></div>
 
-        <h3 class="text-xl sm:text-2xl 2xl:text-3xl
-                   font-semibold text-green-700 mb-4">
-          Coordonnées de contact
-        </h3>
+        <h3 class="text-2xl font-semibold text-green-700 mb-4">Coordonnées de contact</h3>
 
-        <!-- Adresse -->
         <div class="flex items-start gap-3 mb-5">
           <span class="text-green-600 text-2xl">📍</span>
-          <a
-            href="https://www.google.com/maps/place/Agence+de+la+CMU"
-            target="_blank"
-            class="text-green-700 hover:underline">
+          <a href="https://www.google.com/maps/place/Agence+de+la+CMU" target="_blank"
+             class="text-green-700 hover:underline">
             Cité Keur Gorgui, Lot N°4, Immeuble El Hadji Serigne Mérina SYLLA<br>
             Dakar, Sénégal
           </a>
         </div>
 
-        <!-- Téléphone -->
         <div class="flex items-center gap-3 mb-5">
           <span class="text-green-600 text-2xl">📞</span>
-          <a href="tel:+221338591515"
-             class="text-green-700 hover:underline">
+          <a href="tel:+221338591515" class="text-green-700 hover:underline">
             +221 33 859 15 15
           </a>
         </div>
 
-        <!-- Email -->
         <div class="flex items-center gap-3">
           <span class="text-green-600 text-2xl">✉️</span>
-          <a href="mailto:contact@agencecmu.sn"
-             class="text-green-700 hover:underline">
+          <a href="mailto:contact@agencecmu.sn" class="text-green-700 hover:underline">
             contact@agencecmu.sn
           </a>
         </div>
@@ -70,49 +48,52 @@
       </div>
 
       <!-- ===== FORMULAIRE ===== -->
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-1 sm:grid-cols-2 gap-5 flex-1">
 
         <!-- Objet -->
-        <select
-          formControlName="subject"
+        <select formControlName="subject"
           [ngClass]="{'text-gray-400': !form.get('subject')?.value, 'text-black': form.get('subject')?.value}"
           class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md">
           <option value="" disabled selected hidden>Objet de la réclamation *</option>
-          <option class="text-black">Adhésion / Carte CSU</option>
-          <option class="text-black">Suivi / Prise en charge</option>
-          <option class="text-black">Autres</option>
+          <option>Adhésion / Carte CSU</option>
+          <option>Suivi / Prise en charge</option>
+          <option>Autres</option>
         </select>
         <div *ngIf="hasError('subject', 'required')" class="sm:col-span-2 text-red-600 text-sm">
           L’objet de la réclamation est requis.
         </div>
 
+        <!-- Précision si Autres -->
+        <input *ngIf="form.get('subject')?.value === 'Autres'"
+               type="text"
+               formControlName="customSubject"
+               placeholder="Veuillez préciser l’objet *"
+               class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <div *ngIf="form.hasError('customRequired') && form.touched"
+             class="sm:col-span-2 text-red-600 text-sm">
+          Veuillez préciser l’objet de votre réclamation.
+        </div>
+
         <!-- Message -->
-        <textarea
-          formControlName="message"
-          placeholder="Décrivez votre problème *"
-          class="sm:col-span-2 w-full h-36 p-4 bg-white border border-gray-200 rounded-md resize-none">
-        </textarea>
+        <textarea formControlName="message" placeholder="Décrivez votre problème *"
+          class="sm:col-span-2 w-full h-36 p-4 bg-white border border-gray-200 rounded-md resize-none"></textarea>
         <div *ngIf="hasError('message', 'required')" class="sm:col-span-2 text-red-600 text-sm">
           Le message est requis.
         </div>
 
         <!-- Nom -->
         <input type="text" formControlName="fullname" placeholder="Nom complet *"
-               class="w-full p-4 bg-white border border-gray-200 rounded-md" />
-        <div *ngIf="hasError('fullname', 'required')" class="text-red-600 text-sm">
-          Le nom est requis.
-        </div>
+          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <div *ngIf="hasError('fullname', 'required')" class="text-red-600 text-sm">Le nom est requis.</div>
 
         <!-- Email -->
         <input type="email" formControlName="email" placeholder="E-mail"
-               class="w-full p-4 bg-white border border-gray-200 rounded-md" />
-        <div *ngIf="hasError('email', 'email')" class="text-red-600 text-sm">
-          L’e-mail n’est pas valide.
-        </div>
+          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <div *ngIf="hasError('email', 'email')" class="text-red-600 text-sm">L’e-mail n’est pas valide.</div>
 
         <!-- Téléphone -->
         <input type="text" formControlName="phone" placeholder="Téléphone"
-               class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
 
         <!-- Erreur contact obligatoire -->
         <div *ngIf="form.hasError('contactRequired') && form.touched"
@@ -121,18 +102,15 @@
         </div>
 
         <!-- Bouton -->
-        <button type="submit"
-          [disabled]="loading || form.invalid"
-          class="sm:col-span-2 mt-3 bg-green-700 text-white py-3 rounded-md font-semibold hover:bg-green-800 transition flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
+        <button type="submit" [disabled]="loading || form.invalid"
+          class="sm:col-span-2 mt-3 bg-green-700 text-white py-3 rounded-md font-semibold hover:bg-green-800 transition">
           <span *ngIf="!loading">Envoyer la réclamation ➜</span>
           <span *ngIf="loading">Envoi en cours...</span>
         </button>
 
-        <!-- Messages feedback -->
         <p *ngIf="submitted && !errorMsg" class="sm:col-span-2 text-green-700 text-center font-medium mt-2">
           ✔️ Réclamation envoyée avec succès !
         </p>
-
         <p *ngIf="errorMsg" class="sm:col-span-2 text-red-600 text-center font-medium mt-2">
           ❌ {{ errorMsg }}
         </p>

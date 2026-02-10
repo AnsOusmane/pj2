@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+  ValidationErrors
+} from '@angular/forms';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
@@ -17,16 +24,17 @@ export class ReclamationFormComponent {
 
   form = new FormGroup({
     subject: new FormControl('', Validators.required),
+    customSubject: new FormControl(''),
     message: new FormControl('', Validators.required),
     fullname: new FormControl('', Validators.required),
-
-    // 👇 plus obligatoires individuellement
     email: new FormControl('', Validators.email),
     phone: new FormControl(''),
-  }, { validators: this.contactRequiredValidator }); // 👈 validateur global
+  }, {
+    validators: [this.contactRequiredValidator, this.customSubjectValidator]
+  });
 
   private readonly WEB3FORMS_URL = 'https://api.web3forms.com/submit';
-  private readonly ACCESS_KEY = '41427ced-4d84-4f59-abe5-86cdbe354d51';
+  private readonly ACCESS_KEY = 'a3837e05-3557-4015-b3b1-12f93727837f';
 
   constructor(private http: HttpClient) {}
 
@@ -34,10 +42,15 @@ export class ReclamationFormComponent {
   contactRequiredValidator(group: AbstractControl): ValidationErrors | null {
     const email = group.get('email')?.value;
     const phone = group.get('phone')?.value;
+    if (!email && !phone) return { contactRequired: true };
+    return null;
+  }
 
-    if (!email && !phone) {
-      return { contactRequired: true };
-    }
+  /** ✅ Champ précision obligatoire si "Autres" */
+  customSubjectValidator(group: AbstractControl): ValidationErrors | null {
+    const subject = group.get('subject')?.value;
+    const custom = group.get('customSubject')?.value;
+    if (subject === 'Autres' && !custom) return { customRequired: true };
     return null;
   }
 
@@ -51,13 +64,30 @@ export class ReclamationFormComponent {
     this.errorMsg = null;
     this.submitted = false;
 
+    const finalSubject =
+      this.form.value.subject === 'Autres'
+        ? `Autres : ${this.form.value.customSubject}`
+        : this.form.value.subject;
+
+    // 📅 Date et heure locale
+    const now = new Date();
+    const formattedDate = now.toLocaleString('fr-FR', {
+      dateStyle: 'full',
+      timeStyle: 'short'
+    });
+
     const payload = {
       access_key: this.ACCESS_KEY,
       name: this.form.value.fullname || 'Anonyme',
-      email: this.form.value.email || 'non-renseigne@sen-csu.sn',
+      email: this.form.value.email || 'non-renseigné',
       phone: this.form.value.phone || 'Non renseigné',
-      message: `📌 Objet : ${this.form.value.subject}\n\n${this.form.value.message}`,
-      subject: `⚠️ Nouvelle réclamation - ${this.form.value.subject}`,
+
+      message:
+        `📌 Objet : ${finalSubject}\n` +
+        `🕒 Date d’envoi : ${formattedDate}\n\n` +
+        `${this.form.value.message}`,
+
+      subject: `⚠️ Nouvelle réclamation - ${finalSubject}`,
       from_name: this.form.value.fullname || 'Usager',
     };
 
