@@ -2,10 +2,11 @@
   <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-green-700 text-center mt-6 mb-10">
     Réclamation
   </h2>
+
   <div class="w-full bg-white lg:py-14 px-4">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 px-6">
 
-      <!-- ===== COLONNE GAUCHE ===== -->
+      <!-- COLONNE GAUCHE -->
       <div class="flex-1 max-w-[600px] text-gray-700 leading-relaxed text-lg">
         <p class="max-w-xl">
           Vous avez rencontré un problème avec les services de la
@@ -37,45 +38,45 @@
         </div>
       </div>
 
-      <!-- ===== FORMULAIRE ===== -->
+      <!-- FORMULAIRE -->
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-1 sm:grid-cols-2 gap-5 flex-1">
 
         <!-- Prénom et Nom -->
         <input type="text" formControlName="fullname" placeholder="Prénom et Nom *"
-          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+               class="w-full p-4 bg-white border border-gray-200 rounded-md" />
         <div *ngIf="hasError('fullname', 'required')" class="text-red-600 text-sm sm:col-span-2">
-          Le nom est requis.
+          Le nom complet est requis.
         </div>
 
         <!-- Ville -->
         <input type="text" formControlName="city" placeholder="Ville *"
-          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+               class="w-full p-4 bg-white border border-gray-200 rounded-md" />
         <div *ngIf="hasError('city', 'required')" class="text-red-600 text-sm sm:col-span-2">
           La ville est requise.
         </div>
 
-        <!-- Numéro carte d’assuré – plus obligatoire -->
-        <input type="text" formControlName="cardNumber" placeholder="Numéro de carte d’assuré (si vous en avez)"
-          class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <!-- Numéro carte (facultatif) -->
+        <input type="text" formControlName="cardNumber" placeholder="Numéro de carte d’assuré (facultatif)"
+               class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md" />
 
         <!-- Téléphone -->
         <input type="tel" formControlName="phone" placeholder="Téléphone *"
-          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
-        <div *ngIf="hasError('phone', 'required')" class="text-red-600 text-sm">
+               class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <div *ngIf="hasError('phone', 'required')" class="text-red-600 text-sm sm:col-span-2">
           Le téléphone est obligatoire.
         </div>
 
-        <!-- Email (facultatif) -->
+        <!-- Email -->
         <input type="email" formControlName="email" placeholder="Email (facultatif)"
-          class="w-full p-4 bg-white border border-gray-200 rounded-md" />
-        <div *ngIf="hasError('email', 'email')" class="text-red-600 text-sm">
-          Email invalide.
+               class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+        <div *ngIf="hasError('email', 'email')" class="text-red-600 text-sm sm:col-span-2">
+          L’email saisi n’est pas valide.
         </div>
 
         <!-- Objet -->
         <select formControlName="subject"
-          [ngClass]="{'text-gray-400': !form.get('subject')?.value, 'text-black': form.get('subject')?.value}"
-          class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md">
+                [ngClass]="{'text-gray-400': !form.get('subject')?.value, 'text-black': form.get('subject')?.value}"
+                class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md">
           <option value="" disabled selected hidden>Objet de la réclamation *</option>
           <option>Adhésion / Carte CSU</option>
           <option>Suivi / Prise en charge</option>
@@ -85,36 +86,42 @@
           L’objet de la réclamation est requis.
         </div>
 
-        <!-- Précision si Autres -->
+        <!-- Précision si "Autres" -->
         <input *ngIf="form.get('subject')?.value === 'Autres'"
-               type="text"
-               formControlName="customSubject"
+               type="text" formControlName="customSubject"
                placeholder="Précisez l’objet *"
                class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md" />
         <div *ngIf="form.hasError('customRequired') && form.touched"
              class="sm:col-span-2 text-red-600 text-sm">
-          Veuillez préciser l’objet.
+          Veuillez préciser l’objet quand vous choisissez « Autres ».
         </div>
 
         <!-- Message -->
         <textarea formControlName="message" rows="5" placeholder="Le message de votre réclamation *"
-          class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md resize-none"></textarea>
+                  class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md resize-none"></textarea>
         <div *ngIf="hasError('message', 'required')" class="sm:col-span-2 text-red-600 text-sm">
           Le message est requis.
         </div>
 
-        <!-- Bouton -->
+        <!-- BOUTON ENVOI -->
         <button type="submit" [disabled]="loading || form.invalid"
-          class="sm:col-span-2 mt-3 bg-green-700 text-white py-3 rounded-md font-semibold hover:bg-green-800 transition">
-          <span *ngIf="!loading">Envoyer la réclamation ➜</span>
+                class="sm:col-span-2 mt-6 bg-green-700 text-white py-3 px-6 rounded-md font-semibold hover:bg-green-800 transition duration-200">
+          <span *ngIf="!loading">Envoyer la réclamation →</span>
           <span *ngIf="loading">Envoi en cours...</span>
         </button>
 
-        <!-- Messages de succès / erreur -->
-        <p *ngIf="submitted && !errorMsg" class="sm:col-span-2 text-green-700 text-center font-medium mt-2">
-          ✔️ Réclamation envoyée avec succès !
+        <!-- MESSAGE ERREUR GLOBAL → juste en dessous du bouton -->
+        <div *ngIf="showGlobalError" class="sm:col-span-2 mt-4 text-center">
+          <div class="inline-block bg-red-50 border border-red-400 text-red-700 px-6 py-3 rounded-md text-base font-medium">
+            Veuillez remplir tous les champs obligatoires avant d'envoyer.
+          </div>
+        </div>
+
+        <!-- Succès / Erreur serveur -->
+        <p *ngIf="submitted && !errorMsg" class="sm:col-span-2 text-green-700 text-center font-medium mt-6">
+          ✔️ Votre réclamation a bien été envoyée !
         </p>
-        <p *ngIf="errorMsg" class="sm:col-span-2 text-red-600 text-center font-medium mt-2">
+        <p *ngIf="errorMsg" class="sm:col-span-2 text-red-600 text-center font-medium mt-6">
           ❌ {{ errorMsg }}
         </p>
 
