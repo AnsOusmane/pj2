@@ -16,8 +16,8 @@
       <!-- ===== TEXTE GAUCHE ===== -->
       <div class="flex-1 max-w-[600px] text-gray-700 leading-relaxed text-base sm:text-lg xl:text-xl">
         <p>
-          Vous avez rencontré un problème avec les services de la 
-          <span class="font-semibold text-green-700">SEN-CSU </span> ? <br>
+          Vous avez rencontré un problème avec les services de la
+          <span class="font-semibold text-green-700">SEN-CSU</span> ?
           Déposez votre réclamation ici et notre équipe vous répondra rapidement.
         </p>
       </div>
@@ -28,11 +28,12 @@
         <!-- Objet -->
         <select
           formControlName="subject"
+          [ngClass]="{'text-gray-400': !form.get('subject')?.value, 'text-black': form.get('subject')?.value}"
           class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md">
-          <option value="">Objet de la réclamation *</option>
-          <option>Adhésion / Carte CSU</option>
-          <option>Suivi / Prise en charge</option>
-          <option>Autres</option>
+          <option value="" disabled selected hidden>Objet de la réclamation *</option>
+          <option class="text-black">Adhésion / Carte CSU</option>
+          <option class="text-black">Suivi / Prise en charge</option>
+          <option class="text-black">Autres</option>
         </select>
         <div *ngIf="hasError('subject', 'required')" class="sm:col-span-2 text-red-600 text-sm">
           L’objet de la réclamation est requis.
@@ -56,14 +57,21 @@
         </div>
 
         <!-- Email -->
-        <input type="email" formControlName="email" placeholder="E-mail *"
+        <input type="email" formControlName="email" placeholder="E-mail"
                class="w-full p-4 bg-white border border-gray-200 rounded-md" />
-        <div *ngIf="hasError('email', 'required')" class="text-red-600 text-sm">L’e-mail est requis.</div>
-        <div *ngIf="hasError('email', 'email')" class="text-red-600 text-sm">L’e-mail n’est pas valide.</div>
+        <div *ngIf="hasError('email', 'email')" class="text-red-600 text-sm">
+          L’e-mail n’est pas valide.
+        </div>
 
         <!-- Téléphone -->
         <input type="text" formControlName="phone" placeholder="Téléphone"
                class="w-full p-4 bg-white border border-gray-200 rounded-md" />
+
+        <!-- Erreur contact obligatoire -->
+        <div *ngIf="form.hasError('contactRequired') && form.touched"
+             class="sm:col-span-2 text-red-600 text-sm text-center">
+          Veuillez renseigner au moins un moyen de contact : e-mail ou téléphone.
+        </div>
 
         <!-- Bouton -->
         <button type="submit"
@@ -73,6 +81,7 @@
           <span *ngIf="loading">Envoi en cours...</span>
         </button>
 
+        <!-- Messages feedback -->
         <p *ngIf="submitted && !errorMsg" class="sm:col-span-2 text-green-700 text-center font-medium mt-2">
           ✔️ Réclamation envoyée avec succès !
         </p>

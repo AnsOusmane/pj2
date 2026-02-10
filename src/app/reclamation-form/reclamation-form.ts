@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
@@ -16,17 +16,30 @@ export class ReclamationFormComponent {
   errorMsg: string | null = null;
 
   form = new FormGroup({
-    subject: new FormControl('', Validators.required), // 👈 nouvel objet
+    subject: new FormControl('', Validators.required),
     message: new FormControl('', Validators.required),
     fullname: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
+
+    // 👇 plus obligatoires individuellement
+    email: new FormControl('', Validators.email),
     phone: new FormControl(''),
-  });
+  }, { validators: this.contactRequiredValidator }); // 👈 validateur global
 
   private readonly WEB3FORMS_URL = 'https://api.web3forms.com/submit';
-  private readonly ACCESS_KEY = 'a3837e05-3557-4015-b3b1-12f93727837f';
+  private readonly ACCESS_KEY = '41427ced-4d84-4f59-abe5-86cdbe354d51';
 
   constructor(private http: HttpClient) {}
+
+  /** ✅ Au moins email OU téléphone */
+  contactRequiredValidator(group: AbstractControl): ValidationErrors | null {
+    const email = group.get('email')?.value;
+    const phone = group.get('phone')?.value;
+
+    if (!email && !phone) {
+      return { contactRequired: true };
+    }
+    return null;
+  }
 
   onSubmit() {
     if (this.form.invalid) {
@@ -41,8 +54,8 @@ export class ReclamationFormComponent {
     const payload = {
       access_key: this.ACCESS_KEY,
       name: this.form.value.fullname || 'Anonyme',
-      email: this.form.value.email,
-      phone: this.form.value.phone || '—',
+      email: this.form.value.email || 'non-renseigne@sen-csu.sn',
+      phone: this.form.value.phone || 'Non renseigné',
       message: `📌 Objet : ${this.form.value.subject}\n\n${this.form.value.message}`,
       subject: `⚠️ Nouvelle réclamation - ${this.form.value.subject}`,
       from_name: this.form.value.fullname || 'Usager',
