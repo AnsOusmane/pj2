@@ -34,7 +34,7 @@ export class ReclamationFormComponent {
   }, { validators: [this.customSubjectValidator] });
 
   private readonly WEB3FORMS_URL = 'https://api.web3forms.com/submit';
-  private readonly ACCESS_KEY = 'a3837e05-3557-4015-b3b1-12f93727837f';
+  private readonly ACCESS_KEY = '2351968a-fb70-41dc-8596-e8f6653d783d';
 
   constructor(private http: HttpClient) {}
 
