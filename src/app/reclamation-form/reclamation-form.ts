@@ -17,7 +17,6 @@ import { CommonModule } from '@angular/common';
   templateUrl: './reclamation-form.html',
 })
 export class ReclamationFormComponent {
-
   submitted = false;
   loading = false;
   errorMsg: string | null = null;
@@ -27,12 +26,10 @@ export class ReclamationFormComponent {
     customSubject: new FormControl(''),
     message: new FormControl('', Validators.required),
     fullname: new FormControl('', Validators.required),
-
     city: new FormControl('', Validators.required),
-    cardNumber: new FormControl('', Validators.required),
-
-    email: new FormControl('', Validators.email), // facultatif
-    phone: new FormControl('', Validators.required), // ✅ obligatoire
+    cardNumber: new FormControl(''),                    // ← plus de Validators.required
+    email: new FormControl('', Validators.email),
+    phone: new FormControl('', Validators.required),
   }, {
     validators: [this.customSubjectValidator]
   });
@@ -46,7 +43,9 @@ export class ReclamationFormComponent {
   customSubjectValidator(group: AbstractControl): ValidationErrors | null {
     const subject = group.get('subject')?.value;
     const custom = group.get('customSubject')?.value;
-    if (subject === 'Autres' && !custom) return { customRequired: true };
+    if (subject === 'Autres' && !custom?.trim()) {
+      return { customRequired: true };
+    }
     return null;
   }
 
@@ -62,7 +61,7 @@ export class ReclamationFormComponent {
 
     const finalSubject =
       this.form.value.subject === 'Autres'
-        ? `Autres : ${this.form.value.customSubject}`
+        ? `Autres : ${this.form.value.customSubject?.trim()}`
         : this.form.value.subject;
 
     const now = new Date();
@@ -76,14 +75,12 @@ export class ReclamationFormComponent {
       name: this.form.value.fullname,
       email: this.form.value.email || 'Non renseigné',
       phone: this.form.value.phone,
-
       message:
         `📌 Objet : ${finalSubject}\n` +
         `🕒 Date d’envoi : ${formattedDate}\n` +
         `🏙️ Ville : ${this.form.value.city}\n` +
-        `💳 N° Carte assuré : ${this.form.value.cardNumber}\n\n` +
+        `💳 N° Carte assuré : ${this.form.value.cardNumber || 'Non renseigné'}\n\n` +
         `${this.form.value.message}`,
-
       subject: `⚠️ Nouvelle réclamation - ${finalSubject}`,
       from_name: this.form.value.fullname,
     };
@@ -93,29 +90,27 @@ export class ReclamationFormComponent {
       'Accept': 'application/json'
     });
 
-    this.http.post<any>(this.WEB3FORMS_URL, payload, { headers })
-      .subscribe({
-        next: (response) => {
-          if (response?.success) {
-            this.submitted = true;
-            this.form.reset();
-            setTimeout(() => this.submitted = false, 5000);
-          } else {
-            this.errorMsg = response?.message || 'Erreur lors de l’envoi.';
-          }
-          this.loading = false;
-        },
-        error: (err: HttpErrorResponse) => {
-          this.loading = false;
-          console.error('Erreur Web3Forms', err);
-
-          if (err.status === 0) {
-            this.errorMsg = 'Problème de connexion. Vérifiez votre réseau.';
-          } else {
-            this.errorMsg = err.error?.message || 'Une erreur est survenue. Réessayez plus tard.';
-          }
+    this.http.post<any>(this.WEB3FORMS_URL, payload, { headers }).subscribe({
+      next: (response) => {
+        if (response?.success) {
+          this.submitted = true;
+          this.form.reset();
+          setTimeout(() => (this.submitted = false), 6000);
+        } else {
+          this.errorMsg = response?.message || 'Erreur lors de l’envoi.';
         }
-      });
+        this.loading = false;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.loading = false;
+        console.error('Erreur Web3Forms', err);
+        if (err.status === 0) {
+          this.errorMsg = 'Problème de connexion. Vérifiez votre réseau.';
+        } else {
+          this.errorMsg = err.error?.message || 'Une erreur est survenue. Réessayez plus tard.';
+        }
+      }
+    });
   }
 
   hasError(controlName: string, errorName: string): boolean {

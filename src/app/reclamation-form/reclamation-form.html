@@ -4,6 +4,7 @@
   </h2>
   <div class="w-full bg-white lg:py-14 px-4">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 px-6">
+
       <!-- ===== COLONNE GAUCHE ===== -->
       <div class="flex-1 max-w-[600px] text-gray-700 leading-relaxed text-lg">
         <p class="max-w-xl">
@@ -36,28 +37,26 @@
         </div>
       </div>
 
-      <!-- ===== FORMULAIRE (style avant + champs mis à jour) ===== -->
+      <!-- ===== FORMULAIRE ===== -->
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-1 sm:grid-cols-2 gap-5 flex-1">
-        <!-- Nom complet -->
-        <input type="text" formControlName="fullname" placeholder="Nom complet *"
+
+        <!-- Prénom et Nom -->
+        <input type="text" formControlName="fullname" placeholder="Prénom et Nom *"
           class="w-full p-4 bg-white border border-gray-200 rounded-md" />
-        <div *ngIf="hasError('fullname', 'required')" class="text-red-600 text-sm">
+        <div *ngIf="hasError('fullname', 'required')" class="text-red-600 text-sm sm:col-span-2">
           Le nom est requis.
         </div>
 
         <!-- Ville -->
         <input type="text" formControlName="city" placeholder="Ville *"
           class="w-full p-4 bg-white border border-gray-200 rounded-md" />
-        <div *ngIf="hasError('city', 'required')" class="text-red-600 text-sm">
+        <div *ngIf="hasError('city', 'required')" class="text-red-600 text-sm sm:col-span-2">
           La ville est requise.
         </div>
 
-        <!-- Numéro carte d’assuré -->
-        <input type="text" formControlName="cardNumber" placeholder="Numéro de carte d’assuré *"
+        <!-- Numéro carte d’assuré – plus obligatoire -->
+        <input type="text" formControlName="cardNumber" placeholder="Numéro de carte d’assuré (si vous en avez)"
           class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md" />
-        <div *ngIf="hasError('cardNumber', 'required')" class="sm:col-span-2 text-red-600 text-sm">
-          Le numéro de carte est requis.
-        </div>
 
         <!-- Téléphone -->
         <input type="tel" formControlName="phone" placeholder="Téléphone *"
@@ -98,16 +97,10 @@
         </div>
 
         <!-- Message -->
-        <textarea formControlName="message" rows="5" placeholder="Décrivez votre problème *"
+        <textarea formControlName="message" rows="5" placeholder="Le message de votre réclamation *"
           class="sm:col-span-2 w-full p-4 bg-white border border-gray-200 rounded-md resize-none"></textarea>
         <div *ngIf="hasError('message', 'required')" class="sm:col-span-2 text-red-600 text-sm">
           Le message est requis.
-        </div>
-
-        <!-- Erreur contact obligatoire (si vous avez gardé cette validation) -->
-        <div *ngIf="form.hasError('contactRequired') && form.touched"
-             class="sm:col-span-2 text-red-600 text-sm text-center">
-          Veuillez renseigner au moins un moyen de contact : téléphone ou email.
         </div>
 
         <!-- Bouton -->
@@ -124,6 +117,7 @@
         <p *ngIf="errorMsg" class="sm:col-span-2 text-red-600 text-center font-medium mt-2">
           ❌ {{ errorMsg }}
         </p>
+
       </form>
     </div>
   </div>
