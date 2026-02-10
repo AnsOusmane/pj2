@@ -7,7 +7,7 @@ import {
   AbstractControl,
   ValidationErrors
 } from '@angular/forms';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';  // ← CETTE LIGNE ÉTAIT MANQUANTE
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -23,20 +23,29 @@ export class ReclamationFormComponent {
   showErrorSummary = false;
 
   form = new FormGroup({
-    fullname:      new FormControl<string>('', Validators.required),
-    city:          new FormControl<string>('', Validators.required),
-    cardNumber:    new FormControl<string>(''),
-    phone:         new FormControl<string>('', Validators.required),
-    email:         new FormControl<string>('', Validators.email),
-    subject:       new FormControl<string>('', Validators.required),
+    fullname: new FormControl<string>('', Validators.required),
+    city: new FormControl<string>('', Validators.required),
+    cardNumber: new FormControl<string>(''),
+    phone: new FormControl<string>('', [
+      Validators.required,
+      Validators.pattern(/^((\+|00)?221)? ?[ -]?[7-9][0-9]{8}$/)
+    ]),
+    email: new FormControl<string>('', [Validators.email]),
+    subject: new FormControl<string>('', Validators.required),
     customSubject: new FormControl<string>(''),
-    message:       new FormControl<string>('', Validators.required),
+    message: new FormControl<string>('', Validators.required),
   }, { validators: [this.customSubjectValidator] });
 
   private readonly WEB3FORMS_URL = 'https://api.web3forms.com/submit';
   private readonly ACCESS_KEY = '2351968a-fb70-41dc-8596-e8f6653d783d';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  //   this.form.statusChanges.subscribe(status => {
+  //   if (status === 'VALID') {
+  //     this.showErrorSummary = false;
+  //   }
+  // });
+  }
 
   customSubjectValidator(group: AbstractControl): ValidationErrors | null {
     const subject = group.get('subject')?.value;
@@ -49,9 +58,7 @@ export class ReclamationFormComponent {
 
   onSubmit(): void {
     this.showErrorSummary = false;
-
-    // Force la réévaluation des validateurs (important pour customRequired)
-    this.form.updateValueAndValidity();
+    this.form.updateValueAndValidity({ onlySelf: false, emitEvent: true });
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
