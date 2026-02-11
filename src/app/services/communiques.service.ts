@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../environments/environment'; // ajuste le chemin si nécessaire
+import { environment } from 'environments/environment.prod';
 
 // Interfaces (gardées pour le typage fort)
 export interface Communique {
@@ -26,7 +26,7 @@ export interface CommuniqueResponse {
   providedIn: 'root'
 })
 export class CommuniqueService {
-  private apiUrl = `${environment.apiBaseUrl}/communiques`;
+  private apiUrl = `${environment.apiUrl}/communiques`;
 
   constructor(private http: HttpClient) {}
 
