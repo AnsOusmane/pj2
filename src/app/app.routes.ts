@@ -23,7 +23,7 @@ import { AdminComponent } from './admin/admin';
 // import { ActualitesComponent } from './pages/actualites/actualites';
 import { RapportsOfficielsFormComponent } from './admin/rapports-officiels-form/rapports-officiels-form';
 import { DecretsOfficielsFormComponent } from './admin/decrets-form/decrets-form';
-import { communiquesOfficielsFormComponent } from './admin/communiques-form/communiques-form';
+import { CommuniqueFormComponent } from './admin/communiques-form/communiques-form';
 import { BanqueImagesFormComponent } from './admin/banque-d-image-form/banque-d-image-form';
 import { MaintenanceComponent } from './maintenance/maintenance';
 import { CecComponent } from './cec/cec';
@@ -55,7 +55,7 @@ export const routes: Routes = [
   // { path: 'pages/actualites', component: ActualitesComponent },
   { path: 'admin/rapports-officiels-form', component: RapportsOfficielsFormComponent },
   { path: 'admin/decrets-form', component: DecretsOfficielsFormComponent },
-  { path: 'admin/communiques-form', component: communiquesOfficielsFormComponent },
+  { path: 'admin/communiques-form', component: CommuniqueFormComponent },
   { path: 'admin/banque_d_image-form', component: BanqueImagesFormComponent },
   { path: 'maintenance', component: MaintenanceComponent },
   { path: 'cec', component: CecComponent },

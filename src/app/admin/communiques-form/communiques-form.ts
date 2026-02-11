@@ -1,27 +1,28 @@
-// src/app/admin/communique-form/communique-form.component.ts
 import { Component, signal } from '@angular/core';
-import { 
-  ReactiveFormsModule, 
-  FormBuilder, 
-  FormGroup, 
-  Validators 
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CommuniqueService } from '../../services/communique.service';
+import { CommuniqueService } from '../../services/communiques.service';  // ajuste le chemin si nécessaire
 
 @Component({
   selector: 'app-communique-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './communiques-form.html',
-  styleUrls: ['./communiques-form.css'] // optionnel
+  // styleUrls: ['./communiques-form.component.css']   // décommente si tu as un fichier css
 })
 export class CommuniqueFormComponent {
   form: FormGroup;
   success = signal<string | null>(null);
-  error   = signal<string | null>(null);
-  loading = signal(false);
-
+  error = signal<string | null>(null);
+  loading = signal<boolean>(false);
   selectedFileName = signal<string | null>(null);
 
   constructor(
@@ -29,9 +30,16 @@ export class CommuniqueFormComponent {
     private communiqueService: CommuniqueService
   ) {
     this.form = this.fb.group({
-      title:       ['', [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
+      title: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(250)
+        ]
+      ],
       description: [''],
-      file:        [null, Validators.required]
+      file: [null, Validators.required]
     });
   }
 
@@ -39,9 +47,22 @@ export class CommuniqueFormComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
+
+      // Vérification basique du type et de la taille
+      if (!['application/pdf', 'image/jpeg', 'image/png'].includes(file.type)) {
+        this.error.set('Format non autorisé. PDF, JPG ou PNG uniquement.');
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) { // 10 Mo max
+        this.error.set('Le fichier est trop volumineux (max 10 Mo).');
+        return;
+      }
+
       this.form.patchValue({ file });
-      this.selectedFileName.set(file.name);
       this.form.get('file')?.markAsTouched();
+      this.selectedFileName.set(file.name);
+      this.error.set(null); // reset erreur précédente
     }
   }
 
@@ -55,27 +76,45 @@ export class CommuniqueFormComponent {
     this.success.set(null);
     this.error.set(null);
 
-    const value = this.form.value;
+    // Création de l'objet conforme à l'interface Communique attendue par le service
+    const communiqueData = {
+      title: this.form.value.title.trim(),
+      description: this.form.value.description?.trim() || undefined,
+      file: this.form.value.file as File
+    };
 
     try {
-      await this.communiqueService.addCommunique({
-        title: value.title,
-        description: value.description || undefined,
-        file: value.file
-      }).toPromise();
+      // Appel au service avec l'objet (pas FormData)
+      await this.communiqueService.addCommunique(communiqueData).toPromise();
 
-      this.success.set('Communiqué publié avec succès ✓');
+      this.success.set('Communiqué ajouté avec succès !');
+
+      // Reset complet
       this.form.reset();
       this.selectedFileName.set(null);
+
+      // Reset manuel du champ fichier (important)
       const fileInput = document.getElementById('file') as HTMLInputElement;
-      if (fileInput) fileInput.value = '';
+      if (fileInput) {
+        fileInput.value = '';
+      }
     } catch (err: any) {
-      this.error.set(err.message || 'Échec de l’enregistrement');
-      console.error(err);
+      console.error('Erreur ajout communiqué:', err);
+
+      // Gestion d'erreur plus fine
+      const errorMsg = err.error?.message ||
+                       err.message ||
+                       'Une erreur est survenue lors de l\'enregistrement';
+
+      this.error.set(errorMsg);
     } finally {
       this.loading.set(false);
     }
   }
 
-  get f() { return this.form.controls; }
+  // Helper utile pour le template (ex: [class.border-red-500]="isInvalid('title')")
+  isInvalid(controlName: string): boolean {
+    const control = this.form.get(controlName);
+    return !!(control?.touched && control?.invalid);
+  }
 }
