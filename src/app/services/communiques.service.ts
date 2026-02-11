@@ -26,7 +26,7 @@ export interface CommuniqueResponse {
   providedIn: 'root'
 })
 export class CommuniqueService {
-  private apiUrl = `${environment.apiUrl}/communiques`;
+  private apiUrl = `${environment.apiBaseUrl}/communiques`;
 
   constructor(private http: HttpClient) {}
 
