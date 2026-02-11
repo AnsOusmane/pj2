@@ -7,7 +7,7 @@ import {
   AbstractControl,
   ValidationErrors
 } from '@angular/forms';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';  // ← CETTE LIGNE ÉTAIT MANQUANTE
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'; 
 import { CommonModule } from '@angular/common';
 
 @Component({
