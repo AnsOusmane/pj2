@@ -14,7 +14,7 @@ const app = express();
 
 // Middleware CORS (essentiel pour Angular)
 app.use(cors({
-  origin: ['http://localhost:4200', 'https://pj2-gr26.vercel.app'],
+  origin: ['http://localhost:4200', 'https://pj2-gr26.vercel.app', 'https://sencsu.sn'],
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type'],
   credentials: true
