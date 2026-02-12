@@ -18,7 +18,6 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
   templateUrl: './reclamation-form.html',
 })
 export class ReclamationFormComponent {
-
   submitted = false;
   loading = false;
   errorMsg: string | null = null;
@@ -28,70 +27,46 @@ export class ReclamationFormComponent {
     fullname: new FormControl<string>('', Validators.required),
     city: new FormControl<string>('', Validators.required),
     cardNumber: new FormControl<string>(''),
-
-    // ✅ TELEPHONE VERSION PRO
     phone: new FormControl<string>('', [
       Validators.required,
       this.phoneValidator.bind(this)
     ]),
-
     email: new FormControl<string>('', [Validators.email]),
     subject: new FormControl<string>('', Validators.required),
     customSubject: new FormControl<string>(''),
     message: new FormControl<string>('', Validators.required),
+    // Honeypot anti-spam (laisser vide)
+    _honey: new FormControl<string>(''),
   }, { validators: [this.customSubjectValidator] });
 
-  private readonly WEB3FORMS_URL = 'https://api.web3forms.com/submit';
-  private readonly ACCESS_KEY = '394cea44-eda3-4c7a-91bc-b4b6dfa540a1';
+  private readonly FORMSUBMIT_URL = 'https://formsubmit.co/reclamation@agencecmu.sn';
 
   constructor(private http: HttpClient) {}
 
-  /* =====================================================
-     VALIDATION TELEPHONE PRO
-     - International
-     - National Sénégal
-  ====================================================== */
-
   phoneValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-
     if (!value) return null;
 
-    // 1️⃣ Tentative internationale directe
     let phoneNumber = parsePhoneNumberFromString(value);
-
-    // 2️⃣ Si invalide → on suppose Sénégal par défaut
     if (!phoneNumber || !phoneNumber.isValid()) {
       phoneNumber = parsePhoneNumberFromString(value, 'SN');
     }
-
     if (!phoneNumber || !phoneNumber.isValid()) {
       return { invalidPhone: true };
     }
-
     return null;
   }
-
-  /* =====================================================
-     VALIDATION SUJET PERSONNALISÉ
-  ====================================================== */
 
   customSubjectValidator(group: AbstractControl): ValidationErrors | null {
     const subject = group.get('subject')?.value;
     const custom = group.get('customSubject')?.value?.trim?.() || '';
-
     if (subject === 'Autres' && custom.length === 0) {
       return { customRequired: true };
     }
     return null;
   }
 
-  /* =====================================================
-     SUBMIT
-  ====================================================== */
-
   onSubmit(): void {
-
     this.showErrorSummary = false;
     this.form.updateValueAndValidity({ onlySelf: false, emitEvent: true });
 
@@ -101,21 +76,25 @@ export class ReclamationFormComponent {
       return;
     }
 
+    // Protection honeypot : si rempli → on arrête (bot probable)
+    if (this.form.value._honey?.trim()) {
+      console.warn('Honeypot rempli → probable spam, envoi annulé');
+      this.errorMsg = 'Erreur inattendue. Veuillez réessayer.';
+      return;
+    }
+
     this.loading = true;
     this.errorMsg = null;
     this.submitted = false;
 
-    /* ✅ NORMALISATION EN FORMAT INTERNATIONAL */
+    // Normalisation téléphone international
     const phoneControl = this.form.get('phone');
-
     let phoneNumber = parsePhoneNumberFromString(phoneControl?.value || '');
-
     if (!phoneNumber || !phoneNumber.isValid()) {
       phoneNumber = parsePhoneNumberFromString(phoneControl?.value || '', 'SN');
     }
-
     if (phoneNumber) {
-      phoneControl?.setValue(phoneNumber.number); // ex: +221777777777
+      phoneControl?.setValue(phoneNumber.number); // +221xxxxxxxxx
     }
 
     const finalSubject = this.form.value.subject === 'Autres'
@@ -128,12 +107,14 @@ export class ReclamationFormComponent {
       timeStyle: 'short'
     });
 
-    const payload = {
-      access_key: this.ACCESS_KEY,
-      name: this.form.value.fullname,
+    // Payload en objet simple (HttpClient le transformera en form-urlencoded)
+    const payload: any = {
+      fullname: this.form.value.fullname,
       email: this.form.value.email || 'Non renseigné',
       phone: this.form.value.phone,
-      subject: `⚠️ Nouvelle réclamation SEN-CSU - ${finalSubject}`,
+      city: this.form.value.city,
+      cardNumber: this.form.value.cardNumber || 'Non renseigné',
+      _subject: `⚠️ Nouvelle réclamation SEN-CSU - ${finalSubject}`,   // ← sujet email personnalisé
       message:
         `📌 Objet : ${finalSubject}\n` +
         `🕒 Date d’envoi : ${formattedDate}\n` +
@@ -141,38 +122,41 @@ export class ReclamationFormComponent {
         `💳 N° Carte assuré : ${this.form.value.cardNumber || 'Non renseigné'}\n` +
         `📞 Téléphone : ${this.form.value.phone}\n\n` +
         `Message :\n${this.form.value.message || ''}`,
-      from_name: this.form.value.fullname,
+      // Optionnel : si tu veux que le reply-to soit l'email du user
+      _replyto: this.form.value.email || undefined,
+      // Honeypot (déjà vérifié vide)
+      _honey: this.form.value._honey,
     };
 
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
       'Accept': 'application/json'
+      // Pas besoin de Content-Type: application/json → on laisse le défaut → x-www-form-urlencoded
     });
 
-    this.http.post<any>(this.WEB3FORMS_URL, payload, { headers }).subscribe({
+    this.http.post<any>(this.FORMSUBMIT_URL, payload, { headers, observe: 'response' }).subscribe({
       next: (response) => {
-        if (response?.success) {
-          this.submitted = true;
-          this.form.reset();
-          setTimeout(() => this.submitted = false, 7000);
-        } else {
-          this.errorMsg = response?.message || 'Erreur lors de l’envoi de la réclamation.';
-        }
+        // FormSubmit redirige souvent en succès → mais en AJAX on peut avoir 200
+        this.submitted = true;
+        this.form.reset();
+        // Reset honeypot aussi
+        this.form.get('_honey')?.setValue('');
+        setTimeout(() => this.submitted = false, 7000);
         this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
         this.loading = false;
-        console.error('Erreur Web3Forms:', err);
-        this.errorMsg = err.status === 0
-          ? 'Problème de connexion. Vérifiez votre réseau internet.'
-          : err.error?.message || 'Une erreur inattendue est survenue. Réessayez plus tard.';
+        console.error('Erreur FormSubmit:', err);
+
+        if (err.status === 429) {
+          this.errorMsg = 'Trop de tentatives. Réessayez dans quelques minutes.';
+        } else if (err.status >= 400 && err.status < 500) {
+          this.errorMsg = err.error?.message || 'Erreur dans les données envoyées. Vérifiez vos informations.';
+        } else {
+          this.errorMsg = 'Problème serveur ou connexion. Réessayez plus tard.';
+        }
       }
     });
   }
-
-  /* =====================================================
-     HELPER
-  ====================================================== */
 
   hasError(controlName: string, errorName: string): boolean {
     const control = this.form.get(controlName);
