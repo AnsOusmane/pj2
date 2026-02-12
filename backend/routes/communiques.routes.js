@@ -38,6 +38,22 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 } // 10 Mo max
 });
 
+// GET : Récupère tous les communiqués (pour l'affichage public)
+router.get('/', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT id, title, description, file_path, created_at
+      FROM communiques
+      ORDER BY created_at DESC
+    `);
+
+    // Renvoie directement le tableau JSON
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Erreur lors de la récupération des communiqués :', err);
+    res.status(500).json({ message: 'Erreur serveur lors de la récupération' });
+  }
+});
 // POST – Ajouter un communiqué
 router.post('/', upload.single('file'), async (req, res) => {
   try {

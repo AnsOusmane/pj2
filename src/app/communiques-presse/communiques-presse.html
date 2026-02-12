@@ -1,91 +1,105 @@
 <div class="pt-24 max-w-6xl mx-auto px-4">
-
-  <!-- 🔥 Titre principal -->
+  <!-- Titre -->
   <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-6 text-center">
     Communiqués de Presse
   </h1>
 
-  <!-- ⭐ Filtres -->
-  <div class="flex justify-center gap-2 flex-wrap mb-8">
-    <button
-      *ngFor="let cat of categories"
-      (click)="selectCat(cat)"
-      class="px-4 py-2 rounded-full border transition-all duration-300"
-      [ngClass]="{
-        'bg-green-600 text-white shadow-md scale-105': selectedCat === cat,
-        'bg-white text-gray-600 hover:bg-gray-100': selectedCat !== cat
-      }"
-    >
-      {{ cat }}
+  <!-- Chargement ou erreur -->
+  <div *ngIf="isLoading" class="text-center py-20">
+    <div class="animate-spin inline-block w-16 h-16 border-4 border-green-600 border-t-transparent rounded-full"></div>
+    <p class="mt-6 text-lg text-gray-600">Chargement des communiqués...</p>
+  </div>
+
+  <div *ngIf="errorMessage && !isLoading" class="text-center py-20">
+    <p class="text-xl text-red-600 mb-6">{{ errorMessage }}</p>
+    <button (click)="retryLoad()"
+            class="px-8 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition">
+      Réessayer
     </button>
   </div>
 
-  <!-- 📰 Liste des communiqués -->
-  <div class="grid md:grid-cols-2 gap-6">
-
-    <div *ngFor="let c of filteredCommuniques"
-         (click)="openModal(c)"
-         class="bg-white rounded-xl shadow transition-all duration-500 hover:shadow-xl hover:-translate-y-2 transform hover:scale-[1.01] cursor-pointer group overflow-hidden opacity-0 animate-fadeUp">
-
-      <!-- Loader -->
-      <div class="relative">
-        <div class="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse" *ngIf="!c.loaded">
-          <span class="text-gray-400 text-sm">Chargement...</span>
-        </div>
-
-        <img 
-          [src]="c.image"
-          (load)="c.loaded = true"
-          class="h-56 w-full object-cover transition-opacity duration-500 group-hover:opacity-90"
-          alt="{{ c.titre }}"
-        />
-      </div>
-
-      <div class="p-4">
-        <p class="text-xs text-gray-400">{{ c.date }}</p>
-
-        <h2 class="text-xl font-semibold text-green-700 my-2">
-          {{ c.titre }}
-        </h2>
-
-        <p class="text-gray-600 mb-3 line-clamp-3">
-          {{ c.resume }}
-        </p>
-
-        <span class="inline-block px-3 py-1 text-sm rounded-full bg-green-100 text-green-700 font-medium">
-          {{ c.categorie }}
-        </span>
-      </div>
+  <!-- Contenu quand tout est chargé -->
+  <ng-container *ngIf="!isLoading && !errorMessage">
+    <!-- Filtres -->
+    <div class="flex justify-center gap-3 flex-wrap mb-10">
+      <button
+        *ngFor="let cat of categories"
+        (click)="selectCat(cat)"
+        class="px-5 py-2.5 rounded-full border-2 transition-all duration-300 font-medium"
+        [ngClass]="{
+          'bg-green-600 text-white border-green-600 shadow-lg scale-105': selectedCat === cat,
+          'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-gray-400': selectedCat !== cat
+        }"
+      >
+        {{ cat }}
+      </button>
     </div>
 
-  </div>
+    <!-- Pas de résultat -->
+    <div *ngIf="filteredCommuniques.length === 0" class="text-center py-16 text-gray-500 text-lg">
+      Aucun communiqué trouvé pour cette catégorie.
+    </div>
+
+    <!-- Grille des communiqués -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div *ngFor="let c of filteredCommuniques"
+           (click)="openModal(c)"
+           class="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 cursor-pointer group">
+        <!-- Image avec loader -->
+        <div class="relative aspect-[4/3] overflow-hidden">
+          <div class="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse" *ngIf="!c.loaded">
+            <span class="text-gray-400">Chargement...</span>
+          </div>
+          <img
+            [src]="c.image"
+            (load)="c.loaded = true"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            alt="{{ c.titre }}"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Contenu -->
+        <div class="p-6">
+          <p class="text-sm text-gray-500 mb-2">{{ c.date }}</p>
+          <h2 class="text-xl font-bold text-green-800 mb-3 line-clamp-2 group-hover:text-green-700 transition-colors">
+            {{ c.titre }}
+          </h2>
+          <p class="text-gray-600 mb-4 line-clamp-3">
+            {{ c.resume }}
+          </p>
+          <span class="inline-block px-4 py-1.5 text-sm font-medium rounded-full bg-green-100 text-green-700">
+            {{ c.categorie }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>
 
-<!-- 🌟 MODAL FULLSCREEN -->
-<div *ngIf="modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+<!-- Modal -->
+<div *ngIf="modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50"
      (click)="closeModal()">
-
-  <div class="bg-white rounded-xl max-w-2xl w-full overflow-hidden shadow-2xl animate-zoomIn"
+  <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-fadeIn relative"
        (click)="$event.stopPropagation()">
+    <img [src]="modal.image" class="w-full h-80 md:h-96 object-cover" alt="{{ modal.titre }}" />
 
-    <img [src]="modal.image" class="w-full h-72 object-cover" />
-
-    <div class="p-5">
-      <h2 class="text-2xl font-bold text-green-700">{{ modal.titre }}</h2>
-      <p class="text-gray-400 text-sm">{{ modal.date }}</p>
-
-      <p class="text-gray-700 mt-4">
+    <div class="p-6 md:p-8">
+      <h2 class="text-2xl md:text-3xl font-bold text-green-800 mb-3">{{ modal.titre }}</h2>
+      <p class="text-gray-500 mb-6">{{ modal.date }}</p>
+      <p class="text-gray-700 leading-relaxed whitespace-pre-line">
         {{ modal.resume }}
       </p>
-
-      <span class="inline-block mt-4 px-3 py-1 text-sm rounded-full bg-green-100 text-green-700 font-medium">
+      <span class="inline-block mt-6 px-5 py-2 text-base rounded-full bg-green-100 text-green-700 font-medium">
         {{ modal.categorie }}
       </span>
     </div>
 
     <button (click)="closeModal()"
-            class="absolute top-4 right-4 bg-white rounded-full shadow p-2 hover:bg-gray-100">
-      ✕
+            class="absolute top-4 right-4 md:top-6 md:right-6 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition">
+      <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
     </button>
   </div>
 </div>

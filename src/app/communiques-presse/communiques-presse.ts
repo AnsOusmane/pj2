@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment'; // ou environment.prod
 
-interface Presse {
+interface Communique {
   id: number;
   titre: string;
   date: string;
   resume: string;
   image: string;
-  categorie: string;
-  loaded?: boolean; // ⭐ pour détecter que l’image est chargée
+  categorie: string;      // on peut mettre "Général" par défaut ou ajouter un champ category plus tard
+  loaded?: boolean;
 }
 
 @Component({
@@ -18,62 +20,83 @@ interface Presse {
   templateUrl: './communiques-presse.html',
   styleUrls: ['./communiques-presse.css']
 })
-export class CommuniquesPresseComponent {
-
+export class CommuniquesPresseComponent implements OnInit {
   categories = ['Tous', 'Santé', 'Innovation', 'Urgent', 'Gouvernance'];
   selectedCat = 'Tous';
 
-  // ⭐ Ajout paramètre loaded:false pour loader
-  communiques: Presse[] = [
-    {
-      id: 1,
-      titre: 'Lancement du nouveau programme national de santé digitale',
-      date: '10 Février 2025',
-      resume: 'Le ministère dévoile une plateforme révolutionnaire visant à moderniser les soins et améliorer l’accessibilité numérique.',
-      image: 'assets/presse/1.webp',
-      categorie: 'Innovation',
-      loaded: false
-    },
-    {
-      id: 2,
-      titre: 'Ouverture de 12 nouvelles pharmacies partenaires',
-      date: '03 Février 2025',
-      resume: 'Un pas important vers une meilleure couverture pharmaceutique dans les zones rurales.',
-      image: 'assets/presse/2.jpg',
-      categorie: 'Santé',
-      loaded: false
-    },
-    {
-      id: 3,
-      titre: 'Communiqué urgent : campagne de vaccination accélérée',
-      date: '28 Janvier 2025',
-      resume: 'Face à l’augmentation des cas, le ministère renforce le déploiement de la campagne de vaccination.',
-      image: 'assets/presse/3.webp',
-      categorie: 'Urgent',
-      loaded: false
-    }
-  ];
+  communiques: Communique[] = [];
+  filteredCommuniques: Communique[] = [];
 
-  // ⭐ Gestion filtre
-  get filteredCommuniques() {
-    if (this.selectedCat === 'Tous') return this.communiques;
-    return this.communiques.filter(c => c.categorie === this.selectedCat);
+  isLoading = true;
+  errorMessage: string | null = null;
+
+  modal: Communique | null = null;
+
+  private apiUrl = `${environment.apiBaseUrl}/communiques`;
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.loadCommuniques();
+  }
+
+  loadCommuniques() {
+    this.isLoading = true;
+    this.errorMessage = null;
+
+    this.http.get<any[]>(this.apiUrl).subscribe({
+      next: (data) => {
+       this.communiques = data.map(item => ({
+  id: item.id,
+  titre: item.title,
+  date: new Date(item.created_at).toLocaleDateString('fr-SN', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }),
+  resume: item.description || 'Aucun résumé disponible',
+  image: item.file_path && item.file_path.trim()
+    ? `${environment.mediaBaseUrl}${item.file_path.startsWith('/') ? '' : '/'}${item.file_path}`
+    : 'assets/placeholder.jpg',
+  categorie: 'Général',
+  loaded: false
+}));
+
+        this.updateFilteredCommuniques();
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Erreur chargement communiqués', err);
+        this.errorMessage = 'Impossible de charger les communiqués pour le moment. Réessayez plus tard.';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  updateFilteredCommuniques() {
+    if (this.selectedCat === 'Tous') {
+      this.filteredCommuniques = [...this.communiques];
+    } else {
+      this.filteredCommuniques = this.communiques.filter(c => c.categorie === this.selectedCat);
+    }
   }
 
   selectCat(cat: string) {
     this.selectedCat = cat;
+    this.updateFilteredCommuniques();
   }
 
-  // ⭐ Gestion du modal
-  modal: Presse | null = null;
-
-  openModal(c: Presse) {
+  openModal(c: Communique) {
     this.modal = c;
-    document.body.style.overflow = 'hidden'; // Empêche le scroll
+    document.body.style.overflow = 'hidden';
   }
 
   closeModal() {
     this.modal = null;
     document.body.style.overflow = 'auto';
+  }
+
+  retryLoad() {
+    this.loadCommuniques();
   }
 }
