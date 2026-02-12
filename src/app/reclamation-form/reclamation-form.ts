@@ -7,8 +7,9 @@ import {
   AbstractControl,
   ValidationErrors
 } from '@angular/forms';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'; 
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 @Component({
   selector: 'app-reclamation-form',
@@ -17,6 +18,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './reclamation-form.html',
 })
 export class ReclamationFormComponent {
+
   submitted = false;
   loading = false;
   errorMsg: string | null = null;
@@ -26,10 +28,13 @@ export class ReclamationFormComponent {
     fullname: new FormControl<string>('', Validators.required),
     city: new FormControl<string>('', Validators.required),
     cardNumber: new FormControl<string>(''),
+
+    // ✅ TELEPHONE VERSION PRO
     phone: new FormControl<string>('', [
       Validators.required,
-      Validators.pattern(/^((\+|00)?221)? ?[ -]?[7-9][0-9]{8}$/)
+      this.phoneValidator.bind(this)
     ]),
+
     email: new FormControl<string>('', [Validators.email]),
     subject: new FormControl<string>('', Validators.required),
     customSubject: new FormControl<string>(''),
@@ -37,26 +42,56 @@ export class ReclamationFormComponent {
   }, { validators: [this.customSubjectValidator] });
 
   private readonly WEB3FORMS_URL = 'https://api.web3forms.com/submit';
-  private readonly ACCESS_KEY = '295a0f1a-e50f-417f-b657-cc5bdb76c99f';
+  private readonly ACCESS_KEY = '394cea44-eda3-4c7a-91bc-b4b6dfa540a1';
 
-  constructor(private http: HttpClient) {
-  //   this.form.statusChanges.subscribe(status => {
-  //   if (status === 'VALID') {
-  //     this.showErrorSummary = false;
-  //   }
-  // });
+  constructor(private http: HttpClient) {}
+
+  /* =====================================================
+     VALIDATION TELEPHONE PRO
+     - International
+     - National Sénégal
+  ====================================================== */
+
+  phoneValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value) return null;
+
+    // 1️⃣ Tentative internationale directe
+    let phoneNumber = parsePhoneNumberFromString(value);
+
+    // 2️⃣ Si invalide → on suppose Sénégal par défaut
+    if (!phoneNumber || !phoneNumber.isValid()) {
+      phoneNumber = parsePhoneNumberFromString(value, 'SN');
+    }
+
+    if (!phoneNumber || !phoneNumber.isValid()) {
+      return { invalidPhone: true };
+    }
+
+    return null;
   }
+
+  /* =====================================================
+     VALIDATION SUJET PERSONNALISÉ
+  ====================================================== */
 
   customSubjectValidator(group: AbstractControl): ValidationErrors | null {
     const subject = group.get('subject')?.value;
     const custom = group.get('customSubject')?.value?.trim?.() || '';
+
     if (subject === 'Autres' && custom.length === 0) {
       return { customRequired: true };
     }
     return null;
   }
 
+  /* =====================================================
+     SUBMIT
+  ====================================================== */
+
   onSubmit(): void {
+
     this.showErrorSummary = false;
     this.form.updateValueAndValidity({ onlySelf: false, emitEvent: true });
 
@@ -69,7 +104,19 @@ export class ReclamationFormComponent {
     this.loading = true;
     this.errorMsg = null;
     this.submitted = false;
-    this.showErrorSummary = false;
+
+    /* ✅ NORMALISATION EN FORMAT INTERNATIONAL */
+    const phoneControl = this.form.get('phone');
+
+    let phoneNumber = parsePhoneNumberFromString(phoneControl?.value || '');
+
+    if (!phoneNumber || !phoneNumber.isValid()) {
+      phoneNumber = parsePhoneNumberFromString(phoneControl?.value || '', 'SN');
+    }
+
+    if (phoneNumber) {
+      phoneControl?.setValue(phoneNumber.number); // ex: +221777777777
+    }
 
     const finalSubject = this.form.value.subject === 'Autres'
       ? `Autres : ${this.form.value.customSubject?.trim() || 'non précisé'}`
@@ -91,7 +138,8 @@ export class ReclamationFormComponent {
         `📌 Objet : ${finalSubject}\n` +
         `🕒 Date d’envoi : ${formattedDate}\n` +
         `🏙️ Ville : ${this.form.value.city}\n` +
-        `💳 N° Carte assuré : ${this.form.value.cardNumber || 'Non renseigné'}\n\n` +
+        `💳 N° Carte assuré : ${this.form.value.cardNumber || 'Non renseigné'}\n` +
+        `📞 Téléphone : ${this.form.value.phone}\n\n` +
         `Message :\n${this.form.value.message || ''}`,
       from_name: this.form.value.fullname,
     };
@@ -121,6 +169,10 @@ export class ReclamationFormComponent {
       }
     });
   }
+
+  /* =====================================================
+     HELPER
+  ====================================================== */
 
   hasError(controlName: string, errorName: string): boolean {
     const control = this.form.get(controlName);

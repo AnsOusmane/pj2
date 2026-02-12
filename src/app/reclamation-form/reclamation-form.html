@@ -61,8 +61,10 @@
 <div *ngIf="hasError('phone', 'required')" class="text-red-600 text-sm sm:col-span-2">
   Le téléphone est obligatoire.
 </div>
-<div *ngIf="hasError('phone', 'pattern')" class="text-red-600 text-sm sm:col-span-2">
-  Format invalide (ex: +221771234567 ou 771234567).
+<div *ngIf="hasError('phone', 'invalidPhone')" 
+     class="text-red-600 text-sm sm:col-span-2">
+  Numéro invalide. Entrez un numéro valide 
+  (ex : 761234567, 33 123 45 67, +221771234567, +33123456789).
 </div>
 
 <!-- Email -->
