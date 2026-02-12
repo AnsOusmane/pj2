@@ -27,6 +27,13 @@ app.use(express.urlencoded({ extended: true }));
 // Servir les fichiers uploadés publiquement
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+app.use('/uploads', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+}, express.static(path.join(__dirname, 'uploads')));
+
 // Monte les routes API
 app.use('/api/communiques', communiquesRouter);
 // app.use('/api/news', newsRouter); // décommente si besoin
@@ -36,7 +43,7 @@ app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend fonctionne !', dbConnected: true });
 });
 
-// Lancement du serveur – C'EST ÇA QUI MANQUAIT
+// Lancement du serveur
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
