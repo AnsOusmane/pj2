@@ -39,7 +39,7 @@ export class ReclamationFormComponent {
     _honey: new FormControl<string>(''),
   }, { validators: [this.customSubjectValidator] });
 
-  private readonly FORMSUBMIT_URL = 'https://formsubmit.co/reclamation@agencecmu.sn';
+  private readonly FORMSUBMIT_URL = 'https://formsubmit.co/ajax/reclamation@agencecmu.sn';
 
   constructor(private http: HttpClient) {}
 
@@ -126,6 +126,7 @@ export class ReclamationFormComponent {
       _replyto: this.form.value.email || undefined,
       // Honeypot (déjà vérifié vide)
       _honey: this.form.value._honey,
+      _captcha: 'false',
     };
 
     const headers = new HttpHeaders({
@@ -144,16 +145,21 @@ export class ReclamationFormComponent {
         this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
-        this.loading = false;
-        console.error('Erreur FormSubmit:', err);
+  this.loading = false;
+  console.error('Erreur FormSubmit complète :', err);
+  console.log('Status:', err.status);
+  console.log('Response body:', err.error);
 
-        if (err.status === 429) {
-          this.errorMsg = 'Trop de tentatives. Réessayez dans quelques minutes.';
-        } else if (err.status >= 400 && err.status < 500) {
-          this.errorMsg = err.error?.message || 'Erreur dans les données envoyées. Vérifiez vos informations.';
-        } else {
-          this.errorMsg = 'Problème serveur ou connexion. Réessayez plus tard.';
-        }
+  let msg = 'Problème serveur ou connexion. Réessayez plus tard.';
+  if (err.status === 429) {
+    msg = 'Trop de tentatives rapides. Attendez 1-2 minutes.';
+  } else if (err.status === 403 || err.status === 400) {
+    msg = 'Soumission bloquée (spam ou captcha ?). Essayez depuis un autre réseau.';
+  } else if (err.error?.message) {
+    msg = err.error.message;
+  }
+  this.errorMsg = msg;
+
       }
     });
   }
