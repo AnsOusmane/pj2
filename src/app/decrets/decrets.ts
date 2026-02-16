@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DecretsService } from '../services/decrets.service'; // ajuste le chemin
+import { DecretsService } from '../services/decrets.service';
 import { environment } from '../../environments/environment';
 
 interface DecretDisplay {
@@ -8,8 +8,8 @@ interface DecretDisplay {
   titre: string;
   date: string;
   resume: string;
-  file: string;       // lien vers le PDF ou image
-  loaded?: boolean;
+  file: string;
+  loaded: boolean;
 }
 
 @Component({
@@ -23,6 +23,9 @@ export class DecretsComponent implements OnInit {
   isLoading = true;
   errorMessage: string | null = null;
   decrets: DecretDisplay[] = [];
+
+  private apiUrl = `${environment.apiBaseUrl}/decrets`;
+  private mediaBase = environment.mediaBaseUrl || environment.apiBaseUrl.replace(/\/api$/, '');
 
   constructor(private decretsService: DecretsService) {}
 
@@ -38,21 +41,25 @@ export class DecretsComponent implements OnInit {
       next: (data) => {
         this.decrets = data.map(item => ({
           id: item.id,
-          titre: item.title,
-          date: new Date(item.created_at).toLocaleDateString('fr-SN', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-          }),
-          resume: item.description || 'Aucun résumé disponible',
-          file: `${environment.mediaBaseUrl || environment.apiBaseUrl.replace(/\/api$/, '')}${item.file_path}`,
+          titre: item.title || 'Décret sans titre',
+          date: item.created_at
+            ? new Date(item.created_at).toLocaleDateString('fr-SN', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+              })
+            : 'Date inconnue',
+          resume: item.description?.trim() || 'Aucun résumé disponible',
+          file: item.file_path && item.file_path.trim()
+            ? `${this.mediaBase}${item.file_path.startsWith('/') ? '' : '/'}${item.file_path}`
+            : 'assets/placeholder.jpg',
           loaded: false
         }));
 
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('Erreur chargement décrets', err);
+        console.error('Erreur lors du chargement des décrets', err);
         this.errorMessage = 'Impossible de charger les décrets pour le moment.';
         this.isLoading = false;
       }
