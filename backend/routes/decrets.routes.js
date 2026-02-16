@@ -1,11 +1,12 @@
+// routes/decrets.routes.js
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const db = require('../db');
+const { pool } = require('../db'); // ton pool Neon
 
-// Configuration du stockage
+// Configuration Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = 'uploads/decrets';
@@ -13,40 +14,64 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+    const ext = path.extname(file.originalname);
+    const name = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, name + ext);
   }
 });
 
-const upload = multer({ storage });
+const fileFilter = (req, file, cb) => {
+  const allowed = ['application/pdf', 'image/jpeg', 'image/png'];
+  if (allowed.includes(file.mimetype)) cb(null, true);
+  else cb(new Error('PDF, JPG ou PNG uniquement'), false);
+};
 
-// POST : ajouter un décret officiel
-router.post('/', upload.single('file'), (req, res) => {
-  const { title, description } = req.body;
-  const file = req.file?.filename;
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 10 * 1024 * 1024 } // 10 Mo
+});
 
-  if (!title || !file) {
-    return res.status(400).json({ message: 'Titre et fichier requis.' });
+// GET – Liste tous les décrets (pour affichage public)
+router.get('/', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT id, title, description, file_path, created_at
+      FROM decrets
+      ORDER BY created_at DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Erreur GET décrets:', err);
+    res.status(500).json({ message: 'Erreur serveur' });
   }
+});
+// POST – Ajouter un décret
+router.post('/', upload.single('file'), async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const filePath = req.file ? `/uploads/decrets/${req.file.filename}` : null;
 
-  const sql = `
-    INSERT INTO decrets (title, description, file)
-    VALUES (?, ?, ?)
-  `;
-
-  db.query(sql, [title, description, file], (err, result) => {
-    if (err) {
-      console.error('❌ ERREUR SQL :', err);
-      return res.status(500).json({ message: 'Erreur lors de l’enregistrement' });
+    if (!title || !filePath) {
+      return res.status(400).json({ message: 'Titre et fichier obligatoires.' });
     }
 
-    console.log('✅ Décret enregistré ID:', result.insertId);
+    const result = await pool.query(
+      `INSERT INTO decrets 
+         (title, description, file_path, created_at)
+       VALUES ($1, $2, $3, NOW())
+       RETURNING id, title, description, file_path, created_at`,
+      [title, description || null, filePath]
+    );
 
-    res.json({
+    res.status(201).json({
       message: 'Décret ajouté avec succès',
-      id: result.insertId,
-      data: { title, description, file }
+      data: result.rows[0]
     });
-  });
+  } catch (err) {
+    console.error('Erreur ajout décret:', err);
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
 });
 
 module.exports = router;

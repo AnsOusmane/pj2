@@ -8,7 +8,6 @@ import { BanqueDImageComponent } from './banque-d-image/banque-d-image';
 import { CommuniquesPresseComponent } from './communiques-presse/communiques-presse';
 import { RapportsOfficielsComponent } from './rapports-officiels/rapports-officiels';
 import { Guide } from './guide/guide';
-import { DecretsComponent } from './decrets/decrets';
 import { ManuelAuditComponent } from './manuel-audit/manuel-audit';
 import { ContactFormComponent } from './contact-form/contact-form'; 
 import { NosServicesRegionauxComponent } from './nos-services-regionaux/nos-services-regionaux';
@@ -22,13 +21,14 @@ import { CarriereComponent } from './carriere/carriere';
 import { AdminComponent } from './admin/admin';
 // import { ActualitesComponent } from './pages/actualites/actualites';
 import { RapportsOfficielsFormComponent } from './admin/rapports-officiels-form/rapports-officiels-form';
-import { DecretsOfficielsFormComponent } from './admin/decrets-form/decrets-form';
 import { CommuniqueFormComponent } from './admin/communiques-form/communiques-form';
 import { BanqueImagesFormComponent } from './admin/banque-d-image-form/banque-d-image-form';
 import { MaintenanceComponent } from './maintenance/maintenance';
 import { CecComponent } from './cec/cec';
 import { PnbsfComponent } from './pnbsf/pnbsf';
 import { ReclamationFormComponent } from './reclamation-form/reclamation-form';
+import { DecretsFormComponent } from './admin/decrets-form/decrets-form';
+import { DecretsComponent } from './decrets/decrets';
 
 export const routes: Routes = [
   { path: '', component: HeroComponent }, 
@@ -54,7 +54,7 @@ export const routes: Routes = [
   // { path: 'actualites', component: ActualitesComponent },
   // { path: 'pages/actualites', component: ActualitesComponent },
   { path: 'admin/rapports-officiels-form', component: RapportsOfficielsFormComponent },
-  { path: 'admin/decrets-form', component: DecretsOfficielsFormComponent },
+  { path: 'admin/decrets-form', component: DecretsFormComponent },
   { path: 'admin/communiques-form', component: CommuniqueFormComponent },
   { path: 'admin/banque_d_image-form', component: BanqueImagesFormComponent },
   { path: 'maintenance', component: MaintenanceComponent },

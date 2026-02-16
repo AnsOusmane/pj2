@@ -1,81 +1,61 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { DecretsService } from '../services/decrets.service'; // ajuste le chemin
+import { environment } from '../../environments/environment';
 
-interface Decret {
+interface DecretDisplay {
   id: number;
   titre: string;
-  numero: string;
   date: string;
   resume: string;
-  pdf: string;
-  categorie: string;
+  file: string;       // lien vers le PDF ou image
+  loaded?: boolean;
 }
 
 @Component({
   selector: 'app-decrets',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule],
   templateUrl: './decrets.html',
   styleUrls: ['./decrets.css']
 })
-export class DecretsComponent {
+export class DecretsComponent implements OnInit {
+  isLoading = true;
+  errorMessage: string | null = null;
+  decrets: DecretDisplay[] = [];
 
-  searchValue = '';
-  selectedCat = 'Tous';
+  constructor(private decretsService: DecretsService) {}
 
-  categories = ['Tous', 'Santé', 'Administration', 'Finance', 'Numérique'];
-
-  decrets: Decret[] = [
-    {
-      id: 1,
-      titre: "Décret portant création de l'Agence Nationale de Santé Digitale",
-      numero: "Décret N°2025-014",
-      date: "12 Février 2025",
-      resume: "Ce décret officialise la mise en place d'une agence dédiée à la transformation numérique du système de santé.",
-      pdf: "assets/decrets/d1.pdf",
-      categorie: "Santé"
-    },
-    {
-      id: 2,
-      titre: "Décret relatif à la modernisation des systèmes administratifs",
-      numero: "Décret N°2025-006",
-      date: "03 Février 2025",
-      resume: "Met en place un nouveau cadre réglementaire pour la digitalisation des services publics.",
-      pdf: "assets/decrets/d2.pdf",
-      categorie: "Administration"
-    },
-    {
-      id: 3,
-      titre: "Décret portant réforme des structures financières publiques",
-      numero: "Décret N°2025-002",
-      date: "15 Janvier 2025",
-      resume: "Réorganisation des mécanismes d’attribution budgétaire dans les secteurs prioritaires.",
-      pdf: "assets/decrets/d3.pdf",
-      categorie: "Finance"
-    }
-  ];
-
-  get filteredDecrets() {
-    let list = this.decrets;
-
-    if (this.selectedCat !== 'Tous') {
-      list = list.filter(d => d.categorie === this.selectedCat);
-    }
-
-    if (this.searchValue.trim() !== '') {
-      const s = this.searchValue.toLowerCase();
-      list = list.filter(d =>
-        d.titre.toLowerCase().includes(s) ||
-        d.resume.toLowerCase().includes(s) ||
-        d.numero.toLowerCase().includes(s)
-      );
-    }
-
-    return list;
+  ngOnInit() {
+    this.loadDecrets();
   }
 
-  selectCat(cat: string) {
-    this.selectedCat = cat;
+  loadDecrets() {
+    this.isLoading = true;
+    this.errorMessage = null;
+
+    this.decretsService.getAllDecrets().subscribe({
+      next: (data) => {
+        this.decrets = data.map(item => ({
+          id: item.id,
+          titre: item.title,
+          date: new Date(item.created_at).toLocaleDateString('fr-SN', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          }),
+          resume: item.description || 'Aucun résumé disponible',
+          file: `${environment.mediaBaseUrl || environment.apiBaseUrl.replace(/\/api$/, '')}${item.file_path}`,
+          loaded: false
+        }));
+
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Erreur chargement décrets', err);
+        this.errorMessage = 'Impossible de charger les décrets pour le moment.';
+        this.isLoading = false;
+      }
+    });
   }
 }
