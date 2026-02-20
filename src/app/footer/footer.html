@@ -69,9 +69,9 @@
       <div>
           <h3 class="font-semibold mb-3">ESPACE MEDIA</h3>
           <ul class="space-y-1 text-white/80">
-              <li><button (click)="goToComuPresse()" class="hover:underline">Communiqués de presse</button></li>
-              <li><button (click)="goToMedia()" class="hover:underline">Dossiers médias</button></li>
-              <li><button (click)="goToBankImg()" class="hover:underline">Banque d'image</button></li>
+              <li><button  class="hover:underline">Communiqués de presse</button></li> <!-- (click)= "goToComuPresse()"-->
+              <li><button  class="hover:underline">Dossiers médias</button></li> <!-- (click)="goToMedia()" -->
+              <li><button  class="hover:underline">Banque d'image</button></li>                <!-- (click)="goToBankImg()"-->
           </ul>
       </div>
 
@@ -80,15 +80,13 @@
           <div>
               <h3 class="font-semibold mb-3">ASSISTANCE ET CONTACT</h3>
               <ul class="space-y-1 text-white/80">
-                  <li><button (click)="goToContact()" class="hover:underline">Formulaires de contact</button></li>
-                  <!-- <li><button (click)="goToSr()" class="hover:underline">Localiser une agence</button></li> -->
+                  <li><button  class="hover:underline">Formulaire de contact</button></li> <!-- (click)="goToContact()" -->
+                  <li><button (click)="goToSr()" class="hover:underline">Localiser une agence</button></li> <!-- -->
                   <li>
-                 <button (click)="goToMaintenance()"  target="_blank" class="hover:underline"> 
+                 <button target="_blank" class="hover:underline"> 
                         Pharmacies partenaires
                 </button>
                   </li>
-
-                  <li><button (click)="goToContact()" class="hover:underline">Formulaires</button></li>
               </ul>
           </div>
 
