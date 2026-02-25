@@ -1,55 +1,75 @@
-<div class="page">
-
-  <!-- INTRO -->
-  <div class="intro">
+<div class="w-full max-w-4xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
+  <!-- Conteneur principal centré + blanc arrondi -->
+  <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl md:shadow-2xl border border-gray-100 overflow-hidden mt-3 sm:mt-4 md:mt-4 lg:mt-6 xl:mt-8">
     
-    <h1 class="title">
-      Gratuité des soins <span>0 à 5 ans</span>
-    </h1>
+    <!-- Padding intérieur – encore plus réduit en haut -->
+    <div class="pt-3 pb-6 sm:pt-4 sm:pb-8 md:pt-5 md:pb-9 lg:pt-6 lg:pb-10">
+      
+      <!-- INTRO centrée – marge au-dessus minimale -->
+      <div class="text-center mb-8 md:mb-10 lg:mb-12 max-w-3xl mx-auto pt-0 sm:pt-1">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-extrabold text-green-700 mb-3 md:mb-4 leading-tight">
+          Gratuité des soins <span class="text-green-600">0 à 5 ans</span>
+        </h1>
+        <p class="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+          Un programme national qui garantit <strong>l’accès gratuit et prioritaire</strong>
+          aux soins essentiels pour tous les enfants sénégalais de moins de 5 ans.
+        </p>
+      </div>
 
-    <p class="subtitle">
-      Un programme national qui garantit <strong>l’accès gratuit et prioritaire</strong> 
-      aux soins essentiels pour tous les enfants sénégalais de moins de 5 ans.
-    </p>
+      <!-- Grille des cartes -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 px-2 sm:px-4 lg:px-6 xl:px-8 mb-0">
+        
+        <!-- Carte Poste de santé -->
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-green-500/50 hover:-translate-y-2">
+          <img
+            src="assets/postetouba.jfif"
+            class="w-full h-48 sm:h-52 md:h-56 lg:h-60 object-cover"
+            alt="Poste de santé"
+          >
+          <div class="p-5 sm:p-6 md:p-7">
+            <h2 class="text-xl sm:text-2xl font-bold text-green-700 mb-4 text-center">Poste de santé</h2>
+            <ul class="text-gray-700 space-y-3 text-base sm:text-lg">
+              <li>✔ Tickets de consultation gratuits</li>
+              <li>✔ Médicaments génériques (Initiative de Bamako)</li>
+              <li>✔ Tickets de vaccination</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Carte Centre de santé -->
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-green-500/50 hover:-translate-y-2">
+          <img
+            src="assets/centresante.jpeg"
+            class="w-full h-48 sm:h-52 md:h-56 lg:h-60 object-cover"
+            alt="Centre de santé"
+          >
+          <div class="p-5 sm:p-6 md:p-7">
+            <h2 class="text-xl sm:text-2xl font-bold text-green-700 mb-4 text-center">Centre de santé</h2>
+            <ul class="text-gray-700 space-y-3 text-base sm:text-lg">
+              <li>✔ Tickets de consultation gratuits</li>
+              <li>✔ Médicaments génériques</li>
+              <li>✔ Tickets de vaccination</li>
+              <li>✔ Frais d’hospitalisation</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Carte Hôpital -->
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-green-500/50 hover:-translate-y-2">
+          <img
+            src="assets/hopital.jpeg"
+            class="w-full h-48 sm:h-52 md:h-56 lg:h-60 object-cover"
+            alt="Hôpital"
+          >
+          <div class="p-5 sm:p-6 md:p-7">
+            <h2 class="text-xl sm:text-2xl font-bold text-green-700 mb-4 text-center">Hôpital</h2>
+            <ul class="text-gray-700 space-y-3 text-base sm:text-lg">
+              <li>✔ Consultation en urgence gratuite</li>
+              <li>✔ Consultation gratuite pour cas référés</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-
-  <!-- CARTES -->
-  <div class="cards-row">
-
-    <!-- POSTE DE SANTÉ -->
-    <div class="card section-zoom animated-card">
-      <img src="assets/postetouba.jfif" class="card-top-img" alt="Poste de santé">
-      <h2>Poste de santé</h2>
-      <ul>
-        <li>✔ Tickets de consultation gratuits</li>
-        <li>✔ Médicaments génériques (Initiative de Bamako)</li>
-        <li>✔ Tickets de vaccination</li>
-      </ul>
-    </div>
-
-    <!-- CENTRE DE SANTÉ -->
-    <div class="card section-zoom animated-card">
-      <img src="assets/centresante.jpeg" class="card-top-img" alt="Centre de santé">
-      <h2>Centre de santé</h2>
-      <ul>
-        <li>✔ Tickets de consultation gratuits</li>
-        <li>✔ Médicaments génériques</li>
-        <li>✔ Tickets de vaccination</li>
-        <li>✔ Frais d’hospitalisation</li>
-      </ul>
-    </div>
-
-    <!-- HÔPITAL -->
-    <div class="card section-zoom animated-card">
-      <img src="assets/hopital.jpeg" class="card-top-img" alt="Hôpital">
-      <h2>Hôpital</h2>
-      <ul>
-        <li>✔ Consultation en urgence gratuite</li>
-        <li>✔ Consultation gratuite pour cas référés</li>
-      </ul>
-    </div>
-
-  </div>
-
 </div>

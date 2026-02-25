@@ -14,49 +14,51 @@
            alt="Logo Agence" />
     </div>
 
-    <!-- Carrousel -->
-    <div class="relative flex items-center justify-center
-                h-14 sm:h-16 md:h-20
-                overflow-hidden rounded-lg shadow bg-white
-                w-full md:w-auto max-w-full md:max-w-[700px]
-                mx-auto">
+<!-- Carrousel -->
+<div class="relative flex items-center justify-center
+            h-14 sm:h-16 md:h-20
+            overflow-hidden rounded-lg shadow bg-white
+            w-full md:w-auto max-w-full md:max-w-[700px]
+            mx-auto">
 
-      <a [href]="bannerLinks[bannerIndex]" target="_blank" class="block h-full">
-        <img
-          [src]="bannerImages[bannerIndex]"
-          class="h-full w-auto object-contain transition-opacity duration-500 mx-1"
-          [style.opacity]="imageOpacity"
-          alt="Offres CSU">
-      </a>
-<button (click)="previousBanner()"
-  class="absolute left-[1px] md:left-1 top-1/2 -translate-y-1/2
-         w-32 h-32 md:w-12 md:h-12
-         flex items-center justify-start md:justify-center
-         md:pl-0
-         text-7xl text-green-600
-         md:hover:text-white md:hover:bg-green-600
-         rounded-full transition">
-  ‹
-</button>
+  <a [href]="bannerLinks[bannerIndex]" target="_blank" class="block h-full">
+    <img
+      [src]="bannerImages[bannerIndex]"
+      class="h-full w-auto object-contain transition-opacity duration-500 mx-1"
+      [style.opacity]="imageOpacity"
+      alt="Offres CSU">
+  </a>
 
-<button (click)="nextBanner()"
-  class="absolute right-[1px] md:right-1 top-1/2 -translate-y-1/2
-         w-32 h-32 md:w-12 md:h-12
-         flex items-center justify-end md:justify-center
-         md:pr-0
-         text-7xl text-green-600
-         md:hover:text-white md:hover:bg-green-600
-         rounded-full transition">
-  ›
-</button>
+  <button (click)="previousBanner()"
+    class="absolute left-[1px] md:left-1 top-1/2 -translate-y-1/2 -translate-y-[calc(50%+10px)]
+           w-32 h-32 md:w-12 md:h-12
+           flex items-center justify-start md:justify-center
+           md:pl-0
+           text-7xl text-green-600
+           transition">
+    ‹
+  </button>
 
-    </div>
+  <button (click)="nextBanner()"
+    class="absolute right-[1px] md:right-1 top-1/2 -translate-y-1/2 -translate-y-[calc(50%+10px)]
+           w-32 h-32 md:w-12 md:h-12
+           flex items-center justify-end md:justify-center
+           md:pr-0
+           text-7xl text-green-600
+           transition">
+    ›
+  </button>
+
+</div>
 
 <!-- Zone RSX -->
-<div class="relative flex items-center ml-auto shrink-0">
+<div class="relative flex items-center ml-auto shrink-0"
+     (mouseenter)="onMouseEnter()"
+     (mouseleave)="onMouseLeave()">
 
   <!-- Bouton @ -->
   <button
+    type="button"
     (click)="toggleSocials()"
     aria-label="Réseaux sociaux"
     class="w-9 h-9 flex items-center justify-center
@@ -66,24 +68,29 @@
     @
   </button>
 
-      <!-- Réseaux sociaux -->
-      <div *ngIf="showSocials"
-           class="absolute right-0 top-12
-                  flex items-center gap-3
-                  px-3 py-2
-                  rounded-xl bg-white shadow-lg
-                  z-50">
+  <!-- Réseaux sociaux -->
+  <div
+    class="absolute right-0 top-12
+           flex items-center gap-3
+           px-3 py-2
+           rounded-xl bg-white shadow-lg
+           z-50
+           transition-all duration-500 ease-in-out"
+    [class.opacity-100]="isVisible"
+    [class.visible]="isVisible"
+    [class.opacity-0]="!isVisible"
+    [class.invisible]="!isVisible">
 
-        <!-- Facebook -->
-        <a href="https://facebook.com/CouvertureSanitaitrUniverselle"
-           class="w-6 h-6 rotate-45 bg-blue-600 rounded-lg flex items-center justify-center">
-          <svg viewBox="0 0 320 512" class="w-3.5 h-3.5 fill-white -rotate-45">
-            <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 
-            12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 
-            225.36 0c-73.22 0-121.36 44.38-121.36 
-            124.72v70.62H22.89V288h81.11v224h100.2V288z"/>
-          </svg>
-        </a>
+    <!-- Facebook -->
+    <a href="https://facebook.com/CouvertureSanitaitrUniverselle"
+       class="w-6 h-6 rotate-45 bg-blue-600 rounded-lg flex items-center justify-center hover:scale-110 transition">
+      <svg viewBox="0 0 320 512" class="w-3.5 h-3.5 fill-white -rotate-45">
+        <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 
+        12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 
+        225.36 0c-73.22 0-121.36 44.38-121.36 
+        124.72v70.62H22.89V288h81.11v224h100.2V288z"/>
+      </svg>
+    </a>
 
         <!-- YouTube -->
         <a href="https://youtube.com/@sen_csu"
@@ -289,7 +296,7 @@
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToPNBSF()">Bénéficiaires PNBSF</button></li>
             <li><button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToCEC()">Carte d'Égalité des chances</button></li>
             <li>
-              <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block w-full">
+              <a (click)="goToMaintenance()" target="_blank" class="block w-full"> <!-- href="https://sunucsu.sn/pharmacies" -->
                 <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white">Nos pharmacies partenaires</button>
               </a>
             </li>

@@ -1,58 +1,83 @@
-<div class="max-w-6xl mx-auto mt-5">
-
-  <div class="grid md:grid-cols-3 gap-6">
-
-    <!-- Carte 1 -->
-    <div 
-      (click)="showContent('poste')"
-      class="bg-white border rounded-2xl shadow transition cursor-pointer overflow-hidden"
-      [ngClass]="{
-        'border-green-600 shadow-green-300 shadow-md': selectedKey === 'poste'
-      }"
-    >
-      <div class="p-5">
-        <img src="assets/postetouba.jfif" class="w-full h-40 object-cover rounded-xl mb-4">
-        <h2 class="text-lg font-bold">CSU</h2>
-      </div>
-    </div>
-
-    <!-- Carte 2 -->
-    <div 
-      (click)="showContent('eleve')"
-      class="bg-white border rounded-2xl shadow transition cursor-pointer overflow-hidden"
-      [ngClass]="{
-        'border-green-600 shadow-green-300 shadow-md': selectedKey === 'eleve'
-      }"
-    >
-      <div class="p-5">
-        <img src="assets/eleve.png" class="w-full h-40 object-cover rounded-xl mb-4">
-        <h2 class="text-lg font-bold">CSU Élève</h2>
-      </div>
-    </div>
-
-    <!-- Carte 3 -->
-    <div 
-      (click)="showContent('daara')"
-      class="bg-white border rounded-2xl shadow transition cursor-pointer overflow-hidden"
-      [ngClass]="{
-        'border-green-600 shadow-green-300 shadow-md': selectedKey === 'daara'
-      }"
-    >
-      <div class="p-5">
-        <img src="assets/daara.png" class="w-full h-40 object-cover rounded-xl mb-4">
-        <h2 class="text-lg font-bold">CSU Daara</h2>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Panneau bas -->
-  <div *ngIf="selected"
-       id="info-panel"
-       class="bg-white border rounded-2xl shadow mt-10 p-8 text-gray-700 space-y-4">
+<div class="w-full max-w-screen-2xl mx-auto mt-8 mb-16 px-4 xs:px-5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
+  <!-- Carte principale "page blanche" -->
+  <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl md:shadow-2xl border border-gray-100/80 overflow-hidden">
+    
+    <!-- Padding interne qui s'adapte -->
+    <div class="p-5 xs:p-6 sm:p-8 md:p-9 lg:p-10 xl:p-12">
       
-    <div [innerHTML]="selected"></div>
-  
-  </div>
+      <!-- Grille responsive : 1 → 2 → 3 colonnes -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-7 lg:gap-8">
+        
+        <!-- Carte 1 -->
+        <div
+          (click)="showContent('poste')"
+          class="group bg-white border border-gray-200 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-green-500/60 hover:-translate-y-1"
+          [ngClass]="{
+            'border-green-600 shadow-green-300 shadow-md -translate-y-1': selectedKey === 'poste'
+          }"
+        >
+          <div class="p-4 sm:p-5">
+            <img 
+              src="assets/postetouba.jfif" 
+              alt="CSU" 
+              class="w-full aspect-[4/3] object-cover rounded-xl mb-4 sm:mb-5"
+            >
+            <h2 class="text-lg sm:text-xl font-bold text-center text-gray-800 group-hover:text-green-700 transition-colors">
+              CSU
+            </h2>
+          </div>
+        </div>
 
+        <!-- Carte 2 -->
+        <div
+          (click)="showContent('eleve')"
+          class="group bg-white border border-gray-200 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-green-500/60 hover:-translate-y-1"
+          [ngClass]="{
+            'border-green-600 shadow-green-300 shadow-md -translate-y-1': selectedKey === 'eleve'
+          }"
+        >
+          <div class="p-4 sm:p-5">
+            <img 
+              src="assets/eleve.png" 
+              alt="CSU Élève" 
+              class="w-full aspect-[4/3] object-cover rounded-xl mb-4 sm:mb-5"
+            >
+            <h2 class="text-lg sm:text-xl font-bold text-center text-gray-800 group-hover:text-green-700 transition-colors">
+              CSU Élève
+            </h2>
+          </div>
+        </div>
+
+        <!-- Carte 3 -->
+        <div
+          (click)="showContent('daara')"
+          class="group bg-white border border-gray-200 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-green-500/60 hover:-translate-y-1"
+          [ngClass]="{
+            'border-green-600 shadow-green-300 shadow-md -translate-y-1': selectedKey === 'daara'
+          }"
+        >
+          <div class="p-4 sm:p-5">
+            <img 
+              src="assets/daara.png" 
+              alt="CSU Daara" 
+              class="w-full aspect-[4/3] object-cover rounded-xl mb-4 sm:mb-5"
+            >
+            <h2 class="text-lg sm:text-xl font-bold text-center text-gray-800 group-hover:text-green-700 transition-colors">
+              CSU Daara
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panneau d'information -->
+      <div 
+        *ngIf="selected"
+        id="info-panel"
+        class="mt-10 sm:mt-12 lg:mt-14 bg-gradient-to-b from-white to-gray-50/50 border border-gray-200 rounded-2xl shadow-inner p-6 sm:p-8 lg:p-10 text-gray-700 space-y-5 prose prose-sm sm:prose-base max-w-none"
+      >
+        <div [innerHTML]="selected"></div>
+      </div>
+      
+    </div>
+  </div>
 </div>

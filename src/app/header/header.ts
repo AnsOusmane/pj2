@@ -35,10 +35,10 @@ export class HeaderComponent implements AfterViewInit {
   ];
 
   bannerLinks: string[] = [
-    'https://sunucsu.sn',
-    'https://sunucsu.sn/pharmacies',
-    'https://sunucsu.sn/actualite-3',
-    'https://sunucsu.sn/',
+    // 'https://sunucsu.sn',
+    // 'https://sunucsu.sn/pharmacies',
+    //'https://sunucsu.sn/',
+    //'https://sunucsu.sn/',
   ];
 
   bannerIndex: number = 0;
@@ -196,10 +196,36 @@ goToCSUDaara() {
   goToMaintenance() {
     this.router.navigate(['/maintenance']);
   }
-showSocials = false;
+isVisible = false;
+isPinned = false;
+private hoverTimeout: any = null;
 
 toggleSocials() {
-  this.showSocials = !this.showSocials;
+  this.isPinned = !this.isPinned;
+  this.isVisible = this.isPinned;
+
+  if (this.hoverTimeout) {
+    clearTimeout(this.hoverTimeout);
+    this.hoverTimeout = null;
+  }
 }
 
+onMouseEnter() {
+  if (this.hoverTimeout) {
+    clearTimeout(this.hoverTimeout);
+    this.hoverTimeout = null;
+  }
+
+  if (!this.isPinned) {
+    this.isVisible = true;
+  }
+}
+
+onMouseLeave() {
+  if (!this.isPinned) {
+    this.hoverTimeout = setTimeout(() => {
+      this.isVisible = false;
+    }, 2000); // 3 secondes réelles
+  }
+}
 }

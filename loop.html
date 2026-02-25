@@ -204,7 +204,7 @@
         <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white">Bénéficiaires PNBSF</button></li>
         <li><button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white">Carte Egalité des chances</button></li>
         <li>
-          <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block w-full">
+          <a (click)="goToMaintenance()" target="_blank" class="block w-full"> <!-- href="https://sunucsu.sn/pharmacies" -->
             <button class="w-full text-left px-4 py-2 hover:bg-green-500 hover:text-white">Nos pharmacies partenaires</button>
           </a>
         </li>
@@ -244,16 +244,15 @@
       </ul>
     </div>
   </div>
-
   <!-- Carrière -->
     <button (click)="goToCarriere()" class="text-green-700 hover:text-green-900 transition pb-1 border-b-4 border-transparent hover:border-green-500 hover:text-white0">
     Carrière
     </button> 
 
   <!-- Bouton Nous soutenir -->
-<a href="https://sunucsu.sn/initiatives"
+<a
   class="border-2 border-yellow-500 text-yellow-500 font-semibold px-2.5 py-1.5 rounded-full mb-2 bg-white hover:bg-yellow-400 hover:text-white transition text-[18px]"
->
+> <!-- href="https://sunucsu.sn/initiatives" -->
   Nous soutenir
 </a>
 </div>

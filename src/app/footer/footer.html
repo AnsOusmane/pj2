@@ -45,9 +45,9 @@
               <li><button (click)="goToAppelsOffre()" class="hover:underline">Appels d'offres</button></li>
 
               <!-- Publications regroupe tout -->
-              <li>
+              <!-- <li>
                 <button class="hover:underline" (click)="goToRapports()">Publications</button>
-              </li>
+              </li> -->
 
           </ul>
       </div>
@@ -69,9 +69,9 @@
       <div>
           <h3 class="font-semibold mb-3">ESPACE MEDIA</h3>
           <ul class="space-y-1 text-white/80">
-              <li><button  class="hover:underline">Communiqués de presse</button></li> <!-- (click)= "goToComuPresse()"-->
-              <li><button  class="hover:underline">Dossiers médias</button></li> <!-- (click)="goToMedia()" -->
-              <li><button  class="hover:underline">Banque d'image</button></li>                <!-- (click)="goToBankImg()"-->
+              <li><button  class="hover:underline">Communiqués de presse(en édition)</button></li> <!-- (click)= "goToComuPresse()"-->
+              <li><button  class="hover:underline">Dossiers médias(en édition)</button></li> <!-- (click)="goToMedia()" -->
+              <li><button  class="hover:underline">Banque d'image(en édition)</button></li>                <!-- (click)="goToBankImg()"-->
           </ul>
       </div>
 
@@ -80,7 +80,7 @@
           <div>
               <h3 class="font-semibold mb-3">ASSISTANCE ET CONTACT</h3>
               <ul class="space-y-1 text-white/80">
-                  <li><button  class="hover:underline">Formulaire de contact</button></li> <!-- (click)="goToContact()" -->
+                  <li><button (click)="goToContact()" class="hover:underline">Formulaire de contact</button></li> <!--  -->
                   <li><button (click)="goToSr()" class="hover:underline">Localiser une agence</button></li> <!-- -->
                   <li>
                  <button target="_blank" class="hover:underline"> 
