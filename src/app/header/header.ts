@@ -1,9 +1,7 @@
-
 import { Component, EventEmitter, Output, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
-
 
 @Component({
   selector: 'app-header',
@@ -23,10 +21,8 @@ export class HeaderComponent implements AfterViewInit {
   @Output() openDonation = new EventEmitter<void>();
   @Output() openOrganigramme = new EventEmitter<void>();
   @Output() openMissionsvision = new EventEmitter<void>();
-
   @Output() goHome = new EventEmitter<void>();
 
-  
   bannerImages: string[] = [
     'assets/pub/1.png',
     'assets/pub/2.png',
@@ -34,12 +30,7 @@ export class HeaderComponent implements AfterViewInit {
     'assets/pub/4.png',
   ];
 
-  bannerLinks: string[] = [
-    // 'https://sunucsu.sn',
-    // 'https://sunucsu.sn/pharmacies',
-    //'https://sunucsu.sn/',
-    //'https://sunucsu.sn/',
-  ];
+  bannerLinks: string[] = [];
 
   bannerIndex: number = 0;
   imageOpacity: number = 1;
@@ -62,19 +53,18 @@ export class HeaderComponent implements AfterViewInit {
     private router: Router
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-      this.router.events.subscribe(event => {
-    if (event instanceof NavigationEnd) {
-      this.closeAllMenus();
-    }
-  });
-
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.closeAllMenus();
+      }
+    });
   }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  // ✅ PUB
+  // PUB
   nextBanner() {
     this.imageOpacity = 0;
     setTimeout(() => {
@@ -97,7 +87,7 @@ export class HeaderComponent implements AfterViewInit {
     }, 18000);
   }
 
-  // ✅ Partenaires
+  // Partenaires
   nextPartner() {
     this.partnerOpacity = 0;
     setTimeout(() => {
@@ -118,38 +108,71 @@ export class HeaderComponent implements AfterViewInit {
     this.startPartnerAuto();
   }
 
-mobileDropdown = {
-  sen: false,
+  // ────────────────────────────────────────────────
+  //  GESTION DES MENUS MOBILES (seule partie modifiée)
+  // ────────────────────────────────────────────────
+
+  mobileDropdown = {
+    sen: false,
+    publications: false,     // ← AJOUTÉ pour le sous-menu Publications
     assurance: false,
-  assistance: false,
-  media: false,
-  contact: false
-};
+    assistance: false,
+    media: false,
+    contact: false
+  };
 
-toggleMobileDropdown(menu: keyof typeof this.mobileDropdown) {
-  const isAlreadyOpen = this.mobileDropdown[menu];
+  toggleMobileDropdown(menu: 'sen' | 'publications' | 'assurance' | 'assistance' | 'media' | 'contact') {
+    const wasOpen = this.mobileDropdown[menu];
 
-  // On ferme tous les menus
-  Object.keys(this.mobileDropdown).forEach(key => {
-    this.mobileDropdown[key as keyof typeof this.mobileDropdown] = false;
-  });
+    if (menu === 'publications') {
+      // On toggle seulement le sous-menu (SEN doit rester ouvert)
+      this.mobileDropdown.publications = !wasOpen;
+    }
+    else if (menu === 'sen') {
+      // Quand on touche SEN → on toggle SEN
+      this.mobileDropdown.sen = !wasOpen;
+      // Si on ferme SEN, on ferme aussi Publications
+      if (!this.mobileDropdown.sen) {
+        this.mobileDropdown.publications = false;
+      }
+    }
+    else {
+      // Pour tous les autres menus de niveau 1 → fermeture complète
+      Object.keys(this.mobileDropdown).forEach(key => {
+        this.mobileDropdown[key as keyof typeof this.mobileDropdown] = false;
+      });
+      this.mobileDropdown[menu] = true;
+    }
+  }
 
-  this.mobileDropdown[menu] = !isAlreadyOpen;
-}
+  closeMobileMenu() {
+    this.isMenuOpen = false;
+    this.mobileDropdown = {
+      sen: false,
+      publications: false,
+      assurance: false,
+      assistance: false,
+      media: false,
+      contact: false
+    };
+  }
 
-closeMobileMenu() {
-  this.isMenuOpen = false;
-  this.mobileDropdown = { sen: false,   assurance: false, assistance: false, media: false, contact: false };
-}
-closeAllMenus() {
-  this.isMenuOpen = false;
+  closeAllMenus() {
+    this.isMenuOpen = false;
+    this.mobileDropdown = {
+      sen: false,
+      publications: false,
+      assurance: false,
+      assistance: false,
+      media: false,
+      contact: false
+    };
+  }
 
-  Object.keys(this.mobileDropdown).forEach(key => {
-    this.mobileDropdown[key as keyof typeof this.mobileDropdown] = false;
-  });
-}
-  
-  // ✅ Navigation
+  // ────────────────────────────────────────────────
+  //  Navigation (inchangée)
+  // ────────────────────────────────────────────────
+
   onAboutClick() { this.openAboutTimeline.emit(); }
   showOrganigrammeClick() { this.openOrganigramme.emit(); }
   onMissionsvisionClick() { this.openMissionsvision.emit(); }
@@ -176,56 +199,51 @@ closeAllMenus() {
   goToCEC() { this.router.navigate(['/cec']); }
   goToPNBSF() { this.router.navigate(['/pnbsf']); }
   goToReclamation() { this.router.navigate(['/reclamation-form']); }
+
   goToCSU() {
-  this.router.navigate(['/assurance-maladie'], {
-    queryParams: { type: 'poste' }
-  });
-}
+    this.router.navigate(['/assurance-maladie'], { queryParams: { type: 'poste' } });
+  }
 
-goToCSUEleve() {
-  this.router.navigate(['/assurance-maladie'], {
-    queryParams: { type: 'eleve' }
-  });
-}
+  goToCSUEleve() {
+    this.router.navigate(['/assurance-maladie'], { queryParams: { type: 'eleve' } });
+  }
 
-goToCSUDaara() {
-  this.router.navigate(['/assurance-maladie'], {
-    queryParams: { type: 'daara' }
-  });
-}
+  goToCSUDaara() {
+    this.router.navigate(['/assurance-maladie'], { queryParams: { type: 'daara' } });
+  }
+
   goToMaintenance() {
     this.router.navigate(['/maintenance']);
   }
-isVisible = false;
-isPinned = false;
-private hoverTimeout: any = null;
 
-toggleSocials() {
-  this.isPinned = !this.isPinned;
-  this.isVisible = this.isPinned;
+  isVisible = false;
+  isPinned = false;
+  private hoverTimeout: any = null;
 
-  if (this.hoverTimeout) {
-    clearTimeout(this.hoverTimeout);
-    this.hoverTimeout = null;
-  }
-}
-
-onMouseEnter() {
-  if (this.hoverTimeout) {
-    clearTimeout(this.hoverTimeout);
-    this.hoverTimeout = null;
+  toggleSocials() {
+    this.isPinned = !this.isPinned;
+    this.isVisible = this.isPinned;
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+      this.hoverTimeout = null;
+    }
   }
 
-  if (!this.isPinned) {
-    this.isVisible = true;
+  onMouseEnter() {
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+      this.hoverTimeout = null;
+    }
+    if (!this.isPinned) {
+      this.isVisible = true;
+    }
   }
-}
 
-onMouseLeave() {
-  if (!this.isPinned) {
-    this.hoverTimeout = setTimeout(() => {
-      this.isVisible = false;
-    }, 2000); // 3 secondes réelles
+  onMouseLeave() {
+    if (!this.isPinned) {
+      this.hoverTimeout = setTimeout(() => {
+        this.isVisible = false;
+      }, 2000);
+    }
   }
-}
 }

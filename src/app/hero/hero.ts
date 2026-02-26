@@ -239,4 +239,30 @@ export class HeroComponent implements OnInit {
   goToComuPresse() {
     console.log("Lien vers communiqué de presse");
   }
+
+// Ajoute ces propriétés (si pas déjà présentes)
+showVideoMessage = false;
+private hideTimer: any = null;
+
+// Ajoute cette méthode (remplace l'ancienne si différente)
+showVideoUnavailable(show: boolean = true) {
+  if (!show) {
+    this.showVideoMessage = false;
+    return;
+  }
+
+  // Afficher
+  this.showVideoMessage = true;
+
+  // Nettoyer tout timer précédent
+  if (this.hideTimer) {
+    clearTimeout(this.hideTimer);
+  }
+
+  // Cacher automatiquement après 2600 ms
+  this.hideTimer = setTimeout(() => {
+    this.showVideoMessage = false;
+    // this.cdr.detectChanges(); // décommente si tu utilises ChangeDetectionStrategy.OnPush
+  }, 2600);
+}
 }
