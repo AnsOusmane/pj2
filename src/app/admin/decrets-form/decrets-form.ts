@@ -37,6 +37,8 @@ export class DecretsFormComponent {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
       const file = input.files[0];
+      console.log('Fichier sélectionné dans onFileChange :', file.name, 'taille:', file.size, 'type:', file.type);
+
       const allowed = ['application/pdf', 'image/jpeg', 'image/png'];
       if (!allowed.includes(file.type)) {
         this.error.set('PDF, JPG ou PNG uniquement.');
@@ -51,41 +53,60 @@ export class DecretsFormComponent {
       this.selectedFileName.set(file.name);
       this.form.get('file')?.markAsTouched();
       this.error.set(null);
+    } else {
+      console.log('Aucun fichier sélectionné dans onFileChange');
     }
   }
 
   async onSubmit(): Promise<void> {
-  if (this.form.invalid) {
-    this.form.markAllAsTouched();
-    return;
-  }
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      console.log('Formulaire invalide, champs en erreur :', this.form.errors);
+      return;
+    }
 
-  this.loading.set(true);
-  this.success.set(null);
-  this.error.set(null);
+    console.log('Début soumission - Titre :', this.form.value.title);
+    console.log('Description :', this.form.value.description);
+    console.log('Fichier avant envoi :', this.form.value.file ? this.form.value.file.name : 'AUCUN FICHIER');
 
-  // Construire FormData ici
-  const formData = new FormData();
-  formData.append('title', this.form.value.title.trim());
-  if (this.form.value.description?.trim()) {
-    formData.append('description', this.form.value.description.trim());
-  }
-  formData.append('file', this.form.value.file);
+    this.loading.set(true);
+    this.success.set(null);
+    this.error.set(null);
 
-  try {
-    await this.decretsService.addDecret(formData).toPromise();
-    this.success.set('Décret ajouté avec succès !');
-    this.form.reset();
-    this.selectedFileName.set(null);
-    const fileInput = document.getElementById('file') as HTMLInputElement;
-    if (fileInput) fileInput.value = '';
-  } catch (err: any) {
-    this.error.set(err.message || 'Erreur lors de l’ajout');
-    console.error(err);
-  } finally {
-    this.loading.set(false);
+    const formData = new FormData();
+    formData.append('title', this.form.value.title.trim());
+    if (this.form.value.description?.trim()) {
+      formData.append('description', this.form.value.description.trim());
+    }
+    if (this.form.value.file) {
+      formData.append('file', this.form.value.file);
+    } else {
+      this.error.set('Aucun fichier sélectionné');
+      this.loading.set(false);
+      console.log('Rejet : aucun fichier');
+      return;
+    }
+
+    try {
+      const response = await this.decretsService.addDecret(formData).toPromise();
+      console.log('Succès POST :', response);
+      this.success.set('Décret ajouté avec succès !');
+      this.form.reset();
+      this.selectedFileName.set(null);
+      const fileInput = document.getElementById('file') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+    } catch (err: any) {
+      console.error('Erreur complète ajout décret :', {
+        status: err.status,
+        statusText: err.statusText,
+        message: err.message,
+        errorBody: err.error
+      });
+      this.error.set(err.message || 'Erreur lors de l’ajout');
+    } finally {
+      this.loading.set(false);
+    }
   }
-}
 
   isInvalid(field: string): boolean {
     const control = this.form.get(field);
