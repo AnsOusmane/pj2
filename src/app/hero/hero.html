@@ -436,7 +436,7 @@
               4xl:h-[720px]
               4xl:rounded-[60px]">
 
-    <!-- Cadre extérieur -->
+    <!-- Cadre extérieur (bordure téléphone) -->
     <div class="absolute inset-0
                 rounded-[40px]
                 lg:rounded-[50px]
@@ -444,39 +444,33 @@
                 border-4 border-gray-800
                 z-20 pointer-events-none"></div>
 
-    <!-- Notch -->
+    <!-- Notch / Dynamic Island -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 
                 w-28 lg:w-32 4xl:w-40 
                 h-4 lg:h-6 4xl:h-7 
                 bg-black rounded-b-2xl lg:rounded-b-3xl z-30"></div>
 
-    <!-- Zone cliquable + overlay -->
-    <div class="group relative w-full h-full cursor-pointer"
-         (click)="showVideoUnavailable(true)">
+    <!-- Vidéo player -->
+    <div class="group relative w-full h-full cursor-pointer bg-black"
+         (click)="toggleVideo()">
+      
+      <video
+        #videoPlayer
+        class="w-full h-full object-cover rounded-[36px] lg:rounded-[45px] 4xl:rounded-[55px]"
+        poster="assets/tuto.png"
+        preload="metadata"
+        playsinline
+        [muted]="false"
+        [controls]="true">
+        <source src="assets/videos/comment_s_inscrire.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture de vidéos.
+      </video>
 
-      <!-- Image de fond (toujours visible) -->
-      <img 
-        src="assets/tuto.png" 
-        alt="Tutoriel inscription" 
-        class="w-full h-full object-cover 
-               rounded-[36px] 
-               lg:rounded-[45px] 
-               4xl:rounded-[55px]
-               transition-opacity duration-300
-               group-hover:opacity-80">
-
-      <!-- Overlay message (apparition au clic) -->
-      <div *ngIf="showVideoMessage"
-           class="absolute inset-0 bg-black/85 flex items-center justify-center
-                  rounded-[36px] lg:rounded-[45px] 4xl:rounded-[55px]
-                  z-10 transition-opacity duration-300 opacity-100">
-        <div class="text-center px-6">
-          <p class="text-white text-xl sm:text-2xl font-semibold">
-            Vidéo non disponible
-          </p>
-          <p class="text-gray-300 text-sm mt-2">
-            (disponible pour bientôt)
-          </p>
+      <!-- Overlay play/pause léger (optionnel – disparaît après quelques secondes) -->
+      <div *ngIf="showPlayOverlay"
+           class="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity duration-500 z-10 pointer-events-none">
+        <div class="text-white text-6xl sm:text-7xl opacity-80">
+          {{ isPlaying ? '❚❚' : '▶' }}
         </div>
       </div>
 
