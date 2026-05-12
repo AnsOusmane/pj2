@@ -1,7 +1,12 @@
-// src/app/media/media.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { environment } from '../../environments/environment';
+
+import { NewslettersService } from '../services/newsletters.service';
+import { VideosService } from '../services/videos.service';
+import { TestimonialsService } from '../services/testimonials.service';
+import { ActualitesService } from '../services/actualites.service';
 
 @Component({
   selector: 'app-media',
@@ -10,58 +15,274 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   templateUrl: './media.html',
   styleUrls: ['./media.css']
 })
-export class MediaComponent {
-  activeTab = 'newsletters';
-  selectedVideo: { embedUrl: SafeResourceUrl; title: string; description: string } | null = null;
+export class MediaComponent implements OnInit {
 
-  newsletters = [
-    { title: "CSU Info - Édition #15", date: "10 Novembre 2025", excerpt: "Bilan des inscriptions nationales, nouveaux centres partenaires...", link: "#" },
-    { title: "CSU Info - Édition #14", date: "15 Octobre 2025", excerpt: "Guide d'inscription en ligne : étape par étape.", link: "#" },
-    { title: "CSU Info - Édition #13", date: "20 Septembre 2025", excerpt: "Témoignages de bénéficiaires dans les régions rurales.", link: "#" },
-  ];
+  activeTab = 'actualites';
 
- videos = [
-  {
-    title: "CSU - Inscription en ligne (Tutoriel complet)",
-    thumbnail: "https://img.youtube.com/vi/2ZIXBCfPwRQ/maxresdefault.jpg",
-    duration: "4:01",
-    embedUrl: "https://www.youtube.com/watch?v=2ZIXBCfPwRQ",
-    description: "Guide complet pour s'inscrire à la Couverture Santé Universelle."
-  },
-  {
-    title: "Comment fonctionne la couverture santé universelle ?",
-    thumbnail: "https://img.youtube.com/vi/Xo2-K_Cj0w0/maxresdefault.jpg",
-    duration: "6:22",
-    embedUrl: "https://www.youtube.com/watch?v=Xo2-K_Cj0w0",
-    description: "Explication détaillée du système de CSU et de ses avantages."
-  },
-  {
-    title: "CSU : Procédure d’enrôlement pas à pas",
-    thumbnail: "https://img.youtube.com/vi/8O0JeT-zVx8/maxresdefault.jpg",
-    duration: "3:55",
-    embedUrl: "https://www.youtube.com/watch?v=8O0JeT-zVx8",
-    description: "Un tutoriel clair sur le processus d'enrôlement."
+  selectedVideo: any = null;
+  selectedActualite: any = null; // ✅ MODAL ACTUALITE
+
+  newsletters: any[] = [];
+  videos: any[] = [];
+  temoignages: any[] = [];
+  actualites: any[] = [];
+
+  isLoadingNewsletters = false;
+  isLoadingVideos = false;
+  isLoadingTestimonials = false;
+  isLoadingActualites = false;
+
+  newslettersError: string | null = null;
+  videosError: string | null = null;
+  testimonialsError: string | null = null;
+  actualitesError: string | null = null;
+
+  constructor(
+    private sanitizer: DomSanitizer,
+    private newslettersService: NewslettersService,
+    private videosService: VideosService,
+    private testimonialsService: TestimonialsService,
+    private actualitesService: ActualitesService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadNewsletters();
+    this.loadVideos();
+    this.loadTestimonials();
+    this.loadActualites();
   }
-];
 
+  // =====================================================
+  // HELPERS
+  // =====================================================
 
-  temoignages = [
-    { name: "Fatou Diop", location: "Dakar", photo: "https://randomuser.me/api/portraits/women/32.jpg", quote: "Grâce à la CSU, j'ai pu faire soigner mon fils sans payer un centime.", date: "5 Nov. 2025" },
-    { name: "Moustapha Ndiaye", location: "Saint-Louis", photo: "https://randomuser.me/api/portraits/men/45.jpg", quote: "Avant, je reportais mes consultations. Aujourd'hui, je suis suivi.", date: "28 Oct. 2025" },
-    { name: "Aminata Sow", location: "Kaolack", photo: "https://randomuser.me/api/portraits/women/68.jpg", quote: "La CSU m'a sauvée pendant ma grossesse.", date: "12 Oct. 2025" },
-  ];
+  media(path: string | null | undefined): string {
+    if (!path) return 'assets/studio.png';
 
-  constructor(private sanitizer: DomSanitizer) {}
+    if (path.startsWith('http')) return path;
 
-  openVideoModal(video: any) {
+    return `${environment.mediaBaseUrl}/${path}`;
+  }
+
+  fileNameOnly(path: string | null | undefined): string {
+    if (!path) return '';
+    return path.split('/').pop() || '';
+  }
+
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).src = 'assets/studio.png';
+  }
+
+  // =====================================================
+  // NEWSLETTERS
+  // =====================================================
+
+  loadNewsletters(): void {
+
+    this.isLoadingNewsletters = true;
+    this.newslettersError = null;
+
+    this.newslettersService.getAllNewsletters().subscribe({
+
+      next: (data: any[]) => {
+
+        this.newsletters = data.map((item) => {
+
+          const cover =
+            item.cover_url ||
+            item.cover ||
+            item.image ||
+            item.image_url ||
+            item.photo;
+
+          const file =
+            item.file ||
+            item.pdf ||
+            item.document ||
+            item.file_url;
+
+          return {
+            ...item,
+
+            title: item.title || item.titre || 'Newsletter',
+            excerpt: item.excerpt || item.description || item.content || '',
+            date: item.date || item.created_at || item.published_at,
+
+            cover: cover
+              ? this.media(`uploads/newsletters/${this.fileNameOnly(cover)}`)
+              : 'assets/studio.png',
+
+            file_url: file
+              ? this.media(`uploads/newsletters/${this.fileNameOnly(file)}`)
+              : null
+          };
+        });
+
+        this.isLoadingNewsletters = false;
+      },
+
+      error: () => {
+        this.newslettersError = 'Impossible de charger les newsletters.';
+        this.isLoadingNewsletters = false;
+      }
+    });
+  }
+
+  openNewsletter(n: any): void {
+    if (n.file_url) window.open(n.file_url, '_blank');
+    else if (n.link) window.open(n.link, '_blank');
+  }
+
+  // =====================================================
+  // VIDEOS
+  // =====================================================
+
+  loadVideos(): void {
+
+    this.isLoadingVideos = true;
+
+    this.videosService.getAllVideos().subscribe({
+
+      next: (data: any[]) => {
+
+        this.videos = data.map((v) => ({
+
+          ...v,
+
+          thumbnail_url: v.thumbnail
+            ? this.media(`uploads/thumbnails/${v.thumbnail}`)
+            : 'assets/studio.png',
+
+          video_url: v.video
+            ? this.media(`uploads/videos/${v.video}`)
+            : null
+        }));
+
+        this.isLoadingVideos = false;
+      },
+
+      error: () => {
+        this.videosError = 'Impossible de charger les vidéos.';
+        this.isLoadingVideos = false;
+      }
+    });
+  }
+
+  openVideoModal(video: any): void {
+
+    let embedUrl: SafeResourceUrl | null = null;
+
+    if (video.embed_url) {
+      embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(video.embed_url);
+    }
+
     this.selectedVideo = {
-      embedUrl: this.sanitizer.bypassSecurityTrustResourceUrl(video.embedUrl),
       title: video.title,
-      description: video.description
+      description: video.description,
+      embed_url: embedUrl,
+      video_url: video.video_url
     };
   }
 
-  closeModal() {
+  closeModal(): void {
     this.selectedVideo = null;
   }
+
+  // =====================================================
+  // TEMOIGNAGES
+  // =====================================================
+
+  loadTestimonials(): void {
+
+    this.isLoadingTestimonials = true;
+
+    this.testimonialsService.getAllTestimonials().subscribe({
+
+      next: (data: any[]) => {
+
+        this.temoignages = data.map((item) => {
+
+          const photo =
+            item.photo_url ||
+            item.photo ||
+            item.image ||
+            item.avatar;
+
+          return {
+            ...item,
+
+            name: item.name || item.nom || 'Utilisateur',
+            quote: item.quote || item.message || item.content || '',
+            location: item.location || item.region || '',
+
+            photo_url: photo
+              ? this.media(`uploads/testimonials/${this.fileNameOnly(photo)}`)
+              : 'assets/avatar.png'
+          };
+        });
+
+        this.isLoadingTestimonials = false;
+      },
+
+      error: () => {
+        this.testimonialsError = 'Impossible de charger les témoignages.';
+        this.isLoadingTestimonials = false;
+      }
+    });
+  }
+
+  // =====================================================
+  // ACTUALITES
+  // =====================================================
+
+  loadActualites(): void {
+
+    this.isLoadingActualites = true;
+
+    this.actualitesService.getAllActualites().subscribe({
+
+      next: (data: any[]) => {
+
+        this.actualites = data.map((item) => {
+
+          const image =
+            item.image_url ||
+            item.image ||
+            item.photo ||
+            item.cover;
+
+          return {
+            ...item,
+
+            title: item.title || item.titre || 'Actualité',
+            content: item.content || item.description || '',
+            published_at: item.published_at || item.date || item.created_at,
+
+            image_url: image
+              ? this.media(`uploads/actualites/${this.fileNameOnly(image)}`)
+              : 'assets/studio.png'
+          };
+        });
+
+        this.isLoadingActualites = false;
+      },
+
+      error: () => {
+        this.actualitesError = 'Impossible de charger les actualités.';
+        this.isLoadingActualites = false;
+      }
+    });
+  }
+
+  // =====================================================
+  // 🔵 MODAL ACTUALITE
+  // =====================================================
+
+  openActualite(actualite: any): void {
+    this.selectedActualite = actualite;
+  }
+
+closeActualite(): void {
+  this.selectedActualite = null;
+}
 }

@@ -1,115 +1,104 @@
 import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
   FormBuilder,
   FormGroup,
   Validators
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { DecretsService } from '../../services/decrets.service';
+import { DecretsService } from 'app/services/decrets.service';
 
 @Component({
   selector: 'app-decrets-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './decrets-form.html',
-  styleUrls: ['./decrets-form.css'] // optionnel
+  styleUrls: ['./decrets-form.css']
 })
-export class DecretsFormComponent {
+export class DecretsForm {
   form: FormGroup;
   success = signal<string | null>(null);
   error = signal<string | null>(null);
   loading = signal(false);
-  selectedFileName = signal<string | null>(null);
+  selectedPdf = signal<string | null>(null);
+  selectedCover = signal<string | null>(null);
 
   constructor(
     private fb: FormBuilder,
     private decretsService: DecretsService
   ) {
     this.form = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(250)]],
+      title: ['', Validators.required],
       description: [''],
-      file: [null, Validators.required]
+      file: [null, Validators.required],
+      cover: [null]
     });
   }
 
-  onFileChange(event: Event): void {
+  onPdfChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files?.length) {
-      const file = input.files[0];
-      console.log('Fichier sélectionné dans onFileChange :', file.name, 'taille:', file.size, 'type:', file.type);
-
-      const allowed = ['application/pdf', 'image/jpeg', 'image/png'];
-      if (!allowed.includes(file.type)) {
-        this.error.set('PDF, JPG ou PNG uniquement.');
-        return;
-      }
-      if (file.size > 10 * 1024 * 1024) {
-        this.error.set('Fichier trop volumineux (max 10 Mo).');
-        return;
-      }
-
-      this.form.patchValue({ file });
-      this.selectedFileName.set(file.name);
-      this.form.get('file')?.markAsTouched();
-      this.error.set(null);
-    } else {
-      console.log('Aucun fichier sélectionné dans onFileChange');
-    }
-  }
-
-  async onSubmit(): Promise<void> {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      console.log('Formulaire invalide, champs en erreur :', this.form.errors);
+    if (!input.files || input.files.length === 0) return;
+    const file = input.files[0];
+    if (file.type !== 'application/pdf') {
+      this.error.set('Veuillez sélectionner un fichier PDF.');
       return;
     }
+    this.form.patchValue({ file });
+    this.selectedPdf.set(file.name);
+    this.error.set(null);
+  }
 
-    console.log('Début soumission - Titre :', this.form.value.title);
-    console.log('Description :', this.form.value.description);
-    console.log('Fichier avant envoi :', this.form.value.file ? this.form.value.file.name : 'AUCUN FICHIER');
+  onCoverChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+    const file = input.files[0];
+    this.form.patchValue({ cover: file });
+    this.selectedCover.set(file.name);
+  }
+
+  onSubmit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     this.loading.set(true);
     this.success.set(null);
     this.error.set(null);
 
     const formData = new FormData();
-    formData.append('title', this.form.value.title.trim());
-    if (this.form.value.description?.trim()) {
-      formData.append('description', this.form.value.description.trim());
-    }
-    if (this.form.value.file) {
-      formData.append('file', this.form.value.file);
-    } else {
-      this.error.set('Aucun fichier sélectionné');
-      this.loading.set(false);
-      console.log('Rejet : aucun fichier');
-      return;
+    formData.append('title', this.form.value.title);
+    formData.append('description', this.form.value.description || '');
+    formData.append('file', this.form.value.file);
+    if (this.form.value.cover) {
+      formData.append('cover', this.form.value.cover);
     }
 
-    try {
-      const response = await this.decretsService.addDecret(formData).toPromise();
-      console.log('Succès POST :', response);
-      this.success.set('Décret ajouté avec succès !');
-      this.form.reset();
-      this.selectedFileName.set(null);
-      const fileInput = document.getElementById('file') as HTMLInputElement;
-      if (fileInput) fileInput.value = '';
-    } catch (err: any) {
-      console.error('Erreur complète ajout décret :', {
-        status: err.status,
-        statusText: err.statusText,
-        message: err.message,
-        errorBody: err.error
-      });
-      this.error.set(err.message || 'Erreur lors de l’ajout');
-    } finally {
-      this.loading.set(false);
-    }
+    this.decretsService.addDecret(formData).subscribe({
+      next: () => {
+        this.success.set('Décret ajouté avec succès !');
+        this.loading.set(false);
+        this.resetForm();
+      },
+      error: (err) => {
+        this.loading.set(false);
+        this.error.set(err?.message || 'Erreur lors de l’ajout.');
+      }
+    });
+  }
+
+  resetForm(): void {
+    this.form.reset();
+    this.selectedPdf.set(null);
+    this.selectedCover.set(null);
+    const fileInput = document.getElementById('file') as HTMLInputElement;
+    const coverInput = document.getElementById('cover') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
+    if (coverInput) coverInput.value = '';
   }
 
   isInvalid(field: string): boolean {
     const control = this.form.get(field);
-    return !!(control?.touched && control?.invalid);
+    return !!(control && control.invalid && control.touched);
   }
 }

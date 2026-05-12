@@ -1,0 +1,137 @@
+<!-- src/app/videos/videos-form.html -->
+<div class="max-w-3xl mx-auto py-12 px-4">
+
+  <div class="bg-white rounded-2xl shadow-xl p-8">
+
+    <!-- HEADER -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-green-700">
+        Ajouter une Vidéo
+      </h1>
+      <p class="text-gray-600 mt-3">
+        Ajoutez une nouvelle vidéo explicative (YouTube) avec sa miniature.
+      </p>
+    </div>
+
+    <!-- SUCCESS -->
+    <div *ngIf="success()" 
+         class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+      {{ success() }}
+    </div>
+
+    <!-- ERROR -->
+    <div *ngIf="error()" 
+         class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+      {{ error() }}
+    </div>
+
+    <form [formGroup]="form" 
+          (submit)="onSubmit(); $event.preventDefault()" 
+          class="space-y-6">
+
+      <!-- TITLE -->
+      <div>
+        <label class="block font-medium mb-2">
+          Titre de la vidéo *
+        </label>
+        <input type="text" 
+               formControlName="title"
+               placeholder="Ex: CSU - Inscription en ligne (Tutoriel complet)"
+               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none"
+               [class.border-red-500]="isInvalid('title')">
+        <p *ngIf="isInvalid('title')" class="text-red-600 text-sm mt-1">
+          Le titre est obligatoire.
+        </p>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div>
+        <label class="block font-medium mb-2">
+          Description
+        </label>
+        <textarea rows="4" 
+                  formControlName="description"
+                  placeholder="Résumé ou explication de la vidéo..."
+                  class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none">
+        </textarea>
+      </div>
+
+      <!-- EMBED URL -->
+      <div>
+        <label class="block font-medium mb-2">
+          Lien YouTube (Embed URL) *
+        </label>
+        <input type="text" 
+               formControlName="embed_url"
+               placeholder="https://www.youtube.com/embed/2ZIXBCfPwRQ"
+               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none"
+               [class.border-red-500]="isInvalid('embed_url')">
+        <p *ngIf="isInvalid('embed_url')" class="text-red-600 text-sm mt-1">
+          Veuillez entrer un lien YouTube valide.
+        </p>
+        <p class="text-xs text-gray-500 mt-1">
+          Exemple : https://www.youtube.com/embed/VIDEO_ID
+        </p>
+      </div>
+
+      <!-- DURATION -->
+      <div>
+        <label class="block font-medium mb-2">
+          Durée (optionnel)
+        </label>
+        <input type="text" 
+               formControlName="duration"
+               placeholder="Ex: 4:01"
+               class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none">
+      </div>
+       <!-- VIDEO FILE -->
+<div>
+  <label class="block font-medium mb-2">
+    Fichier vidéo (optionnel)
+  </label>
+
+  <input id="video"
+         type="file"
+         accept="video/mp4,video/webm,video/ogg"
+         (change)="onVideoChange($event)"
+         class="w-full border rounded-lg px-4 py-3 bg-gray-50">
+
+  <p *ngIf="selectedVideo()" class="text-sm text-blue-700 mt-2">
+    Vidéo sélectionnée : {{ selectedVideo() }}
+  </p>
+
+  <p class="text-xs text-gray-500 mt-1">
+    Formats autorisés : MP4, WebM, OGG (max 50 Mo)
+  </p>
+</div>
+      <!-- THUMBNAIL -->
+      <div>
+        <label class="block font-medium mb-2">
+          Miniature / Image de couverture
+        </label>
+        <input id="thumbnail"
+               type="file"
+               accept=".jpg,.jpeg,.png,.webp"
+               (change)="onThumbnailChange($event)"
+               class="w-full border rounded-lg px-4 py-3 bg-gray-50">
+        
+        <p *ngIf="selectedThumbnail()" class="text-sm text-blue-700 mt-2">
+          Image sélectionnée : {{ selectedThumbnail() }}
+        </p>
+        
+        <p class="text-xs text-gray-500 mt-1">
+          Conseillé : format 16:9 (1280x720 ou plus)
+        </p>
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <button type="submit"
+              [disabled]="loading() || form.invalid"
+              class="w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white font-semibold py-4 rounded-xl transition">
+        {{ loading() ? 'Enregistrement en cours...' : 'Publier la Vidéo' }}
+      </button>
+
+    </form>
+
+  </div>
+</div>

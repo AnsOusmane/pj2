@@ -1,0 +1,120 @@
+<div class="max-w-3xl mx-auto py-12 px-4">
+  <div class="bg-white rounded-2xl shadow-xl p-8">
+    
+    <!-- HEADER -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-green-700">
+        Ajouter un Rapport Officiel
+      </h1>
+      <p class="text-gray-600 mt-3">
+        Publiez un rapport officiel avec son fichier PDF et une image de couverture.
+      </p>
+    </div>
+
+    <!-- SUCCESS MESSAGE -->
+    <div *ngIf="success()" 
+         class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+      {{ success() }}
+    </div>
+
+    <!-- ERROR MESSAGE -->
+    <div *ngIf="error()" 
+         class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+      {{ error() }}
+    </div>
+
+    <form [formGroup]="form" 
+          (submit)="onSubmit(); $event.preventDefault()" 
+          class="space-y-6">
+
+      <!-- TITLE -->
+      <div>
+        <label class="block font-medium mb-2">
+          Titre *
+        </label>
+        <input
+          type="text"
+          formControlName="title"
+          placeholder="Ex: Rapport Annuel d'Activités 2025"
+          class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none"
+          [class.border-red-500]="isInvalid('title')"
+        />
+        <p *ngIf="isInvalid('title')" class="text-red-600 text-sm mt-1">
+          Le titre est obligatoire.
+        </p>
+      </div>
+
+      <!-- REPORT TYPE -->
+      <div>
+        <label class="block font-medium mb-2">
+          Type de Rapport
+        </label>
+        <input
+          type="text"
+          formControlName="report_type"
+          placeholder="Ex: Annuel, Trimestriel, Final..."
+          class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none"
+        />
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div>
+        <label class="block font-medium mb-2">
+          Description
+        </label>
+        <textarea
+          rows="4"
+          formControlName="description"
+          placeholder="Résumé du contenu du rapport..."
+          class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 outline-none"
+        ></textarea>
+      </div>
+
+      <!-- PDF FILE -->
+      <div>
+        <label class="block font-medium mb-2">
+          Fichier PDF *
+        </label>
+        <input
+          id="file"
+          type="file"
+          accept=".pdf"
+          (change)="onPdfChange($event)"
+          class="w-full border rounded-lg px-4 py-3 bg-gray-50"
+        />
+        <p *ngIf="selectedPdf()" class="text-sm text-green-700 mt-2">
+          PDF sélectionné : {{ selectedPdf() }}
+        </p>
+      </div>
+
+      <!-- COVER IMAGE -->
+      <div>
+        <label class="block font-medium mb-2">
+          Image de couverture (optionnel)
+        </label>
+        <input
+          id="cover"
+          type="file"
+          accept=".jpg,.jpeg,.png,.webp"
+          (change)="onCoverChange($event)"
+          class="w-full border rounded-lg px-4 py-3 bg-gray-50"
+        />
+        <p *ngIf="selectedCover()" class="text-sm text-blue-700 mt-2">
+          Image sélectionnée : {{ selectedCover() }}
+        </p>
+        <p class="text-xs text-gray-500 mt-1">
+          Conseillé : format vertical (comme une couverture de rapport)
+        </p>
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <button
+        type="submit"
+        [disabled]="loading()"
+        class="w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition"
+      >
+        {{ loading() ? 'Enregistrement en cours...' : 'Publier le Rapport Officiel' }}
+      </button>
+    </form>
+  </div>
+</div>

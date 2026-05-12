@@ -5,9 +5,40 @@ dotenv.config();
 
 const { Pool } = pkg;
 
+// Vérification variable d'environnement
+if (!process.env.DATABASE_URL) {
+  console.error('❌ DATABASE_URL manquant dans le fichier .env');
+  process.exit(1);
+}
+
+// Pool PostgreSQL / Neon
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+
   ssl: {
-    rejectUnauthorized: false, // requis pour Neon
+    rejectUnauthorized: false
   },
+
+  // Optimisations
+  max: 20, // nombre max de connexions simultanées
+  idleTimeoutMillis: 30000, // ferme connexions inactives après 30 sec
+  connectionTimeoutMillis: 10000 // timeout connexion 10 sec
 });
+
+// Test connexion au démarrage
+pool.connect()
+  .then(client => {
+    console.log('✅ Connecté à Neon PostgreSQL');
+    client.release();
+  })
+  .catch(err => {
+    console.error('❌ Erreur connexion base de données :', err.message);
+  });
+
+// Gestion erreurs runtime du pool
+pool.on('error', (err) => {
+  console.error('❌ Erreur inattendue PostgreSQL :', err.message);
+});
+
+// Fonction helper requêtes SQL
+export const query = (text, params) => pool.query(text, params);

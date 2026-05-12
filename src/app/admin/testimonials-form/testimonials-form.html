@@ -1,0 +1,36 @@
+<div class="max-w-3xl mx-auto py-12 px-4">
+  <div class="bg-white rounded-2xl shadow-xl p-8">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-green-700">Ajouter un Témoignage</h1>
+    </div>
+
+    <div *ngIf="success()" class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">{{ success() }}</div>
+    <div *ngIf="error()" class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">{{ error() }}</div>
+
+    <form [formGroup]="form" (submit)="onSubmit(); $event.preventDefault()" class="space-y-6">
+      <div>
+        <label class="block font-medium mb-2">Nom complet *</label>
+        <input type="text" formControlName="name" class="w-full border rounded-lg px-4 py-3">
+      </div>
+
+      <div>
+        <label class="block font-medium mb-2">Localisation</label>
+        <input type="text" formControlName="location" placeholder="Dakar, Sénégal" class="w-full border rounded-lg px-4 py-3">
+      </div>
+
+      <div>
+        <label class="block font-medium mb-2">Photo (URL)</label>
+        <input type="text" formControlName="photoUrl" placeholder="https://..." class="w-full border rounded-lg px-4 py-3">
+      </div>
+
+      <div>
+        <label class="block font-medium mb-2">Témoignage *</label>
+        <textarea rows="5" formControlName="quote" class="w-full border rounded-lg px-4 py-3"></textarea>
+      </div>
+
+      <button type="submit" [disabled]="loading()" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-xl">
+        {{ loading() ? 'Enregistrement...' : 'Publier le Témoignage' }}
+      </button>
+    </form>
+  </div>
+</div>

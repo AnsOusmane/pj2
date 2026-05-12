@@ -1,34 +1,38 @@
 <div class="min-h-screen flex bg-gray-100">
-
   <!-- SIDEBAR -->
   <aside class="w-72 bg-white shadow-xl border-r border-gray-200 flex flex-col">
     <div class="p-6 border-b">
       <h1 class="text-2xl font-bold text-green-700">CSU Admin</h1>
       <p class="text-sm text-gray-500">Panneau de gestion</p>
+      
+      <!-- Info utilisateur connecté -->
+      <div *ngIf="currentUser" class="mt-4 p-3 bg-green-50 rounded-xl text-sm">
+        <p class="font-medium text-green-800">{{ currentUser.fullname }}</p>
+        <p class="text-green-600 text-xs">{{ currentUser.email }}</p>
+      </div>
     </div>
 
     <nav class="flex-1 p-4 space-y-6">
-
       <!-- Général -->
       <div>
         <p class="text-xs font-bold text-gray-500 uppercase mb-2">Général</p>
         <a routerLink="dashboard" class="btn-admin">📊 Dashboard</a>
-        <a routerLink="utilisateurs" class="btn-admin">👤 Utilisateurs</a>
+        <a routerLink="users" class="btn-admin">👤 Utilisateurs</a>
       </div>
 
       <!-- Gestion de contenu -->
       <div>
         <p class="text-xs font-bold text-gray-500 uppercase mb-2">Contenu</p>
-        <button (click)="goToAddNews()" class="btn-admin">📰 News</button>
-        <a routerLink="pages" class="btn-admin">📄 Pages</a>
+        <button (click)="goToAddNews()" class="btn-admin">📰 News / Newsletters</button>
         <button (click)="goToAddRapportsOff()" class="btn-admin">📑 Rapports officiels</button>
         <button (click)="goToAddDecret()" class="btn-admin">⚖️ Décrets</button>
         <button (click)="goToAddCom()" class="btn-admin">📢 Communiqués</button>
+        <button (click)="goToAddGuides()" class="btn-admin">📘 Guides</button>
       </div>
 
       <!-- Médias -->
       <div>
-        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Media</p>
+        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Médias</p>
         <a routerLink="media" class="btn-admin">🎞️ Dossiers médias</a>
         <button (click)="goToAddImg()" class="btn-admin">🖼️ Banque d'images</button>
       </div>
@@ -36,20 +40,20 @@
       <!-- Carrière -->
       <div>
         <p class="text-xs font-bold text-gray-500 uppercase mb-2">Carrière</p>
-        <a routerLink="emplois" class="btn-admin">💼 Offres d’emploi</a>
+        <button (click)="goToAddOffresEmploi()" class="btn-admin">💼 Offres d’emploi</button>
         <a routerLink="candidatures" class="btn-admin">📄 Candidatures</a>
       </div>
-
     </nav>
 
-    <button class="p-4 bg-red-600 text-white text-center font-semibold hover:bg-red-700">
+    <!-- Bouton Déconnexion -->
+    <button (click)="logout()" 
+            class="p-4 bg-red-600 hover:bg-red-700 text-white text-center font-semibold transition">
       Déconnexion
     </button>
   </aside>
 
-  <!-- CONTENU -->
+  <!-- CONTENU PRINCIPAL -->
   <main class="flex-1 p-8 overflow-y-auto bg-gray-50 rounded-l-lg">
     <router-outlet></router-outlet>
   </main>
-
 </div>

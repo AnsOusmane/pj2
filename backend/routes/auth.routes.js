@@ -1,42 +1,49 @@
 const express = require('express');
 const router = express.Router();
+const { pool } = require('../db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('../db');
 
-const SECRET = "votre_secret_jwt_super_secure"; // change ça après
+const SECRET_KEY = process.env.JWT_SECRET || 'votre_secret_super_securise_2026';
 
-// 🔐 Login
-router.post('/login', (req, res) => {
-  const { username, password } = req.body;
+// ====================== LOGIN ======================
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-  if (!username || !password)
-    return res.status(400).json({ message: "Champ manquant" });
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    const user = result.rows[0];
 
-  db.query("SELECT * FROM users WHERE username = ?", [username], async (err, results) => {
-    if (err) return res.status(500).json({ message: "Erreur serveur" });
+    if (!user || !user.is_active) {
+      return res.status(401).json({ message: 'Identifiants incorrects' });
+    }
 
-    if (results.length === 0)
-      return res.status(401).json({ message: "Utilisateur introuvable" });
-
-    const user = results[0];
-    const validPass = await bcrypt.compare(password, user.password);
-
-    if (!validPass)
-      return res.status(401).json({ message: "Mot de passe incorrect" });
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(401).json({ message: 'Identifiants incorrects' });
+    }
 
     const token = jwt.sign(
-      { id: user.id, role: user.role },
-      SECRET,
-      { expiresIn: "7d" }
+      { id: user.id, email: user.email, role: user.role },
+      SECRET_KEY,
+      { expiresIn: '8h' }
     );
 
     res.json({
-      message: "Connexion réussie",
+      success: true,
       token,
-      user: { id: user.id, username: user.username, role: user.role }
+      user: {
+        id: user.id,
+        fullname: user.fullname,
+        email: user.email,
+        role: user.role
+      }
     });
-  });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
 });
 
 module.exports = router;

@@ -19,101 +19,87 @@
 
       <hr class="border-white/20 my-8">
   </div>-->
+
   <!-- Partenaires -->
   <div class="max-w-6xl mx-auto text-center mt-5 text-white/80 text-sm">
-     <button (click)="goToMaintenance()" class="hover:underline mx-2">Sunu CSU</button> |
-      <a href="https://femme.gouv.sn" class="hover:underline mx-2">Ministère de la famille et des solidarités</a> |
-      <a href="https://sante.gouv.sn" class="hover:underline mx-2">Ministère de la santé et de l'action sociale</a>
+    <button (click)="navigateTo('/maintenance')" class="hover:underline mx-2">Sunu CSU</button> |
+    <a href="https://femme.gouv.sn" class="hover:underline mx-2">Ministère de la famille et des solidarités</a> |
+    <a href="https://sante.gouv.sn" class="hover:underline mx-2">Ministère de la santé et de l'action sociale</a>
   </div>
 
   <hr class="max-w-6xl mx-auto border-white/20 my-8">
 
-  <!-- Grille -->
   <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
 
-      <!-- Colonne 1 -->
+    <!-- Colonne 1 -->
+    <div>
+      <h3 class="font-semibold mb-3">La Sen-CSU</h3>
+      <ul class="space-y-1 text-white/80">
+        <li><button (click)="openAboutTimeline.emit()" class="hover:underline">A propos</button></li>
+        <li><button (click)="openMissionsvision.emit()" class="hover:underline">Vision et missions</button></li>
+        <li><button (click)="openOrganigramme.emit()" class="hover:underline">Organnigramme</button></li>
+        <li><button (click)="navigateTo('/appels-offres')" class="hover:underline">Appels d'offres</button></li>
+      </ul>
+    </div>
+
+    <!-- Colonne 2 -->
+    <div>
+      <h3 class="font-semibold mb-3">ASSISTANCE MEDICALE</h3>
+      <ul class="space-y-1 text-white/80">
+        <li><button (click)="navigateTo('/zero-5-ans')" class="hover:underline">Les enfants de 0 à 5 ans</button></li>
+        <li><button (click)="navigateTo('/cesarienne')" class="hover:underline">La césarienne</button></li>
+        <li><button (click)="navigateTo('/dialyse')" class="hover:underline">La dialyse</button></li>
+        <li><button (click)="navigateTo('/plan-sesame')" class="hover:underline">Le plan Sésame des 60 ans et plus</button></li>
+      </ul>
+    </div>
+
+    <!-- Colonne 3 -->
+    <div>
+      <h3 class="font-semibold mb-3">ESPACE MEDIA</h3>
+      <ul class="space-y-1 text-white/80">
+        <li><button class="hover:underline">Communiqués de presse (en édition)</button></li>
+        <li><button class="hover:underline">Dossiers médias (en édition)</button></li>
+        <li><button class="hover:underline">Banque d'image (en édition)</button></li>
+      </ul>
+    </div>
+
+    <!-- Colonne 4 -->
+    <div class="flex justify-between">
       <div>
-          <h3 class="font-semibold mb-3">La Sen-CSU</h3>
-          <ul class="space-y-1 text-white/80">
-
-              <li><button (click)="openAboutTimeline.emit()" class="hover:underline">A propos</button></li>
-
-              <li><button (click)="openMissionsvision.emit()" class="hover:underline">Vision et missions</button></li>
-
-              <li><button (click)="openOrganigramme.emit()" class="hover:underline">Organnigramme</button></li>
-
-              <li><button (click)="goToAppelsOffre()" class="hover:underline">Appels d'offres</button></li>
-
-              <!-- Publications regroupe tout -->
-              <!-- <li>
-                <button class="hover:underline" (click)="goToRapports()">Publications</button>
-              </li> -->
-
-          </ul>
+        <h3 class="font-semibold mb-3">ASSISTANCE ET CONTACT</h3>
+        <ul class="space-y-1 text-white/80">
+          <li><button (click)="navigateTo('/contact')" class="hover:underline">Formulaire de contact</button></li>
+          <li><button (click)="navigateTo('/agences')" class="hover:underline">Localiser une agence</button></li>
+          <li>
+            <button class="hover:underline">Pharmacies partenaires</button>
+          </li>
+        </ul>
       </div>
 
-      <!-- Colonne 2 -->
-      <div>
-          <h3 class="font-semibold mb-3">ASSISTANCE MEDICALE</h3>
-          <ul class="space-y-1 text-white/80">
-              <li><button (click)="goToZero5ans()" class="hover:underline">Les enfants de 0 à 5 ans</button></li>
-              <li><button (click)="goToCesarienne()" class="hover:underline">La césarienne</button></li>
-              <li><button (click)="goToDialyse()" class="hover:underline">La dialyse</button></li>
-              <li><button (click)="goToPlanSesame()" class="hover:underline">Le plan Sésame des 60 ans et plus</button></li>
-              <!-- <li><button class="hover:underline">La carte d'égalité des chances</button></li>
-              <li><button class="hover:underline">Les bénéficiaires PNBSF</button></li> -->
-          </ul>
-      </div>
-
-      <!-- Colonne 3 -->
-      <div>
-          <h3 class="font-semibold mb-3">ESPACE MEDIA</h3>
-          <ul class="space-y-1 text-white/80">
-              <li><button  class="hover:underline">Communiqués de presse(en édition)</button></li> <!-- (click)= "goToComuPresse()"-->
-              <li><button  class="hover:underline">Dossiers médias(en édition)</button></li> <!-- (click)="goToMedia()" -->
-              <li><button  class="hover:underline">Banque d'image(en édition)</button></li>                <!-- (click)="goToBankImg()"-->
-          </ul>
-      </div>
-
-      <!-- Colonne 4 -->
-      <div class="flex justify-between">
-          <div>
-              <h3 class="font-semibold mb-3">ASSISTANCE ET CONTACT</h3>
-              <ul class="space-y-1 text-white/80">
-                  <li><button (click)="goToContact()" class="hover:underline">Formulaire de contact</button></li> <!--  -->
-                  <li><button (click)="goToSr()" class="hover:underline">Localiser une agence</button></li> <!-- -->
-                  <li>
-                 <button target="_blank" class="hover:underline"> 
-                        Pharmacies partenaires
-                </button>
-                  </li>
-              </ul>
-          </div>
-
-        <!-- Icônes réseaux pour le footer--> 
-<div class="space-y-4">
-    <div class="flex gap-4 text-xl">
-        <a href="https://facebook.com/CouvertureSanitaitrUniverselle" target="_blank" class="text-white hover:text-gray-300">
+      <!-- Réseaux -->
+      <div class="space-y-4">
+        <div class="flex gap-4 text-xl">
+          <a href="https://facebook.com/CouvertureSanitaitrUniverselle" target="_blank" class="text-white hover:text-gray-300">
             <i class="fab fa-facebook"></i>
-        </a>
-        <a href="https://x.com/sen_csu?s=21&t=6JWMaLzG-CZUjsMrrvT5Ag" target="_blank" class="text-white hover:text-gray-300">
+          </a>
+          <a href="https://x.com/sen_csu" target="_blank" class="text-white hover:text-gray-300">
             <i class="fab fa-x"></i>
-        </a>
-        <a href="https://www.instagram.com/sen_csu_" target="_blank" class="text-white hover:text-gray-300">
+          </a>
+          <a href="https://www.instagram.com/sen_csu_" target="_blank" class="text-white hover:text-gray-300">
             <i class="fab fa-instagram"></i>
-        </a>
-    </div>
-    <div class="flex gap-4 text-xl">
-        <a href="https://linkedin.com/company/sen-csu" target="_blank" class="text-white hover:text-gray-300">
+          </a>
+        </div>
+        <div class="flex gap-4 text-xl">
+          <a href="https://linkedin.com/company/sen-csu" target="_blank" class="text-white hover:text-gray-300">
             <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="https://youtube.com/@sen_csu" target="_blank" class="text-white hover:text-gray-300">
+          </a>
+          <a href="https://youtube.com/@sen_csu" target="_blank" class="text-white hover:text-gray-300">
             <i class="fab fa-youtube"></i>
-        </a>
-    </div>
-</div>
-
+          </a>
+        </div>
       </div>
+
+    </div>
 
   </div>
 </footer>

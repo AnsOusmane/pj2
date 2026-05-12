@@ -9,18 +9,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./footer.css'],
 })
 export class Footer {
+  // On enlève tout le listener NavigationEnd et le shouldScrollTop (plus besoin)
 
-  constructor(private router: Router) {}
-
-  // mêmes événements que dans header
   @Output() openAboutTimeline = new EventEmitter<void>();
   @Output() openMissionsvision = new EventEmitter<void>();
   @Output() openOrganigramme = new EventEmitter<void>();
   @Output() openDonation = new EventEmitter<void>();
 
+  constructor(private router: Router) {}
 
+  // Navigation simple (utilisée par les boutons du footer)
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+  }
 
-  //navigation
+  //Navigation
   goToAppelsOffre() { this.router.navigate(['/appels-offre']); }
   goToRapports() { this.router.navigate(['/rapports-officiels']); }
   goToGuide() { this.router.navigate(['/guide']); }
@@ -36,7 +39,7 @@ export class Footer {
   goToCesarienne() { this.router.navigate(['/cesarienne']); }
   goToContact() { this.router.navigate(['/contact']); }
   goToSr() { this.router.navigate(['/nos-services-regionaux']); }
-    goToMaintenance() {
+  goToMaintenance() {
     this.router.navigate(['/maintenance']);
   }
 }

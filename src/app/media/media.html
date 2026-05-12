@@ -1,132 +1,454 @@
 <!-- src/app/media/media.component.html -->
+
 <div class="min-h-screen bg-gradient-to-br from-green-50 via-white to-gray-100 mt-3">
 
-  <!-- Hero -->
-  <section class="relative overflow-hidden bg-gray-50 text-white">
-    <div class="absolute inset-0 bg-black opacity-20"></div>
-    <div class="relative container mx-auto px-6 py-24 text-center">
-      <h1 class="text-4xl md:text-6xl font-bold mb-4">Médias & Ressources</h1>
-      <p class="text-lg md:text-xl max-w-3xl mx-auto opacity-90">
-        Newsletters, vidéos explicatives, témoignages et ressources officielles de la CSU Sénégal.
-      </p>
+  <!-- ===================================================== -->
+  <!-- HERO -->
+  <!-- ===================================================== -->
+  <section
+    class="relative overflow-hidden min-h-[520px] flex items-center"
+    style="background-image:url('assets/studio.png'); background-size:cover; background-position:center;"
+  >
+    <div class="absolute inset-0 bg-white/30"></div>
+
+    <div class="relative container mx-auto px-6 py-24 text-center z-10">
+      <h1 class="text-black text-4xl md:text-6xl font-extrabold drop-shadow-lg">
+        Médias & Ressources
+      </h1>
     </div>
-    <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>
+
+    <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent"></div>
   </section>
 
-  <!-- Tabs -->
+  <!-- ===================================================== -->
+  <!-- TABS -->
+  <!-- ===================================================== -->
   <div class="sticky top-0 z-40 bg-white shadow-sm">
+
     <div class="container mx-auto px-6">
+
       <nav class="flex flex-wrap justify-center gap-4 md:gap-8 py-4 font-medium">
-        <button (click)="activeTab = 'newsletters'" [class]="activeTab === 'newsletters' ? 'tab-active' : 'tab-inactive'">Newsletters</button>
-        <button (click)="activeTab = 'videos'" [class]="activeTab === 'videos' ? 'tab-active' : 'tab-inactive'">Vidéos</button>
-        <button (click)="activeTab = 'temoignages'" [class]="activeTab === 'temoignages' ? 'tab-active' : 'tab-inactive'">Témoignages</button>
-        <button (click)="activeTab = 'autres'" [class]="activeTab === 'autres' ? 'tab-active' : 'tab-inactive'">Autres</button>
+
+        <button
+          (click)="activeTab = 'actualites'"
+          [class]="activeTab === 'actualites' ? 'tab-active' : 'tab-inactive'"
+        >
+          Actualités
+        </button>
+
+        <button
+          (click)="activeTab = 'newsletters'"
+          [class]="activeTab === 'newsletters' ? 'tab-active' : 'tab-inactive'"
+        >
+          Newsletters
+        </button>
+
+        <button
+          (click)="activeTab = 'videos'"
+          [class]="activeTab === 'videos' ? 'tab-active' : 'tab-inactive'"
+        >
+          Vidéos
+        </button>
+
+        <button
+          (click)="activeTab = 'temoignages'"
+          [class]="activeTab === 'temoignages' ? 'tab-active' : 'tab-inactive'"
+        >
+          Témoignages
+        </button>
+
       </nav>
+
     </div>
+
   </div>
 
-  <!-- Contenu -->
+  <!-- ===================================================== -->
+  <!-- CONTENT -->
+  <!-- ===================================================== -->
   <div class="container mx-auto px-6 py-12">
 
-    <!-- Newsletters -->
-    <div *ngIf="activeTab === 'newsletters'" class="space-y-12 animate-fade-in">
-      <h2 class="text-3xl font-bold text-center mb-10">Newsletters</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div *ngFor="let n of newsletters" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
-          <div class="h-48 bg-gradient-to-br from-green-100 to-gray-100 flex items-center justify-center">
-            <svg class="w-20 h-20 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0H5m0 0h2m10-8h.01M9 12h.01M15 16h.01M9 16h.01"></path>
-            </svg>
-          </div>
-          <div class="p-5">
-            <h3 class="font-semibold text-lg group-hover:text-green-600">{{ n.title }}</h3>
-            <p class="text-sm text-gray-600 mt-1">{{ n.date }}</p>
-            <p class="text-gray-700 mt-3 line-clamp-2">{{ n.excerpt }}</p>
-            <a [href]="n.link" target="_blank" class="inline-flex items-center mt-4 text-green-600 hover:text-green-800">
-              Lire
-              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
+    <!-- ===================================================== -->
+    <!-- ACTUALITES -->
+    <!-- ===================================================== -->
+    <div *ngIf="activeTab === 'actualites'" class="space-y-12 animate-fade-in">
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <h2 class="text-3xl font-bold">Actualités</h2>
+        <p class="text-gray-600">Dernières nouvelles de la CSU</p>
       </div>
+
+      <div *ngIf="isLoadingActualites" class="text-center py-20 text-gray-500">
+        Chargement...
+      </div>
+
+      <div *ngIf="actualitesError" class="text-center py-20 text-red-600">
+        {{ actualitesError }}
+      </div>
+
+      <div
+        *ngIf="!isLoadingActualites && actualites.length > 0"
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
+
+        <div
+          *ngFor="let a of actualites"
+          class="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+          (click)="openActualite(a)"
+        >
+
+          <div class="relative h-56 bg-gray-100 overflow-hidden">
+
+            <img
+              [src]="a.image_url"
+              [alt]="a.title"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              (error)="onImageError($event)"
+            />
+
+          </div>
+
+          <div class="p-6">
+
+            <h3 class="font-semibold text-lg line-clamp-2">
+              {{ a.title }}
+            </h3>
+
+            <p class="text-gray-600 text-sm mt-3 line-clamp-3">
+              {{ a.content }}
+            </p>
+
+            <div class="mt-4 text-xs text-gray-500">
+              {{ a.published_at | date:'dd MMMM yyyy' }}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
-    <!-- Vidéos -->
+    <!-- ===================================================== -->
+    <!-- NEWSLETTERS -->
+    <!-- ===================================================== -->
+    <div *ngIf="activeTab === 'newsletters'" class="space-y-12 animate-fade-in">
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <h2 class="text-3xl font-bold">Nos Newsletters</h2>
+        <p class="text-gray-600">Les 5 dernières éditions</p>
+      </div>
+
+      <div *ngIf="isLoadingNewsletters" class="text-center py-20 text-gray-500">
+        Chargement...
+      </div>
+
+      <div *ngIf="newslettersError" class="text-center py-20 text-red-600">
+        {{ newslettersError }}
+      </div>
+
+      <div
+        *ngIf="!isLoadingNewsletters && newsletters.length > 0"
+        class="relative py-8"
+      >
+
+        <div
+          class="flex gap-6 md:gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide md:justify-center md:overflow-visible"
+        >
+
+          <div
+            *ngFor="let n of newsletters | slice:0:5"
+            class="group flex-none w-[280px] md:w-[320px] snap-center cursor-pointer"
+            (click)="openNewsletter(n)"
+          >
+
+            <div
+              class="relative h-[430px] rounded-2xl overflow-hidden border border-gray-200 shadow-xl transition-all duration-500 group-hover:-translate-y-4 group-hover:scale-105 group-hover:shadow-2xl"
+            >
+
+              <img
+                [src]="n.cover"
+                [alt]="n.title"
+                class="w-full h-full object-cover"
+                (error)="onImageError($event)"
+              />
+
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+              <div
+                class="absolute top-4 right-4 bg-white/90 text-xs px-3 py-2 rounded-xl font-semibold shadow"
+              >
+                {{ n.date }}
+              </div>
+
+              <div
+                class="absolute bottom-4 left-4 bg-white text-green-700 text-[11px] font-bold px-3 py-1 rounded-xl"
+              >
+                NEWSLETTER
+              </div>
+
+              <div class="absolute inset-0 flex items-center justify-center p-6">
+
+                <div class="text-center">
+
+                  <h3 class="text-white text-2xl font-bold drop-shadow-lg">
+                    {{ n.title }}
+                  </h3>
+
+                  <p class="text-white/80 text-sm mt-3 line-clamp-3">
+                    {{ n.excerpt }}
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- VIDEOS -->
+    <!-- ===================================================== -->
     <div *ngIf="activeTab === 'videos'" class="space-y-12 animate-fade-in">
-      <h2 class="text-3xl font-bold text-center mb-10">Vidéos Explicatives</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div *ngFor="let v of videos" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer" (click)="openVideoModal(v)">
-          <div class="relative aspect-video bg-gray-900">
-            <img [src]="v.thumbnail" [alt]="v.title" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center group-hover:bg-opacity-50 transition">
-              <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg class="w-8 h-8 text-green-600 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7L8 5z"/>
-                </svg>
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <h2 class="text-3xl font-bold">Vidéos Explicatives</h2>
+        <p class="text-gray-600">Tutoriels et explications claires</p>
+      </div>
+
+      <div *ngIf="isLoadingVideos" class="text-center py-20 text-gray-500">
+        Chargement...
+      </div>
+
+      <div *ngIf="videosError" class="text-center py-20 text-red-600">
+        {{ videosError }}
+      </div>
+
+      <div
+        *ngIf="!isLoadingVideos && videos.length > 0"
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
+
+        <div
+          *ngFor="let v of videos"
+          class="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+          (click)="openVideoModal(v)"
+        >
+
+          <div class="relative aspect-video bg-black overflow-hidden">
+
+            <img
+              [src]="v.thumbnail_url"
+              [alt]="v.title"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              (error)="onImageError($event)"
+            />
+
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg">
+                ▶
               </div>
             </div>
-            <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">{{ v.duration }}</div>
+
+            <div
+              class="absolute bottom-4 right-4 bg-black/70 text-white text-xs px-3 py-1 rounded-xl"
+            >
+              {{ v.duration }}
+            </div>
+
           </div>
-          <div class="p-4">
-            <h3 class="font-semibold group-hover:text-green-600">{{ v.title }}</h3>
+
+          <div class="p-6">
+
+            <h3 class="font-semibold text-lg line-clamp-2">
+              {{ v.title }}
+            </h3>
+
+            <p class="text-gray-600 text-sm mt-3 line-clamp-3">
+              {{ v.description }}
+            </p>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
 
-    <!-- Témoignages -->
+    <!-- ===================================================== -->
+    <!-- TEMOIGNAGES -->
+    <!-- ===================================================== -->
     <div *ngIf="activeTab === 'temoignages'" class="space-y-12 animate-fade-in">
-      <h2 class="text-3xl font-bold text-center mb-10">Témoignages</h2>
-      <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
-        <div *ngFor="let t of temoignages" class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-green-500 hover:shadow-xl transition">
-          <div class="flex items-center mb-4">
-            <img [src]="t.photo" [alt]="t.name" class="w-16 h-16 rounded-full object-cover border-2 border-green-200">
-            <div class="ml-4">
-              <h4 class="font-bold">{{ t.name }}</h4>
-              <p class="text-sm text-gray-600">{{ t.location }}</p>
-            </div>
-          </div>
-          <p class="text-gray-700 italic">"{{ t.quote }}"</p>
-          <div class="mt-4 text-right text-xs text-gray-500">{{ t.date }}</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Autres -->
-    <div *ngIf="activeTab === 'autres'" class="space-y-12 animate-fade-in">
-      <h2 class="text-3xl font-bold text-center mb-10">Autres Ressources</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <a href="#" class="group bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all">
-          <div class="flex justify-between items-center">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <h2 class="text-3xl font-bold">Témoignages</h2>
+        <p class="text-gray-600">Ce que disent nos bénéficiaires</p>
+      </div>
+
+      <div *ngIf="isLoadingTestimonials" class="text-center py-20 text-gray-500">
+        Chargement...
+      </div>
+
+      <div *ngIf="testimonialsError" class="text-center py-20 text-red-600">
+        {{ testimonialsError }}
+      </div>
+
+      <div
+        *ngIf="!isLoadingTestimonials && temoignages.length > 0"
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
+
+        <div
+          *ngFor="let t of temoignages"
+          class="bg-white rounded-3xl shadow-lg p-8 border border-gray-100"
+        >
+
+          <div class="flex items-center gap-4 mb-6">
+
+            <img
+              [src]="t.photo_url"
+              [alt]="t.name"
+              class="w-16 h-16 rounded-2xl object-cover"
+              (error)="onImageError($event)"
+            />
+
             <div>
-              <h3 class="text-lg font-bold">Rapport Annuel 2024</h3>
-              <p class="text-sm opacity-90 mt-1">PDF • 5.2 Mo</p>
+              <h4 class="font-bold text-lg">{{ t.name }}</h4>
+              <p class="text-green-600 text-sm">{{ t.location }}</p>
             </div>
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2-8H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7z"></path>
-            </svg>
+
           </div>
-        </a>
-        <!-- Autres cartes similaires -->
+
+          <p class="text-gray-700 italic">
+            "{{ t.quote }}"
+          </p>
+
+          <div class="mt-6 text-xs text-gray-500">
+            {{ t.date }}
+          </div>
+
+        </div>
+
       </div>
+
     </div>
+
   </div>
 
-  <!-- Modal Vidéo -->
-  <div *ngIf="selectedVideo" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4" (click)="closeModal()">
-    <div class="relative bg-white rounded-xl max-w-4xl w-full p-6 shadow-2xl" (click)="$event.stopPropagation()">
-      <button (click)="closeModal()" class="absolute -top-3 -right-3 bg-white rounded-full p-2 shadow-lg">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+  <!-- ===================================================== -->
+  <!-- MODAL VIDEO -->
+  <!-- ===================================================== -->
+  <div
+    *ngIf="selectedVideo"
+    class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+    (click)="closeModal()"
+  >
+
+    <div
+      class="relative bg-white rounded-2xl max-w-4xl w-full p-6 shadow-2xl"
+      (click)="$event.stopPropagation()"
+    >
+
+      <button
+        (click)="closeModal()"
+        class="absolute -top-3 -right-3 bg-white rounded-full w-10 h-10 shadow-lg"
+      >
+        ✕
       </button>
-      <div class="aspect-video bg-gray-900 rounded-lg overflow-hidden">
-        <iframe [src]="selectedVideo.embedUrl" frameborder="0" allowfullscreen class="w-full h-full"></iframe>
+
+      <div class="aspect-video bg-black rounded-xl overflow-hidden">
+
+        <!-- YOUTUBE -->
+        <iframe
+          *ngIf="selectedVideo.embed_url"
+          [src]="selectedVideo.embed_url"
+          class="w-full h-full"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+
+      <!-- VIDEO LOCALE -->
+<video
+  *ngIf="!selectedVideo.embed_url && selectedVideo.video_url"
+  controls
+  class="w-full h-full"
+>
+  <source
+    [src]="selectedVideo.video_url"
+    type="video/mp4"
+  />
+</video>
+
       </div>
-      <h3 class="mt-4 text-xl font-bold">{{ selectedVideo.title }}</h3>
-      <p class="text-gray-600">{{ selectedVideo.description }}</p>
+
+      <h3 class="mt-4 text-xl font-bold">
+        {{ selectedVideo.title }}
+      </h3>
+
+      <p class="text-gray-600">
+        {{ selectedVideo.description }}
+      </p>
+
     </div>
+
   </div>
+<!-- ===================================================== -->
+<!-- MODAL ACTUALITÉ -->
+<!-- ===================================================== -->
+
+<div
+  *ngIf="selectedActualite"
+  class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+  (click)="closeActualite()"
+>
+
+  <div
+    class="relative bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl overflow-y-auto max-h-[90vh]"
+    (click)="$event.stopPropagation()"
+  >
+
+    <!-- close -->
+    <button
+      (click)="closeActualite()"
+      class="absolute -top-3 -right-3 bg-white rounded-full w-10 h-10 shadow-lg"
+    >
+      ✕
+    </button>
+
+    <!-- image -->
+    <div class="w-full h-64 bg-gray-100 rounded-xl overflow-hidden mb-6">
+      <img
+  [src]="selectedActualite.image_url"
+  class="w-full h-full object-cover"
+  (error)="onImageError($event)"
+/>
+    </div>
+
+    <!-- title -->
+    <h2 class="text-2xl font-bold mb-4">
+      {{ selectedActualite.title }}
+    </h2>
+
+    <!-- content -->
+    <p class="text-gray-700 whitespace-pre-line leading-relaxed">
+      {{ selectedActualite.content }}
+    </p>
+
+    <!-- date -->
+    <div class="mt-6 text-xs text-gray-500">
+      {{ selectedActualite.published_at | date:'dd MMMM yyyy' }}
+    </div>
+
+  </div>
+
+</div>
 </div>

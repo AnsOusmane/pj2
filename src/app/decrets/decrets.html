@@ -23,42 +23,49 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       <div *ngFor="let d of decrets" 
            class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 group">
-        <!-- Aperçu (image ou PDF) -->
+
+        <!-- Aperçu -->
         <div class="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+          <!-- Cover Image -->
           <img
-            *ngIf="d.file.endsWith('.jpg') || d.file.endsWith('.png')"
-            [src]="d.file"
+            *ngIf="d.cover_url"
+            [src]="d.cover_url"
             (load)="d.loaded = true"
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            alt="{{ d.titre }}"
+            [alt]="d.titre"
             loading="lazy"
           />
-          <div *ngIf="!d.file.endsWith('.jpg') && !d.file.endsWith('.png')" 
-               class="absolute inset-0 flex items-center justify-center bg-gray-50 text-gray-600">
+
+          <!-- Fallback PDF Icon -->
+          <div *ngIf="!d.cover_url" 
+               class="absolute inset-0 flex items-center justify-center bg-gray-50 text-gray-500">
             <div class="text-center">
-              <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
-              <span class="text-sm font-medium">PDF</span>
+              <span class="text-sm font-medium">DOCUMENT PDF</span>
             </div>
           </div>
         </div>
 
-        <!-- Infos -->
+        <!-- Contenu -->
         <div class="p-6">
           <p class="text-sm text-gray-500 mb-2">{{ d.date }}</p>
+          
           <h3 class="text-xl font-bold text-green-800 mb-3 line-clamp-2 group-hover:text-green-700 transition-colors">
             {{ d.titre }}
           </h3>
-          <p class="text-gray-600 mb-4 line-clamp-3">
+          
+          <p class="text-gray-600 mb-5 line-clamp-3">
             {{ d.resume }}
           </p>
+
           <a
-            [href]="d.file"
+            [href]="d.file_url"
             target="_blank"
-            class="inline-flex items-center px-5 py-2.5 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition"
+            class="inline-flex items-center px-6 py-3 bg-green-600 text-white text-sm font-medium rounded-xl hover:bg-green-700 transition w-full justify-center"
           >
-            Voir le décret
+            Consulter le décret
             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>

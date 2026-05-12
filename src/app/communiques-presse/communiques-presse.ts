@@ -55,9 +55,9 @@ export class CommuniquesPresseComponent implements OnInit {
     year: 'numeric'
   }),
   resume: item.description || 'Aucun résumé disponible',
-  image: item.file_path && item.file_path.trim()
-    ? `${environment.mediaBaseUrl}${item.file_path.startsWith('/') ? '' : '/'}${item.file_path}`
-    : 'assets/placeholder.jpg',
+  image: item.file_url && item.file_url.trim()
+  ? `${environment.mediaBaseUrl}${item.file_url.startsWith('/') ? '' : '/'}${item.file_url}`
+  : 'assets/placeholder.jpg',
   categorie: 'Général',
   loaded: false
 }));
