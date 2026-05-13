@@ -4,9 +4,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
-// ==========================
-// IMPORTS
-// ==========================
 const { pool } = require('./db');
 
 const communiquesRouter = require('./routes/communiques.routes');
@@ -25,15 +22,16 @@ const videosRouter = require('./routes/videos.routes');
 
 const app = express();
 
-// ==========================
-// CORS
-// ==========================
+/* ==========================
+   CORS
+========================== */
 app.use(
   cors({
     origin: [
       'http://localhost:4200',
       'https://sencsu.sn',
-      'https://pj2-gr26.vercel.app'
+      'https://pj2-gr26.vercel.app',
+      'https://sencsu-backend.onrender.com'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -41,17 +39,15 @@ app.use(
   })
 );
 
-// ==========================
-// BODY PARSER
-// ==========================
+/* ==========================
+   BODY PARSER
+========================== */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ==========================
-// STATIC FILES
-// ==========================
-
-// Version historique
+/* ==========================
+   STATIC FILES
+========================== */
 app.use(
   '/uploads',
   (req, res, next) => {
@@ -61,7 +57,6 @@ app.use(
   express.static(path.join(__dirname, 'uploads'))
 );
 
-// Compatibilité avec URLs stockées en base
 app.use(
   '/storage/uploads',
   (req, res, next) => {
@@ -71,9 +66,9 @@ app.use(
   express.static(path.join(__dirname, 'uploads'))
 );
 
-// ==========================
-// ROUTES API
-// ==========================
+/* ==========================
+   ROUTES API
+========================== */
 app.use('/api/communiques', communiquesRouter);
 app.use('/api/newsletters', newslettersRouter);
 app.use('/api/decrets', decretsRouter);
@@ -87,9 +82,10 @@ app.use('/api/users', usersRouter);
 app.use('/api/testimonials', testimonialsRouter);
 app.use('/api/actualites', actualitesRouter);
 app.use('/api/videos', videosRouter);
-// ==========================
-// TEST BACKEND
-// ==========================
+
+/* ==========================
+   TEST BACKEND
+========================== */
 app.get('/api/test', async (req, res) => {
   try {
     await pool.query('SELECT 1');
@@ -110,9 +106,26 @@ app.get('/api/test', async (req, res) => {
   }
 });
 
-// ==========================
-// 404
-// ==========================
+/* ==========================
+   DEBUG USERS
+========================== */
+app.get('/api/debug-users', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT id, fullname, email, role, is_active
+      FROM users
+    `);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+
+/* ==========================
+   404
+========================== */
 app.use((req, res) => {
   res.status(404).json({
     message: 'Route non trouvée',
@@ -120,14 +133,14 @@ app.use((req, res) => {
   });
 });
 
-// ==========================
-// START SERVER
-// ==========================
+/* ==========================
+   START SERVER
+========================== */
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log('=================================');
-  console.log(`✅ Serveur lancé sur : http://localhost:${PORT}`);
-  console.log(`📁 Uploads : ${path.join(__dirname, 'uploads')}`);
+  console.log(`Serveur lancé sur port ${PORT}`);
+  console.log(`Uploads : ${path.join(__dirname, 'uploads')}`);
   console.log('=================================');
 });

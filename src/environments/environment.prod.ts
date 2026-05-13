@@ -2,9 +2,9 @@
 export const environment = {
   production: true,
 
-  // Backend Vercel
-  apiBaseUrl: 'https://pj2-gr26.vercel.app/api',
+ 
+  apiBaseUrl: 'https://sencsu.sn/api',
 
   // Images / uploads
-  mediaBaseUrl: 'https://pj2-gr26.vercel.app'
+  mediaBaseUrl: 'https://sencsu.sn'
 };
