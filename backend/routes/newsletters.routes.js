@@ -1,96 +1,83 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../db');
-
 const multer = require('multer');
 const path = require('path');
+const authMiddleware = require('../middleware/auth.middleware');
+const { z } = require('zod');
 
-// ==============================
-// CONFIG MULTER
-// ==============================
+// ====================== MULTER SÉCURISÉ ======================
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
+  destination: (req, file, cb) => cb(null, 'uploads/'),
   filename: (req, file, cb) => {
-    const uniqueName =
-      Date.now() + '-' + Math.round(Math.random() * 1e9);
-
+    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1e9);
     cb(null, uniqueName + path.extname(file.originalname));
   }
 });
 
-const upload = multer({ storage });
-
-// ==============================
-// GET ALL NEWSLETTERS
-// ==============================
-router.get('/', async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT 
-        id,
-        title,
-        description,
-        file_url,
-        cover_url,
-        created_at
-      FROM newsletters
-      ORDER BY created_at DESC
-    `);
-
-    res.json(result.rows);
-
-  } catch (err) {
-    console.error('Erreur GET newsletters :', err);
-    res.status(500).json({
-      message: 'Erreur serveur'
-    });
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max
+  fileFilter: (req, file, cb) => {
+    if (file.fieldname === 'file' && file.mimetype !== 'application/pdf') {
+      return cb(new Error('Le fichier doit être un PDF'), false);
+    }
+    if (file.fieldname === 'cover' && !file.mimetype.startsWith('image/')) {
+      return cb(new Error('La couverture doit être une image'), false);
+    }
+    cb(null, true);
   }
 });
 
-// ==============================
-// POST ADD NEWSLETTER  ✅ IMPORTANT
-// ==============================
+// Validation Zod
+const newsletterSchema = z.object({
+  title: z.string().min(3, "Le titre est trop court").max(200),
+  description: z.string().max(1000).optional()
+});
+
+// Protection : seules les routes POST sont protégées (GET public pour le site vitrine)
+router.use('/create', authMiddleware); // ou protéger tout le router si tu veux
+
+// GET ALL (public)
+router.get('/', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT id, title, description, file_url, cover_url, created_at 
+      FROM newsletters 
+      ORDER BY created_at DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+});
+
+// POST (protégé)
 router.post(
   '/',
-  upload.fields([
-    { name: 'file', maxCount: 1 },
-    { name: 'cover', maxCount: 1 }
-  ]),
+  authMiddleware,
+  upload.fields([{ name: 'file', maxCount: 1 }, { name: 'cover', maxCount: 1 }]),
   async (req, res) => {
     try {
-      const { title, description } = req.body;
-
+      const data = newsletterSchema.parse(req.body);
       const file = req.files?.file?.[0];
       const cover = req.files?.cover?.[0];
 
-      if (!file) {
-        return res.status(400).json({
-          message: 'Fichier PDF requis'
-        });
-      }
-
-      const fileUrl = `/uploads/${file.filename}`;
-      const coverUrl = cover
-        ? `/uploads/${cover.filename}`
-        : null;
+      if (!file) return res.status(400).json({ success: false, message: 'Fichier PDF requis' });
 
       const result = await pool.query(
-        `INSERT INTO newsletters
-        (title, description, file_url, cover_url)
-        VALUES ($1, $2, $3, $4)
-        RETURNING *`,
-        [title, description, fileUrl, coverUrl]
+        `INSERT INTO newsletters (title, description, file_url, cover_url)
+         VALUES ($1, $2, $3, $4) RETURNING *`,
+        [data.title, data.description, `/uploads/${file.filename}`, cover ? `/uploads/${cover.filename}` : null]
       );
 
-      res.status(201).json(result.rows[0]);
-
+      res.status(201).json({ success: true, data: result.rows[0] });
     } catch (err) {
-      console.error('Erreur POST newsletter :', err);
-      res.status(500).json({
-        message: 'Erreur serveur'
-      });
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({ success: false, errors: err.errors });
+      }
+      console.error(err);
+      res.status(500).json({ success: false, message: 'Erreur serveur' });
     }
   }
 );
