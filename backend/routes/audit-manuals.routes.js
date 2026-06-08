@@ -3,8 +3,10 @@ const router = express.Router();
 const { pool } = require('../db');
 const multer = require('multer');
 const path = require('path');
+const authMiddleware = require('../middleware/auth.middleware');
+const { z } = require('zod');
 
-// Multer Configuration
+// ====================== MULTER (inchangé) ======================
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'uploads/'),
   filename: (req, file, cb) => {
@@ -13,9 +15,20 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage });
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB max ajouté
+});
 
-// GET ALL
+// ====================== VALIDATION ======================
+const auditManualSchema = z.object({
+  title: z.string().min(3, "Le titre doit contenir au moins 3 caractères"),
+  description: z.string().max(1000).optional()
+});
+
+// ====================== ROUTES ======================
+
+// GET ALL → Public (site vitrine)
 router.get('/', async (req, res) => {
   try {
     const result = await pool.query(`
@@ -24,36 +37,63 @@ router.get('/', async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error('Erreur GET audit-manuals:', err);
-    res.status(500).json({ message: 'Erreur serveur' });
+    res.status(500).json({ success: false, message: 'Erreur serveur' });
   }
 });
 
-// POST
-router.post('/', upload.fields([
-  { name: 'file', maxCount: 1 },
-  { name: 'cover', maxCount: 1 }
-]), async (req, res) => {
-  try {
-    const { title, description } = req.body;
-    const file = req.files?.file?.[0];
-    const cover = req.files?.cover?.[0];
+// POST → Protégé
+router.post(
+  '/',
+  authMiddleware,
+  upload.fields([
+    { name: 'file', maxCount: 1 },
+    { name: 'cover', maxCount: 1 }
+  ]),
+  async (req, res) => {
+    try {
+      const data = auditManualSchema.parse(req.body);
 
-    if (!file) return res.status(400).json({ message: 'Fichier PDF requis' });
+      const file = req.files?.file?.[0];
+      const cover = req.files?.cover?.[0];
 
-    const fileUrl = `/uploads/${file.filename}`;
-    const coverUrl = cover ? `/uploads/${cover.filename}` : null;
+      if (!file) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Fichier PDF requis' 
+        });
+      }
 
-    const result = await pool.query(
-      `INSERT INTO audit_manuals (title, description, file_url, cover_url)
-       VALUES ($1, $2, $3, $4) RETURNING *`,
-      [title, description, fileUrl, coverUrl]
-    );
+      const fileUrl = `/uploads/${file.filename}`;
+      const coverUrl = cover ? `/uploads/${cover.filename}` : null;
 
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.error('Erreur POST audit-manual:', err);
-    res.status(500).json({ message: 'Erreur serveur' });
+      const result = await pool.query(
+        `INSERT INTO audit_manuals (title, description, file_url, cover_url)
+         VALUES ($1, $2, $3, $4) RETURNING *`,
+        [data.title, data.description, fileUrl, coverUrl]
+      );
+
+      res.status(201).json({ 
+        success: true, 
+        message: 'Document ajouté avec succès',
+        data: result.rows[0] 
+      });
+
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Données invalides', 
+          errors: err.errors 
+        });
+      }
+
+      console.error('Erreur POST audit-manual:', err);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Erreur serveur' 
+      });
+    }
   }
-});
+);
 
 module.exports = router;
