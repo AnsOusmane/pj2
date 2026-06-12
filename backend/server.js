@@ -79,8 +79,16 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 /* ==========================
    STATIC FILES
 ========================== */
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/storage/uploads', express.static(path.join(__dirname, 'uploads')));
+// Les fichiers statiques sont servis cross-origin (front Vercel ↔ backend Render) :
+// on autorise explicitement leur chargement, sinon le CORP same-origin de helmet
+// fait bloquer les images par le navigateur.
+const staticOptions = {
+  setHeaders: (res) => {
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  }
+};
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), staticOptions));
+app.use('/storage/uploads', express.static(path.join(__dirname, 'uploads'), staticOptions));
 
 /* ==========================
    ROUTES
