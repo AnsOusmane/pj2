@@ -63,7 +63,9 @@ router.post('/login', async (req, res) => {
       maxAge: 8 * 60 * 60 * 1000   // 8 heures
     });
 
-    // Réponse sans exposer le token dans le body (recommandé)
+    // Token renvoyé dans le body : le frontend (autre origine que le backend)
+    // l'utilise via l'en-tête Authorization, le cookie sameSite=strict n'étant
+    // pas envoyé en cross-site.
     res.json({
       success: true,
       user: {
@@ -72,7 +74,7 @@ router.post('/login', async (req, res) => {
         email: user.email,
         role: user.role
       },
-      // token: token   ← À supprimer si tu utilises le cookie
+      token
     });
 
   } catch (err) {
