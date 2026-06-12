@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { pool } = require('../db');
-const authMiddleware = require('../middleware/auth');
+const authMiddleware = require('../middleware/auth.middleware');
 const { z } = require('zod');
 
 const uploadDir = 'uploads/decrets';
