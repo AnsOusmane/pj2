@@ -61,12 +61,9 @@ export class MediaComponent implements OnInit {
 
     if (path.startsWith('http')) return path;
 
-    return `${environment.mediaBaseUrl}/${path}`;
-  }
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
 
-  fileNameOnly(path: string | null | undefined): string {
-    if (!path) return '';
-    return path.split('/').pop() || '';
+    return `${environment.mediaBaseUrl}/${cleanPath}`;
   }
 
   onImageError(event: Event): void {
@@ -109,11 +106,11 @@ export class MediaComponent implements OnInit {
             date: item.date || item.created_at || item.published_at,
 
             cover: cover
-              ? this.media(`uploads/newsletters/${this.fileNameOnly(cover)}`)
+              ? this.media(cover)
               : 'assets/studio.png',
 
             file_url: file
-              ? this.media(`uploads/newsletters/${this.fileNameOnly(file)}`)
+              ? this.media(file)
               : null
           };
         });
@@ -216,7 +213,7 @@ export class MediaComponent implements OnInit {
             location: item.location || item.region || '',
 
             photo_url: photo
-              ? this.media(`uploads/testimonials/${this.fileNameOnly(photo)}`)
+              ? this.media(photo)
               : 'assets/avatar.png'
           };
         });
@@ -259,7 +256,7 @@ export class MediaComponent implements OnInit {
             published_at: item.published_at || item.date || item.created_at,
 
             image_url: image
-              ? this.media(`uploads/actualites/${this.fileNameOnly(image)}`)
+              ? this.media(image)
               : 'assets/studio.png'
           };
         });
