@@ -25,6 +25,11 @@ const videosRouter = require('./routes/videos.routes');
 
 const app = express();
 
+// Render (comme la plupart des PaaS) place l'app derrière un reverse proxy.
+// Sans ceci, express-rate-limit voit l'IP du proxy pour tout le monde
+// (rate-limit inefficace) et lève un avertissement de validation X-Forwarded-For.
+app.set('trust proxy', 1);
+
 /* ==========================
    SECURITY MIDDLEWARES
 ========================== */
