@@ -43,7 +43,7 @@ router.get('/', adminOnly, async (req, res) => {
       FROM users
       ORDER BY created_at DESC
     `);
-    res.json({ success: true, data: result.rows });
+    res.json(result.rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Erreur serveur' });
