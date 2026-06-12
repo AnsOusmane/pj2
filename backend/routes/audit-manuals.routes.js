@@ -3,7 +3,7 @@ const router = express.Router();
 const { pool } = require('../db');
 const multer = require('multer');
 const path = require('path');
-const authMiddleware = require('../middleware/auth.middleware');
+const authMiddleware = require('../middleware/auth');
 const { z } = require('zod');
 
 // ====================== MULTER (inchangé) ======================

@@ -4,7 +4,7 @@ const { pool } = require('../db');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const authMiddleware = require('../middleware/auth.middleware');
+const authMiddleware = require('../middleware/auth');
 const { z } = require('zod');
 
 const uploadDir = path.join(__dirname, '../uploads/actualites');

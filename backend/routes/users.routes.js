@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { z } = require('zod');
 const { pool } = require('../db');
-const authMiddleware = require('../middleware/auth.middleware'); // ← Important
+const authMiddleware = require('../middleware/auth'); 
 
 // ====================== SCHÉMAS DE VALIDATION ======================
 const createUserSchema = z.object({
