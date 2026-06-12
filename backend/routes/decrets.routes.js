@@ -1,25 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 const { pool } = require('../db');
+const { makeUpload } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 const { z } = require('zod');
 
-const uploadDir = 'uploads/decrets';
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: uploadDir,
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, Date.now() + '-' + Math.round(Math.random() * 1e9) + ext);
-  }
-});
-
-const upload = multer({
-  storage,
+const upload = makeUpload('decrets', {
   fileFilter: (req, file, cb) => {
     const allowed = ['application/pdf', 'image/jpeg', 'image/png'];
     if (allowed.includes(file.mimetype)) cb(null, true);
@@ -50,7 +36,7 @@ router.post('/', authMiddleware, upload.single('file'), async (req, res) => {
     const result = await pool.query(
       `INSERT INTO decrets (title, description, file_path, created_at)
        VALUES ($1, $2, $3, NOW()) RETURNING *`,
-      [data.title, data.description, `/uploads/decrets/${req.file.filename}`]
+      [data.title, data.description, req.file.path]
     );
 
     res.status(201).json({ success: true, data: result.rows[0] });

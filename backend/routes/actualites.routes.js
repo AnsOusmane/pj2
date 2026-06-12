@@ -1,34 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../db');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const { makeUpload } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 const { z } = require('zod');
 
-// ====================== CONFIGURATION DOSSIER & MULTER ======================
-const uploadDir = path.join(__dirname, '../uploads/actualites');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadDir),
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueName + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({
-  storage,
+// ====================== UPLOAD CLOUDINARY ======================
+const upload = makeUpload('actualites', {
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
   fileFilter: (req, file, cb) => {
     const allowed = /jpeg|jpg|png|webp/;
-    const extValid = allowed.test(path.extname(file.originalname).toLowerCase());
-    const mimeValid = allowed.test(file.mimetype);
-    if (extValid && mimeValid) {
+    if (allowed.test(file.mimetype)) {
       cb(null, true);
     } else {
       cb(new Error('Format image invalide (jpg, png, webp uniquement)'), false);
@@ -65,9 +47,7 @@ router.post('/', authMiddleware, upload.single('thumbnail'), async (req, res) =>
   try {
     const data = actualiteSchema.parse(req.body);
 
-    const image_url = req.file
-      ? `/uploads/actualites/${req.file.filename}`
-      : null;
+    const image_url = req.file ? req.file.path : null;
 
     const result = await pool.query(`
       INSERT INTO actualites (title, content, image_url, link, published_at)

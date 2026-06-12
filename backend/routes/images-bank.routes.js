@@ -1,19 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../db');
-const multer = require('multer');
-const path = require('path');
+const { makeUpload } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueName + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({ storage });
+const upload = makeUpload('images-bank');
 
 // GET ALL
 router.get('/', async (req, res) => {
@@ -36,7 +27,7 @@ router.post('/', authMiddleware, upload.single('image'), async (req, res) => {
 
     if (!file) return res.status(400).json({ message: 'Image requise' });
 
-    const imageUrl = `/uploads/${file.filename}`;
+    const imageUrl = file.path;
 
     const result = await pool.query(
       `INSERT INTO images_bank (title, description, image_url, category)

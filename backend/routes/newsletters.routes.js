@@ -1,22 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../db');
-const multer = require('multer');
-const path = require('path');
+const { makeUpload } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 const { z } = require('zod');
 
-// ====================== MULTER SÉCURISÉ ======================
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueName + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({
-  storage,
+// ====================== UPLOAD CLOUDINARY ======================
+const upload = makeUpload('newsletters', {
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max
   fileFilter: (req, file, cb) => {
     if (file.fieldname === 'file' && file.mimetype !== 'application/pdf') {
@@ -68,7 +58,7 @@ router.post(
       const result = await pool.query(
         `INSERT INTO newsletters (title, description, file_url, cover_url)
          VALUES ($1, $2, $3, $4) RETURNING *`,
-        [data.title, data.description, `/uploads/${file.filename}`, cover ? `/uploads/${cover.filename}` : null]
+        [data.title, data.description, file.path, cover ? cover.path : null]
       );
 
       res.status(201).json({ success: true, data: result.rows[0] });

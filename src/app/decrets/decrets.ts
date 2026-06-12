@@ -75,7 +75,10 @@ export class DecretsComponent implements OnInit {
 
   private constructFileUrl(path?: string): string {
     if (!path?.trim()) return 'assets/images/placeholder.jpg';
-    
+
+    // URL déjà absolue (Cloudinary) → on la renvoie telle quelle.
+    if (path.startsWith('http')) return path;
+
     const separator = path.startsWith('/') ? '' : '/';
     return `${this.mediaBase}${separator}${path}`;
   }

@@ -1,31 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const path = require('path');
 
 const { pool } = require('../db');
+const { makeUpload } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 
 
 // ===============================
-// CONFIG MULTER (UPLOAD)
+// UPLOAD CLOUDINARY
 // ===============================
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    if (file.fieldname === 'thumbnail') {
-      cb(null, 'uploads/thumbnails/');
-    } else if (file.fieldname === 'video') {
-      cb(null, 'uploads/videos/');
-    }
-  },
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + file.originalname.replace(/\s+/g, '_');
-    cb(null, uniqueName);
-  }
-});
-
-const upload = multer({
-  storage,
+const upload = makeUpload('videos', {
   limits: {
     fileSize: 50 * 1024 * 1024 // 50 Mo max
   },
@@ -84,11 +68,11 @@ router.post(
       const { title, description, embed_url, duration } = req.body;
 
       const thumbnail = req.files['thumbnail']
-        ? req.files['thumbnail'][0].filename
+        ? req.files['thumbnail'][0].path
         : null;
 
       const video = req.files['video']
-        ? req.files['video'][0].filename
+        ? req.files['video'][0].path
         : null;
 
       // ✅ Validation logique

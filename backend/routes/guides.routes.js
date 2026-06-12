@@ -2,20 +2,11 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../db');
-const multer = require('multer');
-const path = require('path');
+const { makeUpload } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 
-// Multer Config
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueName + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({ storage });
+// Upload Cloudinary
+const upload = makeUpload('guides');
 
 // GET ALL
 router.get('/', async (req, res) => {
@@ -42,8 +33,8 @@ router.post('/', authMiddleware, upload.fields([
 
     if (!file) return res.status(400).json({ message: 'Fichier PDF requis' });
 
-    const fileUrl = `/uploads/${file.filename}`;
-    const coverUrl = cover ? `/uploads/${cover.filename}` : null;
+    const fileUrl = file.path;
+    const coverUrl = cover ? cover.path : null;
 
     const result = await pool.query(
       `INSERT INTO guides (title, description, file_url, cover_url)

@@ -1,23 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../db');
-const multer = require('multer');
-const path = require('path');
+const { makeUpload } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 const { z } = require('zod');
 
-// ====================== MULTER (inchangé) ======================
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueName + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({ 
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 } // 10MB max ajouté
+// ====================== UPLOAD CLOUDINARY ======================
+const upload = makeUpload('audit-manuals', {
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB max
 });
 
 // ====================== VALIDATION ======================
@@ -63,8 +53,8 @@ router.post(
         });
       }
 
-      const fileUrl = `/uploads/${file.filename}`;
-      const coverUrl = cover ? `/uploads/${cover.filename}` : null;
+      const fileUrl = file.path;
+      const coverUrl = cover ? cover.path : null;
 
       const result = await pool.query(
         `INSERT INTO audit_manuals (title, description, file_url, cover_url)

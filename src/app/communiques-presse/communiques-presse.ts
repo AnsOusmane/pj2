@@ -56,7 +56,9 @@ export class CommuniquesPresseComponent implements OnInit {
   }),
   resume: item.description || 'Aucun résumé disponible',
   image: item.file_url && item.file_url.trim()
-  ? `${environment.mediaBaseUrl}${item.file_url.startsWith('/') ? '' : '/'}${item.file_url}`
+  ? (item.file_url.startsWith('http')
+      ? item.file_url
+      : `${environment.mediaBaseUrl}${item.file_url.startsWith('/') ? '' : '/'}${item.file_url}`)
   : 'assets/placeholder.jpg',
   categorie: 'Général',
   loaded: false

@@ -1,26 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 const { pool } = require('../db');
+const { makeUpload } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 const { z } = require('zod');
 
-const uploadDir = 'uploads/communiques';
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: uploadDir,
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const name = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, name + ext);
-  }
-});
-
-const upload = multer({
-  storage,
+const upload = makeUpload('communiques', {
   fileFilter: (req, file, cb) => {
     const allowed = ['application/pdf', 'image/jpeg', 'image/png'];
     if (allowed.includes(file.mimetype)) cb(null, true);
@@ -58,7 +43,7 @@ router.post('/', authMiddleware, upload.single('file'), async (req, res) => {
     const result = await pool.query(
       `INSERT INTO communiques (title, description, file_url, file_name, file_type, file_size)
        VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [data.title, data.description, `/uploads/communiques/${file.filename}`, file.originalname, file.mimetype, file.size]
+      [data.title, data.description, file.path, file.originalname, file.mimetype, file.size]
     );
 
     res.status(201).json({ success: true, data: result.rows[0] });

@@ -147,11 +147,11 @@ export class MediaComponent implements OnInit {
           ...v,
 
           thumbnail_url: v.thumbnail
-            ? this.media(`uploads/thumbnails/${v.thumbnail}`)
+            ? this.media(v.thumbnail)
             : 'assets/studio.png',
 
           video_url: v.video
-            ? this.media(`uploads/videos/${v.video}`)
+            ? this.media(v.video)
             : null
         }));
 
