@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 
 const { pool } = require('../db');
+const authMiddleware = require('../middleware/auth.middleware');
 
 
 // ===============================
@@ -73,6 +74,7 @@ router.get('/', async (req, res) => {
 // ===============================
 router.post(
   '/',
+  authMiddleware,
   upload.fields([
     { name: 'thumbnail', maxCount: 1 },
     { name: 'video', maxCount: 1 }

@@ -3,6 +3,7 @@ const router = express.Router();
 const { pool } = require('../db');
 const multer = require('multer');
 const path = require('path');
+const authMiddleware = require('../middleware/auth.middleware');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'uploads/'),
@@ -28,7 +29,7 @@ router.get('/', async (req, res) => {
 });
 
 // POST
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', authMiddleware, upload.single('image'), async (req, res) => {
   try {
     const { title, description, category } = req.body;
     const file = req.file;

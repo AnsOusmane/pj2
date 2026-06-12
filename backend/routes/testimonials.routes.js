@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { pool } = require('../db');
+const authMiddleware = require('../middleware/auth.middleware');
 
 
 // ===============================
@@ -29,7 +30,7 @@ router.get('/', async (req, res) => {
 // ===============================
 // CREATE TESTIMONIAL
 // ===============================
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   try {
     const { name, location, photo_url, quote } = req.body;
 
