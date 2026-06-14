@@ -81,7 +81,7 @@ app.use('/api/auth/', rateLimit({
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-/* ==========================
+/* =======================
    STATIC FILES
 ========================== */
 // Les fichiers statiques sont servis cross-origin (front Vercel ↔ backend Render) :
