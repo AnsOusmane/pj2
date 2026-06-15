@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST protégé
+// =====POST protégé
 router.post('/', authMiddleware, upload.single('file'), async (req, res) => {
   try {
     const data = communiqueSchema.parse(req.body);
