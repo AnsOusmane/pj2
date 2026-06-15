@@ -1,6 +1,7 @@
 const { v2: cloudinary } = require('cloudinary');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
+const path = require('path');
 
 // ====================== CONFIGURATION CLOUDINARY ======================
 // Variables d'environnement requises (.env local + dashboard Render) :
@@ -33,11 +34,19 @@ function makeUpload(folder, options = {}) {
       const isVideo = file.mimetype.startsWith('video/');
       const resourceType = isImage ? 'image' : isVideo ? 'video' : 'raw';
 
+      const base = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+      // Pour les fichiers raw (PDF…), on garde l'extension dans le public_id :
+      // sinon Cloudinary les sert en application/octet-stream (téléchargement
+      // forcé au lieu d'un affichage inline dans le navigateur).
+      // Les images/vidéos n'en ont pas besoin (format auto-détecté par Cloudinary).
+      const publicId = resourceType === 'raw'
+        ? `${base}${path.extname(file.originalname)}`
+        : base;
+
       return {
         folder: `sencsu/${folder}`,
         resource_type: resourceType,
-        // Nom unique, on conserve l'extension d'origine pour les fichiers raw (PDF).
-        public_id: `${Date.now()}-${Math.round(Math.random() * 1e9)}`
+        public_id: publicId
       };
     }
   });

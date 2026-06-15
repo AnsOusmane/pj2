@@ -39,7 +39,8 @@ router.post('/', authMiddleware, upload.fields([
     const result = await pool.query(
       `INSERT INTO offres_emploi (title, description, company, location, deadline, file_url, cover_url)
        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-      [title, description, company, location, deadline, fileUrl, coverUrl]
+      // deadline vide ('') → null : une colonne date Postgres refuse la chaîne vide.
+      [title, description, company, location, deadline || null, fileUrl, coverUrl]
     );
 
     res.status(201).json(result.rows[0]);
