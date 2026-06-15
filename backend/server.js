@@ -81,9 +81,9 @@ app.use('/api/auth/', rateLimit({
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-/* =======================
+/* =========================
    STATIC FILES
-========================== */
+============================ */
 // Les fichiers statiques sont servis cross-origin (front Vercel ↔ backend Render) :
 // on autorise explicitement leur chargement, sinon le CORP same-origin de helmet
 // fait bloquer les images par le navigateur.
