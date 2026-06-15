@@ -5,6 +5,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 
 import { routes } from './app.routes';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { RetryInterceptor } from './interceptors/retry.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,9 +17,9 @@ export const appConfig: ApplicationConfig = {
       })
     ),
 
-    // HTTP Client + Interceptor JWT
+    // HTTP Client + Interceptors (JWT puis retry au réveil à froid de Render)
     provideHttpClient(
-      withInterceptors([AuthInterceptor])
+      withInterceptors([AuthInterceptor, RetryInterceptor])
     ),
 
     // Hydration (pour SSR)
