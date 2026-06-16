@@ -7,6 +7,7 @@ const { makeUpload, pdfOnly } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 const celluleOrAdmin = require('../middleware/cellule.middleware');
 const verifyTurnstile = require('../middleware/turnstile.middleware');
+const { sendMail, AGENCY_EMAIL } = require('../config/mailer');
 
 const upload = makeUpload('fournisseurs', { fileFilter: pdfOnly });
 
@@ -53,6 +54,67 @@ async function nextNumero() {
   );
   const chrono = String(rows[0].prochain).padStart(4, '0');
   return `AGR-${annee}-${chrono}`;
+}
+
+// Envoie (sans bloquer le dépôt) la confirmation au fournisseur + la notification interne.
+// Tout est encapsulé : un échec SMTP est journalisé mais n'impacte jamais la réponse HTTP.
+async function notifierDepot(dossier, data) {
+  const dateFr = new Date(dossier.created_at).toLocaleString('fr-FR', {
+    dateStyle: 'long', timeStyle: 'short', timeZone: 'Africa/Dakar'
+  });
+
+  // 1) Accusé de réception au fournisseur (uniquement s'il a renseigné un email).
+  if (data.email) {
+    await sendMail({
+      to: data.email,
+      subject: `Confirmation de votre demande d'agrément — ${dossier.numero}`,
+      html: `
+        <h2>Votre demande d'agrément a bien été reçue</h2>
+        <p>Bonjour${data.contact_nom ? ' ' + escapeHtml(data.contact_nom) : ''},</p>
+        <p>Nous accusons réception de votre demande d'agrément déposée auprès de l'Agence
+           de la Couverture Sanitaire Universelle (SEN-CSU).</p>
+        <p>Votre numéro de dossier est :</p>
+        <p style="font-size:20px;font-weight:bold;color:#15803d;letter-spacing:1px;">${dossier.numero}</p>
+        <p>Conservez ce numéro pour tout suivi auprès de l'Agence. Votre dossier sera
+           étudié par nos services et vous serez informé(e) de la suite donnée.</p>
+        <hr>
+        <p style="color:#6b7280;font-size:13px;">Récapitulatif :<br>
+           <b>Raison sociale :</b> ${escapeHtml(data.raison_sociale)}<br>
+           <b>Déposé le :</b> ${dateFr}</p>
+        <p style="color:#6b7280;font-size:12px;">Cet email est automatique, merci de ne pas y répondre.</p>
+      `,
+    }).catch((e) => console.error('Mail confirmation fournisseur non envoyé:', e.message));
+  }
+
+  // 2) Notification interne à l'agence.
+  await sendMail({
+    to: AGENCY_EMAIL,
+    replyTo: data.email || undefined,
+    subject: `🆕 Nouvelle demande d'agrément — ${escapeHtml(data.raison_sociale)} (${dossier.numero})`,
+    html: `
+      <h2>Nouvelle demande d'agrément</h2>
+      <p><b>N° dossier :</b> ${dossier.numero}</p>
+      <p><b>Raison sociale :</b> ${escapeHtml(data.raison_sociale)}</p>
+      <p><b>Domaine :</b> ${escapeHtml(data.domaine) || '-'}</p>
+      <p><b>NINEA :</b> ${escapeHtml(data.ninea) || '-'} &nbsp;|&nbsp;
+         <b>RCCM :</b> ${escapeHtml(data.rccm) || '-'}</p>
+      <p><b>Contact :</b> ${escapeHtml(data.contact_nom) || '-'} &nbsp;|&nbsp;
+         <b>Tél :</b> ${escapeHtml(data.telephone) || '-'} &nbsp;|&nbsp;
+         <b>Email :</b> ${escapeHtml(data.email) || '-'}</p>
+      <p><b>Adresse :</b> ${escapeHtml(data.adresse) || '-'}</p>
+      <p><b>Message :</b><br>${escapeHtml(data.message) || '-'}</p>
+      <hr>
+      <p style="color:#6b7280;font-size:13px;">Déposé le ${dateFr}. À traiter dans l'espace de gestion des agréments.</p>
+    `,
+  }).catch((e) => console.error('Mail notification interne non envoyé:', e.message));
+}
+
+// Échappe le HTML pour éviter toute injection via les champs du formulaire public.
+function escapeHtml(v) {
+  if (v === undefined || v === null) return '';
+  return String(v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 // ====================== POST PUBLIC (dépôt sans compte) ======================
@@ -113,6 +175,11 @@ router.post('/', depotLimiter, verifyTurnstile, upload.fields([
     if (!inserted) {
       return res.status(500).json({ message: 'Impossible de générer le numéro de dossier, réessayez.' });
     }
+
+    // Notifications email (fournisseur + agence) en arrière-plan : on ne fait pas
+    // attendre/échouer le dépôt si le serveur SMTP est lent ou indisponible.
+    notifierDepot(inserted, data)
+      .catch((e) => console.error('Notifications dépôt non envoyées:', e.message));
 
     res.status(201).json({
       success: true,
