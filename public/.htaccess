@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Ne pas réécrire les fichiers/dossiers existants (assets, images, etc.)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  # Toutes les autres routes -> index.html (routing Angular côté client)
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Cache long pour les fichiers avec hash dans le nom
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+</IfModule>
