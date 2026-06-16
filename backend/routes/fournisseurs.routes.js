@@ -55,21 +55,31 @@ async function nextNumero() {
 }
 
 // ====================== POST PUBLIC (dépôt sans compte) ======================
+// Pièces du cahier des charges (PDF) :
+//   - doc_demande      : demande formelle au DG          (OBLIGATOIRE)
+//   - doc_ninea        : copie du NINEA                   (OBLIGATOIRE)
+//   - doc_presentation : présentation entreprise/plaquette (OBLIGATOIRE)
+//   - doc_registre     : registre de commerce             (facultatif, bonus)
+//   - doc_fiscale      : attestation fiscale              (facultatif, bonus)
 router.post('/', depotLimiter, upload.fields([
+  { name: 'doc_demande', maxCount: 1 },
+  { name: 'doc_ninea', maxCount: 1 },
+  { name: 'doc_presentation', maxCount: 1 },
   { name: 'doc_registre', maxCount: 1 },
-  { name: 'doc_fiscale', maxCount: 1 },
-  { name: 'doc_complementaire', maxCount: 1 }
+  { name: 'doc_fiscale', maxCount: 1 }
 ]), async (req, res) => {
   try {
     const data = depotSchema.parse(clean(req.body));
 
+    const docDemande = req.files?.doc_demande?.[0]?.path ?? null;
+    const docNinea = req.files?.doc_ninea?.[0]?.path ?? null;
+    const docPresentation = req.files?.doc_presentation?.[0]?.path ?? null;
     const docRegistre = req.files?.doc_registre?.[0]?.path ?? null;
     const docFiscale = req.files?.doc_fiscale?.[0]?.path ?? null;
-    const docComplementaire = req.files?.doc_complementaire?.[0]?.path ?? null;
 
-    if (!docRegistre || !docFiscale) {
+    if (!docDemande || !docNinea || !docPresentation) {
       return res.status(400).json({
-        message: 'Le registre de commerce et l\'attestation fiscale (PDF) sont obligatoires.'
+        message: 'La demande adressée au Directeur Général, la copie du NINEA et la présentation de l\'entreprise (PDF) sont obligatoires.'
       });
     }
 
@@ -81,14 +91,15 @@ router.post('/', depotLimiter, upload.fields([
         const result = await pool.query(
           `INSERT INTO fournisseurs_agrements
              (numero, raison_sociale, ninea, rccm, domaine, adresse, telephone, email,
-              contact_nom, message, doc_registre_url, doc_fiscale_url, doc_complementaire_url)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+              contact_nom, message, doc_demande_url, doc_ninea_url, doc_presentation_url,
+              doc_registre_url, doc_fiscale_url)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
            RETURNING id, numero, created_at`,
           [
             numero, data.raison_sociale, data.ninea ?? null, data.rccm ?? null,
             data.domaine ?? null, data.adresse ?? null, data.telephone ?? null,
             data.email ?? null, data.contact_nom ?? null, data.message ?? null,
-            docRegistre, docFiscale, docComplementaire
+            docDemande, docNinea, docPresentation, docRegistre, docFiscale
           ]
         );
         inserted = result.rows[0];

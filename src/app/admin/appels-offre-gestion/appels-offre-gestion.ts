@@ -92,7 +92,8 @@ export class AppelsOffreGestionComponent implements OnInit {
       mode_passation: ligne.mode_passation ?? '',
       source_financement: ligne.source_financement ?? '',
       date_lancement: ligne.date_lancement ? ligne.date_lancement.substring(0, 10) : '',
-      date_limite: ligne.date_limite ? ligne.date_limite.substring(0, 10) : '',
+      // datetime-local attend « YYYY-MM-DDTHH:mm » → on tronque la chaîne ISO.
+      date_limite: ligne.date_limite ? ligne.date_limite.substring(0, 16) : '',
       statut: ligne.statut,
       is_published: !!ligne.is_published
     });

@@ -72,7 +72,7 @@
         </div>
         <div *ngIf="l.date_limite" class="flex gap-2">
           <dt class="font-medium text-gray-500">Date limite :</dt>
-          <dd [class.text-red-600]="!estEnCours(l)">{{ l.date_limite | date:'dd/MM/yyyy' }}</dd>
+          <dd [class.text-red-600]="!estEnCours(l)">{{ l.date_limite | date:'dd/MM/yyyy à HH:mm' }}</dd>
         </div>
       </dl>
 

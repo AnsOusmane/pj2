@@ -25,9 +25,11 @@ export interface Agrement {
   email: string | null;
   contact_nom: string | null;
   message: string | null;
+  doc_demande_url: string | null;
+  doc_ninea_url: string | null;
+  doc_presentation_url: string | null;
   doc_registre_url: string | null;
   doc_fiscale_url: string | null;
-  doc_complementaire_url: string | null;
   statut: AgrementStatut;
   note_traitement: string | null;
   updated_by_name?: string | null;

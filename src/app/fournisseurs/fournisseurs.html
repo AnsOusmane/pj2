@@ -111,22 +111,41 @@
 
       <!-- ====================== DOCUMENTS ====================== -->
       <div class="border-t border-gray-100 pt-5">
-        <h2 class="text-sm font-semibold text-gray-700 mb-3">Pièces justificatives (PDF)</h2>
+        <h2 class="text-sm font-semibold text-gray-700 mb-1">Pièces à fournir (PDF)</h2>
+        <p class="text-xs text-gray-400 mb-3">
+          Les trois premières pièces sont obligatoires (conformément à l'avis de passation des marchés).
+        </p>
         <div class="space-y-3">
           <div>
-            <label class="block text-sm text-gray-600 mb-1">Registre de commerce *</label>
-            <input id="f-reg" type="file" accept="application/pdf" (change)="onFileChange($event, 'registre')"
+            <label class="block text-sm text-gray-600 mb-1">Demande adressée au Directeur Général *</label>
+            <input id="f-demande" type="file" accept="application/pdf" (change)="onFileChange($event, 'demande')"
                    class="w-full border rounded-lg px-3 py-2 file:mr-3 file:px-3 file:py-1 file:rounded file:border-0 file:bg-green-50 file:text-green-700" />
           </div>
           <div>
-            <label class="block text-sm text-gray-600 mb-1">Attestation fiscale *</label>
-            <input id="f-fisc" type="file" accept="application/pdf" (change)="onFileChange($event, 'fiscale')"
+            <label class="block text-sm text-gray-600 mb-1">Copie du NINEA (en cours de validité) *</label>
+            <input id="f-ninea" type="file" accept="application/pdf" (change)="onFileChange($event, 'ninea')"
                    class="w-full border rounded-lg px-3 py-2 file:mr-3 file:px-3 file:py-1 file:rounded file:border-0 file:bg-green-50 file:text-green-700" />
           </div>
           <div>
-            <label class="block text-sm text-gray-600 mb-1">Pièce complémentaire (facultatif)</label>
-            <input id="f-comp" type="file" accept="application/pdf" (change)="onFileChange($event, 'complementaire')"
+            <label class="block text-sm text-gray-600 mb-1">Présentation de l'entreprise (catalogue / plaquette) *</label>
+            <input id="f-present" type="file" accept="application/pdf" (change)="onFileChange($event, 'presentation')"
                    class="w-full border rounded-lg px-3 py-2 file:mr-3 file:px-3 file:py-1 file:rounded file:border-0 file:bg-green-50 file:text-green-700" />
+          </div>
+
+          <div class="border-t border-dashed border-gray-100 pt-3">
+            <p class="text-xs text-gray-400 mb-2">Pièces complémentaires (facultatives)</p>
+            <div class="space-y-3">
+              <div>
+                <label class="block text-sm text-gray-600 mb-1">Registre de commerce (RCCM)</label>
+                <input id="f-reg" type="file" accept="application/pdf" (change)="onFileChange($event, 'registre')"
+                       class="w-full border rounded-lg px-3 py-2 file:mr-3 file:px-3 file:py-1 file:rounded file:border-0 file:bg-green-50 file:text-green-700" />
+              </div>
+              <div>
+                <label class="block text-sm text-gray-600 mb-1">Attestation fiscale</label>
+                <input id="f-fisc" type="file" accept="application/pdf" (change)="onFileChange($event, 'fiscale')"
+                       class="w-full border rounded-lg px-3 py-2 file:mr-3 file:px-3 file:py-1 file:rounded file:border-0 file:bg-green-50 file:text-green-700" />
+              </div>
+            </div>
           </div>
         </div>
         <p class="text-xs text-gray-400 mt-2">Formats acceptés : PDF, 10 Mo maximum par fichier.</p>

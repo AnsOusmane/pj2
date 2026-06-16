@@ -44,13 +44,11 @@ export class AppelsOffreComponent implements OnInit {
     });
   }
 
-  /** En cours = statut « ouvert » ET date limite non dépassée (auto-expiration). */
+  /** En cours = statut « ouvert » ET date/heure limite non dépassée (auto-expiration). */
   estEnCours(l: AppelOffre): boolean {
     if (l.statut === 'cloture') return false;
     if (!l.date_limite) return true;
-    const limite = new Date(l.date_limite);
-    limite.setHours(23, 59, 59, 999);
-    return limite.getTime() >= Date.now();
+    return new Date(l.date_limite).getTime() >= Date.now();
   }
 
   resetFiltres(): void {

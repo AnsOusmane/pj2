@@ -89,12 +89,16 @@
                   <div>
                     <p class="text-gray-500 mb-1">Documents :</p>
                     <div class="flex flex-wrap gap-2">
+                      <a *ngIf="l.doc_demande_url" [href]="l.doc_demande_url" target="_blank"
+                         class="text-blue-600 underline text-xs">📄 Demande DG</a>
+                      <a *ngIf="l.doc_ninea_url" [href]="l.doc_ninea_url" target="_blank"
+                         class="text-blue-600 underline text-xs">📄 NINEA</a>
+                      <a *ngIf="l.doc_presentation_url" [href]="l.doc_presentation_url" target="_blank"
+                         class="text-blue-600 underline text-xs">📄 Présentation</a>
                       <a *ngIf="l.doc_registre_url" [href]="l.doc_registre_url" target="_blank"
                          class="text-blue-600 underline text-xs">📄 Registre</a>
                       <a *ngIf="l.doc_fiscale_url" [href]="l.doc_fiscale_url" target="_blank"
                          class="text-blue-600 underline text-xs">📄 Attestation fiscale</a>
-                      <a *ngIf="l.doc_complementaire_url" [href]="l.doc_complementaire_url" target="_blank"
-                         class="text-blue-600 underline text-xs">📄 Pièce complémentaire</a>
                     </div>
                   </div>
 
