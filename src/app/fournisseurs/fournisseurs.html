@@ -151,9 +151,14 @@
         <p class="text-xs text-gray-400 mt-2">Formats acceptés : PDF, 10 Mo maximum par fichier.</p>
       </div>
 
+      <!-- Vérification anti-robot (Cloudflare Turnstile) -->
+      <div class="border-t border-gray-100 pt-5">
+        <div id="cf-turnstile"></div>
+      </div>
+
       <div class="pt-2">
-        <button type="submit" [disabled]="saving()"
-                class="w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition">
+        <button type="submit" [disabled]="saving() || !captchaToken()"
+                class="w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition">
           {{ saving() ? 'Envoi en cours…' : 'Déposer ma demande' }}
         </button>
       </div>

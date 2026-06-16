@@ -1,7 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, signal, AfterViewInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FournisseursService } from 'app/services/fournisseurs.service';
+import { environment } from 'environments/environment';
+
+declare global {
+  interface Window { turnstile?: any; __cfTurnstileOnload?: () => void; }
+}
 
 @Component({
   selector: 'app-fournisseurs',
@@ -10,13 +15,17 @@ import { FournisseursService } from 'app/services/fournisseurs.service';
   templateUrl: './fournisseurs.html',
   styleUrls: ['./fournisseurs.css']
 })
-export class FournisseursComponent {
+export class FournisseursComponent implements AfterViewInit, OnDestroy {
 
   readonly domaines = ['Fournitures', 'Travaux', 'Services', 'Prestations intellectuelles'];
 
   form: FormGroup;
   saving = signal(false);
   error = signal<string | null>(null);
+
+  // Anti-robot Cloudflare Turnstile
+  captchaToken = signal<string | null>(null);
+  private widgetId: string | null = null;
 
   // Écran de confirmation après dépôt réussi
   numeroConfirme = signal<string | null>(null);
@@ -30,7 +39,11 @@ export class FournisseursComponent {
   docRegistre = signal<File | null>(null);
   docFiscale = signal<File | null>(null);
 
-  constructor(private fb: FormBuilder, private service: FournisseursService) {
+  constructor(
+    private fb: FormBuilder,
+    private service: FournisseursService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.form = this.fb.group({
       raison_sociale: ['', Validators.required],
       ninea: [''],
@@ -41,6 +54,44 @@ export class FournisseursComponent {
       email: ['', Validators.email],
       contact_nom: [''],
       message: ['']
+    });
+  }
+
+  // ====================== TURNSTILE (anti-robot) ======================
+  ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return; // pas de window/document en SSR
+    this.loadTurnstile();
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId) && this.widgetId && window.turnstile) {
+      try { window.turnstile.remove(this.widgetId); } catch { /* no-op */ }
+    }
+  }
+
+  private loadTurnstile(): void {
+    // Le script déjà chargé (navigation interne) : on rend directement.
+    if (window.turnstile) { this.renderWidget(); return; }
+
+    // Sinon on injecte le script une seule fois, avec callback de rendu explicite.
+    window.__cfTurnstileOnload = () => this.renderWidget();
+    if (document.getElementById('cf-turnstile-script')) return;
+    const s = document.createElement('script');
+    s.id = 'cf-turnstile-script';
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__cfTurnstileOnload';
+    s.async = true;
+    s.defer = true;
+    document.head.appendChild(s);
+  }
+
+  private renderWidget(): void {
+    const el = document.getElementById('cf-turnstile');
+    if (!el || this.widgetId || !window.turnstile) return;
+    this.widgetId = window.turnstile.render('#cf-turnstile', {
+      sitekey: environment.turnstileSiteKey,
+      callback: (token: string) => this.captchaToken.set(token),
+      'expired-callback': () => this.captchaToken.set(null),
+      'error-callback': () => this.captchaToken.set(null)
     });
   }
 
@@ -67,6 +118,11 @@ export class FournisseursComponent {
       this.error.set('La demande au Directeur Général, la copie du NINEA, la présentation de l\'entreprise et le registre de commerce (PDF) sont obligatoires.');
       return;
     }
+    const token = this.captchaToken();
+    if (!token) {
+      this.error.set('Veuillez valider la vérification anti-robot avant d\'envoyer.');
+      return;
+    }
 
     this.saving.set(true);
     this.error.set(null);
@@ -83,13 +139,18 @@ export class FournisseursComponent {
     if (this.docRegistre()) fd.append('doc_registre', this.docRegistre() as File);
     if (this.docFiscale()) fd.append('doc_fiscale', this.docFiscale() as File);
 
-    this.service.deposer(fd).subscribe({
+    this.service.deposer(fd, token).subscribe({
       next: (res) => {
         this.saving.set(false);
         this.numeroConfirme.set(res.numero);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       },
-      error: (err) => { this.saving.set(false); this.error.set(err?.message || 'Erreur lors du dépôt.'); }
+      error: (err) => {
+        this.saving.set(false);
+        this.error.set(err?.message || 'Erreur lors du dépôt.');
+        // Le token Turnstile est à usage unique : on réarme le widget pour réessayer.
+        this.resetCaptcha();
+      }
     });
   }
 
@@ -105,6 +166,15 @@ export class FournisseursComponent {
       const el = document.getElementById('f-' + id) as HTMLInputElement | null;
       if (el) el.value = '';
     });
+    this.resetCaptcha();
+  }
+
+  /** Réarme le widget Turnstile (token à usage unique). */
+  private resetCaptcha(): void {
+    this.captchaToken.set(null);
+    if (isPlatformBrowser(this.platformId) && this.widgetId && window.turnstile) {
+      try { window.turnstile.reset(this.widgetId); } catch { /* no-op */ }
+    }
   }
 
   isInvalid(field: string): boolean {

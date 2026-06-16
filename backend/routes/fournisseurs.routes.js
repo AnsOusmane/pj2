@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 const { makeUpload, pdfOnly } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 const celluleOrAdmin = require('../middleware/cellule.middleware');
+const verifyTurnstile = require('../middleware/turnstile.middleware');
 
 const upload = makeUpload('fournisseurs', { fileFilter: pdfOnly });
 
@@ -61,7 +62,7 @@ async function nextNumero() {
 //   - doc_presentation : présentation entreprise/plaquette (OBLIGATOIRE)
 //   - doc_registre     : registre de commerce             (OBLIGATOIRE)
 //   - doc_fiscale      : attestation fiscale              (facultatif, bonus)
-router.post('/', depotLimiter, upload.fields([
+router.post('/', depotLimiter, verifyTurnstile, upload.fields([
   { name: 'doc_demande', maxCount: 1 },
   { name: 'doc_ninea', maxCount: 1 },
   { name: 'doc_presentation', maxCount: 1 },
