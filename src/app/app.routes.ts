@@ -20,6 +20,10 @@ import { AssuranceMaladieComponent } from './assurance-maladie/assurance-maladie
 import { AppelsOffreComponent } from './appels-offre/appels-offre';
 import { CarriereComponent } from './carriere/carriere';
 import { DecretsComponent } from './decrets/decrets';
+import { PpmPublicComponent } from './ppm-public/ppm-public';
+import { MarchesPublicsComponent } from './marches-publics/marches-publics';
+import { AvisAttributionComponent } from './avis-attribution/avis-attribution';
+import { FournisseursComponent } from './fournisseurs/fournisseurs';
 
 // Admin Components
 import { AdminComponent } from './admin/admin';
@@ -41,6 +45,10 @@ import { UserEditForm } from './admin/user-edit/user-edit';
 // import { VideosForm } from './admin/videos-form/videos-form';
 import { TestimonialsFormComponent } from './admin/testimonials-form/testimonials-form';
 import { ActualitesFormComponent } from './admin/actualites-form/actualites-form';
+import { PpmGestionComponent } from './admin/ppm-gestion/ppm-gestion';
+import { AppelsOffreGestionComponent } from './admin/appels-offre-gestion/appels-offre-gestion';
+import { AvisAttributionGestionComponent } from './admin/avis-attribution-gestion/avis-attribution-gestion';
+import { FournisseursGestionComponent } from './admin/fournisseurs-gestion/fournisseurs-gestion';
 
 // Guards
 import { AuthGuard } from './guards/auth.guard';
@@ -69,7 +77,11 @@ export const routes: Routes = [
   { path: 'dialyse', component: DialyseComponent },
   { path: 'cesarienne', component: CesarienneComponent },
   { path: 'assurance-maladie', component: AssuranceMaladieComponent },
-  { path: 'appels-offre', component: AppelsOffreComponent },
+  { path: 'appels-offre', component: MarchesPublicsComponent },
+  { path: 'appels-offre/ppm', component: PpmPublicComponent },
+  { path: 'appels-offre/avis', component: AppelsOffreComponent },
+  { path: 'appels-offre/attributions', component: AvisAttributionComponent },
+  { path: 'appels-offre/fournisseurs', component: FournisseursComponent },
   { path: 'carriere', component: CarriereComponent },
   { path: 'login', component: LoginForm },
 
@@ -88,6 +100,10 @@ export const routes: Routes = [
       { path: 'guides-form', component: GuidesForm },
       { path: 'audit-manuals-form', component: AuditManualsForm },
       { path: 'offres-emploi-form', component: OffresEmploiForm },
+      { path: 'ppm-gestion', component: PpmGestionComponent },
+      { path: 'appels-offre-gestion', component: AppelsOffreGestionComponent },
+      { path: 'avis-attribution-gestion', component: AvisAttributionGestionComponent },
+      { path: 'fournisseurs-gestion', component: FournisseursGestionComponent },
       { path: 'communiques-form', component: CommuniqueFormComponent },
       { path: 'banque_d_image-form', component: BanqueImagesFormComponent },
 

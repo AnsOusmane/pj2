@@ -10,14 +10,14 @@ const createUserSchema = z.object({
   fullname: z.string().min(2, "Le nom complet doit contenir au moins 2 caractères"),
   email: z.string().email("Email invalide").trim().toLowerCase(),
   password: z.string().min(8, "Le mot de passe doit contenir au moins 8 caractères"),
-  role: z.enum(['user', 'admin']).optional().default('user'),
+  role: z.enum(['user', 'admin', 'cellule-pm']).optional().default('user'),
   is_active: z.boolean().optional().default(true)
 });
 
 const updateUserSchema = z.object({
   fullname: z.string().min(2).optional(),
   email: z.string().email().trim().toLowerCase().optional(),
-  role: z.enum(['user', 'admin']).optional(),
+  role: z.enum(['user', 'admin', 'cellule-pm']).optional(),
   is_active: z.boolean().optional()
 });
 

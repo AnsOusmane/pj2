@@ -5,11 +5,17 @@
 /tmp
 /out-tsc
 /bazel-out
+*.bundle.js
+*.chunk.js
 
 # Node
 /node_modules
 npm-debug.log
 yarn-error.log
+
+# Build cache
+/.angular/cache
+/.angular
 
 # IDEs and editors
 .idea/
@@ -42,3 +48,13 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 .vercel
+
+# Upload files and media (too large)
+/backend/uploads/**
+/src/assets/videos/**
+/src/assets/images/**
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm

@@ -58,4 +58,10 @@ function makeUpload(folder, options = {}) {
   });
 }
 
-module.exports = { cloudinary, makeUpload };
+// fileFilter multer réutilisable : n'accepte que les PDF.
+// On rejette silencieusement (cb(null, false)) plutôt que de lever une erreur,
+// pour ne pas casser le flux multer ; la route vérifie ensuite la présence
+// des fichiers requis et renvoie un message clair.
+const pdfOnly = (req, file, cb) => cb(null, file.mimetype === 'application/pdf');
+
+module.exports = { cloudinary, makeUpload, pdfOnly };

@@ -1,56 +1,60 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AppelsOffreService, AppelOffre } from 'app/services/appels-offre.service';
 
 @Component({
   selector: 'app-appels-offre',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './appels-offre.html',
   styleUrls: ['./appels-offre.css']
 })
-export class AppelsOffreComponent {
+export class AppelsOffreComponent implements OnInit {
 
-  selectedKey: string | null = null;
-  selected: string | null = null;
+  readonly typesMarche = ['Fournitures', 'Travaux', 'Services', 'Prestations intellectuelles'];
 
-  data: any = {
-    ao1: `
-      <h2 class="text-2xl font-bold mb-4">Fourniture de matériel médical</h2>
-      <p><strong>Objet :</strong> Acquisition d’équipements médicaux destinés aux postes et centres de santé.</p>
-      <p><strong>Deadline :</strong> 15 Février 2025</p>
-      <p><strong>Documents requis :</strong></p>
-      <ul class="list-disc ml-6">
-        <li>Registre de commerce</li>
-        <li>Attestation fiscale</li>
-        <li>Catalogue technique</li>
-      </ul>
-    `,
-    ao2: `
-      <h2 class="text-2xl font-bold mb-4">Construction d’un centre de dialyse</h2>
-      <p><strong>Objet :</strong> Projet de réalisation et équipement d’un centre de dialyse régional.</p>
-      <p><strong>Deadline :</strong> 28 Février 2025</p>
-      <p><strong>Pièces exigées :</strong></p>
-      <ul class="list-disc ml-6">
-        <li>Plan architectural</li>
-        <li>Dossier technique complet</li>
-        <li>Attestation CNSS & IPRES</li>
-      </ul>
-    `,
-    ao3: `
-      <h2 class="text-2xl font-bold mb-4">Maintenance des équipements biomédicaux</h2>
-      <p><strong>Objet :</strong> Maintenance préventive et corrective des appareils hospitaliers.</p>
-      <p><strong>Deadline :</strong> 10 Mars 2025</p>
-      <p><strong>Conditions :</strong></p>
-      <ul class="list-disc ml-6">
-        <li>Expérience ≥ 3 ans</li>
-        <li>Techniciens certifiés</li>
-        <li>Attestation de capacité financière</li>
-      </ul>
-    `
-  };
+  lignes = signal<AppelOffre[]>([]);
+  loading = signal(false);
+  error = signal<string | null>(null);
 
-  showContent(key: string) {
-    this.selectedKey = key;
-    this.selected = this.data[key];
+  // Filtres
+  filtreType = signal<string>('');
+  // 'tous' | 'ouvert' (en cours) | 'cloture' (clôturés/expirés)
+  filtreEtat = signal<string>('tous');
+
+  lignesFiltrees = computed(() => {
+    const type = this.filtreType();
+    const etat = this.filtreEtat();
+    return this.lignes().filter(l => {
+      if (type !== '' && l.type_marche !== type) return false;
+      if (etat === 'ouvert' && !this.estEnCours(l)) return false;
+      if (etat === 'cloture' && this.estEnCours(l)) return false;
+      return true;
+    });
+  });
+
+  constructor(private aoService: AppelsOffreService) {}
+
+  ngOnInit(): void {
+    this.loading.set(true);
+    this.aoService.getAll().subscribe({
+      next: (data) => { this.lignes.set(data); this.loading.set(false); },
+      error: (err) => { this.error.set(err?.message || 'Erreur de chargement'); this.loading.set(false); }
+    });
+  }
+
+  /** En cours = statut « ouvert » ET date limite non dépassée (auto-expiration). */
+  estEnCours(l: AppelOffre): boolean {
+    if (l.statut === 'cloture') return false;
+    if (!l.date_limite) return true;
+    const limite = new Date(l.date_limite);
+    limite.setHours(23, 59, 59, 999);
+    return limite.getTime() >= Date.now();
+  }
+
+  resetFiltres(): void {
+    this.filtreType.set('');
+    this.filtreEtat.set('tous');
   }
 }

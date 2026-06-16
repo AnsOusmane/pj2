@@ -1,0 +1,178 @@
+<div class="p-4 md:p-6 max-w-7xl mx-auto">
+
+  <!-- En-tête -->
+  <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">Avis d'attribution</h1>
+      <p class="text-sm text-gray-500">Gestion des résultats d'attribution — cellule de passation des marchés</p>
+    </div>
+    <button (click)="openCreate()"
+            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition">
+      + Ajouter un avis d'attribution
+    </button>
+  </div>
+
+  <!-- Messages -->
+  <div *ngIf="success()" class="mb-4 px-4 py-3 rounded-lg bg-green-50 text-green-700 border border-green-200">
+    {{ success() }}
+  </div>
+  <div *ngIf="error()" class="mb-4 px-4 py-3 rounded-lg bg-red-50 text-red-700 border border-red-200">
+    {{ error() }}
+  </div>
+
+  <!-- Panneau de formulaire (ajout / édition) -->
+  <form *ngIf="showForm()" [formGroup]="form" (ngSubmit)="save()"
+        class="mb-6 bg-white border border-gray-200 rounded-xl shadow-sm p-5">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">
+      {{ editingId() === 'new' ? 'Nouvel avis d\'attribution' : 'Modifier l\'avis d\'attribution' }}
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Objet -->
+      <div class="lg:col-span-2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Objet du marché *</label>
+        <input type="text" formControlName="objet"
+               class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none"
+               [class.border-red-400]="isInvalid('objet')" />
+        <p *ngIf="isInvalid('objet')" class="text-xs text-red-500 mt-1">L'objet est requis.</p>
+      </div>
+
+      <!-- Référence -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Référence</label>
+        <input type="text" formControlName="reference"
+               class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none" />
+      </div>
+
+      <!-- Attributaire -->
+      <div class="lg:col-span-2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Attributaire (titulaire) *</label>
+        <input type="text" formControlName="attributaire"
+               class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none"
+               [class.border-red-400]="isInvalid('attributaire')" />
+        <p *ngIf="isInvalid('attributaire')" class="text-xs text-red-500 mt-1">L'attributaire est requis.</p>
+      </div>
+
+      <!-- Montant -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Montant attribué (FCFA)</label>
+        <input type="number" min="0" step="1" formControlName="montant"
+               class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none" />
+      </div>
+
+      <!-- Type de marché -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Type de marché</label>
+        <select formControlName="type_marche"
+                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none">
+          <option value="">—</option>
+          <option *ngFor="let t of typesMarche" [value]="t">{{ t }}</option>
+        </select>
+      </div>
+
+      <!-- Mode de passation -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Mode de passation</label>
+        <select formControlName="mode_passation"
+                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none">
+          <option value="">—</option>
+          <option *ngFor="let m of modesPassation" [value]="m">{{ m }}</option>
+        </select>
+      </div>
+
+      <!-- Date d'attribution -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Date d'attribution</label>
+        <input type="date" formControlName="date_attribution"
+               class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none" />
+      </div>
+
+      <!-- Fichier PDF de l'avis -->
+      <div class="lg:col-span-2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Avis d'attribution (PDF)</label>
+        <input id="attr-file" type="file" accept="application/pdf" (change)="onFileChange($event)"
+               class="w-full border rounded-lg px-3 py-2 file:mr-3 file:px-3 file:py-1 file:rounded file:border-0 file:bg-green-50 file:text-green-700" />
+        <p *ngIf="selectedFileName()" class="text-xs text-green-600 mt-1">📎 {{ selectedFileName() }}</p>
+        <p *ngIf="!selectedFileName() && existingFileUrl()" class="text-xs text-gray-500 mt-1">
+          Fichier actuel conservé —
+          <a [href]="existingFileUrl()" target="_blank" class="text-blue-600 underline">voir l'avis</a>
+        </p>
+      </div>
+
+      <!-- Publication -->
+      <div class="flex items-center gap-2 mt-6">
+        <input type="checkbox" id="is_published" formControlName="is_published"
+               class="h-4 w-4 text-green-600 rounded" />
+        <label for="is_published" class="text-sm font-medium text-gray-700">
+          Publier (visible par le public)
+        </label>
+      </div>
+    </div>
+
+    <div class="flex gap-3 mt-5">
+      <button type="submit" [disabled]="saving()"
+              class="bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white px-5 py-2 rounded-lg font-medium transition">
+        {{ saving() ? 'Enregistrement…' : 'Enregistrer' }}
+      </button>
+      <button type="button" (click)="cancel()"
+              class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg font-medium transition">
+        Annuler
+      </button>
+    </div>
+  </form>
+
+  <!-- Tableau -->
+  <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-x-auto">
+    <table class="w-full text-sm text-left">
+      <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+        <tr>
+          <th class="px-4 py-3">Objet</th>
+          <th class="px-4 py-3">Attributaire</th>
+          <th class="px-4 py-3 text-right">Montant (FCFA)</th>
+          <th class="px-4 py-3">Date</th>
+          <th class="px-4 py-3">Avis</th>
+          <th class="px-4 py-3">Publié</th>
+          <th class="px-4 py-3">Dernière modif.</th>
+          <th class="px-4 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <tr *ngIf="loading()">
+          <td colspan="8" class="px-4 py-8 text-center text-gray-400">Chargement…</td>
+        </tr>
+        <tr *ngIf="!loading() && lignes().length === 0">
+          <td colspan="8" class="px-4 py-8 text-center text-gray-400">Aucun avis d'attribution. Cliquez sur « Ajouter un avis d'attribution ».</td>
+        </tr>
+        <tr *ngFor="let l of lignes()" class="hover:bg-gray-50">
+          <td class="px-4 py-3 font-medium text-gray-800 max-w-xs">{{ l.objet }}</td>
+          <td class="px-4 py-3 text-gray-600">{{ l.attributaire }}</td>
+          <td class="px-4 py-3 text-right text-gray-600">
+            {{ l.montant != null ? (l.montant | number:'1.0-0') : '—' }}
+          </td>
+          <td class="px-4 py-3 text-gray-600">
+            {{ l.date_attribution ? (l.date_attribution | date:'dd/MM/yyyy') : '—' }}
+          </td>
+          <td class="px-4 py-3">
+            <a *ngIf="l.file_url" [href]="l.file_url" target="_blank" class="text-blue-600 underline">PDF</a>
+            <span *ngIf="!l.file_url" class="text-gray-400">—</span>
+          </td>
+          <td class="px-4 py-3">
+            <button (click)="togglePublish(l)" class="text-xs underline"
+                    [class.text-green-600]="l.is_published"
+                    [class.text-gray-400]="!l.is_published">
+              {{ l.is_published ? 'Oui' : 'Non' }}
+            </button>
+          </td>
+          <td class="px-4 py-3 text-gray-500 text-xs">
+            <span *ngIf="l.updated_by_name">{{ l.updated_by_name }}<br /></span>
+            {{ l.updated_at | date:'dd/MM/yyyy HH:mm' }}
+          </td>
+          <td class="px-4 py-3 text-right whitespace-nowrap">
+            <button (click)="openEdit(l)" class="text-blue-600 hover:underline mr-3">Modifier</button>
+            <button (click)="remove(l)" class="text-red-600 hover:underline">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

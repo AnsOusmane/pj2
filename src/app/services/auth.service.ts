@@ -11,7 +11,7 @@ export interface LoginResponse {
     id: number;
     fullname: string;
     email: string;
-    role: 'admin' | 'user';
+    role: 'admin' | 'user' | 'cellule-pm';
   };
 }
 
@@ -19,7 +19,7 @@ export interface User {
   id: number;
   fullname: string;
   email: string;
-  role: 'admin' | 'user';
+  role: 'admin' | 'user' | 'cellule-pm';
 }
 
 @Injectable({ providedIn: 'root' })

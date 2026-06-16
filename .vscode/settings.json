@@ -1,0 +1,29 @@
+{
+  "files.exclude": {
+    "dist/": true,
+    ".angular/": true,
+    "backend/uploads/": true,
+    "src/assets/videos/": true,
+    "src/assets/images/": true,
+    "**/*.bundle.js": true,
+    "**/*.chunk.js": true,
+    "**/node_modules/": true,
+    "**/*.mp4": true,
+    "**/*.avi": true,
+    "**/*.mov": true
+  },
+  "search.exclude": {
+    "dist/": true,
+    ".angular/": true,
+    "backend/uploads/": true,
+    "src/assets/videos/": true,
+    "node_modules/": true,
+    "**/*.bundle.js": true,
+    "**/*.mp4": true
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false
+  }
+}

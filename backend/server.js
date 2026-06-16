@@ -22,6 +22,10 @@ const usersRouter = require('./routes/users.routes');
 const testimonialsRouter = require('./routes/testimonials.routes');
 const actualitesRouter = require('./routes/actualites.routes');
 const videosRouter = require('./routes/videos.routes');
+const ppmRouter = require('./routes/ppm.routes');
+const appelsOffreRouter = require('./routes/appels-offre.routes');
+const avisAttributionRouter = require('./routes/avis-attribution.routes');
+const fournisseursRouter = require('./routes/fournisseurs.routes');
 
 const app = express();
 
@@ -111,6 +115,10 @@ app.use('/api/users', usersRouter);
 app.use('/api/testimonials', testimonialsRouter);
 app.use('/api/actualites', actualitesRouter);
 app.use('/api/videos', videosRouter);
+app.use('/api/ppm', ppmRouter);
+app.use('/api/appels-offre', appelsOffreRouter);
+app.use('/api/avis-attribution', avisAttributionRouter);
+app.use('/api/fournisseurs', fournisseursRouter);
 
 app.get('/api/test', async (req, res) => {
   try {
