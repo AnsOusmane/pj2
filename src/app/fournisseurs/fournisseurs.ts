@@ -63,8 +63,8 @@ export class FournisseursComponent {
 
   submit(): void {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
-    if (!this.docDemande() || !this.docNinea() || !this.docPresentation()) {
-      this.error.set('La demande au Directeur Général, la copie du NINEA et la présentation de l\'entreprise (PDF) sont obligatoires.');
+    if (!this.docDemande() || !this.docNinea() || !this.docPresentation() || !this.docRegistre()) {
+      this.error.set('La demande au Directeur Général, la copie du NINEA, la présentation de l\'entreprise et le registre de commerce (PDF) sont obligatoires.');
       return;
     }
 

@@ -59,7 +59,7 @@ async function nextNumero() {
 //   - doc_demande      : demande formelle au DG          (OBLIGATOIRE)
 //   - doc_ninea        : copie du NINEA                   (OBLIGATOIRE)
 //   - doc_presentation : présentation entreprise/plaquette (OBLIGATOIRE)
-//   - doc_registre     : registre de commerce             (facultatif, bonus)
+//   - doc_registre     : registre de commerce             (OBLIGATOIRE)
 //   - doc_fiscale      : attestation fiscale              (facultatif, bonus)
 router.post('/', depotLimiter, upload.fields([
   { name: 'doc_demande', maxCount: 1 },
@@ -77,9 +77,9 @@ router.post('/', depotLimiter, upload.fields([
     const docRegistre = req.files?.doc_registre?.[0]?.path ?? null;
     const docFiscale = req.files?.doc_fiscale?.[0]?.path ?? null;
 
-    if (!docDemande || !docNinea || !docPresentation) {
+    if (!docDemande || !docNinea || !docPresentation || !docRegistre) {
       return res.status(400).json({
-        message: 'La demande adressée au Directeur Général, la copie du NINEA et la présentation de l\'entreprise (PDF) sont obligatoires.'
+        message: 'La demande au Directeur Général, la copie du NINEA, la présentation de l\'entreprise et le registre de commerce (PDF) sont obligatoires.'
       });
     }
 
