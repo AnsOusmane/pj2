@@ -2,11 +2,12 @@ import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppelsOffreService, AppelOffre } from 'app/services/appels-offre.service';
+import { BackButtonComponent } from 'app/shared/back-button/back-button';
 
 @Component({
   selector: 'app-appels-offre',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BackButtonComponent],
   templateUrl: './appels-offre.html',
   styleUrls: ['./appels-offre.css']
 })

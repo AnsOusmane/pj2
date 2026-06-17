@@ -2,11 +2,12 @@ import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PpmService, Ppm, PpmStatut } from 'app/services/ppm.service';
+import { BackButtonComponent } from 'app/shared/back-button/back-button';
 
 @Component({
   selector: 'app-ppm-public',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BackButtonComponent],
   templateUrl: './ppm-public.html',
   styleUrls: ['./ppm-public.css']
 })

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { BackButtonComponent } from 'app/shared/back-button/back-button';
 
 interface Rubrique {
   titre: string;
@@ -12,7 +13,7 @@ interface Rubrique {
 @Component({
   selector: 'app-marches-publics',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, BackButtonComponent],
   templateUrl: './marches-publics.html',
   styleUrls: ['./marches-publics.css']
 })

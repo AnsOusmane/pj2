@@ -2,11 +2,12 @@ import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AvisAttributionService, AvisAttribution } from 'app/services/avis-attribution.service';
+import { BackButtonComponent } from 'app/shared/back-button/back-button';
 
 @Component({
   selector: 'app-avis-attribution',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BackButtonComponent],
   templateUrl: './avis-attribution.html',
   styleUrls: ['./avis-attribution.css']
 })

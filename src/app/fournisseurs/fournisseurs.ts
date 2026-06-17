@@ -2,6 +2,7 @@ import { Component, signal, AfterViewInit, OnDestroy, Inject, PLATFORM_ID } from
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FournisseursService } from 'app/services/fournisseurs.service';
+import { BackButtonComponent } from 'app/shared/back-button/back-button';
 import { environment } from 'environments/environment';
 
 declare global {
@@ -11,7 +12,7 @@ declare global {
 @Component({
   selector: 'app-fournisseurs',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, BackButtonComponent],
   templateUrl: './fournisseurs.html',
   styleUrls: ['./fournisseurs.css']
 })
