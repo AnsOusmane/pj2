@@ -7,7 +7,6 @@ const { makeUpload, pdfOnly } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 const celluleOrAdmin = require('../middleware/cellule.middleware');
 const verifyTurnstile = require('../middleware/turnstile.middleware');
-const { sendNotification } = require('../config/mailer');
 
 const upload = makeUpload('fournisseurs', { fileFilter: pdfOnly });
 
@@ -54,33 +53,6 @@ async function nextNumero() {
   );
   const chrono = String(rows[0].prochain).padStart(4, '0');
   return `AGR-${annee}-${chrono}`;
-}
-
-// Notifie l'agence (via Web3Forms) d'un nouveau dépôt, sans bloquer la réponse HTTP.
-// Le fournisseur, lui, reçoit son numéro de dossier sur l'écran de confirmation.
-async function notifierDepot(dossier, data) {
-  const dateFr = new Date(dossier.created_at).toLocaleString('fr-FR', {
-    dateStyle: 'long', timeStyle: 'short', timeZone: 'Africa/Dakar'
-  });
-
-  await sendNotification({
-    subject: `🆕 Nouvelle demande d'agrément — ${data.raison_sociale} (${dossier.numero})`,
-    from_name: 'Espace Fournisseurs SEN-CSU',
-    replyto: data.email || undefined,
-    fields: {
-      'N° dossier': dossier.numero,
-      'Raison sociale': data.raison_sociale,
-      'Domaine': data.domaine || '-',
-      'NINEA': data.ninea || '-',
-      'RCCM': data.rccm || '-',
-      'Personne à contacter': data.contact_nom || '-',
-      'Téléphone': data.telephone || '-',
-      'Email': data.email || '-',
-      'Adresse': data.adresse || '-',
-      'Message': data.message || '-',
-      'Déposé le': dateFr,
-    },
-  });
 }
 
 // ====================== POST PUBLIC (dépôt sans compte) ======================
@@ -141,11 +113,6 @@ router.post('/', depotLimiter, verifyTurnstile, upload.fields([
     if (!inserted) {
       return res.status(500).json({ message: 'Impossible de générer le numéro de dossier, réessayez.' });
     }
-
-    // Notification à l'agence en arrière-plan : on ne fait pas attendre/échouer
-    // le dépôt si Web3Forms est lent ou indisponible.
-    notifierDepot(inserted, data)
-      .catch((e) => console.error('Notification dépôt non envoyée:', e.message));
 
     res.status(201).json({
       success: true,

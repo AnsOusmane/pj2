@@ -41,12 +41,47 @@ export interface Agrement {
 export class FournisseursService {
   private apiUrl = `${environment.apiBaseUrl}/fournisseurs`;
 
+  // Notification à l'agence via Web3Forms (même service que le formulaire de contact).
+  // La clé d'accès Web3Forms est publique par conception (safe à exposer côté front).
+  private readonly web3formsUrl = 'https://api.web3forms.com/submit';
+  private readonly web3formsKey = '41427ced-4d84-4f59-abe5-86cdbe354d51';
+
   constructor(private http: HttpClient) {}
 
   /** Dépôt public d'une demande d'agrément (FormData + token anti-robot Turnstile). */
   deposer(data: FormData, captchaToken: string): Observable<DepotResponse> {
     const headers = new HttpHeaders({ 'CF-Turnstile-Token': captchaToken });
     return this.http.post<DepotResponse>(this.apiUrl, data, { headers }).pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Prévient l'agence d'un nouveau dépôt (best-effort, ne bloque pas la confirmation).
+   * N'utilise PAS handleError : un échec de notif ne doit pas remonter comme une erreur de dépôt.
+   */
+  notifierAgence(p: {
+    numero: string; raison_sociale: string;
+    domaine?: string | null; ninea?: string | null; rccm?: string | null;
+    contact_nom?: string | null; telephone?: string | null; email?: string | null;
+    adresse?: string | null; message?: string | null;
+  }): Observable<unknown> {
+    const payload: Record<string, string> = {
+      access_key: this.web3formsKey,
+      subject: `🆕 Nouvelle demande d'agrément — ${p.raison_sociale} (${p.numero})`,
+      from_name: 'Espace Fournisseurs SEN-CSU',
+      'N° dossier': p.numero,
+      'Raison sociale': p.raison_sociale,
+      'Domaine': p.domaine || '-',
+      'NINEA': p.ninea || '-',
+      'RCCM': p.rccm || '-',
+      'Personne à contacter': p.contact_nom || '-',
+      'Téléphone': p.telephone || '-',
+      'Email': p.email || '-',
+      'Adresse': p.adresse || '-',
+      'Message': p.message || '-',
+    };
+    if (p.email) payload['replyto'] = p.email;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    return this.http.post(this.web3formsUrl, payload, { headers });
   }
 
   /** Liste de gestion (cellule/admin), filtre statut optionnel. */

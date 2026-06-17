@@ -143,6 +143,16 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
       next: (res) => {
         this.saving.set(false);
         this.numeroConfirme.set(res.numero);
+
+        // Notifie l'agence (Web3Forms) — best-effort : un échec n'impacte pas la confirmation.
+        this.service.notifierAgence({
+          numero: res.numero,
+          raison_sociale: v.raison_sociale,
+          domaine: v.domaine, ninea: v.ninea, rccm: v.rccm,
+          contact_nom: v.contact_nom, telephone: v.telephone, email: v.email,
+          adresse: v.adresse, message: v.message
+        }).subscribe({ error: (e) => console.error('Notification agence non envoyée :', e) });
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
       },
       error: (err) => {
