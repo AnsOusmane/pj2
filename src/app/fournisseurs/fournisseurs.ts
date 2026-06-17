@@ -46,15 +46,16 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.form = this.fb.group({
-      raison_sociale: ['', Validators.required],
-      ninea: [''],
-      rccm: [''],
-      domaine: [''],
-      adresse: [''],
-      telephone: [''],
-      email: ['', Validators.email],
-      contact_nom: [''],
-      message: ['']
+      raison_sociale: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
+      // Facultatifs : les validateurs de format ne s'appliquent que si le champ est rempli.
+      ninea: ['', [Validators.pattern(/^[A-Za-z0-9]+$/), Validators.maxLength(50)]],
+      rccm: ['', Validators.maxLength(100)],
+      domaine: ['', Validators.required],
+      adresse: ['', Validators.maxLength(255)],
+      telephone: ['', [Validators.required, Validators.pattern(/^[+]?[0-9\s().-]{7,20}$/)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
+      contact_nom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
+      message: ['', Validators.maxLength(2000)]
     });
   }
 
@@ -114,7 +115,11 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
   }
 
   submit(): void {
-    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.error.set('Veuillez corriger les champs en rouge avant d\'envoyer.');
+      return;
+    }
     if (!this.docDemande() || !this.docNinea() || !this.docPresentation() || !this.docRegistre()) {
       this.error.set('La demande au Directeur Général, la copie du NINEA, la présentation de l\'entreprise et le registre de commerce (PDF) sont obligatoires.');
       return;
