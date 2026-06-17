@@ -48,8 +48,10 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
     this.form = this.fb.group({
       raison_sociale: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
       // Facultatifs : les validateurs de format ne s'appliquent que si le champ est rempli.
-      ninea: ['', [Validators.pattern(/^[A-Za-z0-9]+$/), Validators.maxLength(50)]],
-      rccm: ['', Validators.maxLength(100)],
+      // NINEA : 7 à 20 caractères (chiffres, lettres, espaces) — ex. « 0040228 2G3 ».
+      ninea: ['', Validators.pattern(/^[A-Za-z0-9 ]{7,20}$/)],
+      // RCCM : format OHADA SN-VVV-AAAA-T-NNNNN — ex. « SN-DKR-2020-B-12345 » (séparateurs - . ou espace).
+      rccm: ['', Validators.pattern(/^SN[-. ][A-Za-z]{2,4}[-. ]\d{4}[-. ][A-Za-z][-. ]\d{1,6}$/i)],
       domaine: ['', Validators.required],
       adresse: ['', Validators.maxLength(255)],
       telephone: ['', [Validators.required, Validators.pattern(/^[+]?[0-9\s().-]{7,20}$/)]],
