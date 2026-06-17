@@ -52,7 +52,7 @@ export class App implements AfterViewInit {
   ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    /* 🎉 VOEUX NOUVEL AN */
+    /* VOEUX NOUVEL AN */
     const alreadyShown = localStorage.getItem('newYear2026Shown');
 
     if (!alreadyShown) {
@@ -64,7 +64,7 @@ export class App implements AfterViewInit {
       }, 4500);
     }
 
-    /* ⏳ LOADER */
+    /* LOADER */
     setTimeout(() => {
       if (this.logo) {
         this.logo.nativeElement.classList.add('animate-grow-logo');

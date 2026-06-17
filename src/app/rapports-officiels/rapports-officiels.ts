@@ -68,7 +68,7 @@ export class RapportsOfficielsComponent {
     }
   ];
 
-  // 🔍 Filtres combinés (catégorie + recherche)
+  // Filtres combinés (catégorie + recherche)
   get filteredRapports() {
     return this.rapports.filter(r =>
       (this.selectedCat === 'Tous' || r.categorie === this.selectedCat) &&
@@ -84,12 +84,12 @@ export class RapportsOfficielsComponent {
     window.open(path, '_blank');
   }
 
-  // 🟢 Ouvrir modal
+  // Ouvrir modal
   openDetails(r: Rapport) {
     this.selectedRapport = r;
   }
 
-  // 🔴 Fermer modal
+  // Fermer modal
   closeModal() {
     this.selectedRapport = null;
   }

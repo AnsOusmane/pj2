@@ -21,17 +21,17 @@ export class ActualitesService {
 
   constructor(private http: HttpClient) {}
 
-  // 📌 GET
+  // GET
   getAllActualites(): Observable<Actualite[]> {
     return this.http.get<Actualite[]>(this.apiUrl);
   }
 
-  // 📌 POST JSON (sans image upload)
+  // POST JSON (sans image upload)
   createActualite(payload: Actualite): Observable<Actualite> {
     return this.http.post<Actualite>(this.apiUrl, payload);
   }
 
-  // 📌 POST MULTIPART (AVEC IMAGE UPLOAD)
+  // POST MULTIPART (AVEC IMAGE UPLOAD)
   createActualiteWithUpload(formData: FormData): Observable<Actualite> {
     return this.http.post<Actualite>(this.apiUrl, formData);
   }

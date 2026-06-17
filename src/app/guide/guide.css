@@ -124,7 +124,7 @@
   font-size: 1.05rem;
 }
 
-/* 📱 IPHONE DANS LE HEADER — réduit de 20% */
+/* IPHONE DANS LE HEADER — réduit de 20% */
 .iphone {
   width: 248px;    /* 80% de 310px */
   height: 480px;   /* 80% de 600px */

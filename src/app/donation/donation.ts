@@ -40,7 +40,7 @@ export class DonationComponent {
     this.customMonthly = null;
   }
 
-  /** ✔️ Fermeture fiable sur clic extérieur */
+  /** Fermeture fiable sur clic extérieur */
   onBackdropClick(event: MouseEvent) {
     if (event.target === event.currentTarget) {
       this.close.emit();

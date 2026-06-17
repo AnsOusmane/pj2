@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 interface CesareItem {
   title: string;
-  icon: string;
   content: string[];
 }
 
@@ -18,7 +17,6 @@ export class CesarienneComponent {
   cesarienneData: CesareItem[] = [
     {
       title: "Éligibilité",
-      icon: "🤰",
       content: [
         "Toute femme sénégalaise en état de grossesse",
         "Cas nécessitant une césarienne : obligatoire, de nécessité ou de prudence"
@@ -26,7 +24,6 @@ export class CesarienneComponent {
     },
     {
       title: "Structures concernées",
-      icon: "🏥",
       content: [
         "Tous les hôpitaux publics du pays",
         "Centres de santé habilités",
@@ -37,7 +34,6 @@ export class CesarienneComponent {
     },
     {
       title: "Prise en charge gratuite",
-      icon: "💚",
       content: [
         "Acte opératoire de la césarienne",
         "Bilan pré-opératoire",

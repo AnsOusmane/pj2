@@ -60,7 +60,7 @@ export class NosServicesRegionauxComponent implements AfterViewInit {
   }
 
   //--------------------------------------------------------------------
-  // 📍 Initialisation carte
+  // Initialisation carte
   //--------------------------------------------------------------------
   private initMap() {
     this.map = L.map('map').setView([14.7, -14.7], 6);
@@ -70,7 +70,7 @@ export class NosServicesRegionauxComponent implements AfterViewInit {
   }
 
   //--------------------------------------------------------------------
-  // 📍 Récupération position utilisateur
+  // Récupération position utilisateur
   //--------------------------------------------------------------------
   private getUser() {
     navigator.geolocation.getCurrentPosition(
@@ -89,7 +89,7 @@ export class NosServicesRegionauxComponent implements AfterViewInit {
   }
 
   //--------------------------------------------------------------------
-  // 📌 Calcul Haversine (distance réelle en km)
+  // Calcul Haversine (distance réelle en km)
   //--------------------------------------------------------------------
   private haversine(lat1: number, lon1: number, lat2: number, lon2: number): number {
     const R = 6371;
@@ -106,7 +106,7 @@ export class NosServicesRegionauxComponent implements AfterViewInit {
   }
 
   //--------------------------------------------------------------------
-  // ⭐ Trouver le SR le plus proche + distance + tracer itinéraire
+  // Trouver le SR le plus proche + distance + tracer itinéraire
   //--------------------------------------------------------------------
   private findNearestAndRoute() {
     let min = Infinity;
@@ -128,7 +128,7 @@ export class NosServicesRegionauxComponent implements AfterViewInit {
   }
 
   //--------------------------------------------------------------------
-  // 🚗 Itinéraire OSRM
+  // Itinéraire OSRM
   //--------------------------------------------------------------------
 private drawRealItinerary() {
   if (!this.userLat || !this.userLng || !this.nearest) return;
@@ -170,7 +170,7 @@ private drawRealItinerary() {
 
 
   //--------------------------------------------------------------------
-  // 🌍 Ouvrir Google Maps
+  // Ouvrir Google Maps
   //--------------------------------------------------------------------
   openItinerary() {
     if (!this.nearest) return;

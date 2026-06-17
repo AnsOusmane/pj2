@@ -21,7 +21,6 @@
         <div class="w-80 h-[2px] bg-green-700 my-6"></div>
         <h3 class="text-2xl font-semibold text-green-700 mb-4">Coordonnées de contact</h3>
         <div class="flex items-start gap-3 mb-5">
-          <span class="text-green-600 text-2xl">📍</span>
           <a href="https://www.google.com/maps/place/Agence+de+la+CMU" target="_blank"
              class="text-green-700 hover:underline">
             Cité Keur Gorgui, Lot N°4, Immeuble El Hadji Serigne Mérina SYLLA<br>
@@ -29,13 +28,11 @@
           </a>
         </div>
         <div class="flex items-center gap-3 mb-5">
-          <span class="text-green-600 text-2xl">📞</span>
           <a href="tel:+221338591515" class="text-green-700 hover:underline">
             +221 33 859 15 15
           </a>
         </div>
         <div class="flex items-center gap-3">
-          <span class="text-green-600 text-2xl">✉️</span>
           <a href="mailto:contact@agencecmu.sn" class="text-green-700 hover:underline">
             contact@agencecmu.sn
           </a>
@@ -136,18 +133,18 @@
         <div *ngIf="showErrorSummary && form.valid"
              class="sm:col-span-2 mt-5 p-5 bg-green-50 border border-green-400 rounded-xl text-center">
           <p class="text-green-800 font-semibold">
-            ✅ Parfait ! Tous les champs obligatoires sont correctement remplis.<br>
+            Parfait ! Tous les champs obligatoires sont correctement remplis.<br>
             Vous pouvez cliquer sur « Envoyer ».
           </p>
         </div>
 
         <p *ngIf="submitted && !errorMsg"
            class="sm:col-span-2 mt-6 text-green-700 text-center font-medium">
-          ✔️ Votre réclamation a bien été envoyée ! Merci.
+          Votre réclamation a bien été envoyée ! Merci.
         </p>
         <p *ngIf="errorMsg"
            class="sm:col-span-2 mt-6 text-red-600 text-center font-medium">
-          ❌ {{ errorMsg }}
+          {{ errorMsg }}
         </p>
       </form>
     </div>

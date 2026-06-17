@@ -41,7 +41,6 @@
           </h3>
           <!-- Adresse -->
           <div class="flex items-start gap-3 mb-5">
-            <span class="text-green-600 text-2xl">📍</span>
             <a
               href="https://www.google.com/maps/place/Agence+de+la+CMU"
               target="_blank"
@@ -52,7 +51,6 @@
           </div>
           <!-- Téléphone -->
           <div class="flex items-center gap-3 mb-5">
-            <span class="text-green-600 text-2xl">📞</span>
             <a href="tel:+221338591515"
                class="text-green-700 hover:underline">
               +221 33 859 15 15
@@ -60,7 +58,6 @@
           </div>
           <!-- Email -->
           <div class="flex items-center gap-3">
-            <span class="text-green-600 text-2xl">✉️</span>
             <a href="mailto:contact@agencecmu.sn"
                class="text-green-700 hover:underline">
               contact@agencecmu.sn
@@ -120,10 +117,10 @@
           </button>
           <!-- Messages feedback -->
           <p *ngIf="submitted && !errorMsg" class="sm:col-span-2 text-green-700 text-center font-medium mt-2">
-            ✔️ Message envoyé avec succès !
+            Message envoyé avec succès !
           </p>
           <p *ngIf="errorMsg" class="sm:col-span-2 text-red-600 text-center font-medium mt-2">
-            ❌ {{ errorMsg }}
+            {{ errorMsg }}
           </p>
         </form>
       </div>

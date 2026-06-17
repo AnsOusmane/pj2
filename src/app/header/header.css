@@ -1,11 +1,11 @@
-/* ✅ Empêche tout débordement, stabilise les transitions */
+/* Empêche tout débordement, stabilise les transitions */
 a {
   display: block;
   position: relative;
 }
 
 /* Bloque tout dépassement même pendant les transitions */
-/* ✅ Ne cible que le bloc du carrousel partenaires */
+/* Ne cible que le bloc du carrousel partenaires */
 .carousel-container,
 .carousel-wrapper {
   position: relative;

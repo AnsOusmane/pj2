@@ -121,7 +121,7 @@ export class AssuranceMaladieComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    // ✅ Écoute les paramètres venant du header
+    // Écoute les paramètres venant du header
     this.route.queryParams.subscribe(params => {
       const type = params['type'];
 

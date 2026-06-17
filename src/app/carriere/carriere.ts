@@ -114,7 +114,7 @@ Seuls les candidats présélectionnés seront contactés pour un entretien.`
     if (!file) return;
     const maxSize = 10 * 1024 * 1024;
     if (file.size > maxSize) {
-      this.messageErreur = 'Le fichier dépasse la taille maximale de 10 Mo ❌';
+      this.messageErreur = 'Le fichier dépasse la taille maximale de 10 Mo';
       return;
     }
     this.form.patchValue({ cv: file });
@@ -162,15 +162,15 @@ Nom : ${this.form.value.nom}
 Email : ${this.form.value.email}
 Téléphone : ${this.form.value.telephone || 'Non renseigné'}
 Poste souhaité : ${this.form.value.poste || 'Non précisé'}
-📎 CV du candidat :
+CV du candidat :
 ${cvLink}
 `);
       await this.http.post('https://api.web3forms.com/submit', formData).toPromise();
-      this.messageSucces = 'Candidature envoyée avec succès ✅';
+      this.messageSucces = 'Candidature envoyée avec succès';
       this.form.reset();
     } catch (err: any) {
       console.error(err);
-      this.messageErreur = "Erreur lors de l'envoi ❌";
+      this.messageErreur = "Erreur lors de l'envoi";
     }
     this.envoiEnCours = false;
   }

@@ -1,11 +1,11 @@
 <div class="pt-24 max-w-7xl mx-auto px-4">
 
-  <!-- 🔰 Titre -->
+  <!-- Titre -->
   <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4 text-center">
     Rapports Officiels
   </h1>
 
-  <!-- 🔎 Barre de recherche -->
+  <!-- Barre de recherche -->
   <div class="flex justify-center mb-6">
     <input
       [(ngModel)]="searchValue"
@@ -15,7 +15,7 @@
     />
   </div>
 
-  <!-- ⭐ Filtres -->
+  <!-- Filtres -->
   <div class="flex justify-center gap-2 flex-wrap mb-10">
     <button
       *ngFor="let cat of categories"
@@ -30,7 +30,7 @@
     </button>
   </div>
 
-  <!-- 🧱 Masonry grid -->
+  <!-- Masonry grid -->
   <div class="masonry">
     <div *ngFor="let r of filteredRapports"
       class="masonry-item bg-white rounded-xl shadow hover:shadow-lg transition-all hover:-translate-y-1 overflow-hidden cursor-pointer"
@@ -63,7 +63,7 @@
   </div>
 
 
-  <!-- 🟢 MODAL (Vue détaillée) -->
+  <!-- MODAL (Vue détaillée) -->
   <div *ngIf="selectedRapport" class="modal-overlay" (click)="closeModal()">
 
     <div class="modal-content" (click)="$event.stopPropagation()">

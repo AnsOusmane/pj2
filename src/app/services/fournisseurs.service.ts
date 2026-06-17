@@ -66,7 +66,7 @@ export class FournisseursService {
   }): Observable<unknown> {
     const payload: Record<string, string> = {
       access_key: this.web3formsKey,
-      subject: `🆕 Nouvelle demande d'agrément — ${p.raison_sociale} (${p.numero})`,
+      subject: `Nouvelle demande d'agrément — ${p.raison_sociale} (${p.numero})`,
       from_name: 'Espace Fournisseurs SEN-CSU',
       'N° dossier': p.numero,
       'Raison sociale': p.raison_sociale,

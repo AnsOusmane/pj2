@@ -20,7 +20,7 @@ export class MediaComponent implements OnInit {
   activeTab = 'actualites';
 
   selectedVideo: any = null;
-  selectedActualite: any = null; // ✅ MODAL ACTUALITE
+  selectedActualite: any = null; // MODAL ACTUALITE
 
   newsletters: any[] = [];
   videos: any[] = [];
@@ -272,7 +272,7 @@ export class MediaComponent implements OnInit {
   }
 
   // =====================================================
-  // 🔵 MODAL ACTUALITE
+  // MODAL ACTUALITE
   // =====================================================
 
   openActualite(actualite: any): void {

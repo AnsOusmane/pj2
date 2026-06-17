@@ -114,13 +114,13 @@ export class ReclamationFormComponent {
       phone: this.form.value.phone,
       city: this.form.value.city,
       cardNumber: this.form.value.cardNumber || 'Non renseigné',
-      _subject: `⚠️ Nouvelle réclamation SEN-CSU - ${finalSubject}`,   // ← sujet email personnalisé
+      _subject: `Nouvelle réclamation SEN-CSU - ${finalSubject}`,   // ← sujet email personnalisé
       message:
-        `📌 Objet : ${finalSubject}\n` +
-        `🕒 Date d’envoi : ${formattedDate}\n` +
-        `🏙️ Ville : ${this.form.value.city}\n` +
-        `💳 N° Carte assuré : ${this.form.value.cardNumber || 'Non renseigné'}\n` +
-        `📞 Téléphone : ${this.form.value.phone}\n\n` +
+        `Objet : ${finalSubject}\n` +
+        `Date d’envoi : ${formattedDate}\n` +
+        `Ville : ${this.form.value.city}\n` +
+        `N° Carte assuré : ${this.form.value.cardNumber || 'Non renseigné'}\n` +
+        `Téléphone : ${this.form.value.phone}\n\n` +
         `Message :\n${this.form.value.message || ''}`,
       // Optionnel : si tu veux que le reply-to soit l'email du user
       _replyto: this.form.value.email || undefined,
