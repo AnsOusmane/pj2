@@ -1,28 +1,40 @@
-const nodemailer = require('nodemailer');
+// Notification email via Web3Forms (https://web3forms.com) — aucun serveur SMTP requis.
+// L'email part toujours vers l'adresse liée à la clé d'accès (la boîte de l'agence).
+// La clé d'accès est "publique" mais on la garde en variable d'env pour la changer sans redeploy de code.
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY;
 
-// Adresse interne qui reçoit les notifications (dépôts d'agrément, contacts…).
-const AGENCY_EMAIL = process.env.MAIL_TO || 'ansoumana.ndiaye-external@sencsu.sn';
+/**
+ * Envoie une notification à l'agence via Web3Forms.
+ * @param {object}  opts
+ * @param {string}  opts.subject    Sujet de l'email.
+ * @param {string} [opts.from_name] Nom d'expéditeur affiché (défaut "SEN-CSU").
+ * @param {string} [opts.replyto]   Adresse de réponse (ex. email du fournisseur).
+ * @param {object}  opts.fields     Champs libres affichés dans le corps (clé = libellé).
+ */
+async function sendNotification({ subject, from_name, replyto, fields = {} }) {
+  if (!ACCESS_KEY) {
+    console.warn('WEB3FORMS_ACCESS_KEY absente : notification non envoyée.');
+    return;
+  }
 
-// Transporteur réutilisé (on évite d'en recréer un à chaque envoi).
-let transporter = null;
-function getTransporter() {
-  if (transporter) return transporter;
-  transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS,
-    },
+  const resp = await fetch(WEB3FORMS_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({
+      access_key: ACCESS_KEY,
+      subject,
+      from_name: from_name || 'SEN-CSU',
+      ...(replyto ? { replyto } : {}),
+      ...fields,
+    }),
   });
-  return transporter;
+
+  const data = await resp.json().catch(() => ({}));
+  if (!data.success) {
+    throw new Error(data.message || `Web3Forms a renvoyé une erreur (HTTP ${resp.status})`);
+  }
+  return data;
 }
 
-/** Envoi générique. `from` est déjà positionné sur l'expéditeur SEN-CSU. */
-async function sendMail(opts) {
-  const t = getTransporter();
-  return t.sendMail({ from: `"SEN-CSU" <${process.env.MAIL_USER}>`, ...opts });
-}
-
-module.exports = { sendMail, AGENCY_EMAIL };
+module.exports = { sendNotification };
