@@ -52,7 +52,12 @@ export class UsersService {
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let message = 'Une erreur est survenue';
-    if (error.error?.message) message = error.error.message;
+    if (error.error?.message) {
+      message = error.error.message;
+    } else if (Array.isArray(error.error?.errors) && error.error.errors.length) {
+      // ZodError renvoyée par le backend : { errors: [{ message, path }] }
+      message = error.error.errors.map((e: any) => e.message).join(' ');
+    }
     console.error('Erreur API Users :', error);
     return throwError(() => new Error(message));
   }

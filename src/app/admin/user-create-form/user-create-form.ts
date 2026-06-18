@@ -45,7 +45,7 @@ export class UserCreateForm {
 
         password: ['', [
           Validators.required,
-          Validators.minLength(4)
+          Validators.minLength(8)
         ]],
 
         confirmPassword: ['', Validators.required],
