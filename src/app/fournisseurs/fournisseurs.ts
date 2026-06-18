@@ -9,6 +9,21 @@ declare global {
   interface Window { turnstile?: any; __cfTurnstileOnload?: () => void; }
 }
 
+interface RecapDossier {
+  numero: string;
+  date: string;
+  raison_sociale: string;
+  ninea: string;
+  rccm: string;
+  domaine: string;
+  adresse: string;
+  telephone: string;
+  email: string;
+  contact_nom: string;
+  message: string;
+  documents: { label: string; nom: string }[];
+}
+
 @Component({
   selector: 'app-fournisseurs',
   standalone: true,
@@ -30,6 +45,9 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
 
   // Écran de confirmation après dépôt réussi
   numeroConfirme = signal<string | null>(null);
+
+  // Récapitulatif du dossier déposé (affichage + téléchargement)
+  recap = signal<RecapDossier | null>(null);
 
   // Fichiers (hors FormControl)
   // Pièces du cahier des charges (obligatoires)
@@ -152,6 +170,28 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
         this.saving.set(false);
         this.numeroConfirme.set(res.numero);
 
+        // Mémorise le récapitulatif du dossier (le formulaire n'est pas encore réinitialisé)
+        this.recap.set({
+          numero: res.numero,
+          date: new Date().toLocaleString('fr-FR'),
+          raison_sociale: v.raison_sociale,
+          ninea: v.ninea || '—',
+          rccm: v.rccm || '—',
+          domaine: v.domaine,
+          adresse: v.adresse || '—',
+          telephone: v.telephone,
+          email: v.email,
+          contact_nom: v.contact_nom,
+          message: v.message || '—',
+          documents: [
+            { label: 'Demande adressée au Directeur Général', nom: this.docDemande()?.name || '—' },
+            { label: 'Copie du NINEA', nom: this.docNinea()?.name || '—' },
+            { label: "Présentation de l'entreprise", nom: this.docPresentation()?.name || '—' },
+            { label: 'Registre de commerce (RCCM)', nom: this.docRegistre()?.name || '—' },
+            ...(this.docFiscale() ? [{ label: 'Attestation fiscale', nom: this.docFiscale()!.name }] : [])
+          ]
+        });
+
         // Notifie l'agence (Web3Forms) — best-effort : un échec n'impacte pas la confirmation.
         this.service.notifierAgence({
           numero: res.numero,
@@ -174,6 +214,7 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
 
   nouveauDepot(): void {
     this.numeroConfirme.set(null);
+    this.recap.set(null);
     this.form.reset({ email: '' });
     this.docDemande.set(null);
     this.docNinea.set(null);
@@ -193,6 +234,98 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
     if (isPlatformBrowser(this.platformId) && this.widgetId && window.turnstile) {
       try { window.turnstile.reset(this.widgetId); } catch { /* no-op */ }
     }
+  }
+
+  /** Ouvre un document imprimable (logo SEN-CSU en haut) que l'utilisateur enregistre en PDF. */
+  telechargerRecap(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const r = this.recap();
+    if (!r) return;
+
+    const esc = (s: string) =>
+      String(s ?? '—').replace(/[&<>"]/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+
+    const logoUrl = new URL('assets/logo.png', document.baseURI).href;
+
+    const ligne = (label: string, valeur: string) =>
+      `<tr><th>${esc(label)}</th><td>${esc(valeur)}</td></tr>`;
+
+    const docs = r.documents
+      .map(d => `<li><span>${esc(d.label)}</span><em>${esc(d.nom)}</em></li>`)
+      .join('');
+
+    const html = `<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Récapitulatif demande d'agrément ${esc(r.numero)}</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; color: #1f2937; margin: 0; padding: 32px 40px; }
+  .head { text-align: center; border-bottom: 3px solid #16a34a; padding-bottom: 16px; margin-bottom: 24px; }
+  .head img { height: 80px; object-fit: contain; }
+  .head h1 { font-size: 20px; margin: 12px 0 2px; color: #15803d; }
+  .head p { margin: 0; font-size: 12px; color: #6b7280; }
+  .numero { display: inline-block; margin: 0 auto 24px; background: #f0fdf4; border: 1px solid #bbf7d0;
+            border-radius: 10px; padding: 10px 18px; text-align: center; }
+  .numero span { display: block; font-size: 10px; text-transform: uppercase; color: #16a34a; letter-spacing: .05em; }
+  .numero strong { font-size: 20px; color: #15803d; letter-spacing: .04em; }
+  .center { text-align: center; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: #15803d;
+       border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; margin: 24px 0 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+  th { width: 38%; color: #6b7280; font-weight: 600; }
+  ul { list-style: none; padding: 0; margin: 0; font-size: 13px; }
+  ul li { display: flex; justify-content: space-between; gap: 16px; padding: 7px 8px; border-bottom: 1px solid #f1f5f9; }
+  ul li em { color: #6b7280; font-style: normal; }
+  .foot { margin-top: 28px; font-size: 11px; color: #9ca3af; text-align: center; border-top: 1px solid #e5e7eb; padding-top: 12px; }
+  @media print { body { padding: 0; } }
+</style></head>
+<body>
+  <div class="head">
+    <img src="${logoUrl}" alt="SEN-CSU">
+    <h1>Demande d'agrément — Récapitulatif</h1>
+    <p>Agence de la Couverture Sanitaire Universelle (SEN-CSU)</p>
+  </div>
+
+  <div class="center">
+    <div class="numero">
+      <span>Numéro de dossier</span>
+      <strong>${esc(r.numero)}</strong>
+    </div>
+  </div>
+
+  <h2>Informations du fournisseur</h2>
+  <table>
+    ${ligne('Raison sociale', r.raison_sociale)}
+    ${ligne('Domaine d\'activité', r.domaine)}
+    ${ligne('NINEA', r.ninea)}
+    ${ligne('RCCM', r.rccm)}
+    ${ligne('Personne à contacter', r.contact_nom)}
+    ${ligne('Téléphone', r.telephone)}
+    ${ligne('Email', r.email)}
+    ${ligne('Adresse', r.adresse)}
+    ${ligne('Message / précisions', r.message)}
+  </table>
+
+  <h2>Pièces déposées</h2>
+  <ul>${docs}</ul>
+
+  <div class="foot">
+    Document généré le ${esc(r.date)} — à conserver pour le suivi de votre demande auprès de l'Agence.
+  </div>
+
+  <script>window.onload = function () { window.print(); };</script>
+</body></html>`;
+
+    const w = window.open('', '_blank');
+    if (!w) {
+      this.error.set('Veuillez autoriser les fenêtres pop-up pour télécharger le récapitulatif.');
+      return;
+    }
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
   }
 
   isInvalid(field: string): boolean {

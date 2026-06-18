@@ -13,9 +13,47 @@
       <p class="text-xs uppercase text-green-600 font-medium">Numéro de dossier</p>
       <p class="text-2xl font-bold text-green-700 tracking-wide">{{ numeroConfirme() }}</p>
     </div>
-    <div class="mt-6">
+
+    <!-- ===== Récapitulatif du dossier déposé ===== -->
+    <div *ngIf="recap() as r" class="mt-8 text-left border border-gray-200 rounded-xl overflow-hidden">
+      <div class="flex items-center gap-3 bg-gray-50 border-b border-gray-200 px-5 py-3">
+        <img src="assets/logo.png" alt="SEN-CSU" class="h-10 w-auto object-contain" />
+        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Récapitulatif du dossier</h2>
+      </div>
+
+      <dl class="divide-y divide-gray-100 text-sm">
+        <div class="flex px-5 py-2"><dt class="w-2/5 text-gray-500">Raison sociale</dt><dd class="w-3/5 text-gray-800 font-medium">{{ r.raison_sociale }}</dd></div>
+        <div class="flex px-5 py-2"><dt class="w-2/5 text-gray-500">Domaine d'activité</dt><dd class="w-3/5 text-gray-800">{{ r.domaine }}</dd></div>
+        <div class="flex px-5 py-2"><dt class="w-2/5 text-gray-500">NINEA</dt><dd class="w-3/5 text-gray-800">{{ r.ninea }}</dd></div>
+        <div class="flex px-5 py-2"><dt class="w-2/5 text-gray-500">RCCM</dt><dd class="w-3/5 text-gray-800">{{ r.rccm }}</dd></div>
+        <div class="flex px-5 py-2"><dt class="w-2/5 text-gray-500">Personne à contacter</dt><dd class="w-3/5 text-gray-800">{{ r.contact_nom }}</dd></div>
+        <div class="flex px-5 py-2"><dt class="w-2/5 text-gray-500">Téléphone</dt><dd class="w-3/5 text-gray-800">{{ r.telephone }}</dd></div>
+        <div class="flex px-5 py-2"><dt class="w-2/5 text-gray-500">Email</dt><dd class="w-3/5 text-gray-800 break-all">{{ r.email }}</dd></div>
+        <div class="flex px-5 py-2"><dt class="w-2/5 text-gray-500">Adresse</dt><dd class="w-3/5 text-gray-800">{{ r.adresse }}</dd></div>
+        <div class="flex px-5 py-2"><dt class="w-2/5 text-gray-500">Message / précisions</dt><dd class="w-3/5 text-gray-800">{{ r.message }}</dd></div>
+      </dl>
+
+      <div class="px-5 py-3 bg-gray-50 border-t border-gray-200">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Pièces déposées</p>
+        <ul class="space-y-1">
+          <li *ngFor="let d of r.documents" class="flex justify-between gap-4 text-sm">
+            <span class="text-gray-700">{{ d.label }}</span>
+            <span class="text-gray-400 truncate max-w-[50%]">{{ d.nom }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+      <button (click)="telechargerRecap()"
+              class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-medium transition">
+        <svg viewBox="0 0 24 24" class="w-5 h-5 fill-current" aria-hidden="true">
+          <path d="M12 3a1 1 0 0 1 1 1v8.59l2.3-2.3a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42l2.3 2.3V4a1 1 0 0 1 1-1ZM5 18a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/>
+        </svg>
+        Télécharger le récapitulatif
+      </button>
       <button (click)="nouveauDepot()"
-              class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-medium transition">
+              class="border border-green-600 text-green-700 hover:bg-green-50 px-5 py-2 rounded-lg font-medium transition">
         Déposer une nouvelle demande
       </button>
     </div>
