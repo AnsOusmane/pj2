@@ -3,11 +3,6 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FournisseursService } from 'app/services/fournisseurs.service';
 import { BackButtonComponent } from 'app/shared/back-button/back-button';
-import { environment } from 'environments/environment';
-
-declare global {
-  interface Window { turnstile?: any; __cfTurnstileOnload?: () => void; }
-}
 
 interface RecapDossier {
   numero: string;
@@ -38,10 +33,6 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
   form: FormGroup;
   saving = signal(false);
   error = signal<string | null>(null);
-
-  // Anti-robot Cloudflare Turnstile
-  captchaToken = signal<string | null>(null);
-  private widgetId: string | null = null;
 
   // Écran de confirmation après dépôt réussi
   numeroConfirme = signal<string | null>(null);
@@ -79,43 +70,10 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  // ====================== TURNSTILE (anti-robot) ======================
-  ngAfterViewInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return; // pas de window/document en SSR
-    this.loadTurnstile();
-  }
+  // Anti-robot Cloudflare Turnstile désactivé pour l'instant.
+  ngAfterViewInit(): void { /* no-op */ }
 
-  ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId) && this.widgetId && window.turnstile) {
-      try { window.turnstile.remove(this.widgetId); } catch { /* no-op */ }
-    }
-  }
-
-  private loadTurnstile(): void {
-    // Le script déjà chargé (navigation interne) : on rend directement.
-    if (window.turnstile) { this.renderWidget(); return; }
-
-    // Sinon on injecte le script une seule fois, avec callback de rendu explicite.
-    window.__cfTurnstileOnload = () => this.renderWidget();
-    if (document.getElementById('cf-turnstile-script')) return;
-    const s = document.createElement('script');
-    s.id = 'cf-turnstile-script';
-    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__cfTurnstileOnload';
-    s.async = true;
-    s.defer = true;
-    document.head.appendChild(s);
-  }
-
-  private renderWidget(): void {
-    const el = document.getElementById('cf-turnstile');
-    if (!el || this.widgetId || !window.turnstile) return;
-    this.widgetId = window.turnstile.render('#cf-turnstile', {
-      sitekey: environment.turnstileSiteKey,
-      callback: (token: string) => this.captchaToken.set(token),
-      'expired-callback': () => this.captchaToken.set(null),
-      'error-callback': () => this.captchaToken.set(null)
-    });
-  }
+  ngOnDestroy(): void { /* no-op */ }
 
   onFileChange(event: Event, slot: 'demande' | 'ninea' | 'presentation' | 'registre' | 'fiscale'): void {
     const input = event.target as HTMLInputElement;
@@ -144,12 +102,6 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
       this.error.set('La demande au Directeur Général, la copie du NINEA, la présentation de l\'entreprise et le registre de commerce (PDF) sont obligatoires.');
       return;
     }
-    const token = this.captchaToken();
-    if (!token) {
-      this.error.set('Veuillez valider la vérification anti-robot avant d\'envoyer.');
-      return;
-    }
-
     this.saving.set(true);
     this.error.set(null);
 
@@ -165,7 +117,7 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
     if (this.docRegistre()) fd.append('doc_registre', this.docRegistre() as File);
     if (this.docFiscale()) fd.append('doc_fiscale', this.docFiscale() as File);
 
-    this.service.deposer(fd, token).subscribe({
+    this.service.deposer(fd).subscribe({
       next: (res) => {
         this.saving.set(false);
         this.numeroConfirme.set(res.numero);
@@ -206,8 +158,6 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
       error: (err) => {
         this.saving.set(false);
         this.error.set(err?.message || 'Erreur lors du dépôt.');
-        // Le token Turnstile est à usage unique : on réarme le widget pour réessayer.
-        this.resetCaptcha();
       }
     });
   }
@@ -225,15 +175,6 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
       const el = document.getElementById('f-' + id) as HTMLInputElement | null;
       if (el) el.value = '';
     });
-    this.resetCaptcha();
-  }
-
-  /** Réarme le widget Turnstile (token à usage unique). */
-  private resetCaptcha(): void {
-    this.captchaToken.set(null);
-    if (isPlatformBrowser(this.platformId) && this.widgetId && window.turnstile) {
-      try { window.turnstile.reset(this.widgetId); } catch { /* no-op */ }
-    }
   }
 
   /** Ouvre un document imprimable (logo SEN-CSU en haut) que l'utilisateur enregistre en PDF. */

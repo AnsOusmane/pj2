@@ -205,17 +205,12 @@
         <p class="text-xs text-gray-400 mt-2">Formats acceptés : PDF, 10 Mo maximum par fichier.</p>
       </div>
 
-      <!-- Vérification anti-robot (Cloudflare Turnstile) -->
-      <div class="border-t border-gray-100 pt-5">
-        <div id="cf-turnstile"></div>
-      </div>
-
       <div class="pt-2">
         <!-- Message d'erreur d'envoi, juste à côté du bouton -->
         <div *ngIf="error()" class="mb-3 px-4 py-3 rounded-lg bg-red-50 text-red-700 border border-red-200 text-sm">
           {{ error() }}
         </div>
-        <button type="submit" [disabled]="saving() || !captchaToken()"
+        <button type="submit" [disabled]="saving()"
                 class="w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition">
           {{ saving() ? 'Envoi en cours…' : 'Déposer ma demande' }}
         </button>

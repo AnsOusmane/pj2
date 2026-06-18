@@ -48,10 +48,9 @@ export class FournisseursService {
 
   constructor(private http: HttpClient) {}
 
-  /** Dépôt public d'une demande d'agrément (FormData + token anti-robot Turnstile). */
-  deposer(data: FormData, captchaToken: string): Observable<DepotResponse> {
-    const headers = new HttpHeaders({ 'CF-Turnstile-Token': captchaToken });
-    return this.http.post<DepotResponse>(this.apiUrl, data, { headers }).pipe(catchError(this.handleError));
+  /** Dépôt public d'une demande d'agrément (FormData). Anti-robot Turnstile désactivé pour l'instant. */
+  deposer(data: FormData): Observable<DepotResponse> {
+    return this.http.post<DepotResponse>(this.apiUrl, data).pipe(catchError(this.handleError));
   }
 
   /**

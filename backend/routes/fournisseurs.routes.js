@@ -62,7 +62,8 @@ async function nextNumero() {
 //   - doc_presentation : présentation entreprise/plaquette (OBLIGATOIRE)
 //   - doc_registre     : registre de commerce             (OBLIGATOIRE)
 //   - doc_fiscale      : attestation fiscale              (facultatif, bonus)
-router.post('/', depotLimiter, verifyTurnstile, upload.fields([
+// Anti-robot Cloudflare Turnstile désactivé pour l'instant (réactiver : remettre verifyTurnstile)
+router.post('/', depotLimiter, /* verifyTurnstile, */ upload.fields([
   { name: 'doc_demande', maxCount: 1 },
   { name: 'doc_ninea', maxCount: 1 },
   { name: 'doc_presentation', maxCount: 1 },
