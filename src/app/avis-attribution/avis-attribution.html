@@ -12,7 +12,7 @@
   </header>
 
   <!-- Filtres -->
-  <div class="flex flex-wrap items-end gap-4 mb-6 bg-gray-50 border border-gray-200 rounded-xl p-4">
+  <div class="flex flex-wrap items-end gap-4 mb-6 bg-gray-50 border border-green-700/10 rounded-xl p-4">
     <div>
       <label class="block text-xs font-medium text-gray-600 mb-1">Type de marché</label>
       <select [ngModel]="filtreType()" (ngModelChange)="filtreType.set($event)"
@@ -33,7 +33,7 @@
   </div>
 
   <!-- Tableau -->
-  <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-x-auto">
+  <div class="bg-white border border-green-700/10 rounded-xl shadow-sm overflow-x-auto">
     <table class="w-full text-sm text-left">
       <thead class="bg-green-700 text-white uppercase text-xs">
         <tr>

@@ -12,7 +12,7 @@
   </header>
 
   <!-- Filtres -->
-  <div class="flex flex-wrap items-end gap-4 mb-6 bg-gray-50 border border-gray-200 rounded-xl p-4">
+  <div class="flex flex-wrap items-end gap-4 mb-6 bg-gray-50 border border-green-700/10 rounded-xl p-4">
     <div>
       <label class="block text-xs font-medium text-gray-600 mb-1">Type de marché</label>
       <select [ngModel]="filtreType()" (ngModelChange)="filtreType.set($event)"
@@ -42,14 +42,14 @@
   </div>
   <div *ngIf="loading()" class="text-center text-gray-400 py-12">Chargement…</div>
   <div *ngIf="!loading() && lignesFiltrees().length === 0"
-       class="text-center text-gray-400 py-12 bg-white border border-gray-200 rounded-xl">
+       class="text-center text-gray-400 py-12 bg-white border border-green-700/10 rounded-xl">
     Aucun appel d'offres à afficher pour le moment.
   </div>
 
   <!-- Cartes -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
     <article *ngFor="let l of lignesFiltrees()"
-             class="bg-white border border-gray-200 rounded-2xl shadow-sm p-5 flex flex-col">
+             class="bg-white border border-green-700/10 rounded-2xl shadow-sm p-5 flex flex-col">
 
       <div class="flex items-start justify-between gap-3 mb-2">
         <span *ngIf="estEnCours(l)"
@@ -59,7 +59,7 @@
         <span *ngIf="l.reference" class="text-xs text-gray-400">Réf. {{ l.reference }}</span>
       </div>
 
-      <h2 class="text-lg font-semibold text-gray-800">{{ l.objet }}</h2>
+      <h2 class="text-lg font-semibold text-green-700">{{ l.objet }}</h2>
 
       <p *ngIf="l.description" class="text-sm text-gray-500 mt-2 whitespace-pre-line">
         {{ l.description }}
@@ -74,11 +74,11 @@
         </div>
         <div *ngIf="l.date_limite" class="flex gap-2">
           <dt class="font-medium text-gray-500">Date limite :</dt>
-          <dd [class.text-red-600]="!estEnCours(l)">{{ l.date_limite | date:'dd/MM/yyyy à HH:mm' }}</dd>
+          <dd [class.text-red-600]="!estEnCours(l)">{{ l.date_limite | date:'dd/MM/yyyy à HH:mm' }} T.U</dd>
         </div>
       </dl>
 
-      <div class="mt-4 pt-4 border-t border-gray-100">
+      <div class="mt-4 pt-4 border-t border-green-700/10">
         <a *ngIf="l.file_url" [href]="l.file_url" target="_blank"
            class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition">
           Télécharger l'avis
