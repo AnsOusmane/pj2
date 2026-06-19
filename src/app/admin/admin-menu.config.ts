@@ -18,6 +18,8 @@ export interface AdminMenuItem {
   route: string;
   /** Réservé aux admins : jamais assignable à un autre utilisateur. */
   adminOnly?: boolean;
+  /** Entrée dont la page n'existe pas encore : non assignable, pas de redirection. */
+  comingSoon?: boolean;
 }
 
 export interface AdminMenuGroup {
@@ -29,7 +31,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
   {
     title: 'Général',
     items: [
-      { key: 'dashboard', label: 'Dashboard', icon: '📊', route: 'dashboard' },
+      { key: 'dashboard', label: 'Dashboard', icon: '📊', route: 'dashboard', comingSoon: true },
       { key: 'users', label: 'Utilisateurs', icon: '👤', route: 'users', adminOnly: true },
     ],
   },
@@ -46,7 +48,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
   {
     title: 'Médias',
     items: [
-      { key: 'media', label: 'Dossiers médias', icon: '🎞️', route: 'media' },
+      { key: 'media', label: 'Dossiers médias', icon: '🎞️', route: 'media', comingSoon: true },
       { key: 'banque-images', label: "Banque d'images", icon: '🖼️', route: 'images-bank-form' },
     ],
   },
@@ -54,7 +56,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
     title: 'Carrière',
     items: [
       { key: 'offres-emploi', label: "Offres d'emploi", icon: '💼', route: 'offres-emploi-form' },
-      { key: 'candidatures', label: 'Candidatures', icon: '📄', route: 'candidatures' },
+      { key: 'candidatures', label: 'Candidatures', icon: '📄', route: 'candidatures', comingSoon: true },
     ],
   },
   {
@@ -68,8 +70,26 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
   },
 ];
 
-/** Toutes les clés de permission assignables (hors entrées réservées aux admins). */
-export const ASSIGNABLE_PERMISSION_KEYS: string[] = ADMIN_MENU
+/**
+ * Toutes les entrées assignables à un utilisateur non-admin :
+ * on exclut les entrées réservées aux admins et celles dont la page n'existe pas.
+ */
+export const ASSIGNABLE_ITEMS: AdminMenuItem[] = ADMIN_MENU
   .flatMap((g) => g.items)
-  .filter((i) => !i.adminOnly)
-  .map((i) => i.key);
+  .filter((i) => !i.adminOnly && !i.comingSoon);
+
+export const ASSIGNABLE_PERMISSION_KEYS: string[] = ASSIGNABLE_ITEMS.map((i) => i.key);
+
+/**
+ * Première section réellement accessible pour cet utilisateur (route relative à /admin),
+ * ou null si aucune. Un admin atterrit sur la gestion des utilisateurs.
+ */
+export function firstAccessibleRoute(
+  role: string | undefined,
+  permissions: string[] | undefined
+): string | null {
+  if (role === 'admin') return 'users';
+  const perms = permissions || [];
+  const item = ASSIGNABLE_ITEMS.find((i) => perms.includes(i.key));
+  return item ? item.route : null;
+}

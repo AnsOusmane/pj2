@@ -24,9 +24,9 @@ export class UserCreateForm {
 
   form: FormGroup;
 
-  // Groupes du menu admin (hors entrées réservées aux admins) pour les cases à cocher.
+  // Groupes du menu admin (entrées assignables uniquement) pour les cases à cocher.
   menuGroups = ADMIN_MENU
-    .map((g) => ({ title: g.title, items: g.items.filter((i) => !i.adminOnly) }))
+    .map((g) => ({ title: g.title, items: g.items.filter((i) => !i.adminOnly && !i.comingSoon) }))
     .filter((g) => g.items.length > 0);
 
   selectedPermissions = signal<Set<string>>(new Set<string>());

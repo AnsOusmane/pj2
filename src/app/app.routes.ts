@@ -39,7 +39,8 @@ import { CommuniqueFormComponent } from './admin/communiques-form/communiques-fo
 import { BanqueImagesFormComponent } from './admin/banque-d-image-form/banque-d-image-form';
 import { UsersListComponent } from './admin/users-list/users-list';
 import { UserCreateForm } from './admin/user-create-form/user-create-form';
-import { UserEditForm } from './admin/user-edit/user-edit';       
+import { UserEditForm } from './admin/user-edit/user-edit';
+import { AdminHomeComponent } from './admin/admin-home/admin-home';
 
 // === NOUVEAUX FORMULAIRES ===
 // import { VideosForm } from './admin/videos-form/videos-form';
@@ -93,7 +94,8 @@ export const routes: Routes = [
     component: AdminComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'users', pathMatch: 'full' },
+      // Atterrissage : redirige vers la première section accessible selon le rôle/permissions.
+      { path: '', component: AdminHomeComponent, pathMatch: 'full' },
 
       { path: 'newsletters-form', component: NewslettersForm },
       { path: 'decrets-form', component: DecretsForm },
