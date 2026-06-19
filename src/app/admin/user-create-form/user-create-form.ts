@@ -10,6 +10,8 @@ import {
 } from '@angular/forms';
 
 import { UsersService } from 'app/services/user.service';
+import { AuthService } from 'app/services/auth.service';
+import { ADMIN_MENU } from 'app/admin/admin-menu.config';
 
 @Component({
   selector: 'app-user-create-form',
@@ -22,6 +24,16 @@ export class UserCreateForm {
 
   form: FormGroup;
 
+  // Groupes du menu admin (hors entrées réservées aux admins) pour les cases à cocher.
+  menuGroups = ADMIN_MENU
+    .map((g) => ({ title: g.title, items: g.items.filter((i) => !i.adminOnly) }))
+    .filter((g) => g.items.length > 0);
+
+  selectedPermissions = signal<Set<string>>(new Set<string>());
+
+  // Seul un admin peut créer un utilisateur : sinon on n'affiche pas le formulaire.
+  isAdmin = false;
+
   success = signal<string | null>(null);
   error = signal<string | null>(null);
   loading = signal(false);
@@ -31,8 +43,11 @@ export class UserCreateForm {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UsersService
+    private userService: UsersService,
+    private authService: AuthService
   ) {
+
+    this.isAdmin = this.authService.isAdmin();
 
     this.form = this.fb.group(
       {
@@ -75,6 +90,26 @@ export class UserCreateForm {
     return null;
   }
 
+  get isAdminRole(): boolean {
+    return this.form.get('role')?.value === 'admin';
+  }
+
+  isPermissionSelected(key: string): boolean {
+    return this.selectedPermissions().has(key);
+  }
+
+  togglePermission(key: string, checked: boolean): void {
+    this.selectedPermissions.update((set) => {
+      const next = new Set(set);
+      if (checked) {
+        next.add(key);
+      } else {
+        next.delete(key);
+      }
+      return next;
+    });
+  }
+
   togglePassword(): void {
     this.showPassword.update(v => !v);
   }
@@ -112,7 +147,13 @@ export class UserCreateForm {
     this.success.set(null);
 
     // retirer confirmPassword avant envoi API
-    const { confirmPassword, ...payload } = this.form.value;
+    const { confirmPassword, ...rest } = this.form.value;
+
+    // Un admin a accès à tout : pas de permissions spécifiques à envoyer.
+    const payload = {
+      ...rest,
+      permissions: this.isAdminRole ? [] : Array.from(this.selectedPermissions())
+    };
 
     this.userService.create(payload).subscribe({
 
@@ -128,6 +169,7 @@ export class UserCreateForm {
           role: 'admin',
           is_active: true
         });
+        this.selectedPermissions.set(new Set<string>());
 
       },
 

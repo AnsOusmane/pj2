@@ -52,6 +52,8 @@ import { FournisseursGestionComponent } from './admin/fournisseurs-gestion/fourn
 
 // Guards
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { AdminOnlyGuard } from './guards/admin-only.guard';
 import { MaintenanceComponent } from './maintenance/maintenance';
 import { CecComponent } from './cec/cec';
 import { PnbsfComponent } from './pnbsf/pnbsf';
@@ -112,10 +114,12 @@ export const routes: Routes = [
       { path: 'testimonials-form', component: TestimonialsFormComponent },
       { path: 'actualites-form', component: ActualitesFormComponent },
 
-      // Gestion Utilisateurs
-      { path: 'users', component: UsersListComponent },
+      // Gestion Utilisateurs (réservée aux admins)
+      { path: 'users', component: UsersListComponent, canActivate: [AdminGuard] },
+      // Pas de guard ici : le composant affiche lui-même un message de blocage
+      // (et masque le formulaire) si l'utilisateur n'est pas admin.
       { path: 'user-create-form', component: UserCreateForm },
-      { path: 'user-edit/:id', component: UserEditForm } 
+      { path: 'user-edit/:id', component: UserEditForm, canActivate: [AdminOnlyGuard] }
     ]
   },
 

@@ -11,14 +11,17 @@ const createUserSchema = z.object({
   email: z.string().email("Email invalide").trim().toLowerCase(),
   password: z.string().min(8, "Le mot de passe doit contenir au moins 8 caractères"),
   role: z.enum(['user', 'admin', 'cellule-pm']).optional().default('user'),
-  is_active: z.boolean().optional().default(true)
+  is_active: z.boolean().optional().default(true),
+  // Clés du menu admin auxquelles l'utilisateur a accès (ignorées pour un admin).
+  permissions: z.array(z.string()).optional().default([])
 });
 
 const updateUserSchema = z.object({
   fullname: z.string().min(2).optional(),
   email: z.string().email().trim().toLowerCase().optional(),
   role: z.enum(['user', 'admin', 'cellule-pm']).optional(),
-  is_active: z.boolean().optional()
+  is_active: z.boolean().optional(),
+  permissions: z.array(z.string()).optional()
 });
 
 // ====================== MIDDLEWARE DE PROTECTION ======================
@@ -39,7 +42,7 @@ const adminOnly = (req, res, next) => {
 router.get('/', adminOnly, async (req, res) => {
   try {
     const result = await pool.query(`
-      SELECT id, fullname, email, role, is_active, created_at, updated_at
+      SELECT id, fullname, email, role, is_active, permissions, created_at, updated_at
       FROM users
       ORDER BY created_at DESC
     `);
@@ -63,11 +66,14 @@ router.post('/', adminOnly, async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(data.password, 12); // 12 rounds recommandé
 
+    // Un admin a accès à tout : on ne stocke pas de permissions spécifiques.
+    const permissions = data.role === 'admin' ? [] : data.permissions;
+
     const result = await pool.query(
-      `INSERT INTO users (fullname, email, password, role, is_active)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING id, fullname, email, role, is_active, created_at`,
-      [data.fullname, data.email, hashedPassword, data.role, data.is_active]
+      `INSERT INTO users (fullname, email, password, role, is_active, permissions)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING id, fullname, email, role, is_active, permissions, created_at`,
+      [data.fullname, data.email, hashedPassword, data.role, data.is_active, JSON.stringify(permissions)]
     );
 
     res.status(201).json({
@@ -90,16 +96,20 @@ router.put('/:id', adminOnly, async (req, res) => {
     const { id } = req.params;
     const data = updateUserSchema.parse(req.body);
 
+    const permissions =
+      data.permissions === undefined ? null : JSON.stringify(data.permissions);
+
     const result = await pool.query(
       `UPDATE users
        SET fullname = COALESCE($1, fullname),
            email = COALESCE($2, email),
            role = COALESCE($3, role),
            is_active = COALESCE($4, is_active),
+           permissions = COALESCE($5::jsonb, permissions),
            updated_at = CURRENT_TIMESTAMP
-       WHERE id = $5
-       RETURNING id, fullname, email, role, is_active, updated_at`,
-      [data.fullname, data.email, data.role, data.is_active, id]
+       WHERE id = $6
+       RETURNING id, fullname, email, role, is_active, permissions, updated_at`,
+      [data.fullname, data.email, data.role, data.is_active, permissions, id]
     );
 
     if (result.rows.length === 0) {

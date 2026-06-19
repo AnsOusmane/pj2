@@ -13,44 +13,16 @@
     </div>
 
     <nav class="flex-1 p-4 space-y-6">
-      <!-- Général -->
-      <div>
-        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Général</p>
-        <a routerLink="dashboard" class="btn-admin">📊 Dashboard</a>
-        <a routerLink="users" class="btn-admin">👤 Utilisateurs</a>
-      </div>
-
-      <!-- Gestion de contenu -->
-      <div>
-        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Contenu</p>
-        <button (click)="goToAddNews()" class="btn-admin">📰 News / Newsletters</button>
-        <button (click)="goToAddRapportsOff()" class="btn-admin">📑 Rapports officiels</button>
-        <button (click)="goToAddDecret()" class="btn-admin">⚖️ Décrets</button>
-        <button (click)="goToAddCom()" class="btn-admin">📢 Communiqués</button>
-        <button (click)="goToAddGuides()" class="btn-admin">📘 Guides</button>
-      </div>
-
-      <!-- Médias -->
-      <div>
-        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Médias</p>
-        <a routerLink="media" class="btn-admin">🎞️ Dossiers médias</a>
-        <button (click)="goToAddImg()" class="btn-admin">🖼️ Banque d'images</button>
-      </div>
-
-      <!-- Carrière -->
-      <div>
-        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Carrière</p>
-        <button (click)="goToAddOffresEmploi()" class="btn-admin">💼 Offres d’emploi</button>
-        <a routerLink="candidatures" class="btn-admin">📄 Candidatures</a>
-      </div>
-
-      <!-- Marchés Publics -->
-      <div>
-        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Marchés Publics</p>
-        <a routerLink="ppm-gestion" class="btn-admin">📋 Plan de Passation (PPM)</a>
-        <a routerLink="appels-offre-gestion" class="btn-admin">📨 Appels d'offres</a>
-        <a routerLink="avis-attribution-gestion" class="btn-admin">🏆 Avis d'attribution</a>
-        <a routerLink="fournisseurs-gestion" class="btn-admin">🤝 Espace Fournisseurs</a>
+      <div *ngFor="let group of visibleMenu">
+        <p class="text-xs font-bold text-gray-500 uppercase mb-2">{{ group.title }}</p>
+        <a
+          *ngFor="let item of group.items"
+          [routerLink]="item.route"
+          routerLinkActive="bg-green-50 text-green-700"
+          class="btn-admin"
+        >
+          {{ item.icon }} {{ item.label }}
+        </a>
       </div>
     </nav>
 

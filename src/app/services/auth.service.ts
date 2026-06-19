@@ -12,6 +12,7 @@ export interface LoginResponse {
     fullname: string;
     email: string;
     role: 'admin' | 'user' | 'cellule-pm';
+    permissions: string[];
   };
 }
 
@@ -20,6 +21,7 @@ export interface User {
   fullname: string;
   email: string;
   role: 'admin' | 'user' | 'cellule-pm';
+  permissions: string[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -62,6 +64,14 @@ export class AuthService {
     return user?.role === 'admin';
   }
 
+  /** Un admin a accès à tout ; sinon on vérifie la liste de permissions. */
+  hasPermission(key: string): boolean {
+    const user = this.currentUserSubject.value;
+    if (!user) return false;
+    if (user.role === 'admin') return true;
+    return (user.permissions || []).includes(key);
+  }
+
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
@@ -70,7 +80,12 @@ export class AuthService {
     const userStr = localStorage.getItem('currentUser');
     if (userStr) {
       try {
-        this.currentUserSubject.next(JSON.parse(userStr));
+        const user = JSON.parse(userStr) as User;
+        // Compatibilité avec d'anciennes sessions sans permissions.
+        if (!Array.isArray(user.permissions)) {
+          user.permissions = [];
+        }
+        this.currentUserSubject.next(user);
       } catch (e) {
         console.error('Erreur parsing user storage');
       }

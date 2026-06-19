@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
 
     // 2. Recherche de l'utilisateur
     const result = await pool.query(
-      'SELECT id, fullname, email, password, role, is_active FROM users WHERE email = $1',
+      'SELECT id, fullname, email, password, role, is_active, permissions FROM users WHERE email = $1',
       [email]
     );
 
@@ -72,7 +72,9 @@ router.post('/login', async (req, res) => {
         id: user.id,
         fullname: user.fullname,
         email: user.email,
-        role: user.role
+        role: user.role,
+        // Un admin a accès à tout ; les autres sont limités à leurs permissions.
+        permissions: user.role === 'admin' ? [] : (user.permissions || [])
       },
       token
     });

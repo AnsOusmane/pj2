@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService, User } from '../services/auth.service';
+import { ADMIN_MENU, AdminMenuGroup, AdminMenuItem } from './admin-menu.config';
 
 @Component({
   selector: 'app-admin',
@@ -13,6 +14,9 @@ export class AdminComponent implements OnInit {
 
   currentUser: User | null = null;
 
+  // Menu filtré selon le rôle / les permissions de l'utilisateur connecté.
+  visibleMenu: AdminMenuGroup[] = [];
+
   constructor(
     private router: Router,
     private authService: AuthService
@@ -21,36 +25,23 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
+      this.visibleMenu = this.buildVisibleMenu(user);
     });
   }
 
-  // ====================== NAVIGATION ======================
-  goToAddNews() {
-    this.router.navigate(['/admin/newsletters-form']);
-  }
+  private buildVisibleMenu(user: User | null): AdminMenuGroup[] {
+    const isAdmin = user?.role === 'admin';
+    const permissions = user?.permissions || [];
 
-  goToAddRapportsOff() {
-    this.router.navigate(['/admin/official-reports-form']);
-  }
+    const canSee = (item: AdminMenuItem): boolean => {
+      if (isAdmin) return true;
+      if (item.adminOnly) return false;
+      return permissions.includes(item.key);
+    };
 
-  goToAddDecret() {
-    this.router.navigate(['/admin/decrets-form']);
-  }
-
-  goToAddCom() {
-    this.router.navigate(['/admin/communiques-form']);
-  }
-
-  goToAddImg() {
-    this.router.navigate(['/admin/images-bank-form']);
-  }
-
-  goToAddGuides() {
-    this.router.navigate(['/admin/guides-form']);
-  }
-
-  goToAddOffresEmploi() {
-    this.router.navigate(['/admin/offres-emploi-form']);
+    return ADMIN_MENU
+      .map(group => ({ ...group, items: group.items.filter(canSee) }))
+      .filter(group => group.items.length > 0);
   }
 
   // ====================== DÉCONNEXION ======================

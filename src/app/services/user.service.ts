@@ -4,12 +4,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 
+export type UserRole = 'admin' | 'user' | 'cellule-pm';
+
 export interface User {
   id: number;
   fullname: string;
   email: string;
-  role: 'admin' | 'user';
+  role: UserRole;
   is_active: boolean;
+  permissions: string[];
   created_at: string;
 }
 
@@ -17,15 +20,17 @@ export interface CreateUserDto {
   fullname: string;
   email: string;
   password: string;
-  role?: 'admin' | 'user';
+  role?: UserRole;
   is_active?: boolean;
+  permissions?: string[];
 }
 
 export interface UpdateUserDto {
   fullname?: string;
   email?: string;
-  role?: 'admin' | 'user';
+  role?: UserRole;
   is_active?: boolean;
+  permissions?: string[];
 }
 
 @Injectable({ providedIn: 'root' })
