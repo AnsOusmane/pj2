@@ -65,7 +65,7 @@ export class UserCreateForm {
 
         confirmPassword: ['', Validators.required],
 
-        role: ['admin', Validators.required],
+        role: ['user', Validators.required],
 
         is_active: [true]
       },
@@ -166,7 +166,7 @@ export class UserCreateForm {
         );
 
         this.form.reset({
-          role: 'admin',
+          role: 'user',
           is_active: true
         });
         this.selectedPermissions.set(new Set<string>());
