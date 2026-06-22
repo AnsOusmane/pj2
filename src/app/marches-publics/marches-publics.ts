@@ -36,7 +36,7 @@ export class MarchesPublicsComponent {
       lien: '/appels-offre/attributions'
     },
     {
-      titre: 'Espace Fournisseurs',
+      titre: "Demande d'agrément",
       description: 'Déposez en ligne votre demande d’agrément (manifestation d’intérêt).',
       lien: '/appels-offre/fournisseurs'
     }

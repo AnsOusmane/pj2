@@ -15,6 +15,12 @@ export interface AvisAttribution {
   date_attribution: string | null;
   file_url: string | null;
   is_published?: boolean;
+  archived_at?: string | null;
+  // Lien vers l'appel d'offres d'origine (optionnel).
+  appel_offre_id?: number | null;
+  // Champs joints (route de gestion) : référence/objet de l'AO lié.
+  ao_reference?: string | null;
+  ao_objet?: string | null;
   updated_at: string;
   // Présents uniquement via la route de gestion (cellule/admin)
   created_by?: number | null;
@@ -40,9 +46,11 @@ export class AvisAttributionService {
     return this.http.get<AvisAttribution[]>(this.apiUrl, { params }).pipe(catchError(this.handleError));
   }
 
-  /** Liste de gestion (cellule/admin) : brouillons inclus + nom du dernier éditeur. */
-  getAllForManage(): Observable<AvisAttribution[]> {
-    return this.http.get<AvisAttribution[]>(`${this.apiUrl}/manage`).pipe(catchError(this.handleError));
+  /** Liste de gestion (cellule/admin) : actifs par défaut, ou archivés si demandé. */
+  getAllForManage(archived = false): Observable<AvisAttribution[]> {
+    let params = new HttpParams();
+    if (archived) params = params.set('archived', 'true');
+    return this.http.get<AvisAttribution[]>(`${this.apiUrl}/manage`, { params }).pipe(catchError(this.handleError));
   }
 
   /** Création — FormData (upload PDF de l'avis). */
@@ -55,8 +63,15 @@ export class AvisAttributionService {
     return this.http.put<AvisAttribution>(`${this.apiUrl}/${id}`, data).pipe(catchError(this.handleError));
   }
 
-  delete(id: number): Observable<{ success: boolean; message: string }> {
-    return this.http.delete<{ success: boolean; message: string }>(`${this.apiUrl}/${id}`)
+  /** Archive un avis d'attribution (soft-archive). */
+  archive(id: number): Observable<{ success: boolean; message: string }> {
+    return this.http.patch<{ success: boolean; message: string }>(`${this.apiUrl}/${id}/archive`, {})
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Restaure un avis d'attribution archivé. */
+  unarchive(id: number): Observable<{ success: boolean; message: string }> {
+    return this.http.patch<{ success: boolean; message: string }>(`${this.apiUrl}/${id}/unarchive`, {})
       .pipe(catchError(this.handleError));
   }
 

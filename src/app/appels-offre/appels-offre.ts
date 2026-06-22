@@ -29,8 +29,9 @@ export class AppelsOffreComponent implements OnInit {
     const etat = this.filtreEtat();
     return this.lignes().filter(l => {
       if (type !== '' && l.type_marche !== type) return false;
+      if (etat === 'a_venir' && !this.estAVenir(l)) return false;
       if (etat === 'ouvert' && !this.estEnCours(l)) return false;
-      if (etat === 'cloture' && this.estEnCours(l)) return false;
+      if (etat === 'cloture' && (this.estEnCours(l) || this.estAVenir(l))) return false;
       return true;
     });
   });
@@ -45,9 +46,17 @@ export class AppelsOffreComponent implements OnInit {
     });
   }
 
-  /** En cours = statut « ouvert » ET date/heure limite non dépassée (auto-expiration). */
+  /** À venir = pas encore lancé (statut « à venir » ou date de lancement future). */
+  estAVenir(l: AppelOffre): boolean {
+    if (l.statut === 'cloture') return false;
+    if (l.statut === 'a_venir') return true;
+    return !!l.date_lancement && new Date(l.date_lancement).getTime() > Date.now();
+  }
+
+  /** En cours = lancé, non clôturé ET date/heure limite non dépassée (auto-expiration). */
   estEnCours(l: AppelOffre): boolean {
     if (l.statut === 'cloture') return false;
+    if (this.estAVenir(l)) return false;
     if (!l.date_limite) return true;
     return new Date(l.date_limite).getTime() >= Date.now();
   }

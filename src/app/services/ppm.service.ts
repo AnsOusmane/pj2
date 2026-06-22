@@ -20,6 +20,7 @@ export interface Ppm {
   date_prevue_lancement: string | null;
   statut: PpmStatut;
   is_published?: boolean;
+  archived_at?: string | null;
   updated_at: string;
   // Présents uniquement via la route de gestion (cellule/admin)
   created_by?: number | null;
@@ -55,9 +56,11 @@ export class PpmService {
     return this.http.get<Ppm[]>(this.apiUrl, { params }).pipe(catchError(this.handleError));
   }
 
-  /** Liste de gestion (cellule/admin) : brouillons inclus + nom du dernier éditeur. */
-  getAllForManage(): Observable<Ppm[]> {
-    return this.http.get<Ppm[]>(`${this.apiUrl}/manage`).pipe(catchError(this.handleError));
+  /** Liste de gestion (cellule/admin) : actifs par défaut, ou archivés si demandé. */
+  getAllForManage(archived = false): Observable<Ppm[]> {
+    let params = new HttpParams();
+    if (archived) params = params.set('archived', 'true');
+    return this.http.get<Ppm[]>(`${this.apiUrl}/manage`, { params }).pipe(catchError(this.handleError));
   }
 
   create(payload: PpmPayload): Observable<Ppm> {
@@ -68,8 +71,15 @@ export class PpmService {
     return this.http.put<Ppm>(`${this.apiUrl}/${id}`, payload).pipe(catchError(this.handleError));
   }
 
-  delete(id: number): Observable<{ success: boolean; message: string }> {
-    return this.http.delete<{ success: boolean; message: string }>(`${this.apiUrl}/${id}`)
+  /** Archive une ligne (soft-archive : elle disparaît des actifs et du public). */
+  archive(id: number): Observable<{ success: boolean; message: string }> {
+    return this.http.patch<{ success: boolean; message: string }>(`${this.apiUrl}/${id}/archive`, {})
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Restaure une ligne archivée. */
+  unarchive(id: number): Observable<{ success: boolean; message: string }> {
+    return this.http.patch<{ success: boolean; message: string }>(`${this.apiUrl}/${id}/unarchive`, {})
       .pipe(catchError(this.handleError));
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppelsOffreService, AppelOffre } from 'app/services/appels-offre.service';
+import { PpmService, Ppm } from 'app/services/ppm.service';
 
 @Component({
   selector: 'app-appels-offre-gestion',
@@ -21,6 +22,7 @@ export class AppelsOffreGestionComponent implements OnInit {
     'Entente directe'
   ];
   readonly statuts = [
+    { value: 'a_venir', label: 'À venir' },
     { value: 'ouvert', label: 'Ouvert' },
     { value: 'cloture', label: 'Clôturé' }
   ];
@@ -30,6 +32,12 @@ export class AppelsOffreGestionComponent implements OnInit {
   saving = signal(false);
   error = signal<string | null>(null);
   success = signal<string | null>(null);
+
+  // false = lignes actives ; true = lignes archivées.
+  showArchived = signal(false);
+
+  // Lignes PPM actives proposées comme origine d'un appel d'offres.
+  ppmOptions = signal<Ppm[]>([]);
 
   // null = panneau fermé, 'new' = création, number = édition de cette ligne
   editingId = signal<number | 'new' | null>(null);
@@ -42,8 +50,13 @@ export class AppelsOffreGestionComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private aoService: AppelsOffreService) {
+  constructor(
+    private fb: FormBuilder,
+    private aoService: AppelsOffreService,
+    private ppmService: PpmService
+  ) {
     this.form = this.fb.group({
+      ppm_id: [''],
       reference: [''],
       objet: ['', Validators.required],
       description: [''],
@@ -59,14 +72,46 @@ export class AppelsOffreGestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
+    this.loadPpmOptions();
+  }
+
+  // Lignes PPM actives (pour le menu « Issu de la ligne PPM »).
+  private loadPpmOptions(): void {
+    this.ppmService.getAllForManage(false).subscribe({
+      next: (data) => this.ppmOptions.set(data),
+      error: () => { /* non bloquant : le menu reste vide */ }
+    });
+  }
+
+  // Pré-remplit les champs depuis la ligne PPM sélectionnée.
+  onPpmSelect(): void {
+    const id = Number(this.form.value.ppm_id);
+    const p = this.ppmOptions().find((x) => x.id === id);
+    if (!p) return;
+    this.form.patchValue({
+      reference: p.reference ?? '',
+      objet: p.objet,
+      type_marche: p.type_marche ?? '',
+      mode_passation: p.mode_passation ?? '',
+      source_financement: p.source_financement ?? ''
+    });
   }
 
   load(): void {
     this.loading.set(true);
-    this.aoService.getAllForManage().subscribe({
+    this.aoService.getAllForManage(this.showArchived()).subscribe({
       next: (data) => { this.lignes.set(data); this.loading.set(false); },
       error: (err) => { this.error.set(err?.message || 'Erreur de chargement'); this.loading.set(false); }
     });
+  }
+
+  // Bascule entre les appels d'offres actifs et archivés.
+  setArchivedView(archived: boolean): void {
+    if (this.showArchived() === archived) return;
+    this.showArchived.set(archived);
+    this.editingId.set(null);
+    this.resetMessages();
+    this.load();
   }
 
   // ====================== OUVERTURE DU PANNEAU ======================
@@ -74,7 +119,7 @@ export class AppelsOffreGestionComponent implements OnInit {
     this.resetMessages();
     this.resetFile();
     this.form.reset({
-      reference: '', objet: '', description: '', type_marche: '', mode_passation: '',
+      ppm_id: '', reference: '', objet: '', description: '', type_marche: '', mode_passation: '',
       source_financement: '', date_lancement: '', date_limite: '', statut: 'ouvert', is_published: false
     });
     this.editingId.set('new');
@@ -85,13 +130,14 @@ export class AppelsOffreGestionComponent implements OnInit {
     this.resetFile();
     this.existingFileUrl.set(ligne.file_url ?? null);
     this.form.reset({
+      ppm_id: ligne.ppm_id ?? '',
       reference: ligne.reference ?? '',
       objet: ligne.objet,
       description: ligne.description ?? '',
       type_marche: ligne.type_marche ?? '',
       mode_passation: ligne.mode_passation ?? '',
       source_financement: ligne.source_financement ?? '',
-      date_lancement: ligne.date_lancement ? ligne.date_lancement.substring(0, 10) : '',
+      date_lancement: ligne.date_lancement ? ligne.date_lancement.substring(0, 16) : '',
       // datetime-local attend « YYYY-MM-DDTHH:mm » → on tronque la chaîne ISO.
       date_limite: ligne.date_limite ? ligne.date_limite.substring(0, 16) : '',
       statut: ligne.statut,
@@ -140,6 +186,7 @@ export class AppelsOffreGestionComponent implements OnInit {
     if (v.source_financement) fd.append('source_financement', v.source_financement);
     if (v.date_lancement)     fd.append('date_lancement', v.date_lancement);
     if (v.date_limite)        fd.append('date_limite', v.date_limite);
+    if (v.ppm_id)             fd.append('ppm_id', String(v.ppm_id));
     if (this.selectedFile())  fd.append('file', this.selectedFile() as File);
 
     const current = this.editingId();
@@ -159,12 +206,21 @@ export class AppelsOffreGestionComponent implements OnInit {
     });
   }
 
-  // ====================== SUPPRESSION ======================
-  remove(ligne: AppelOffre): void {
-    if (!confirm(`Supprimer l'appel d'offres « ${ligne.objet} » ?`)) return;
-    this.aoService.delete(ligne.id).subscribe({
-      next: () => { this.success.set('Appel d\'offres supprimé.'); this.load(); },
-      error: (err) => this.error.set(err?.message || 'Erreur lors de la suppression.')
+  // ====================== ARCHIVAGE ======================
+  archive(ligne: AppelOffre): void {
+    if (!confirm(`Archiver l'appel d'offres « ${ligne.objet} » ?`)) return;
+    this.resetMessages();
+    this.aoService.archive(ligne.id).subscribe({
+      next: () => { this.success.set('Appel d\'offres archivé.'); this.load(); },
+      error: (err) => this.error.set(err?.message || 'Erreur lors de l\'archivage.')
+    });
+  }
+
+  restore(ligne: AppelOffre): void {
+    this.resetMessages();
+    this.aoService.unarchive(ligne.id).subscribe({
+      next: () => { this.success.set('Appel d\'offres restauré.'); this.load(); },
+      error: (err) => this.error.set(err?.message || 'Erreur lors de la restauration.')
     });
   }
 

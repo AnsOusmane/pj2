@@ -3,16 +3,22 @@
   <!-- En-tête -->
   <div class="admin-page-head">
     <div>
-      <h1 class="text-2xl font-bold text-gray-800">Espace Fournisseurs</h1>
+      <h1 class="text-2xl font-bold text-gray-800">Dépôt d'agréments</h1>
       <p class="text-sm text-gray-500">Demandes d'agrément déposées par les fournisseurs</p>
     </div>
-    <div>
-      <label class="text-sm text-gray-600 mr-2">Statut :</label>
-      <select [(ngModel)]="filtreStatut" (ngModelChange)="onFiltreChange()"
-              class="border rounded-lg px-3 py-2 text-sm bg-white outline-none focus:ring-2 focus:ring-green-400">
-        <option [ngValue]="''">Tous</option>
-        <option *ngFor="let s of statuts" [ngValue]="s.value">{{ s.label }}</option>
-      </select>
+    <div class="flex items-center gap-3 flex-wrap">
+      <div class="head-toggle">
+        <button type="button" (click)="setArchivedView(false)" [class.active]="!showArchived()">Actives</button>
+        <button type="button" (click)="setArchivedView(true)" [class.active]="showArchived()">Archivées</button>
+      </div>
+      <div>
+        <label class="text-sm mr-2">Statut :</label>
+        <select [(ngModel)]="filtreStatut" (ngModelChange)="onFiltreChange()"
+                class="border rounded-lg px-3 py-2 text-sm bg-white outline-none focus:ring-2 focus:ring-green-400">
+          <option [ngValue]="''">Tous</option>
+          <option *ngFor="let s of statuts" [ngValue]="s.value">{{ s.label }}</option>
+        </select>
+      </div>
     </div>
   </div>
 
@@ -66,7 +72,8 @@
               <button (click)="toggleDetail(l)" class="text-blue-600 hover:underline mr-3">
                 {{ detailId() === l.id ? 'Fermer' : 'Détail' }}
               </button>
-              <button (click)="remove(l)" class="text-red-600 hover:underline">Supprimer</button>
+              <button *ngIf="!showArchived()" (click)="archive(l)" class="text-amber-600 hover:underline">Archiver</button>
+              <button *ngIf="showArchived()" (click)="restore(l)" class="text-green-600 hover:underline">Restaurer</button>
             </td>
           </tr>
 

@@ -11,7 +11,7 @@ Il couvre les 4 sous-modules :
 | 1 | **PPM** — Plan de Passation des Marchés | `/api/ppm` | `ppm` |
 | 2 | **Appels d'offres** | `/api/appels-offre` | `appels_offre` |
 | 3 | **Avis d'attribution** | `/api/avis-attribution` | `avis_attribution` |
-| 4 | **Espace Fournisseurs** (dépôt d'agrément) | `/api/fournisseurs` | `fournisseurs_agrements` |
+| 4 | **demande d'agrément** (dépôt d'agrément) | `/api/fournisseurs` | `fournisseurs_agrements` |
 
 ---
 
@@ -27,7 +27,7 @@ Table PostgreSQL  ↔  Route Express (CRUD + Zod)  ↔  Service Angular  ↔  É
 ### Principes communs
 
 - **Modèle de publication** : la cellule rédige en *brouillon* (`is_published = false`),
-  le contenu n'apparaît côté public qu'une fois **publié**. (Sauf l'Espace Fournisseurs,
+  le contenu n'apparaît côté public qu'une fois **publié**. (Sauf l'demande d'agrément,
   qui est un flux entrant et non un contenu publié — voir §6.)
 - **Traçabilité « dernière modif »** : chaque table porte `updated_by` (FK `users`) et
   `updated_at`, mis à jour à chaque écriture. Pas d'historique complet, seulement le
@@ -162,7 +162,7 @@ En `multipart/form-data`, **tous les champs arrivent en chaîne**. D'où :
 - À l'`UPDATE`, le `file_url` existant est **conservé** si aucun nouveau PDF n'est
   envoyé (on ne met `file_url` que si `req.file` est présent).
 
-### Espace Fournisseurs (`fournisseurs.routes.js`) — spécifique
+### demande d'agrément (`fournisseurs.routes.js`) — spécifique
 
 | Méthode & route | Accès | Description |
 |-----------------|-------|-------------|
@@ -249,7 +249,7 @@ delete(id): Observable<...>                               // DELETE
   (type de marché, état), badges d'état. L'appel d'offres calcule une **expiration
   automatique** à partir de `date_limite` (`estEnCours()` → badge « En cours » /
   « Clôturé »), indépendamment du `statut` stocké.
-- **Espace Fournisseurs public** : formulaire `ReactiveForms` + 3 champs fichiers,
+- **demande d'agrément public** : formulaire `ReactiveForms` + 3 champs fichiers,
   `submit()` construit un `FormData`, puis **écran de confirmation** affichant le
   numéro `AGR-…` retourné (signal `numeroConfirme`) ; `nouveauDepot()` réinitialise.
 - **Écrans admin** : modelés sur `ppm-gestion`. Liste + formulaire, upload PDF

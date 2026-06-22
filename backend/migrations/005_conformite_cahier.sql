@@ -4,7 +4,7 @@
 -- ====================================================================
 
 -- --------------------------------------------------------------------
--- Module 4 — Espace Fournisseurs : aligner les pièces sur le cahier.
+-- Module 4 — demande d'agrément : aligner les pièces sur le cahier.
 -- Le cahier impose 3 pièces PDF :
 --   1. Demande formelle adressée au Directeur Général
 --   2. Copie du NINEA (en cours de validité)

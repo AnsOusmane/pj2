@@ -64,7 +64,7 @@
           </td>
           <td class="px-4 py-3 text-gray-600">{{ l.type_marche || '—' }}</td>
           <td class="px-4 py-3 text-center text-gray-600">
-            {{ l.date_attribution ? (l.date_attribution | date:'dd/MM/yyyy') : '—' }}
+            {{ l.date_attribution ? (l.date_attribution | date:'dd/MM/yyyy HH:mm') : '—' }}
           </td>
           <td class="px-4 py-3 text-center">
             <a *ngIf="l.file_url" [href]="l.file_url" target="_blank"

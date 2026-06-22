@@ -6,10 +6,16 @@
       <h1 class="text-2xl font-bold text-gray-800">Avis d'attribution</h1>
       <p class="text-sm text-gray-500">Gestion des résultats d'attribution — cellule de passation des marchés</p>
     </div>
-    <button (click)="openCreate()"
-            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition">
-      + Ajouter un avis d'attribution
-    </button>
+    <div class="flex items-center gap-3">
+      <div class="head-toggle">
+        <button type="button" (click)="setArchivedView(false)" [class.active]="!showArchived()">Actifs</button>
+        <button type="button" (click)="setArchivedView(true)" [class.active]="showArchived()">Archivés</button>
+      </div>
+      <button *ngIf="!showArchived()" (click)="openCreate()"
+              class="head-cta px-4 py-2 rounded-lg font-medium transition">
+        + Ajouter un avis d'attribution
+      </button>
+    </div>
   </div>
 
   <!-- Messages -->
@@ -28,6 +34,21 @@
     </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Origine appel d'offres (lien + pré-remplissage) -->
+      <div class="lg:col-span-3">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Issu de l'appel d'offres</label>
+        <select formControlName="appel_offre_id" (change)="onAoSelect()"
+                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none bg-green-50">
+          <option value="">— Aucun (saisie manuelle) —</option>
+          <option *ngFor="let ao of aoOptions()" [value]="ao.id">
+            {{ ao.reference ? ao.reference + ' — ' : '' }}{{ ao.objet }}
+          </option>
+        </select>
+        <p class="text-xs text-gray-400 mt-1">
+          Choisir un appel d'offres pré-remplit les champs, le clôture et fait passer la ligne PPM liée en « attribué ».
+        </p>
+      </div>
+
       <!-- Objet -->
       <div class="lg:col-span-2">
         <label class="block text-sm font-medium text-gray-700 mb-1">Objet du marché *</label>
@@ -83,7 +104,7 @@
       <!-- Date d'attribution -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Date d'attribution</label>
-        <input type="date" formControlName="date_attribution"
+        <input type="datetime-local" formControlName="date_attribution"
                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none" />
       </div>
 
@@ -144,13 +165,20 @@
           <td colspan="8" class="px-4 py-8 text-center text-gray-400">Aucun avis d'attribution. Cliquez sur « Ajouter un avis d'attribution ».</td>
         </tr>
         <tr *ngFor="let l of lignes()" class="hover:bg-gray-50">
-          <td class="px-4 py-3 font-medium text-gray-800 max-w-xs">{{ l.objet }}</td>
+          <td class="px-4 py-3 font-medium text-gray-800 max-w-xs">
+            {{ l.objet }}
+            <span *ngIf="l.appel_offre_id"
+                  class="inline-block mt-1 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[11px] font-medium"
+                  [title]="l.ao_objet || ''">
+              ↳ AO {{ l.ao_reference || ('#' + l.appel_offre_id) }}
+            </span>
+          </td>
           <td class="px-4 py-3 text-gray-600">{{ l.attributaire }}</td>
           <td class="px-4 py-3 text-right text-gray-600">
             {{ l.montant != null ? (l.montant | number:'1.0-0') : '—' }}
           </td>
           <td class="px-4 py-3 text-gray-600">
-            {{ l.date_attribution ? (l.date_attribution | date:'dd/MM/yyyy') : '—' }}
+            {{ l.date_attribution ? (l.date_attribution | date:'dd/MM/yyyy HH:mm') : '—' }}
           </td>
           <td class="px-4 py-3">
             <a *ngIf="l.file_url" [href]="l.file_url" target="_blank" class="text-blue-600 underline">PDF</a>
@@ -168,8 +196,11 @@
             {{ l.updated_at | date:'dd/MM/yyyy HH:mm' }}
           </td>
           <td class="px-4 py-3 text-right whitespace-nowrap">
-            <button (click)="openEdit(l)" class="text-blue-600 hover:underline mr-3">Modifier</button>
-            <button (click)="remove(l)" class="text-red-600 hover:underline">Supprimer</button>
+            <ng-container *ngIf="!showArchived()">
+              <button (click)="openEdit(l)" class="text-blue-600 hover:underline mr-3">Modifier</button>
+              <button (click)="archive(l)" class="text-amber-600 hover:underline">Archiver</button>
+            </ng-container>
+            <button *ngIf="showArchived()" (click)="restore(l)" class="text-green-600 hover:underline">Restaurer</button>
           </td>
         </tr>
       </tbody>

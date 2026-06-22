@@ -62,7 +62,7 @@
   <!-- ====================== FORMULAIRE DE DÉPÔT ====================== -->
   <div *ngIf="!numeroConfirme()">
     <header class="mb-8 text-center">
-      <h1 class="text-3xl md:text-4xl font-bold text-green-700">Espace Fournisseurs</h1>
+      <h1 class="text-3xl md:text-4xl font-bold text-green-700">Dépot d'agrément</h1>
       <p class="mt-2 text-gray-500 max-w-2xl mx-auto">
         Déposez en ligne votre demande d'agrément (manifestation d'intérêt). Aucun compte
         n'est nécessaire : un numéro de dossier vous sera attribué à la fin du dépôt.
@@ -135,7 +135,7 @@
                  [class.border-red-400]="isInvalid('email')" />
           <p *ngIf="isInvalid('email')" class="text-xs text-red-500 mt-1">
             <span *ngIf="form.get('email')?.errors?.['required']">L'email est requis.</span>
-            <span *ngIf="form.get('email')?.errors?.['email']">Format d'email invalide.</span>
+            <span *ngIf="form.get('email')?.errors?.['email'] || form.get('email')?.errors?.['pattern']">Format d'email invalide (ex. nom&#64;domaine.sn).</span>
           </p>
         </div>
 

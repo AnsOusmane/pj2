@@ -123,13 +123,29 @@ html {
 .admin-page-head p {
   color: #dcfce7 !important;
 }
-/* Boutons d'action dans la barre : blancs sur fond vert. */
-.admin-page-head > a,
-.admin-page-head button {
+/* Bouton d'action principal de la barre (CTA) : blanc sur fond vert. */
+.admin-page-head .head-cta {
   background-color: #ffffff !important;
   color: #15803d !important;
 }
-.admin-page-head > a:hover,
-.admin-page-head button:hover {
+.admin-page-head .head-cta:hover {
   background-color: #f0fdf4 !important;
+}
+/* Bascule Actifs / Archivés dans la barre verte. */
+.admin-page-head .head-toggle {
+  display: inline-flex;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.admin-page-head .head-toggle button {
+  padding: 0.375rem 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+  transition: 0.15s;
+}
+.admin-page-head .head-toggle button.active {
+  background-color: #ffffff;
+  color: #15803d;
 }

@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 
-export type AoStatut = 'ouvert' | 'cloture';
+export type AoStatut = 'a_venir' | 'ouvert' | 'cloture';
 
 export interface AppelOffre {
   id: number;
@@ -19,6 +19,18 @@ export interface AppelOffre {
   file_url: string | null;
   statut: AoStatut;
   is_published?: boolean;
+  archived_at?: string | null;
+  // Lien vers la ligne PPM d'origine (optionnel).
+  ppm_id?: number | null;
+  // Champs joints (route de gestion) : référence/objet de la ligne PPM liée.
+  ppm_reference?: string | null;
+  ppm_objet?: string | null;
+  // Avis d'attribution publié et lié (route publique) : pour affichage + téléchargement.
+  avis_file_url?: string | null;
+  avis_reference?: string | null;
+  avis_attributaire?: string | null;
+  avis_montant?: number | null;
+  avis_date_attribution?: string | null;
   updated_at: string;
   // Présents uniquement via la route de gestion (cellule/admin)
   created_by?: number | null;
@@ -46,9 +58,11 @@ export class AppelsOffreService {
     return this.http.get<AppelOffre[]>(this.apiUrl, { params }).pipe(catchError(this.handleError));
   }
 
-  /** Liste de gestion (cellule/admin) : brouillons inclus + nom du dernier éditeur. */
-  getAllForManage(): Observable<AppelOffre[]> {
-    return this.http.get<AppelOffre[]>(`${this.apiUrl}/manage`).pipe(catchError(this.handleError));
+  /** Liste de gestion (cellule/admin) : actifs par défaut, ou archivés si demandé. */
+  getAllForManage(archived = false): Observable<AppelOffre[]> {
+    let params = new HttpParams();
+    if (archived) params = params.set('archived', 'true');
+    return this.http.get<AppelOffre[]>(`${this.apiUrl}/manage`, { params }).pipe(catchError(this.handleError));
   }
 
   /** Création — FormData (upload PDF de l'avis). */
@@ -61,8 +75,15 @@ export class AppelsOffreService {
     return this.http.put<AppelOffre>(`${this.apiUrl}/${id}`, data).pipe(catchError(this.handleError));
   }
 
-  delete(id: number): Observable<{ success: boolean; message: string }> {
-    return this.http.delete<{ success: boolean; message: string }>(`${this.apiUrl}/${id}`)
+  /** Archive un appel d'offres (soft-archive). */
+  archive(id: number): Observable<{ success: boolean; message: string }> {
+    return this.http.patch<{ success: boolean; message: string }>(`${this.apiUrl}/${id}/archive`, {})
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Restaure un appel d'offres archivé. */
+  unarchive(id: number): Observable<{ success: boolean; message: string }> {
+    return this.http.patch<{ success: boolean; message: string }>(`${this.apiUrl}/${id}/unarchive`, {})
       .pipe(catchError(this.handleError));
   }
 

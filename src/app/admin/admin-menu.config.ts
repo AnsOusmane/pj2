@@ -65,7 +65,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
       { key: 'ppm', label: 'Plan de Passation (PPM)', icon: '📋', route: 'ppm-gestion' },
       { key: 'appels-offre', label: "Appels d'offres", icon: '📨', route: 'appels-offre-gestion' },
       { key: 'avis-attribution', label: "Avis d'attribution", icon: '🏆', route: 'avis-attribution-gestion' },
-      { key: 'fournisseurs', label: 'Espace Fournisseurs', icon: '🤝', route: 'fournisseurs-gestion' },
+      { key: 'fournisseurs', label: "Demande d'agrément", icon: '🤝', route: 'fournisseurs-gestion' },
     ],
   },
 ];

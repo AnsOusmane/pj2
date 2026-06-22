@@ -1,5 +1,5 @@
 -- ====================================================================
--- Module 4 — Espace Fournisseurs (dépôt public libre d'agrément)
+-- Module 4 — demande d'agrément (dépôt public libre d'agrément)
 -- Manifestation d'intérêt déposée SANS compte par les fournisseurs.
 -- Numéro auto AGR-[ANNÉE]-[chrono] généré côté backend.
 -- Suivi du statut par la cellule / l'admin (traçabilité updated_by/at).

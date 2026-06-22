@@ -6,10 +6,16 @@
       <h1 class="text-2xl font-bold text-gray-800">Plan de Passation des Marchés</h1>
       <p class="text-sm text-gray-500">Gestion des lignes du PPM — cellule de passation des marchés</p>
     </div>
-    <button (click)="openCreate()"
-            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition">
-      + Ajouter une ligne
-    </button>
+    <div class="flex items-center gap-3">
+      <div class="head-toggle">
+        <button type="button" (click)="setArchivedView(false)" [class.active]="!showArchived()">Actifs</button>
+        <button type="button" (click)="setArchivedView(true)" [class.active]="showArchived()">Archivés</button>
+      </div>
+      <button *ngIf="!showArchived()" (click)="openCreate()"
+              class="head-cta px-4 py-2 rounded-lg font-medium transition">
+        + Ajouter une ligne
+      </button>
+    </div>
   </div>
 
   <!-- Messages -->
@@ -99,7 +105,7 @@
       <!-- Date prévue de lancement -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Date prévue de lancement</label>
-        <input type="date" formControlName="date_prevue_lancement"
+        <input type="datetime-local" formControlName="date_prevue_lancement"
                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none" />
       </div>
 
@@ -190,8 +196,11 @@
             {{ l.updated_at | date:'dd/MM/yyyy HH:mm' }}
           </td>
           <td class="px-4 py-3 text-right whitespace-nowrap">
-            <button (click)="openEdit(l)" class="text-blue-600 hover:underline mr-3">Modifier</button>
-            <button (click)="remove(l)" class="text-red-600 hover:underline">Supprimer</button>
+            <ng-container *ngIf="!showArchived()">
+              <button (click)="openEdit(l)" class="text-blue-600 hover:underline mr-3">Modifier</button>
+              <button (click)="archive(l)" class="text-amber-600 hover:underline">Archiver</button>
+            </ng-container>
+            <button *ngIf="showArchived()" (click)="restore(l)" class="text-green-600 hover:underline">Restaurer</button>
           </td>
         </tr>
       </tbody>

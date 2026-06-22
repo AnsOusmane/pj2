@@ -32,6 +32,7 @@ export interface Agrement {
   doc_fiscale_url: string | null;
   statut: AgrementStatut;
   note_traitement: string | null;
+  archived_at?: string | null;
   updated_by_name?: string | null;
   created_at: string;
   updated_at: string;
@@ -66,7 +67,7 @@ export class FournisseursService {
     const payload: Record<string, string> = {
       access_key: this.web3formsKey,
       subject: `Nouvelle demande d'agrément — ${p.raison_sociale} (${p.numero})`,
-      from_name: 'Espace Fournisseurs SEN-CSU',
+      from_name: "demande d'agrément SEN-CSU",
       'N° dossier': p.numero,
       'Raison sociale': p.raison_sociale,
       'Domaine': p.domaine || '-',
@@ -83,10 +84,11 @@ export class FournisseursService {
     return this.http.post(this.web3formsUrl, payload, { headers });
   }
 
-  /** Liste de gestion (cellule/admin), filtre statut optionnel. */
-  getAllForManage(statut?: AgrementStatut | ''): Observable<Agrement[]> {
+  /** Liste de gestion (cellule/admin), filtre statut optionnel. Actifs par défaut, ou archivés. */
+  getAllForManage(statut?: AgrementStatut | '', archived = false): Observable<Agrement[]> {
     let params = new HttpParams();
     if (statut) params = params.set('statut', statut);
+    if (archived) params = params.set('archived', 'true');
     return this.http.get<Agrement[]>(`${this.apiUrl}/manage`, { params }).pipe(catchError(this.handleError));
   }
 
@@ -95,18 +97,42 @@ export class FournisseursService {
     return this.http.put<Agrement>(`${this.apiUrl}/${id}`, payload).pipe(catchError(this.handleError));
   }
 
-  delete(id: number): Observable<{ success: boolean; message: string }> {
-    return this.http.delete<{ success: boolean; message: string }>(`${this.apiUrl}/${id}`)
+  /** Archive une demande d'agrément (soft-archive). */
+  archive(id: number): Observable<{ success: boolean; message: string }> {
+    return this.http.patch<{ success: boolean; message: string }>(`${this.apiUrl}/${id}/archive`, {})
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Restaure une demande d'agrément archivée. */
+  unarchive(id: number): Observable<{ success: boolean; message: string }> {
+    return this.http.patch<{ success: boolean; message: string }>(`${this.apiUrl}/${id}/unarchive`, {})
       .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    let message = 'Une erreur est survenue';
-    if (error.error instanceof ErrorEvent) {
-      message = error.error.message;
+    let message: string;
+
+    if (error.error instanceof ErrorEvent || error.status === 0) {
+      // Erreur réseau / client : serveur injoignable, coupure internet, CORS…
+      message = 'Impossible de contacter le serveur. Vérifiez votre connexion internet et réessayez.';
+    } else if (error.status === 413) {
+      // Charge trop lourde (un PDF dépasse la limite).
+      message = 'Un des fichiers PDF dépasse la taille maximale autorisée (10 Mo).';
+    } else if (error.status === 429) {
+      // Limiteur anti-abus : on garde le message du serveur s'il existe.
+      message = error.error?.message || 'Trop de tentatives. Veuillez réessayer dans un moment.';
+    } else if (Array.isArray(error.error?.errors) && error.error.errors.length) {
+      // Erreurs de validation Zod : on détaille les champs concernés.
+      message = error.error.errors
+        .map((e: { message?: string }) => e?.message)
+        .filter(Boolean)
+        .join(' • ') || (error.error?.message ?? 'Données invalides.');
+    } else if (error.status >= 500) {
+      message = 'Le serveur a rencontré une erreur. Réessayez dans quelques instants.';
     } else {
-      message = error.error?.message || `Erreur ${error.status}`;
+      message = error.error?.message || `Une erreur est survenue (code ${error.status}).`;
     }
+
     console.error('Erreur API Fournisseurs :', error);
     return throwError(() => new Error(message));
   }

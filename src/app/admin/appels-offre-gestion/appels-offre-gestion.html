@@ -6,10 +6,16 @@
       <h1 class="text-2xl font-bold text-gray-800">Appels d'offres</h1>
       <p class="text-sm text-gray-500">Gestion des avis d'appel d'offres — cellule de passation des marchés</p>
     </div>
-    <button (click)="openCreate()"
-            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition">
-      + Ajouter un appel d'offres
-    </button>
+    <div class="flex items-center gap-3">
+      <div class="head-toggle">
+        <button type="button" (click)="setArchivedView(false)" [class.active]="!showArchived()">Actifs</button>
+        <button type="button" (click)="setArchivedView(true)" [class.active]="showArchived()">Archivés</button>
+      </div>
+      <button *ngIf="!showArchived()" (click)="openCreate()"
+              class="head-cta px-4 py-2 rounded-lg font-medium transition">
+        + Ajouter un appel d'offres
+      </button>
+    </div>
   </div>
 
   <!-- Messages -->
@@ -28,6 +34,21 @@
     </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Origine PPM (lien + pré-remplissage) -->
+      <div class="lg:col-span-3">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Issu de la ligne PPM</label>
+        <select formControlName="ppm_id" (change)="onPpmSelect()"
+                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none bg-green-50">
+          <option value="">— Aucune (saisie manuelle) —</option>
+          <option *ngFor="let p of ppmOptions()" [value]="p.id">
+            {{ p.reference ? p.reference + ' — ' : '' }}{{ p.objet }} ({{ p.annee }})
+          </option>
+        </select>
+        <p class="text-xs text-gray-400 mt-1">
+          Choisir une ligne PPM pré-remplit les champs ci-dessous et la fera passer en « lancé ».
+        </p>
+      </div>
+
       <!-- Objet -->
       <div class="lg:col-span-2">
         <label class="block text-sm font-medium text-gray-700 mb-1">Objet de l'appel d'offres *</label>
@@ -74,7 +95,7 @@
       <!-- Date de lancement -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Date de lancement</label>
-        <input type="date" formControlName="date_lancement"
+        <input type="datetime-local" formControlName="date_lancement"
                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none" />
       </div>
 
@@ -92,6 +113,10 @@
                 class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none">
           <option *ngFor="let s of statuts" [value]="s.value">{{ s.label }}</option>
         </select>
+        <p class="text-xs text-gray-400 mt-1">
+          Dès qu'une date est renseignée, le statut est calculé automatiquement
+          (« à venir » avant le lancement, « clôturé » après la date limite).
+        </p>
       </div>
 
       <!-- Description -->
@@ -159,7 +184,14 @@
           <td colspan="9" class="px-4 py-8 text-center text-gray-400">Aucun appel d'offres. Cliquez sur « Ajouter un appel d'offres ».</td>
         </tr>
         <tr *ngFor="let l of lignes()" class="hover:bg-gray-50">
-          <td class="px-4 py-3 font-medium text-gray-800 max-w-xs">{{ l.objet }}</td>
+          <td class="px-4 py-3 font-medium text-gray-800 max-w-xs">
+            {{ l.objet }}
+            <span *ngIf="l.ppm_id"
+                  class="inline-block mt-1 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[11px] font-medium"
+                  [title]="l.ppm_objet || ''">
+              ↳ PPM {{ l.ppm_reference || ('#' + l.ppm_id) }}
+            </span>
+          </td>
           <td class="px-4 py-3 text-gray-600">{{ l.reference || '—' }}</td>
           <td class="px-4 py-3 text-gray-600">{{ l.type_marche || '—' }}</td>
           <td class="px-4 py-3 text-gray-600">
@@ -172,6 +204,7 @@
           <td class="px-4 py-3">
             <span class="px-2 py-1 rounded-full text-xs font-medium"
                   [ngClass]="{
+                    'bg-slate-100 text-slate-600': l.statut === 'a_venir',
                     'bg-blue-100 text-blue-700': l.statut === 'ouvert',
                     'bg-amber-100 text-amber-700': l.statut === 'cloture'
                   }">
@@ -190,8 +223,11 @@
             {{ l.updated_at | date:'dd/MM/yyyy HH:mm' }}
           </td>
           <td class="px-4 py-3 text-right whitespace-nowrap">
-            <button (click)="openEdit(l)" class="text-blue-600 hover:underline mr-3">Modifier</button>
-            <button (click)="remove(l)" class="text-red-600 hover:underline">Supprimer</button>
+            <ng-container *ngIf="!showArchived()">
+              <button (click)="openEdit(l)" class="text-blue-600 hover:underline mr-3">Modifier</button>
+              <button (click)="archive(l)" class="text-amber-600 hover:underline">Archiver</button>
+            </ng-container>
+            <button *ngIf="showArchived()" (click)="restore(l)" class="text-green-600 hover:underline">Restaurer</button>
           </td>
         </tr>
       </tbody>

@@ -31,7 +31,7 @@ const ppmUpdateSchema = ppmSchema.partial();
 router.get('/', async (req, res) => {
   try {
     const { annee, type_marche, statut } = req.query;
-    const conditions = ['is_published = true'];
+    const conditions = ['is_published = true', 'archived_at IS NULL'];
     const values = [];
 
     if (annee)       { values.push(annee);       conditions.push(`annee = $${values.length}`); }
@@ -56,10 +56,13 @@ router.get('/', async (req, res) => {
 // ====================== GET GESTION (cellule/admin : tout, brouillons inclus) ======================
 router.get('/manage', authMiddleware, celluleOrAdmin, async (req, res) => {
   try {
+    // ?archived=true → lignes archivées ; sinon lignes actives uniquement.
+    const archived = req.query.archived === 'true';
     const result = await pool.query(
       `SELECT p.*, u.fullname AS updated_by_name
        FROM ppm p
        LEFT JOIN users u ON u.id = p.updated_by
+       WHERE p.archived_at IS ${archived ? 'NOT NULL' : 'NULL'}
        ORDER BY p.annee DESC, p.created_at DESC`
     );
     res.json(result.rows);
@@ -140,16 +143,37 @@ router.put('/:id', authMiddleware, celluleOrAdmin, async (req, res) => {
   }
 });
 
-// ====================== DELETE ======================
-router.delete('/:id', authMiddleware, celluleOrAdmin, async (req, res) => {
+// ====================== ARCHIVAGE (remplace la suppression) ======================
+router.patch('/:id/archive', authMiddleware, celluleOrAdmin, async (req, res) => {
   try {
-    const result = await pool.query('DELETE FROM ppm WHERE id = $1 RETURNING id', [req.params.id]);
+    const result = await pool.query(
+      `UPDATE ppm SET archived_at = CURRENT_TIMESTAMP, archived_by = $1
+       WHERE id = $2 AND archived_at IS NULL RETURNING id`,
+      [req.user.id, req.params.id]
+    );
     if (result.rowCount === 0) {
-      return res.status(404).json({ message: 'Ligne PPM non trouvée' });
+      return res.status(404).json({ message: 'Ligne PPM non trouvée ou déjà archivée' });
     }
-    res.json({ success: true, message: 'Ligne PPM supprimée' });
+    res.json({ success: true, message: 'Ligne PPM archivée' });
   } catch (err) {
-    console.error('Erreur DELETE ppm:', err);
+    console.error('Erreur archive ppm:', err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+router.patch('/:id/unarchive', authMiddleware, celluleOrAdmin, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `UPDATE ppm SET archived_at = NULL, archived_by = NULL
+       WHERE id = $1 AND archived_at IS NOT NULL RETURNING id`,
+      [req.params.id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Ligne PPM non trouvée ou déjà active' });
+    }
+    res.json({ success: true, message: 'Ligne PPM restaurée' });
+  } catch (err) {
+    console.error('Erreur unarchive ppm:', err);
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });

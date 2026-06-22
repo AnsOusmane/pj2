@@ -7,8 +7,39 @@ const { makeUpload, pdfOnly } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
 const celluleOrAdmin = require('../middleware/cellule.middleware');
 const verifyTurnstile = require('../middleware/turnstile.middleware');
+const { sendAgrementConfirmation } = require('../services/agrement-notify');
 
 const upload = makeUpload('fournisseurs', { fileFilter: pdfOnly });
+
+// Champs de fichiers attendus pour le dépôt.
+const depotFields = upload.fields([
+  { name: 'doc_demande', maxCount: 1 },
+  { name: 'doc_ninea', maxCount: 1 },
+  { name: 'doc_presentation', maxCount: 1 },
+  { name: 'doc_registre', maxCount: 1 },
+  { name: 'doc_fiscale', maxCount: 1 }
+]);
+
+// Enveloppe multer pour transformer ses erreurs (fichier trop lourd, etc.) en
+// réponses JSON claires : sans ça, une erreur multer court-circuite la route et
+// renvoie un 500 opaque non interprétable côté client.
+function handleDepotUpload(req, res, next) {
+  depotFields(req, res, (err) => {
+    if (!err) return next();
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(413).json({
+        message: 'Un des fichiers PDF dépasse la taille maximale autorisée (10 Mo).'
+      });
+    }
+    if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+      return res.status(400).json({ message: 'Fichier inattendu dans le formulaire.' });
+    }
+    console.error('Erreur upload fournisseurs:', err);
+    return res.status(400).json({
+      message: 'Échec du téléversement des fichiers. Vérifiez qu\'il s\'agit bien de PDF de moins de 10 Mo.'
+    });
+  });
+}
 
 // Le dépôt est public et anonyme + upload de fichiers : on limite fortement
 // par IP pour prévenir l'abus de stockage Cloudinary (en plus du limiteur global).
@@ -63,13 +94,7 @@ async function nextNumero() {
 //   - doc_registre     : registre de commerce             (OBLIGATOIRE)
 //   - doc_fiscale      : attestation fiscale              (facultatif, bonus)
 // Anti-robot Cloudflare Turnstile désactivé pour l'instant (réactiver : remettre verifyTurnstile)
-router.post('/', depotLimiter, /* verifyTurnstile, */ upload.fields([
-  { name: 'doc_demande', maxCount: 1 },
-  { name: 'doc_ninea', maxCount: 1 },
-  { name: 'doc_presentation', maxCount: 1 },
-  { name: 'doc_registre', maxCount: 1 },
-  { name: 'doc_fiscale', maxCount: 1 }
-]), async (req, res) => {
+router.post('/', depotLimiter, /* verifyTurnstile, */ handleDepotUpload, async (req, res) => {
   try {
     const data = depotSchema.parse(clean(req.body));
 
@@ -121,6 +146,25 @@ router.post('/', depotLimiter, /* verifyTurnstile, */ upload.fields([
       numero: inserted.numero,
       created_at: inserted.created_at
     });
+
+    // Confirmation au fournisseur (best-effort, non bloquant) : email + PDF récap.
+    // Lancé après la réponse — un échec d'envoi n'impacte jamais le dépôt.
+    const docName = (f) => req.files?.[f]?.[0]?.originalname || null;
+    sendAgrementConfirmation({
+      numero: inserted.numero,
+      date: new Date(inserted.created_at).toLocaleString('fr-FR'),
+      raison_sociale: data.raison_sociale,
+      ninea: data.ninea, rccm: data.rccm, domaine: data.domaine,
+      adresse: data.adresse, telephone: data.telephone, email: data.email,
+      contact_nom: data.contact_nom, message: data.message,
+      documents: [
+        { label: 'Demande adressée au Directeur Général', nom: docName('doc_demande') },
+        { label: 'Copie du NINEA', nom: docName('doc_ninea') },
+        { label: "Présentation de l'entreprise", nom: docName('doc_presentation') },
+        { label: 'Registre de commerce (RCCM)', nom: docName('doc_registre') },
+        { label: 'Attestation fiscale', nom: docName('doc_fiscale') }
+      ]
+    }).catch((e) => console.error('[agrement] email de confirmation non envoyé:', e.message));
   } catch (err) {
     if (err instanceof z.ZodError) {
       return res.status(400).json({ message: 'Données invalides', errors: err.errors });
@@ -135,10 +179,11 @@ router.post('/', depotLimiter, /* verifyTurnstile, */ upload.fields([
 router.get('/manage', authMiddleware, celluleOrAdmin, async (req, res) => {
   try {
     const { statut } = req.query;
-    const conditions = [];
+    const archived = req.query.archived === 'true';
+    const conditions = [`f.archived_at IS ${archived ? 'NOT NULL' : 'NULL'}`];
     const values = [];
     if (statut) { values.push(statut); conditions.push(`f.statut = $${values.length}`); }
-    const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+    const where = `WHERE ${conditions.join(' AND ')}`;
 
     const result = await pool.query(
       `SELECT f.*, u.fullname AS updated_by_name
@@ -200,16 +245,37 @@ router.put('/:id', authMiddleware, celluleOrAdmin, async (req, res) => {
   }
 });
 
-// ====================== DELETE ======================
-router.delete('/:id', authMiddleware, celluleOrAdmin, async (req, res) => {
+// ====================== ARCHIVAGE (remplace la suppression) ======================
+router.patch('/:id/archive', authMiddleware, celluleOrAdmin, async (req, res) => {
   try {
-    const result = await pool.query('DELETE FROM fournisseurs_agrements WHERE id = $1 RETURNING id', [req.params.id]);
+    const result = await pool.query(
+      `UPDATE fournisseurs_agrements SET archived_at = CURRENT_TIMESTAMP, archived_by = $1
+       WHERE id = $2 AND archived_at IS NULL RETURNING id`,
+      [req.user.id, req.params.id]
+    );
     if (result.rowCount === 0) {
-      return res.status(404).json({ message: 'Demande non trouvée' });
+      return res.status(404).json({ message: 'Demande non trouvée ou déjà archivée' });
     }
-    res.json({ success: true, message: 'Demande supprimée' });
+    res.json({ success: true, message: 'Demande archivée' });
   } catch (err) {
-    console.error('Erreur DELETE fournisseurs:', err);
+    console.error('Erreur archive fournisseurs:', err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+router.patch('/:id/unarchive', authMiddleware, celluleOrAdmin, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `UPDATE fournisseurs_agrements SET archived_at = NULL, archived_by = NULL
+       WHERE id = $1 AND archived_at IS NOT NULL RETURNING id`,
+      [req.params.id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Demande non trouvée ou déjà active' });
+    }
+    res.json({ success: true, message: 'Demande restaurée' });
+  } catch (err) {
+    console.error('Erreur unarchive fournisseurs:', err);
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });

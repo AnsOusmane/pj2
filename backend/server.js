@@ -27,6 +27,9 @@ const appelsOffreRouter = require('./routes/appels-offre.routes');
 const avisAttributionRouter = require('./routes/avis-attribution.routes');
 const fournisseursRouter = require('./routes/fournisseurs.routes');
 
+// Jobs planifiés
+const { scheduleAoStatusSweep } = require('./jobs/ao-status.job');
+
 const app = express();
 
 // Render (comme la plupart des PaaS) place l'app derrière un reverse proxy.
@@ -66,7 +69,7 @@ app.use(cors({
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 }));
 
 // Rate Limiting
@@ -134,4 +137,7 @@ app.use((req, res) => res.status(404).json({ message: 'Route non trouvée' }));
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Serveur sécurisé sur port ${PORT}`);
+  // Pilotage automatique du statut des appels d'offres par les dates
+  // (lancement / clôture + synchro PPM). Rattrape l'état au démarrage.
+  scheduleAoStatusSweep();
 });

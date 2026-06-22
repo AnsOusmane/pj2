@@ -35,6 +35,9 @@ export class PpmGestionComponent implements OnInit {
   error = signal<string | null>(null);
   success = signal<string | null>(null);
 
+  // false = lignes actives ; true = lignes archivées.
+  showArchived = signal(false);
+
   // null = panneau fermé, 'new' = création, number = édition de cette ligne
   editingId = signal<number | 'new' | null>(null);
   showForm = computed(() => this.editingId() !== null);
@@ -63,10 +66,19 @@ export class PpmGestionComponent implements OnInit {
 
   load(): void {
     this.loading.set(true);
-    this.ppmService.getAllForManage().subscribe({
+    this.ppmService.getAllForManage(this.showArchived()).subscribe({
       next: (data) => { this.lignes.set(data); this.loading.set(false); },
       error: (err) => { this.error.set(err?.message || 'Erreur de chargement'); this.loading.set(false); }
     });
+  }
+
+  // Bascule entre les lignes actives et les lignes archivées.
+  setArchivedView(archived: boolean): void {
+    if (this.showArchived() === archived) return;
+    this.showArchived.set(archived);
+    this.editingId.set(null);
+    this.resetMessages();
+    this.load();
   }
 
   // ====================== OUVERTURE DU PANNEAU ======================
@@ -92,7 +104,7 @@ export class PpmGestionComponent implements OnInit {
       annee: ligne.annee,
       trimestre: ligne.trimestre ?? '',
       date_prevue_lancement: ligne.date_prevue_lancement
-        ? ligne.date_prevue_lancement.substring(0, 10) : '',
+        ? ligne.date_prevue_lancement.substring(0, 16) : '',
       statut: ligne.statut,
       is_published: !!ligne.is_published
     });
@@ -142,12 +154,21 @@ export class PpmGestionComponent implements OnInit {
     });
   }
 
-  // ====================== SUPPRESSION ======================
-  remove(ligne: Ppm): void {
-    if (!confirm(`Supprimer la ligne « ${ligne.objet} » ?`)) return;
-    this.ppmService.delete(ligne.id).subscribe({
-      next: () => { this.success.set('Ligne supprimée.'); this.load(); },
-      error: (err) => this.error.set(err?.message || 'Erreur lors de la suppression.')
+  // ====================== ARCHIVAGE ======================
+  archive(ligne: Ppm): void {
+    if (!confirm(`Archiver la ligne « ${ligne.objet} » ?`)) return;
+    this.resetMessages();
+    this.ppmService.archive(ligne.id).subscribe({
+      next: () => { this.success.set('Ligne archivée.'); this.load(); },
+      error: (err) => this.error.set(err?.message || 'Erreur lors de l\'archivage.')
+    });
+  }
+
+  restore(ligne: Ppm): void {
+    this.resetMessages();
+    this.ppmService.unarchive(ligne.id).subscribe({
+      next: () => { this.success.set('Ligne restaurée.'); this.load(); },
+      error: (err) => this.error.set(err?.message || 'Erreur lors de la restauration.')
     });
   }
 

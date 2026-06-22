@@ -26,6 +26,9 @@ export class FournisseursGestionComponent implements OnInit {
 
   filtreStatut = signal<AgrementStatut | ''>('');
 
+  // false = demandes actives ; true = demandes archivées.
+  showArchived = signal(false);
+
   // Ligne dont le panneau de détail est ouvert
   detailId = signal<number | null>(null);
 
@@ -37,13 +40,22 @@ export class FournisseursGestionComponent implements OnInit {
 
   load(): void {
     this.loading.set(true);
-    this.service.getAllForManage(this.filtreStatut() || undefined).subscribe({
+    this.service.getAllForManage(this.filtreStatut() || undefined, this.showArchived()).subscribe({
       next: (data) => { this.lignes.set(data); this.loading.set(false); },
       error: (err) => { this.error.set(err?.message || 'Erreur de chargement'); this.loading.set(false); }
     });
   }
 
   onFiltreChange(): void {
+    this.load();
+  }
+
+  // Bascule entre les demandes actives et archivées.
+  setArchivedView(archived: boolean): void {
+    if (this.showArchived() === archived) return;
+    this.showArchived.set(archived);
+    this.detailId.set(null);
+    this.resetMessages();
     this.load();
   }
 
@@ -67,11 +79,20 @@ export class FournisseursGestionComponent implements OnInit {
     });
   }
 
-  remove(l: Agrement): void {
-    if (!confirm(`Supprimer la demande ${l.numero} (${l.raison_sociale}) ?`)) return;
-    this.service.delete(l.id).subscribe({
-      next: () => { this.success.set('Demande supprimée.'); this.load(); },
-      error: (err) => this.error.set(err?.message || 'Erreur lors de la suppression.')
+  archive(l: Agrement): void {
+    if (!confirm(`Archiver la demande ${l.numero} (${l.raison_sociale}) ?`)) return;
+    this.resetMessages();
+    this.service.archive(l.id).subscribe({
+      next: () => { this.success.set('Demande archivée.'); this.load(); },
+      error: (err) => this.error.set(err?.message || 'Erreur lors de l\'archivage.')
+    });
+  }
+
+  restore(l: Agrement): void {
+    this.resetMessages();
+    this.service.unarchive(l.id).subscribe({
+      next: () => { this.success.set('Demande restaurée.'); this.load(); },
+      error: (err) => this.error.set(err?.message || 'Erreur lors de la restauration.')
     });
   }
 

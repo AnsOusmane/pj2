@@ -64,7 +64,14 @@ export class FournisseursComponent implements AfterViewInit, OnDestroy {
       domaine: ['', Validators.required],
       adresse: ['', Validators.maxLength(255)],
       telephone: ['', [Validators.required, Validators.pattern(/^[+]?[0-9\s().-]{7,20}$/)]],
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
+      // Validators.email accepte « dh@l » (sans point ni extension) : on ajoute un
+      // motif qui exige un vrai domaine avec extension (ex. « nom@domaine.sn »).
+      email: ['', [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/),
+        Validators.maxLength(255)
+      ]],
       contact_nom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
       message: ['', Validators.maxLength(2000)]
     });
