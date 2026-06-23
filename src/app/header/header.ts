@@ -137,11 +137,12 @@ export class HeaderComponent implements AfterViewInit {
       }
     }
     else {
-      // Pour tous les autres menus de niveau 1 → fermeture complète
+      // Pour tous les autres menus de niveau 1 → on ferme tout, puis on bascule
+      // l'état du menu cliqué (un 2ᵉ clic le referme au lieu de le rouvrir).
       Object.keys(this.mobileDropdown).forEach(key => {
         this.mobileDropdown[key as keyof typeof this.mobileDropdown] = false;
       });
-      this.mobileDropdown[menu] = true;
+      this.mobileDropdown[menu] = !wasOpen;
     }
   }
 

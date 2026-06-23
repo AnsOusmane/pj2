@@ -61,6 +61,12 @@ export class AppelsOffreComponent implements OnInit {
     return new Date(l.date_limite).getTime() >= Date.now();
   }
 
+  /** La date limite de dépôt des offres est-elle dépassée ? (vert tant que non) */
+  limiteDepassee(l: AppelOffre): boolean {
+    if (!l.date_limite) return false;
+    return new Date(l.date_limite).getTime() < Date.now();
+  }
+
   resetFiltres(): void {
     this.filtreType.set('');
     this.filtreEtat.set('tous');

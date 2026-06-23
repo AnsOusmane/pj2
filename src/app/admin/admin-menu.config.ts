@@ -31,41 +31,41 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
   {
     title: 'Général',
     items: [
-      { key: 'dashboard', label: 'Dashboard', icon: '📊', route: 'dashboard', comingSoon: true },
-      { key: 'users', label: 'Utilisateurs', icon: '👤', route: 'users', adminOnly: true },
+      { key: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', route: 'dashboard', comingSoon: true }, // 📊
+      { key: 'users', label: 'Utilisateurs', icon: '\u{1F464}', route: 'users', adminOnly: true }, // 👤
     ],
   },
   {
     title: 'Contenu',
     items: [
-      { key: 'newsletters', label: 'News / Newsletters', icon: '📰', route: 'newsletters-form' },
-      { key: 'rapports', label: 'Rapports officiels', icon: '📑', route: 'official-reports-form' },
-      { key: 'decrets', label: 'Décrets', icon: '⚖️', route: 'decrets-form' },
-      { key: 'communiques', label: 'Communiqués', icon: '📢', route: 'communiques-form' },
-      { key: 'guides', label: 'Guides', icon: '📘', route: 'guides-form' },
+      { key: 'newsletters', label: 'News / Newsletters', icon: '\u{1F4F0}', route: 'newsletters-form' }, // 📰
+      { key: 'rapports', label: 'Rapports officiels', icon: '\u{1F4D1}', route: 'official-reports-form' }, // 📑
+      { key: 'decrets', label: 'Décrets', icon: '\u{2696}\u{FE0F}', route: 'decrets-form' }, // ⚖️
+      { key: 'communiques', label: 'Communiqués', icon: '\u{1F4E2}', route: 'communiques-form' }, // 📢
+      { key: 'guides', label: 'Guides', icon: '\u{1F4D8}', route: 'guides-form' }, // 📘
     ],
   },
   {
     title: 'Médias',
     items: [
-      { key: 'media', label: 'Dossiers médias', icon: '🎞️', route: 'media', comingSoon: true },
-      { key: 'banque-images', label: "Banque d'images", icon: '🖼️', route: 'images-bank-form' },
+      { key: 'media', label: 'Dossiers médias', icon: '\u{1F39E}\u{FE0F}', route: 'media', comingSoon: true }, // 🎞️
+      { key: 'banque-images', label: "Banque d'images", icon: '\u{1F5BC}\u{FE0F}', route: 'images-bank-form' }, // 🖼️
     ],
   },
   {
     title: 'Carrière',
     items: [
-      { key: 'offres-emploi', label: "Offres d'emploi", icon: '💼', route: 'offres-emploi-form' },
-      { key: 'candidatures', label: 'Candidatures', icon: '📄', route: 'candidatures', comingSoon: true },
+      { key: 'offres-emploi', label: "Offres d'emploi", icon: '\u{1F4BC}', route: 'offres-emploi-form' }, // 💼
+      { key: 'candidatures', label: 'Candidatures', icon: '\u{1F4C4}', route: 'candidatures', comingSoon: true }, // 📄
     ],
   },
   {
     title: 'Marchés Publics',
     items: [
-      { key: 'ppm', label: 'Plan de Passation (PPM)', icon: '📋', route: 'ppm-gestion' },
-      { key: 'appels-offre', label: "Appels d'offres", icon: '📨', route: 'appels-offre-gestion' },
-      { key: 'avis-attribution', label: "Avis d'attribution", icon: '🏆', route: 'avis-attribution-gestion' },
-      { key: 'fournisseurs', label: "Demande d'agrément", icon: '🤝', route: 'fournisseurs-gestion' },
+      { key: 'ppm', label: 'Plan de Passation (PPM)', icon: '\u{1F4CB}', route: 'ppm-gestion' }, // 📋
+      { key: 'appels-offre', label: "Appels d'offres", icon: '\u{1F4E8}', route: 'appels-offre-gestion' }, // 📨
+      { key: 'avis-attribution', label: "Avis d'attribution", icon: '\u{1F3C6}', route: 'avis-attribution-gestion' }, // 🏆
+      { key: 'fournisseurs', label: "Demande d'agrément", icon: '\u{1F91D}', route: 'fournisseurs-gestion' }, // 🤝
     ],
   },
 ];

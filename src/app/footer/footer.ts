@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 export class Footer {
   // On enlève tout le listener NavigationEnd et le shouldScrollTop (plus besoin)
 
+  /** Année courante pour le copyright. */
+  readonly currentYear = new Date().getFullYear();
+
   @Output() openAboutTimeline = new EventEmitter<void>();
   @Output() openMissionsvision = new EventEmitter<void>();
   @Output() openOrganigramme = new EventEmitter<void>();

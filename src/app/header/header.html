@@ -367,7 +367,7 @@
     
   <!-- Burger / Quitter -->
   <button
-    class="p-2 border rounded-md font-sharetech"
+    class="p-2 border border-green-600 rounded-md font-sharetech"
     (click)="toggleMenu()"
     aria-label="Menu"
   >
@@ -397,18 +397,19 @@
 <!-- Menu Mobile -->
 <div
   *ngIf="isMenuOpen"
-  class="absolute top-20 left-0 w-full
-         rounded-b-lg bg-green-600 shadow-lg
-         border-t border-gray-200 z-50"
+  class="absolute top-20 md:top-28 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)]
+         max-h-[calc(100vh-6rem)] md:max-h-[calc(100vh-8rem)] overflow-y-auto
+         rounded-2xl bg-green-700/60 backdrop-blur-2xl
+         ring-1 ring-white/15 shadow-2xl z-50"
   (click)="$event.stopPropagation()"
 >
-  <!-- Header du menu (zone dédiée) -->
-  <div class="relative flex items-center justify-end px-4 py-3 border-b border-white/20">
+  <!-- Header du menu (zone dédiée, reste visible au défilement) -->
+  <div class="sticky top-0 z-10 bg-green-700/40 backdrop-blur-2xl flex items-center justify-end px-4 py-2.5 border-b border-white/10">
     <button
       (click)="closeMobileMenu()"
-      class="w-10 h-10 rounded-full
-             bg-white/20 hover:bg-white/30
-             text-white text-2xl font-bold
+      class="w-8 h-8 rounded-full
+             bg-white/10 hover:bg-white/20
+             text-white text-xl
              flex items-center justify-center
              transition"
       aria-label="Fermer le menu"
@@ -418,109 +419,107 @@
   </div>
 
   <!-- Contenu du menu -->
-  <ul class="flex flex-col p-4 space-y-3 text-white font-semibold text-[18px]">
-    
+  <ul class="flex flex-col px-3 py-2 divide-y divide-white/10 text-white font-medium text-[15px]">
+
     <!-- SEN-CSU -->
-    <li>
-      <button class="w-full text-left py-2 cursor-pointer flex justify-between items-center"
+    <li class="py-1">
+      <button class="w-full text-left px-2 py-2.5 rounded-lg flex justify-between items-center hover:bg-white/10 transition"
               (click)="toggleMobileDropdown('sen')">
         La SEN-CSU
-        <span [class.rotate-180]="mobileDropdown.sen">▾</span>
+        <span class="transition-transform" [class.rotate-180]="mobileDropdown.sen">▾</span>
       </button>
 
-      <div *ngIf="mobileDropdown.sen" class="pl-4 space-y-2 text-[16px] pt-2">
-        <button (click)="onAboutClick(); closeMobileMenu()">A propos</button><br>
-        <button (click)="openMissionsvision.emit(); closeMobileMenu()">Vision & Missions</button><br>
-        <button (click)="showOrganigrammeClick(); closeMobileMenu()">Organigramme</button><br>
-        <button (click)="goToAppelsOffre(); closeMobileMenu()">Appels d'offres</button>
+      <div *ngIf="mobileDropdown.sen" class="pl-3 mt-1 pb-2 space-y-0.5 text-[14px] font-normal text-white/85">
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="onAboutClick(); closeMobileMenu()">A propos</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="openMissionsvision.emit(); closeMobileMenu()">Vision & Missions</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="showOrganigrammeClick(); closeMobileMenu()">Organigramme</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToAppelsOffre(); closeMobileMenu()">Appels d'offres</button>
 
         <!-- Sous-menu Publications -->
-        <button class="w-full text-left py-2 cursor-pointer flex justify-between items-center mt-3 font-medium"
+        <button class="w-full text-left px-2 py-2 rounded-lg flex justify-between items-center hover:bg-white/10 transition"
                 (click)="toggleMobileDropdown('publications')">
           Publications
-          <span [class.rotate-180]="mobileDropdown.publications">▾</span>
+          <span class="transition-transform" [class.rotate-180]="mobileDropdown.publications">▾</span>
         </button>
 
-        <div *ngIf="mobileDropdown.publications" class="pl-6 space-y-2 text-[15px] pt-1">
-          <button (click)="goToAppelsOffre(); closeMobileMenu()">Rapports officiels</button><br>  <!--(click)="goToRapports(); -->
-          <button (click)="goToAppelsOffre(); closeMobileMenu()">Guides</button><br>  <!--(click)="goToGuide();-->
-          <button (click)="goToAppelsOffre();  closeMobileMenu()">Décrets</button><br> <!--(click)="goToDecret();-->
-          <button (click)="goToAppelsOffre();  closeMobileMenu()">Manuels d'audit</button> <!--(click)="goToManuel();-->
+        <div *ngIf="mobileDropdown.publications" class="pl-3 space-y-0.5 text-[13px] font-normal text-white/75">
+          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToAppelsOffre(); closeMobileMenu()">Rapports officiels</button>  <!--(click)="goToRapports(); -->
+          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToAppelsOffre(); closeMobileMenu()">Guides</button>  <!--(click)="goToGuide();-->
+          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToAppelsOffre();  closeMobileMenu()">Décrets</button> <!--(click)="goToDecret();-->
+          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToAppelsOffre();  closeMobileMenu()">Manuels d'audit</button> <!--(click)="goToManuel();-->
         </div>
       </div>
     </li>
 
     <!-- Assistance médicale -->
-    <li>
-      <button class="w-full text-left py-2 cursor-pointer flex justify-between items-center"
+    <li class="py-1">
+      <button class="w-full text-left px-2 py-2.5 rounded-lg flex justify-between items-center hover:bg-white/10 transition"
               (click)="toggleMobileDropdown('assistance')">
         Assistance médicale
-        <span [class.rotate-180]="mobileDropdown.assistance">▾</span>
+        <span class="transition-transform" [class.rotate-180]="mobileDropdown.assistance">▾</span>
       </button>
-      <div *ngIf="mobileDropdown.assistance" class="pl-4 space-y-2 text-[16px]">
-        <button (click)="goToZero5ans(); closeMobileMenu()">0 à 5 ans</button><br>
-        <button (click)="goToCesarienne(); closeMobileMenu()">Césarienne</button><br>
-        <button (click)="goToDialyse(); closeMobileMenu()">Dialyse</button><br>
-        <button (click)="goToPlanSesame(); closeMobileMenu()">Plan Sésame</button><br>
-        <button (click)="goToPNBSF(); closeMobileMenu()">Bénéficiaires PNBSF</button><br>
-        <button (click)="goToCEC(); closeMobileMenu()">Carte d'Égalité des Chances</button><br>
-        <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block w-full">
-          <button class="w-full text-left py-2 hover:text-green-300">Nos pharmacies partenaires</button>
-        </a>
+      <div *ngIf="mobileDropdown.assistance" class="pl-3 mt-1 pb-2 space-y-0.5 text-[14px] font-normal text-white/85">
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToZero5ans(); closeMobileMenu()">0 à 5 ans</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToCesarienne(); closeMobileMenu()">Césarienne</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToDialyse(); closeMobileMenu()">Dialyse</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToPlanSesame(); closeMobileMenu()">Plan Sésame</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToPNBSF(); closeMobileMenu()">Bénéficiaires PNBSF</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToCEC(); closeMobileMenu()">Carte d'Égalité des Chances</button>
+        <a href="https://sunucsu.sn/pharmacies" target="_blank" class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition">Nos pharmacies partenaires</a>
       </div>
     </li>
 
     <!-- Assurance Maladie -->
-    <li>
-      <button class="w-full text-left py-2 cursor-pointer flex justify-between items-center"
+    <li class="py-1">
+      <button class="w-full text-left px-2 py-2.5 rounded-lg flex justify-between items-center hover:bg-white/10 transition"
               (click)="toggleMobileDropdown('assurance')">
         Assurance Maladie
-        <span [class.rotate-180]="mobileDropdown.assurance">▾</span>
+        <span class="transition-transform" [class.rotate-180]="mobileDropdown.assurance">▾</span>
       </button>
-      <div *ngIf="mobileDropdown.assurance" class="pl-4 space-y-2 text-[16px]">
-        <button (click)="goToCSU(); closeMobileMenu()">CSU</button><br>
-        <button (click)="goToCSUEleve(); closeMobileMenu()">CSU Élève</button><br>
-        <button (click)="goToCSUDaara(); closeMobileMenu()">CSU Daara</button>
+      <div *ngIf="mobileDropdown.assurance" class="pl-3 mt-1 pb-2 space-y-0.5 text-[14px] font-normal text-white/85">
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToCSU(); closeMobileMenu()">CSU</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToCSUEleve(); closeMobileMenu()">CSU Élève</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToCSUDaara(); closeMobileMenu()">CSU Daara</button>
       </div>
     </li>
 
     <!-- Espace Média -->
-    <li>
-      <button class="w-full text-left py-2 cursor-pointer flex justify-between items-center"
+    <li class="py-1">
+      <button class="w-full text-left px-2 py-2.5 rounded-lg flex justify-between items-center hover:bg-white/10 transition"
               (click)="toggleMobileDropdown('media')">
         Espace Média
-        <span [class.rotate-180]="mobileDropdown.media">▾</span>
+        <span class="transition-transform" [class.rotate-180]="mobileDropdown.media">▾</span>
       </button>
-      <div *ngIf="mobileDropdown.media" class="pl-4 space-y-2 text-[16px]">
-        <button (click)="closeMobileMenu()">Communiqués (en édition)</button><br>
-        <button (click)="closeMobileMenu()">Dossiers média (en édition)</button><br>
-        <button (click)="closeMobileMenu()">Banque d'images (en édition)</button>
+      <div *ngIf="mobileDropdown.media" class="pl-3 mt-1 pb-2 space-y-0.5 text-[14px] font-normal text-white/85">
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="closeMobileMenu()">Communiqués (en édition)</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="closeMobileMenu()">Dossiers média (en édition)</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="closeMobileMenu()">Banque d'images (en édition)</button>
       </div>
     </li>
 
     <!-- Assistance & Contact -->
-    <li>
-      <button class="w-full text-left py-2 cursor-pointer flex justify-between items-center"
+    <li class="py-1">
+      <button class="w-full text-left px-2 py-2.5 rounded-lg flex justify-between items-center hover:bg-white/10 transition"
               (click)="toggleMobileDropdown('contact')">
         Assistance & Contact
-        <span [class.rotate-180]="mobileDropdown.contact">▾</span>
+        <span class="transition-transform" [class.rotate-180]="mobileDropdown.contact">▾</span>
       </button>
-      <div *ngIf="mobileDropdown.contact" class="pl-4 space-y-2 text-[16px]">
-        <button (click)="goToContact(); closeMobileMenu()">Formulaire de contact</button><br>
-        <button (click)="goToSr(); closeMobileMenu()">Localiser une agence</button><br>
-        <button (click)="goToReclamation(); closeMobileMenu()">Faire une réclamation</button>
+      <div *ngIf="mobileDropdown.contact" class="pl-3 mt-1 pb-2 space-y-0.5 text-[14px] font-normal text-white/85">
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToContact(); closeMobileMenu()">Formulaire de contact</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToSr(); closeMobileMenu()">Localiser une agence</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-white/10 transition" (click)="goToReclamation(); closeMobileMenu()">Faire une réclamation</button>
       </div>
     </li>
 
     <!-- Carrière -->
-    <li>
-      <button (click)="goToCarriere(); closeMobileMenu()" class="block w-full text-left py-2">
+    <li class="py-1">
+      <button (click)="goToCarriere(); closeMobileMenu()" class="block w-full text-left px-2 py-2.5 rounded-lg hover:bg-white/10 transition">
         Carrière
       </button>
     </li>
 
     <!-- Bouton Nous soutenir -->
-    <li class="pt-4">
+    <li class="pt-4 pb-2">
       <a href="https://sunucsu.sn/initiatives"
          class="border-2 border-yellow-500 text-yellow-500 font-semibold px-4 py-3
                 rounded-full w-full text-center block
