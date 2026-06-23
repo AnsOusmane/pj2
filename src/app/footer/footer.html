@@ -38,7 +38,7 @@
         <li><button (click)="openAboutTimeline.emit()" class="hover:underline">A propos</button></li>
         <li><button (click)="openMissionsvision.emit()" class="hover:underline">Vision et missions</button></li>
         <li><button (click)="openOrganigramme.emit()" class="hover:underline">Organnigramme</button></li>
-        <li><button (click)="navigateTo('/appels-offres')" class="hover:underline">Appels d'offres</button></li>
+        <li><button (click)="goToAppelsOffre()" class="hover:underline">Appels d'offres</button></li>
       </ul>
     </div>
 
@@ -68,8 +68,8 @@
       <h3 class="font-semibold mb-3 uppercase tracking-wide text-sm">Assistance et contact</h3>
       <ul class="space-y-2 text-white/80 text-sm">
         <li><button (click)="navigateTo('/contact')" class="hover:underline">Formulaire de contact</button></li>
-        <li><button (click)="navigateTo('/agences')" class="hover:underline">Localiser une agence</button></li>
-        <li><button class="hover:underline">Pharmacies partenaires</button></li>
+        <li><button (click)="goToSr()" class="hover:underline">Localiser une agence</button></li>
+        <li><button (click)="goToMaintenance()" class="hover:underline">Pharmacies partenaires</button></li>
       </ul>
     </div>
 

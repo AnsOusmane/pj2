@@ -82,7 +82,7 @@ Toute autre pièce justifiant l’expérience ou les compétences techniques ;
 Une copie de la carte nationale d’identité et un extrait du casier judiciaire datant de moins de trois (03) mois.
 VI. DÉPÔT DES CANDIDATURES :
 Les candidatures doivent être envoyées au plus tard le 13 janvier 2026 à l’adresse suivante :
-recrutement@agencecmu.sn
+recrutement@sencsu.sn
 Seuls les candidats présélectionnés seront contactés pour un entretien.`
     }
   ];

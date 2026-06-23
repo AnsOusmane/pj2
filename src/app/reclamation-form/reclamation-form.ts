@@ -39,7 +39,7 @@ export class ReclamationFormComponent {
     _honey: new FormControl<string>(''),
   }, { validators: [this.customSubjectValidator] });
 
-  private readonly FORMSUBMIT_URL = 'https://formsubmit.co/ajax/reclamation@agencecmu.sn';
+  private readonly FORMSUBMIT_URL = 'https://formsubmit.co/ajax/reclamation@sencsu.sn';
 
   constructor(private http: HttpClient) {}
 
