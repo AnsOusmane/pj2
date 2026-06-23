@@ -62,7 +62,9 @@ app.use(cookieParser());
 app.use(cors({
   origin: (origin, callback) => {
     const allowed = ['http://localhost:4200', 'https://sencsu.sn', 'https://www.sencsu.sn', 'https://pj2-gr26.vercel.app'];
-    if (!origin || allowed.includes(origin)) {
+    // Origines du réseau local (démo multi-PC) : localhost + plages d'IP privées.
+    const privateLan = /^http:\/\/(localhost|127\.0\.0\.1|(?:10|192\.168|172\.(?:1[6-9]|2\d|3[01]))\.[\d.]+):\d+$/;
+    if (!origin || allowed.includes(origin) || privateLan.test(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Origin non autorisée'));

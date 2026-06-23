@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const { pool } = require('../db');
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   // 1. Récupération du token : Priorité au cookie httpOnly (recommandé)
   let token = req.cookies?.auth_token;
 
@@ -10,22 +11,55 @@ const authMiddleware = (req, res, next) => {
   }
 
   if (!token) {
-    return res.status(401).json({ 
+    return res.status(401).json({
       success: false,
-      message: 'Accès refusé. Veuillez vous connecter.' 
+      message: 'Accès refusé. Veuillez vous connecter.'
+    });
+  }
+
+  let decoded;
+  try {
+    // Utilisation de la variable d'environnement (beaucoup plus sécurisé)
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    console.error('JWT Error:', err.message);
+    return res.status(403).json({
+      success: false,
+      message: 'Session expirée ou invalide. Veuillez vous reconnecter.'
     });
   }
 
   try {
-    // Utilisation de la variable d'environnement (beaucoup plus sécurisé)
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    // Le token est valide jusqu'à 8h : on revérifie l'état du compte en base à
+    // CHAQUE requête. Sans ça, désactiver un compte ou rétrograder un admin
+    // n'aurait d'effet qu'à l'expiration du token (jusqu'à 8h de droits zombie).
+    // On prend aussi le rôle/permissions à jour de la base, pas ceux figés dans
+    // le token au moment du login.
+    const { rows } = await pool.query(
+      'SELECT id, email, role, is_active, permissions FROM users WHERE id = $1',
+      [decoded.id]
+    );
+    const user = rows[0];
+
+    if (!user || !user.is_active) {
+      return res.status(403).json({
+        success: false,
+        message: 'Compte introuvable ou désactivé. Veuillez vous reconnecter.'
+      });
+    }
+
+    req.user = {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      permissions: user.role === 'admin' ? [] : (user.permissions || [])
+    };
     next();
   } catch (err) {
-    console.error('JWT Error:', err.message);
-    return res.status(403).json({ 
+    console.error('Auth DB Error:', err.message);
+    return res.status(500).json({
       success: false,
-      message: 'Session expirée ou invalide. Veuillez vous reconnecter.' 
+      message: 'Erreur de vérification de session.'
     });
   }
 };
