@@ -1,3 +1,9 @@
+/* Le host ne forme pas de bloc conteneur : le <nav> peut rester collé
+   en haut sur toute la page tandis que la bande pub défile normalement. */
+:host {
+  display: contents;
+}
+
 /* Empêche tout débordement, stabilise les transitions */
 a {
   display: block;
@@ -20,7 +26,7 @@ a {
   display: block;
   transition: opacity 0.2s ease-in-out;
 }
-/* Bande publicité fixe, smooth */
+/* Bande publicité : fond blanc, défile normalement (non fixée) */
 .promo-banner {
   background: white !important;
 }

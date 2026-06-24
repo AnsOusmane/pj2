@@ -114,7 +114,7 @@ export class HeroComponent implements OnInit {
           <p class="text-lg">
             L’inscription a été pensée pour être 
             <span class="font-semibold text-white">simple, fluide et rapide</span>, 
-            afin de faciliter votre accès à la CSU.
+            afin de faciliter votre adhésion à la CSU.
           </p>
 
           <section>
@@ -133,7 +133,7 @@ export class HeroComponent implements OnInit {
             </h3>
             <p>
               Votre dossier est traité rapidement afin que vous puissiez bénéficier des 
-              services sanitaires sans délai.
+              services sanitaires.
             </p>
           </section>
         </div>
