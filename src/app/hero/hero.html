@@ -17,27 +17,74 @@
       class="w-full object-contain bg-white rounded-2xl"
     >
 
-    <!-- Carte flottante -->
-    <div
-      class="absolute top-[188px] left-1 
-             bg-green-600 text-white
-             px-3 py-2 rounded-md
-             text-sm leading-tight shadow-md font-exo2"
-    >
-      <button class="block w-full text-left" (click)="scrollTo('why')">
-        Pourquoi s'inscrire ?
-      </button>
-      <button class="block w-full text-left mt-1" (click)="scrollTo('how')">
-        Comment s'inscrire ?
-      </button>
-      <button class="block w-full text-left mt-1">
-        S’inscrire à la Sen-CSU
-      </button>
+    <!-- Carte flottante (même design que le panneau desktop) -->
+    <div class="absolute top-[188px] left-1 w-[56%] max-w-[210px] font-exo2">
+
+      <!-- carte -->
+      <div class="relative overflow-hidden rounded-xl p-2">
+
+        <!-- Décor « herbes » en filigrane -->
+        <svg class="pointer-events-none absolute inset-0 h-full w-full"
+             viewBox="0 0 220 300" preserveAspectRatio="xMidYMax slice"
+             fill="#d7ddd9" aria-hidden="true">
+          <g opacity="0.6">
+            <polygon points="12,300 18,300 70,26" />
+            <polygon points="10,300 15,300 36,72" />
+            <polygon points="14,300 20,300 115,98" />
+            <polygon points="13,300 19,300 150,40" />
+            <polygon points="16,300 23,300 206,150" />
+            <polygon points="16,300 24,300 212,206" />
+            <polygon points="15,300 22,300 186,252" />
+            <polygon points="42,168 47,168 60,104" />
+            <polygon points="120,128 126,128 152,150" />
+          </g>
+        </svg>
+
+        <!-- Boutons -->
+        <div class="relative flex flex-col gap-1.5">
+
+          <!-- Secondaire : Pourquoi -->
+          <button (click)="scrollTo('why')"
+            class="flex items-center justify-between gap-1.5
+                   rounded-lg px-2.5 py-1.5
+                   bg-green-50/80 border border-green-600/30
+                   text-green-800 text-left text-[11px] font-semibold">
+            <span>Pourquoi s'inscrire ?</span>
+            <span class="flex h-5 w-5 shrink-0 items-center justify-center
+                         rounded-full bg-green-600/15 text-green-700 text-[11px]">→</span>
+          </button>
+
+          <!-- Secondaire : Comment -->
+          <button (click)="scrollTo('how')"
+            class="flex items-center justify-between gap-1.5
+                   rounded-lg px-2.5 py-1.5
+                   bg-green-50/80 border border-green-600/30
+                   text-green-800 text-left text-[11px] font-semibold">
+            <span>Comment s'inscrire ?</span>
+            <span class="flex h-5 w-5 shrink-0 items-center justify-center
+                         rounded-full bg-green-600/15 text-green-700 text-[11px]">→</span>
+          </button>
+
+          <!-- CTA principal -->
+          <button
+            class="rounded-lg px-2.5 py-1.5
+                   bg-gradient-to-r from-emerald-500 via-green-500 to-green-600
+                   text-white text-[11px] font-bold ring-1 ring-white/20 shadow">
+            <span class="flex items-center justify-center gap-1">
+              S’inscrire à la Sen-CSU
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5"
+                   fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Bouton CTA -->
-  <div class="w-full flex justify-center mt-[65px] mb-6 px-6">
+  <div class="w-full flex justify-center mt-[105px] mb-6 px-6">
     <button
       (click)="goToMaintenance()"
       class="w-full max-w-md
