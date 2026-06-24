@@ -59,7 +59,7 @@ export class CommuniquesPresseComponent implements OnInit {
   ? (item.file_url.startsWith('http')
       ? item.file_url
       : `${environment.mediaBaseUrl}${item.file_url.startsWith('/') ? '' : '/'}${item.file_url}`)
-  : 'assets/placeholder.jpg',
+  : 'assets/placeholder.svg',
   categorie: 'Général',
   loaded: false
 }));

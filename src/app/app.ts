@@ -4,7 +4,6 @@ import { RouterOutlet, Router } from '@angular/router';
 
 // Composants
 import { HeaderComponent } from './header/header';
-import { TutoScreenComponent } from './tuto-screen-component/tuto-screen-component';
 import { AboutTimelineComponent } from './about-timeline/about-timeline';
 import { DonationComponent } from './donation/donation';
 import { OrganigrammeComponent } from './organigramme/organigramme';
@@ -20,7 +19,6 @@ import { ConsentBannerComponent } from './consent-banner/consent-banner';
     CommonModule,
     RouterOutlet,
     HeaderComponent,
-    TutoScreenComponent,
     AboutTimelineComponent,
     DonationComponent,
     OrganigrammeComponent,
@@ -36,7 +34,6 @@ export class App implements AfterViewInit {
   isLoading = signal(true);
   showNewYearWish = signal(false);
 
-  showTuto = signal(false);
   showAbout = signal(false);
   showDonation = signal(false);
   showOrganigramme = signal(false);
@@ -73,7 +70,6 @@ export class App implements AfterViewInit {
     }, 400);
   }
 
-  openTuto() { this.showTuto.set(true); }
   openAbout() { this.showAbout.set(true); }
   openDonation() { this.showDonation.set(true); }
   openOrganigramme() { this.showOrganigramme.set(true); }

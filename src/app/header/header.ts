@@ -15,7 +15,6 @@ export class HeaderComponent implements AfterViewInit {
   isMenuOpen = false;
   isBrowser = false;
 
-  @Output() openTuto = new EventEmitter<void>();
   @Output() openAboutTimeline = new EventEmitter<void>();
   @Output() openAbout = new EventEmitter<void>();
   @Output() openDonation = new EventEmitter<void>();

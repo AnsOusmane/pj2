@@ -1,8 +1,0 @@
-/* Optionnel : ajustements Tailwind si nécessaire */
-video {
-  border-radius: 1rem;
-}
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}

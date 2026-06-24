@@ -29,44 +29,9 @@ export class RapportsOfficielsComponent {
   // état modal
   selectedRapport: Rapport | null = null;
 
-  rapports: Rapport[] = [
-    {
-      id: 1,
-      titre: 'Rapport Annuel 2024 – Santé Publique',
-      date: '12 Décembre 2024',
-      image: 'assets/rapports/r1.webp',
-      categorie: 'Rapports Annuels',
-      fichier: 'assets/rapports/pdf/r1.pdf',
-      contenu: 'Ce rapport présente les grandes avancées du ministère...'
-    },
-    {
-      id: 2,
-      titre: 'Étude nationale sur le numérique médical',
-      date: '04 Février 2025',
-      image: 'assets/rapports/r2.webp',
-      categorie: 'Études',
-      fichier: 'assets/rapports/pdf/r2.pdf',
-      contenu: 'Une étude complète sur l\'évolution du digital médical...'
-    },
-    {
-      id: 3,
-      titre: 'Statistiques 2025 : couverture pharmaceutique',
-      date: '20 Janvier 2025',
-      image: 'assets/rapports/r3.webp',
-      categorie: 'Statistiques',
-      fichier: 'assets/rapports/pdf/r3.pdf',
-      contenu: 'Toutes les statistiques de la couverture pharmaceutique...'
-    },
-    {
-      id: 4,
-      titre: 'Audit financier – Programme Santé Digitale',
-      date: '10 Décembre 2024',
-      image: 'assets/rapports/r4.webp',
-      categorie: 'Finances',
-      fichier: 'assets/rapports/pdf/r4.pdf',
-      contenu: 'Audit complet sur l’utilisation des fonds...'
-    }
-  ];
+  // Les rapports de démo (fichiers webp/pdf absents) ont été retirés.
+  // À remplacer par les vrais rapports (ou un chargement depuis l'API) une fois le contenu disponible.
+  rapports: Rapport[] = [];
 
   // Filtres combinés (catégorie + recherche)
   get filteredRapports() {

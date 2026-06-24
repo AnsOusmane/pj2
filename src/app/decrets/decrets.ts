@@ -74,7 +74,7 @@ export class DecretsComponent implements OnInit {
   }
 
   private constructFileUrl(path?: string): string {
-    if (!path?.trim()) return 'assets/images/placeholder.jpg';
+    if (!path?.trim()) return 'assets/placeholder.svg';
 
     // URL déjà absolue (Cloudinary) → on la renvoie telle quelle.
     if (path.startsWith('http')) return path;

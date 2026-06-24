@@ -214,7 +214,7 @@ export class MediaComponent implements OnInit {
 
             photo_url: photo
               ? this.media(photo)
-              : 'assets/avatar.png'
+              : 'assets/avatar.svg'
           };
         });
 
