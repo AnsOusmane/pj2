@@ -7,6 +7,7 @@ import { NewslettersService } from '../services/newsletters.service';
 import { VideosService } from '../services/videos.service';
 import { TestimonialsService } from '../services/testimonials.service';
 import { ActualitesService } from '../services/actualites.service';
+import { FacebookService, FacebookPost } from '../services/facebook.service';
 
 @Component({
   selector: 'app-media',
@@ -19,10 +20,12 @@ export class MediaComponent implements OnInit {
 
   activeTab = 'actualites';
 
-  // URL de la page Facebook de l'agence (identique au lien du footer).
-  // ⚠️ Si le fil ne s'affiche pas, vérifier ici l'orthographe exacte de la page.
+  // URL de la page Facebook de l'agence (lien « Voir la page » + footer).
   readonly facebookPageUrl = 'https://www.facebook.com/CouvertureSanitaireUniverselle';
-  facebookFeedUrl!: SafeResourceUrl;
+
+  // Fil Facebook natif (récupéré via l'API Graph côté backend).
+  fbPosts: FacebookPost[] = [];
+  isLoadingFbPosts = false;
 
   selectedVideo: any = null;
   selectedActualite: any = null; // MODAL ACTUALITE
@@ -47,22 +50,34 @@ export class MediaComponent implements OnInit {
     private newslettersService: NewslettersService,
     private videosService: VideosService,
     private testimonialsService: TestimonialsService,
-    private actualitesService: ActualitesService
+    private actualitesService: ActualitesService,
+    private facebookService: FacebookService
   ) {}
 
   ngOnInit(): void {
-    // Construit l'URL du Page Plugin Facebook (mise à jour auto, sans backend).
-    const plugin =
-      'https://www.facebook.com/plugins/page.php?href=' +
-      encodeURIComponent(this.facebookPageUrl) +
-      '&tabs=timeline&width=500&height=800&small_header=false' +
-      '&adapt_container_width=true&hide_cover=false&show_facepile=true';
-    this.facebookFeedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(plugin);
-
+    this.loadFacebookPosts();
     this.loadNewsletters();
     this.loadVideos();
     this.loadTestimonials();
     this.loadActualites();
+  }
+
+  // =====================================================
+  // FACEBOOK (API Graph officielle, via backend)
+  // =====================================================
+
+  loadFacebookPosts(): void {
+    this.isLoadingFbPosts = true;
+    this.facebookService.getPosts().subscribe({
+      next: (res) => {
+        this.fbPosts = res.posts || [];
+        this.isLoadingFbPosts = false;
+      },
+      error: () => {
+        this.fbPosts = [];
+        this.isLoadingFbPosts = false;
+      }
+    });
   }
 
   // =====================================================

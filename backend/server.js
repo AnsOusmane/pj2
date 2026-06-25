@@ -26,6 +26,7 @@ const ppmRouter = require('./routes/ppm.routes');
 const appelsOffreRouter = require('./routes/appels-offre.routes');
 const avisAttributionRouter = require('./routes/avis-attribution.routes');
 const fournisseursRouter = require('./routes/fournisseurs.routes');
+const facebookRouter = require('./routes/facebook.routes');
 
 // Jobs planifiés
 const { scheduleAoStatusSweep } = require('./jobs/ao-status.job');
@@ -124,6 +125,7 @@ app.use('/api/ppm', ppmRouter);
 app.use('/api/appels-offre', appelsOffreRouter);
 app.use('/api/avis-attribution', avisAttributionRouter);
 app.use('/api/fournisseurs', fournisseursRouter);
+app.use('/api/facebook', facebookRouter);
 
 app.get('/api/test', async (req, res) => {
   try {
