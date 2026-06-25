@@ -192,7 +192,8 @@ export class HeaderComponent implements AfterViewInit {
   goToDialyse() { this.router.navigate(['/dialyse']); }
   goToCesarienne() { this.router.navigate(['/cesarienne']); }
   goToAssuranceMaladie() { this.router.navigate(['/assurance-maladie']); }
-  goToAppelsOffre() { this.router.navigate(['/appels-offre']); }
+  // Section « Appels d'offres » temporairement en cours d'édition → redirige vers la page maintenance
+  goToAppelsOffre() { this.router.navigate(['/maintenance']); }
   goToCarriere() { this.router.navigate(['/carriere']); }
   goToAdmin() { this.router.navigate(['/admin']); }
   goToActualites() { this.router.navigate(['pages/actualites']); }

@@ -19,6 +19,11 @@ export class MediaComponent implements OnInit {
 
   activeTab = 'actualites';
 
+  // URL de la page Facebook de l'agence (identique au lien du footer).
+  // ⚠️ Si le fil ne s'affiche pas, vérifier ici l'orthographe exacte de la page.
+  readonly facebookPageUrl = 'https://www.facebook.com/CouvertureSanitaireUniverselle';
+  facebookFeedUrl!: SafeResourceUrl;
+
   selectedVideo: any = null;
   selectedActualite: any = null; // MODAL ACTUALITE
 
@@ -46,6 +51,14 @@ export class MediaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Construit l'URL du Page Plugin Facebook (mise à jour auto, sans backend).
+    const plugin =
+      'https://www.facebook.com/plugins/page.php?href=' +
+      encodeURIComponent(this.facebookPageUrl) +
+      '&tabs=timeline&width=500&height=800&small_header=false' +
+      '&adapt_container_width=true&hide_cover=false&show_facepile=true';
+    this.facebookFeedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(plugin);
+
     this.loadNewsletters();
     this.loadVideos();
     this.loadTestimonials();

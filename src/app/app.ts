@@ -70,6 +70,11 @@ export class App implements AfterViewInit {
     }, 400);
   }
 
+  // Masque l'en-tête (navbar fixe) sur la page maintenance
+  get hideHeader(): boolean {
+    return this.router.url.split('?')[0].startsWith('/maintenance');
+  }
+
   openAbout() { this.showAbout.set(true); }
   openDonation() { this.showDonation.set(true); }
   openOrganigramme() { this.showOrganigramme.set(true); }

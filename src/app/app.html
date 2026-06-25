@@ -36,6 +36,7 @@
 </div> -->
 
 <app-header
+  *ngIf="!hideHeader"
   (openAboutTimeline)="openAbout()"
   (openDonation)="openDonation()"
   (openOrganigramme)="openOrganigramme()"

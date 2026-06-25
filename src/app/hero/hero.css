@@ -36,16 +36,6 @@
   letter-spacing: -0.5px;
 }
 
-/* Sous-titres & paragraphes : Poppins propre */
-.csu-body {
-  font-family: "Poppins", sans-serif;
-}
-
-/* Petits textes / légendes : Quicksand */
-.csu-muted {
-  font-family: "Quicksand", sans-serif;
-}
-
 /* Exemple d'ajustements visuels */
 .csu-number {
   background: var(--csu-red);
