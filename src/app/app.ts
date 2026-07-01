@@ -1,4 +1,4 @@
-import { Component, signal, Inject, PLATFORM_ID, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, signal, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 
@@ -10,6 +10,9 @@ import { OrganigrammeComponent } from './organigramme/organigramme';
 import { MissionsvisionComponent } from './missionsvision/missionsvision';
 import { Footer } from './footer/footer';
 import { LoaderComponent } from './core/loader/loader';
+import { ScrollTopComponent } from './core/scroll-top/scroll-top';
+import { SearchComponent } from './core/search/search';
+import { ChatComponent } from './core/chat/chat';
 import { ConsentBannerComponent } from './consent-banner/consent-banner';
 
 @Component({
@@ -25,6 +28,9 @@ import { ConsentBannerComponent } from './consent-banner/consent-banner';
     MissionsvisionComponent,
     Footer,
     LoaderComponent,
+    ScrollTopComponent,
+    SearchComponent,
+    ChatComponent,
     ConsentBannerComponent,
   ],
   templateUrl: './app.html',
@@ -38,8 +44,6 @@ export class App implements AfterViewInit {
   showDonation = signal(false);
   showOrganigramme = signal(false);
   showMissionsvision = signal(false);
-
-  @ViewChild('logo', { static: false }) logo!: ElementRef<HTMLImageElement>;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -61,13 +65,10 @@ export class App implements AfterViewInit {
       }, 4500);
     }
 
-    /* LOADER */
+    /* LOADER : on laisse l'animation visible le temps que le site s'initialise. */
     setTimeout(() => {
-      if (this.logo) {
-        this.logo.nativeElement.classList.add('animate-grow-logo');
-      }
       this.isLoading.set(false);
-    }, 400);
+    }, 300);
   }
 
   // Masque l'en-tête (navbar fixe) sur la page maintenance

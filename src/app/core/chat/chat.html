@@ -1,0 +1,125 @@
+<!-- Bulle flottante d'ouverture -->
+<button
+  *ngIf="!chat.isOpen()"
+  (click)="chat.open()"
+  aria-label="Ouvrir l'assistant de discussion"
+  title="Assistant SEN-CSU"
+  class="chat-bubble fixed bottom-6 left-6 z-40 flex items-center justify-center
+         w-14 h-14 rounded-full bg-green-700 text-white shadow-lg
+         hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-400 transition-colors"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 10h8M8 14h5M21 12a8 8 0 01-11.5 7.2L3 21l1.8-6.5A8 8 0 1121 12z" />
+  </svg>
+</button>
+
+<!-- Fenêtre de chat -->
+<div
+  *ngIf="chat.isOpen()"
+  class="chat-window fixed bottom-6 left-6 z-40 flex flex-col
+         w-[calc(100vw-3rem)] sm:w-96 h-[70vh] sm:h-[520px] max-h-[80vh]
+         bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100"
+>
+  <!-- En-tête -->
+  <div class="flex items-center gap-3 px-4 py-3 bg-green-700 text-white shrink-0">
+    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-white/15">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+           viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8 10h8M8 14h5M21 12a8 8 0 01-11.5 7.2L3 21l1.8-6.5A8 8 0 1121 12z" />
+      </svg>
+    </span>
+    <div class="min-w-0">
+      <p class="font-semibold leading-tight truncate">Assistant SEN-CSU</p>
+      <p class="text-[11px] text-white/80 leading-tight">FR · Wolof · EN</p>
+    </div>
+    <button
+      (click)="chat.close()"
+      aria-label="Fermer l'assistant"
+      class="ml-auto text-white/80 hover:text-white text-2xl leading-none px-1"
+    >
+      &times;
+    </button>
+  </div>
+
+  <!-- Sélecteur de langue -->
+  <div class="flex items-center gap-1 px-3 py-2 border-b border-gray-100 bg-gray-50 shrink-0">
+    <span class="text-[11px] text-gray-400 mr-1">Langue :</span>
+    <button
+      *ngFor="let l of langs"
+      (click)="setLang(l.value)"
+      class="text-xs px-2 py-0.5 rounded-full transition-colors"
+      [class.bg-green-600]="chat.langMode() === l.value"
+      [class.text-white]="chat.langMode() === l.value"
+      [class.text-gray-600]="chat.langMode() !== l.value"
+      [class.hover:bg-gray-200]="chat.langMode() !== l.value"
+    >
+      {{ l.label }}
+    </button>
+  </div>
+
+  <!-- Zone messages -->
+  <div #scrollZone class="flex-1 overflow-y-auto px-3 py-3 space-y-3 bg-white">
+    <div *ngFor="let m of messages()" class="flex flex-col">
+      <!-- Indicateur « en train d'écrire… » -->
+      <div *ngIf="m.typing" class="self-start bg-gray-100 rounded-2xl rounded-bl-sm px-3 py-2.5">
+        <span class="chat-typing"><span></span><span></span><span></span></span>
+      </div>
+
+      <div
+        *ngIf="!m.typing"
+        class="max-w-[85%] px-3 py-2 rounded-2xl text-sm leading-relaxed whitespace-pre-line"
+        [class.self-end]="m.from === 'user'"
+        [class.bg-green-600]="m.from === 'user'"
+        [class.text-white]="m.from === 'user'"
+        [class.rounded-br-sm]="m.from === 'user'"
+        [class.self-start]="m.from === 'bot'"
+        [class.bg-gray-100]="m.from === 'bot'"
+        [class.text-gray-800]="m.from === 'bot'"
+        [class.rounded-bl-sm]="m.from === 'bot'"
+      >
+        {{ m.text }}
+      </div>
+
+      <!-- Suggestions cliquables (messages du bot) -->
+      <div *ngIf="m.suggestions?.length" class="flex flex-wrap gap-1.5 mt-2 self-start max-w-[95%]">
+        <button
+          *ngFor="let s of m.suggestions"
+          (click)="onSuggestion(s)"
+          class="text-xs px-2.5 py-1 rounded-full border border-green-300 text-green-700
+                 hover:bg-green-50 transition-colors"
+        >
+          {{ s }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Saisie -->
+  <form (submit)="onSubmit($event)" class="flex items-center gap-2 px-3 py-2.5 border-t border-gray-100 shrink-0">
+    <input
+      #chatInput
+      type="text"
+      [value]="draft()"
+      (input)="draft.set($any($event.target).value)"
+      placeholder="Écrivez votre message…"
+      aria-label="Votre message"
+      class="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm outline-none
+             focus:ring-2 focus:ring-green-400 text-gray-800 placeholder-gray-400"
+    />
+    <button
+      type="submit"
+      aria-label="Envoyer"
+      [disabled]="!draft().trim()"
+      class="flex items-center justify-center w-10 h-10 rounded-full bg-green-700 text-white
+             hover:bg-green-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors shrink-0"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+           viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </button>
+  </form>
+</div>

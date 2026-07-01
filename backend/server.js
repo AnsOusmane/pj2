@@ -28,6 +28,7 @@ const avisAttributionRouter = require('./routes/avis-attribution.routes');
 const fournisseursRouter = require('./routes/fournisseurs.routes');
 const candidaturesRouter = require('./routes/candidatures.routes');
 const facebookRouter = require('./routes/facebook.routes');
+const chatRouter = require('./routes/chat.routes');
 
 // Jobs planifiés
 const { scheduleAoStatusSweep } = require('./jobs/ao-status.job');
@@ -128,6 +129,7 @@ app.use('/api/avis-attribution', avisAttributionRouter);
 app.use('/api/fournisseurs', fournisseursRouter);
 app.use('/api/candidatures', candidaturesRouter);
 app.use('/api/facebook', facebookRouter);
+app.use('/api/chat', chatRouter);
 
 app.get('/api/test', async (req, res) => {
   try {

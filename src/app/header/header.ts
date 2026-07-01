@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output, AfterViewInit, Inject, PLATFORM_ID } f
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
+import { SearchService } from '../core/search/search.service';
 
 @Component({
   selector: 'app-header',
@@ -49,7 +50,8 @@ export class HeaderComponent implements AfterViewInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router
+    private router: Router,
+    private searchService: SearchService
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
     this.router.events.subscribe(event => {
@@ -61,6 +63,12 @@ export class HeaderComponent implements AfterViewInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  /** Ouvre la palette de recherche globale. */
+  openSearch() {
+    this.closeMobileMenu();
+    this.searchService.open();
   }
 
   // PUB

@@ -1,0 +1,14 @@
+/* Apparition douce du bouton */
+.scroll-top-btn {
+  animation: scroll-top-appear 0.2s ease-out;
+}
+@keyframes scroll-top-appear {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-top-btn {
+    animation: none;
+  }
+}

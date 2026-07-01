@@ -1,0 +1,35 @@
+.search-overlay {
+  animation: search-fade 0.15s ease-out;
+}
+.search-panel {
+  animation: search-pop 0.18s ease-out;
+}
+
+@keyframes search-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes search-pop {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.kbd {
+  display: inline-block;
+  min-width: 1.3em;
+  padding: 0 0.35em;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+  border-bottom-width: 2px;
+  border-radius: 0.3rem;
+  background: #f9fafb;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-overlay,
+  .search-panel {
+    animation: none;
+  }
+}

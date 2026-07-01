@@ -1,8 +1,12 @@
-<div class="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
-  <img
-    #logo
-    src="assets/logosencsu.jpg"
-    alt="Logo"
-    class="w-72" 
-  />
+<div class="loader-overlay fixed inset-0 flex flex-col items-center justify-center bg-white z-[9999]">
+  <div class="relative flex items-center justify-center">
+    <!-- Anneau qui tourne -->
+    <span class="loader-ring"></span>
+    <!-- Logo qui pulse -->
+    <img
+      src="assets/logosencsu.jpg"
+      alt="SEN-CSU"
+      class="loader-logo w-24 h-24 rounded-full object-cover shadow-lg"
+    />
+  </div>
 </div>

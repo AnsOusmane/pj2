@@ -1,6 +1,9 @@
 
+<!-- ÉCRAN DE CHARGEMENT (animation affichée le temps que le site s'initialise) -->
+<app-loader *ngIf="isLoading()"></app-loader>
+
 <!-- VOEUX NOUVEL AN -->
- 
+
 <!-- <div
   *ngIf="showNewYearWish()"
   class="fixed inset-0 z-[9999]
@@ -129,3 +132,12 @@
   (openDonation)="openDonation()"> 
 </app-footer>
 <app-consent-banner></app-consent-banner>
+
+<!-- Palette de recherche globale (ouverte via la loupe de la navbar ou Ctrl+K) -->
+<app-search></app-search>
+
+<!-- Assistant de discussion (chatbot local trilingue FR / Wolof / EN) -->
+<app-chat></app-chat>
+
+<!-- Bouton flottant « Revenir en haut » (visible seulement après défilement) -->
+<app-scroll-top></app-scroll-top>
