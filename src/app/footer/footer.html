@@ -21,10 +21,13 @@
   </div>-->
 
   <!-- Partenaires -->
-  <div class="max-w-6xl mx-auto text-center mt-5 text-white/80 text-sm">
-    <button (click)="navigateTo('/maintenance')" class="hover:underline mx-2">Sunu CSU</button> |
-    <a href="https://femme.gouv.sn" class="hover:underline mx-2">Ministère de la famille et des solidarités</a> |
-    <a href="https://sante.gouv.sn" class="hover:underline mx-2">Ministère de la santé et de l'action sociale</a>
+  <div class="max-w-6xl mx-auto text-center mt-5 text-white/80 text-sm
+              flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-0">
+    <button (click)="navigateTo('/maintenance')" class="hover:underline sm:mx-2">Sunu CSU</button>
+    <span class="hidden sm:inline">|</span>
+    <a href="https://femme.gouv.sn" class="hover:underline sm:mx-2">Ministère de la famille et des solidarités</a>
+    <span class="hidden sm:inline">|</span>
+    <a href="https://sante.gouv.sn" class="hover:underline sm:mx-2">Ministère de la santé et de l'action sociale</a>
   </div>
 
   <hr class="max-w-6xl mx-auto border-white/20 my-8">
@@ -57,7 +60,6 @@
     <div>
       <h3 class="font-semibold mb-3 uppercase tracking-wide text-sm">Espace média</h3>
       <ul class="space-y-2 text-white/80 text-sm">
-        <li><button (click)="goToMedia()" class="hover:underline">Actualités &amp; réseaux sociaux</button></li>
         <li><button class="hover:underline">Communiqués de presse (en édition)</button></li>
         <li><button class="hover:underline">Dossiers médias (en édition)</button></li>
         <li><button class="hover:underline">Banque d'image (en édition)</button></li>

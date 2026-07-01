@@ -1,7 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CandidaturesService } from '../services/candidatures.service';
+import { OffresEmploiService, OffreEmploi } from '../services/offres-emploi.service';
 
 @Component({
   selector: 'app-carriere',
@@ -9,13 +11,19 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './carriere.html',
 })
-export class CarriereComponent {
+export class CarriereComponent implements OnInit {
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
+  private candidaturesService = inject(CandidaturesService);
+  private offresService = inject(OffresEmploiService);
 
   envoiEnCours = false;
   messageSucces = '';
   messageErreur = '';
+
+  // Offres d'emploi publiées depuis l'admin (chargées via l'API).
+  offres: OffreEmploi[] = [];
+  isLoadingOffres = false;
 
   form: FormGroup = this.fb.group({
     nom: ['', Validators.required],
@@ -25,78 +33,32 @@ export class CarriereComponent {
     cv: [null]
   });
 
-  offres: any[] = [
-    {
-      id: 1,
-      titre: "Directeur des systèmes d'information (DSI)",
-      type: "CDI",
-      lieu: "Dakar",
-      description: `APPEL À CANDIDATURE POUR LE POSTE DE DIRECTEUR DES SYSTÈMES D’INFORMATION
-I. CONTEXTE ET JUSTIFICATION
-L’Agence Sénégalaise de la Couverture Sanitaire Universelle (SEN-CSU), personne morale de droit public, en charge de la mise en œuvre de la politique nationale de couverture sanitaire universelle, s’inscrit dans une dynamique de modernisation et de transformation digitale de ses services. Dans ce cadre, elle lance un appel à candidatures pour recruter un Directeur des Systèmes d’Information (DSI), un poste de haute responsabilité stratégique placé sous l’autorité directe de la Direction Générale.
-Le Directeur des Systèmes d’Information est le pilote de la transformation numérique de l’Agence. Il conçoit, met en œuvre et supervise la stratégie informatique en cohérence avec les orientations stratégiques de l’Agence de la SEN-CSU. Il a pour vocation de piloter la stratégie numérique de l’Agence. Il joue un rôle central dans l’intégration des technologies de l’information au service de la performance, de l’efficience opérationnelle et de la transparence des interventions de l’Agence.
-II. MISSIONS PRINCIPALES :
-Élaborer et mettre en œuvre la stratégie et la politique informatique de l’agence, en cohérence avec les orientations générales définies par la Direction Générale ;
-Définir et mettre en place une politique de sécurité informatique et de protection des données personnelles ;
-Concevoir et déployer un système informatisé de planification, de gestion et de suivi des activités de l’agence ;
-Mettre en œuvre une plateforme de gestion intégrée dédiée à la Couverture Sanitaire Universelle (CSU) ;
-Accompagner la mise en place d’un système d’identification basé sur les TIC (Technologies de l’Information et de la Communication) ;
-Appuyer l’organisation des flux d’information internes en vue d’une meilleure efficacité opérationnelle ;
-Évaluer les besoins métiers en matière de solutions informatiques et recommander les investissements adéquats ;
-Assurer l’alignement stratégique entre les besoins des parties prenantes de la CSU, la vision de l’agence et les outils numériques ;
-Conduire une veille technologique et réglementaire pour anticiper les évolutions pertinentes dans le domaine des systèmes d’information ;
-Conseiller la Direction Générale sur les choix technologiques et les évolutions à intégrer pour maintenir la performance du système d’information.
-Responsabilités et Activités :
-Recueillir et analyser les besoins des directions métiers et proposer des solutions adaptées ;
-Garantir la cohérence et la performance du système d’information dans toutes ses composantes ;
-Piloter les projets informatiques majeurs de l’agence, de la conception à la mise en production ;
-Assurer la maintenance, la sécurité et l’évolution des infrastructures informatiques ;
-Veiller au respect des normes, des bonnes pratiques et de la conformité réglementaire en matière de traitement des données ;
-Gérer les relations avec les prestataires, partenaires technologiques et institutions en lien avec le système d’information ;
-Produire des rapports réguliers d’analyse, d’évaluation et de recommandation à destination de la Direction Générale.
-III. LIEU ET DURÉE DE LA MISSION :
-Type de contrat : CDI
-Lieu d’affectation :
-Le contrat du DSI sera conclu pour être exécuté à Dakar. Cependant, une clause de mobilité incluse dans ledit contrat peut emmener le DSI à travailler en tout lieu où l’Agence aura des activités, aussi bien à l’intérieur qu’à l’extérieur du Sénégal.
-IV. PROFIL DU DSI
-Qualifications requises :
-Diplôme supérieur (Bac+5 minimum) en Informatique, Systèmes d’Information, Génie logiciel, Télécommunications, ingénierie ou domaine connexe.
-Expérience professionnelle d’au moins 07 ans dans les systèmes d’information, dont au moins 5 ans à un poste de direction ou de pilotage stratégique dans une organisation publique ou privée de taille significative.
-Maîtrise démontrée de la gouvernance des systèmes d’information, des normes de sécurité (ISO 27001, RGPD, etc.) et de la gestion de projets complexes.
-Bonne connaissance du secteur de la santé publique, des politiques sociales ou de la protection sociale est un atout majeur.
-Compétences Managériales et Humaines :
-Excellente capacité de leadership, de gestion d’équipes pluridisciplinaires et de conduite du changement.
-Forte aptitude à travailler dans un environnement multi-acteurs, à enjeux sociaux élevés.
-Esprit d’analyse, leadership, sens de l’anticipation et capacité à travailler en transversalité avec les autres directions.
-Leadership et gestion d’équipe : le DSI doit être un meneur capable de motiver, d’encadrer ses équipes et de favoriser l’intelligence collective.
-Communication et écoute : des compétences interpersonnelles élevées sont essentielles pour dialoguer efficacement avec les différentes entités métiers, comprendre leurs besoins et faire adhérer à la stratégie SI.
-Gestion du changement (Change Maker) : le DSI est au cœur de la transformation numérique de l’entreprise. Il doit accompagner les collaborateurs dans l’évolution de leurs méthodes de travail et encourager l’innovation.
-Capacité d’analyse et de prise de décision : il doit pouvoir synthétiser des informations complexes et prendre des décisions éclairées, parfois rapidement.
-Organisation et gestion de projet : la gestion simultanée de multiples projets et la planification de l’évolution des infrastructures nécessitent une organisation rigoureuse.
-V. DOSSIERS DE CANDIDATURE :
-Le dossier de candidature doit comporter :
-Une lettre de motivation adressée au Directeur Général de la SEN-CSU ;
-Un curriculum vitae détaillé ;
-Les copies des diplômes et attestations de travail pertinents ;
-Toute autre pièce justifiant l’expérience ou les compétences techniques ;
-Une copie de la carte nationale d’identité et un extrait du casier judiciaire datant de moins de trois (03) mois.
-VI. DÉPÔT DES CANDIDATURES :
-Les candidatures doivent être envoyées au plus tard le 13 janvier 2026 à l’adresse suivante :
-recrutement@sencsu.sn
-Seuls les candidats présélectionnés seront contactés pour un entretien.`
-    }
-  ];
-
   filtre = '';
-  offreSelectionnee: any = null;  // ← stocke l'offre actuellement ouverte
+  offreSelectionnee: OffreEmploi | null = null;  // ← stocke l'offre actuellement ouverte
+
+  ngOnInit(): void {
+    this.chargerOffres();
+  }
+
+  /** Charge les offres d'emploi actives publiées depuis l'admin. */
+  chargerOffres(): void {
+    this.isLoadingOffres = true;
+    this.offresService.getAll().subscribe({
+      next: (offres) => { this.offres = offres; this.isLoadingOffres = false; },
+      error: () => { this.offres = []; this.isLoadingOffres = false; }
+    });
+  }
 
   get offresFiltrees() {
+    const q = this.filtre.toLowerCase();
     return this.offres.filter(o =>
-      o.titre.toLowerCase().includes(this.filtre.toLowerCase())
+      (o.title || '').toLowerCase().includes(q) ||
+      (o.company || '').toLowerCase().includes(q) ||
+      (o.location || '').toLowerCase().includes(q)
     );
   }
 
-  afficherDetails(offre: any) {
+  afficherDetails(offre: OffreEmploi) {
     // Toggle : si c'est la même offre qui est ouverte → on la ferme
     if (this.offreSelectionnee?.id === offre.id) {
       this.offreSelectionnee = null;
@@ -149,6 +111,21 @@ Seuls les candidats présélectionnés seront contactés pour un entretien.`
       if (this.form.value.cv) {
         cvLink = await this.uploadCV(this.form.value.cv);
       }
+
+      // Stockage en base (best-effort) — en plus de l'envoi par mail ci-dessous.
+      // Un échec ici ne doit pas empêcher la notification e-mail à l'agence.
+      try {
+        await this.candidaturesService.enregistrer({
+          nom: this.form.value.nom,
+          email: this.form.value.email,
+          telephone: this.form.value.telephone || undefined,
+          poste: this.form.value.poste || undefined,
+          cv_url: this.form.value.cv ? cvLink : undefined
+        }).toPromise();
+      } catch (dbErr) {
+        console.error('Candidature non enregistrée en base (mail envoyé quand même) :', dbErr);
+      }
+
       const formData = new FormData();
       formData.append('access_key', '5ca3d34c-8b1b-444c-8148-b34bd0015f81');
       formData.append('name', this.form.value.nom);

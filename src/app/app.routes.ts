@@ -51,10 +51,12 @@ export const routes: Routes = [
       { path: 'guides-form', loadComponent: () => import('./admin/guides-form/guides-form').then(m => m.GuidesForm) },
       { path: 'audit-manuals-form', loadComponent: () => import('./admin/audit-manuals-form/audit-manuals-form').then(m => m.AuditManualsForm) },
       { path: 'offres-emploi-form', loadComponent: () => import('./admin/offres-emploi-form/offres-emploi-form').then(m => m.OffresEmploiForm) },
+      { path: 'offres-emploi-gestion', loadComponent: () => import('./admin/offres-emploi-gestion/offres-emploi-gestion').then(m => m.OffresEmploiGestionComponent) },
       { path: 'ppm-gestion', loadComponent: () => import('./admin/ppm-gestion/ppm-gestion').then(m => m.PpmGestionComponent) },
       { path: 'appels-offre-gestion', loadComponent: () => import('./admin/appels-offre-gestion/appels-offre-gestion').then(m => m.AppelsOffreGestionComponent) },
       { path: 'avis-attribution-gestion', loadComponent: () => import('./admin/avis-attribution-gestion/avis-attribution-gestion').then(m => m.AvisAttributionGestionComponent) },
       { path: 'fournisseurs-gestion', loadComponent: () => import('./admin/fournisseurs-gestion/fournisseurs-gestion').then(m => m.FournisseursGestionComponent) },
+      { path: 'candidatures', loadComponent: () => import('./admin/candidatures-gestion/candidatures-gestion').then(m => m.CandidaturesGestionComponent) },
       { path: 'communiques-form', loadComponent: () => import('./admin/communiques-form/communiques-form').then(m => m.CommuniqueFormComponent) },
       { path: 'banque_d_image-form', loadComponent: () => import('./admin/banque-d-image-form/banque-d-image-form').then(m => m.BanqueImagesFormComponent) },
 

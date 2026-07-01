@@ -1,0 +1,139 @@
+<div class="p-4 md:p-6 max-w-7xl mx-auto">
+
+  <!-- En-tête -->
+  <div class="admin-page-head">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">Candidatures</h1>
+      <p class="text-sm text-gray-500">Candidatures spontanées reçues via le formulaire Carrière</p>
+    </div>
+    <div class="flex items-center gap-3 flex-wrap">
+      <div class="head-toggle">
+        <button type="button" (click)="setArchivedView(false)" [class.active]="!showArchived()">Actives</button>
+        <button type="button" (click)="setArchivedView(true)" [class.active]="showArchived()">Archivées</button>
+      </div>
+      <div>
+        <label class="text-sm mr-2">Statut :</label>
+        <select [(ngModel)]="filtreStatut" (ngModelChange)="onFiltreChange()"
+                class="border rounded-lg px-3 py-2 text-sm bg-white outline-none focus:ring-2 focus:ring-green-400">
+          <option [ngValue]="''">Tous</option>
+          <option *ngFor="let s of statuts" [ngValue]="s.value">{{ s.label }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div *ngIf="success()" class="mb-4 px-4 py-3 rounded-lg bg-green-50 text-green-700 border border-green-200">
+    {{ success() }}
+  </div>
+  <div *ngIf="error()" class="mb-4 px-4 py-3 rounded-lg bg-red-50 text-red-700 border border-red-200">
+    {{ error() }}
+  </div>
+
+  <!-- Tableau -->
+  <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-x-auto">
+    <table class="w-full text-sm text-left">
+      <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+        <tr>
+          <th class="px-4 py-3">Candidat</th>
+          <th class="px-4 py-3">Poste souhaité</th>
+          <th class="px-4 py-3">CV</th>
+          <th class="px-4 py-3">Reçu le</th>
+          <th class="px-4 py-3">Statut</th>
+          <th class="px-4 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <tr *ngIf="loading()">
+          <td colspan="6" class="px-4 py-8 text-center text-gray-400">Chargement…</td>
+        </tr>
+        <tr *ngIf="!loading() && lignes().length === 0">
+          <td colspan="6" class="px-4 py-8 text-center text-gray-400">Aucune candidature pour ce filtre.</td>
+        </tr>
+
+        <ng-container *ngFor="let l of lignes()">
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3 font-medium text-gray-800">{{ l.nom }}</td>
+            <td class="px-4 py-3 text-gray-600">{{ l.poste || '—' }}</td>
+            <td class="px-4 py-3">
+              <a *ngIf="l.cv_url" [href]="l.cv_url" target="_blank" class="text-blue-600 underline text-xs">Ouvrir</a>
+              <span *ngIf="!l.cv_url" class="text-gray-400 text-xs">—</span>
+            </td>
+            <td class="px-4 py-3 text-gray-600">{{ l.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="px-4 py-3">
+              <span class="px-2 py-1 rounded-full text-xs font-medium"
+                    [ngClass]="{
+                      'bg-gray-100 text-gray-600': l.statut === 'recu',
+                      'bg-blue-100 text-blue-700': l.statut === 'en_cours',
+                      'bg-green-100 text-green-700': l.statut === 'retenu',
+                      'bg-red-100 text-red-700': l.statut === 'rejete'
+                    }">
+                {{ statutLabel(l.statut) }}
+              </span>
+            </td>
+            <td class="px-4 py-3 text-right whitespace-nowrap">
+              <button (click)="toggleDetail(l)" class="text-blue-600 hover:underline mr-3">
+                {{ detailId() === l.id ? 'Fermer' : 'Détail' }}
+              </button>
+              <button *ngIf="!showArchived()" (click)="archive(l)" class="text-amber-600 hover:underline">Archiver</button>
+              <button *ngIf="showArchived()" (click)="restore(l)" class="text-green-600 hover:underline">Restaurer</button>
+            </td>
+          </tr>
+
+          <!-- Panneau de détail -->
+          <tr *ngIf="detailId() === l.id" class="bg-gray-50">
+            <td colspan="6" class="px-4 py-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="space-y-1">
+                  <p><span class="text-gray-500">Email :</span> {{ l.email || '—' }}</p>
+                  <p><span class="text-gray-500">Téléphone :</span> {{ l.telephone || '—' }}</p>
+                  <p><span class="text-gray-500">Poste souhaité :</span> {{ l.poste || '—' }}</p>
+                  <p *ngIf="l.message"><span class="text-gray-500">Message :</span> {{ l.message }}</p>
+                  <p>
+                    <span class="text-gray-500">CV :</span>
+                    <a *ngIf="l.cv_url" [href]="l.cv_url" target="_blank" class="text-blue-600 underline">Télécharger le CV</a>
+                    <span *ngIf="!l.cv_url" class="text-gray-400">Non fourni</span>
+                  </p>
+                </div>
+
+                <div class="space-y-3">
+                  <!-- Changer le statut -->
+                  <div>
+                    <p class="text-gray-500 mb-1">Changer le statut :</p>
+                    <div class="flex flex-wrap gap-2">
+                      <button *ngFor="let s of statuts" (click)="changerStatut(l, s.value)"
+                              [disabled]="l.statut === s.value"
+                              class="px-3 py-1 rounded-lg text-xs border transition disabled:opacity-50"
+                              [class.bg-green-600]="l.statut === s.value"
+                              [class.text-white]="l.statut === s.value"
+                              [class.border-gray-300]="l.statut !== s.value"
+                              [class.hover:bg-gray-100]="l.statut !== s.value">
+                        {{ s.label }}
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Note interne -->
+                  <div>
+                    <p class="text-gray-500 mb-1">Note de traitement :</p>
+                    <textarea #noteRef rows="2"
+                              class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-400 outline-none"
+                              [value]="l.note_traitement || ''"></textarea>
+                    <button (click)="enregistrerNote(l, noteRef.value)"
+                            class="mt-1 text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg">
+                      Enregistrer la note
+                    </button>
+                  </div>
+
+                  <p *ngIf="l.updated_by_name" class="text-xs text-gray-400">
+                    Dernière modif. : {{ l.updated_by_name }} — {{ l.updated_at | date:'dd/MM/yyyy HH:mm' }}
+                  </p>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

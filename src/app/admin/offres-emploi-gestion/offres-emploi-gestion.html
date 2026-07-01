@@ -1,0 +1,68 @@
+<div class="p-4 md:p-6 max-w-7xl mx-auto">
+
+  <!-- En-tête -->
+  <div class="admin-page-head">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">Offres d'emploi</h1>
+      <p class="text-sm text-gray-500">Gérer la visibilité et la suppression des offres publiées</p>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div *ngIf="success()" class="mb-4 px-4 py-3 rounded-lg bg-green-50 text-green-700 border border-green-200">
+    {{ success() }}
+  </div>
+  <div *ngIf="error()" class="mb-4 px-4 py-3 rounded-lg bg-red-50 text-red-700 border border-red-200">
+    {{ error() }}
+  </div>
+
+  <!-- Tableau -->
+  <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-x-auto">
+    <table class="w-full text-sm text-left">
+      <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+        <tr>
+          <th class="px-4 py-3">Intitulé</th>
+          <th class="px-4 py-3">Employeur</th>
+          <th class="px-4 py-3">Lieu</th>
+          <th class="px-4 py-3">Date limite</th>
+          <th class="px-4 py-3">PDF</th>
+          <th class="px-4 py-3">Visibilité</th>
+          <th class="px-4 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <tr *ngIf="loading()">
+          <td colspan="7" class="px-4 py-8 text-center text-gray-400">Chargement…</td>
+        </tr>
+        <tr *ngIf="!loading() && lignes().length === 0">
+          <td colspan="7" class="px-4 py-8 text-center text-gray-400">Aucune offre publiée.</td>
+        </tr>
+
+        <tr *ngFor="let l of lignes()" class="hover:bg-gray-50">
+          <td class="px-4 py-3 font-medium text-gray-800">{{ l.title }}</td>
+          <td class="px-4 py-3 text-gray-600">{{ l.company || '—' }}</td>
+          <td class="px-4 py-3 text-gray-600">{{ l.location || '—' }}</td>
+          <td class="px-4 py-3 text-gray-600">{{ l.deadline ? (l.deadline | date:'dd/MM/yyyy') : '—' }}</td>
+          <td class="px-4 py-3">
+            <a *ngIf="l.file_url" [href]="l.file_url" target="_blank" class="text-blue-600 underline text-xs">Ouvrir</a>
+            <span *ngIf="!l.file_url" class="text-gray-400 text-xs">—</span>
+          </td>
+          <td class="px-4 py-3">
+            <span class="px-2 py-1 rounded-full text-xs font-medium"
+                  [ngClass]="l.is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'">
+              {{ l.is_active ? 'Visible' : 'Masquée' }}
+            </span>
+          </td>
+          <td class="px-4 py-3 text-right whitespace-nowrap">
+            <button (click)="toggleActive(l)"
+                    class="hover:underline mr-3"
+                    [ngClass]="l.is_active ? 'text-amber-600' : 'text-green-600'">
+              {{ l.is_active ? 'Masquer' : 'Afficher' }}
+            </button>
+            <button (click)="supprimer(l)" class="text-red-600 hover:underline">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

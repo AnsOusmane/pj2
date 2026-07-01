@@ -55,8 +55,9 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
   {
     title: 'Carrière',
     items: [
-      { key: 'offres-emploi', label: "Offres d'emploi", icon: '\u{1F4BC}', route: 'offres-emploi-form' }, // 💼
-      { key: 'candidatures', label: 'Candidatures', icon: '\u{1F4C4}', route: 'candidatures', comingSoon: true }, // 📄
+      { key: 'offres-emploi', label: "Publier une offre", icon: '\u{1F4BC}', route: 'offres-emploi-form' }, // 💼
+      { key: 'offres-emploi-gestion', label: "Gérer les offres", icon: '\u{1F5C2}\u{FE0F}', route: 'offres-emploi-gestion' }, // 🗂️
+      { key: 'candidatures', label: 'Candidatures', icon: '\u{1F4C4}', route: 'candidatures' }, // 📄
     ],
   },
   {

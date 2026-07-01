@@ -23,7 +23,10 @@ const authMiddleware = async (req, res, next) => {
     decoded = jwt.verify(token, process.env.JWT_SECRET);
   } catch (err) {
     console.error('JWT Error:', err.message);
-    return res.status(403).json({
+    // 401 (et non 403) : l'authentification a échoué → le client doit se
+    // reconnecter. Le front s'appuie sur ce code pour rediriger vers /login.
+    // (403 est réservé à « authentifié mais droits insuffisants ».)
+    return res.status(401).json({
       success: false,
       message: 'Session expirée ou invalide. Veuillez vous reconnecter.'
     });
@@ -42,7 +45,8 @@ const authMiddleware = async (req, res, next) => {
     const user = rows[0];
 
     if (!user || !user.is_active) {
-      return res.status(403).json({
+      // 401 : la session ne correspond plus à un compte actif → reconnexion requise.
+      return res.status(401).json({
         success: false,
         message: 'Compte introuvable ou désactivé. Veuillez vous reconnecter.'
       });

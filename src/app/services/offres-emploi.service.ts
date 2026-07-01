@@ -23,12 +23,28 @@ export class OffresEmploiService {
 
   constructor(private http: HttpClient) {}
 
+  /** Offres actives uniquement (page publique). */
   getAll(): Observable<OffreEmploi[]> {
     return this.http.get<OffreEmploi[]>(this.apiUrl).pipe(catchError(this.handleError));
   }
 
+  /** Toutes les offres (actives + masquées) pour la gestion admin. */
+  getAllForManage(): Observable<OffreEmploi[]> {
+    return this.http.get<OffreEmploi[]>(`${this.apiUrl}/manage`).pipe(catchError(this.handleError));
+  }
+
   addOffre(formData: FormData): Observable<any> {
     return this.http.post(this.apiUrl, formData).pipe(catchError(this.handleError));
+  }
+
+  /** Affiche / masque une offre sur le site public. */
+  setActive(id: number, is_active: boolean): Observable<OffreEmploi> {
+    return this.http.patch<OffreEmploi>(`${this.apiUrl}/${id}/active`, { is_active }).pipe(catchError(this.handleError));
+  }
+
+  /** Suppression définitive. */
+  delete(id: number): Observable<{ success: boolean; message: string }> {
+    return this.http.delete<{ success: boolean; message: string }>(`${this.apiUrl}/${id}`).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

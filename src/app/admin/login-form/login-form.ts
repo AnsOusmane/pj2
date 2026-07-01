@@ -69,9 +69,12 @@ export class LoginForm implements OnInit {
       return;
     }
 
-    // URL de retour après login
+    // URL de retour après login + message si la session a expiré.
     this.route.queryParams.subscribe(params => {
       this.returnUrl = params['returnUrl'] || '/admin';
+      if (params['expired'] === '1') {
+        this.error.set('Votre session a expiré. Veuillez vous reconnecter.');
+      }
     });
   }
 
