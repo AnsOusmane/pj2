@@ -23,6 +23,18 @@ export interface ChatApiResponse {
   error?: string;
 }
 
+/** Trace d'une interaction, envoyée au journal d'utilisation (analytics). */
+export interface ChatLogPayload {
+  sessionId: string;
+  langMode: 'auto' | 'fr' | 'wo' | 'en';
+  detectedLang: 'fr' | 'wo' | 'en';
+  message: string;
+  /** Issue : entrée FAQ trouvée, repli sans réponse, ou (à terme) Claude. */
+  outcome: 'faq' | 'fallback' | 'claude';
+  /** Id de l'entrée FAQ si outcome = 'faq'. */
+  matchedId?: string;
+}
+
 /**
  * Appel du repli conversationnel (backend → API Claude).
  *
@@ -38,5 +50,13 @@ export class ChatApiService {
 
   ask(payload: ChatApiRequest): Observable<ChatApiResponse> {
     return this.http.post<ChatApiResponse>(this.apiUrl, payload);
+  }
+
+  /**
+   * Journalise une interaction (best-effort, « tire et oublie »).
+   * On souscrit sans rien attendre : un échec ne doit jamais perturber le chat.
+   */
+  log(payload: ChatLogPayload): void {
+    this.http.post(`${this.apiUrl}/log`, payload).subscribe({ error: () => {} });
   }
 }

@@ -19,8 +19,12 @@ export interface ChatMessage {
   navigate?: ChatNavAction;
   /** Vrai si aucune entrée FAQ n'a matché → le composant peut tenter Claude. */
   isFallback?: boolean;
+  /** Id de l'entrée FAQ qui a répondu (pour le journal d'utilisation). */
+  matchedId?: string;
   /** Indicateur « en train d'écrire… » (placeholder pendant l'appel Claude). */
   typing?: boolean;
+  /** Message d'accueil : retraduit automatiquement au changement de langue. */
+  greeting?: boolean;
 }
 
 /** Une entrée de la base de connaissances trilingue. */
@@ -71,7 +75,7 @@ export class ChatService {
   // ── Messages d'accueil / repli, par langue ─────────────────────────────
   private readonly greeting: Record<ChatLang, string> = {
     fr: "Bonjour 👋 Je suis l'assistant de la SEN-CSU. Posez-moi une question sur la couverture santé, la césarienne, la dialyse, le Plan Sésame, les agences… en français, en wolof ou en anglais.",
-    wo: "Salaamaalekum 👋 Man mooy jokkukaayu SEN-CSU. Laajal ma ci wergu yaram, césarienne, dialyse, Plan Sésame, mbaa fan la agence yi nekk… ci wolof, français walla anglais.",
+    wo: "Salaamaalekum 👋 Man may jokkukaayu SEN-CSU. Laaj ma ci sa wergu yaram, césarienne, dialyse, Plan Sésame, mbaa fan la agence yi nekk… ci wolof, français walla anglais ma tontu la.",
     en: "Hello 👋 I'm the SEN-CSU assistant. Ask me about health coverage, C-section, dialysis, the Sésame Plan, our offices… in French, Wolof or English.",
   };
 
@@ -282,12 +286,22 @@ export class ChatService {
     },
   ];
 
-  /** Message d'accueil dans la langue courante. */
-  greetingMessage(): ChatMessage {
+  /** Construit le message d'accueil dans la langue courante (sans effet de bord). */
+  private buildGreeting(): ChatMessage {
     const lang = this.resolveLang('');
+    return { from: 'bot', text: this.greeting[lang], suggestions: this.topics[lang], greeting: true };
+  }
+
+  /** Message d'accueil à l'ouverture (réinitialise le contexte). */
+  greetingMessage(): ChatMessage {
     this.pendingAction = null;
     this.pendingFollowUp = null;
-    return { from: 'bot', text: this.greeting[lang], suggestions: this.topics[lang] };
+    return this.buildGreeting();
+  }
+
+  /** Message d'accueil retraduit dans la langue courante (au changement de langue). */
+  refreshGreeting(): ChatMessage {
+    return this.buildGreeting();
   }
 
   /** Construit la réponse du bot à un message utilisateur. */
@@ -302,13 +316,13 @@ export class ChatService {
         const nav = this.pendingAction;
         this.pendingAction = null;
         this.pendingFollowUp = null;
-        return { from: 'bot', text: this.confirmNav[lang], navigate: nav };
+        return { from: 'bot', text: this.confirmNav[lang], navigate: nav, matchedId: 'affirm' };
       }
       // 2) réponse détaillée en attente → on la donne.
       if (this.pendingFollowUp) {
         const detail = this.pendingFollowUp[lang];
         this.pendingFollowUp = null;
-        return { from: 'bot', text: detail, suggestions: this.topics[lang] };
+        return { from: 'bot', text: detail, suggestions: this.topics[lang], matchedId: 'affirm' };
       }
     }
 
@@ -320,6 +334,7 @@ export class ChatService {
         from: 'bot',
         text: entry.answers[lang],
         suggestions: entry.suggest ? this.topics[lang] : undefined,
+        matchedId: entry.id,
       };
     }
 

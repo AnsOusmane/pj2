@@ -33,6 +33,8 @@ export class ChatComponent {
   messages = signal<ChatMessage[]>([]);
   draft = signal('');
   private isBrowser: boolean;
+  /** Id anonyme de visite : regroupe les messages d'une session sans identifier la personne. */
+  private sessionId: string | null = null;
 
   /** Options du sélecteur de langue. */
   readonly langs: { value: ChatLangMode; label: string }[] = [
@@ -61,6 +63,9 @@ export class ChatComponent {
 
   setLang(mode: ChatLangMode): void {
     this.chat.langMode.set(mode);
+    // Retraduit automatiquement le message d'accueil dans la nouvelle langue.
+    const greeting = this.chat.refreshGreeting();
+    this.messages.update(list => list.map(m => (m.greeting ? greeting : m)));
   }
 
   onSubmit(event?: Event): void {
@@ -75,6 +80,16 @@ export class ChatComponent {
     this.draft.set('');
 
     const botReply = this.chat.reply(text);
+
+    // Journal d'utilisation (best-effort) : savoir ce qui marche / coince.
+    this.chatApi.log({
+      sessionId: this.getSessionId(),
+      langMode: this.chat.langMode(),
+      detectedLang: this.chat.languageFor(text),
+      message: text,
+      outcome: botReply.isFallback ? 'fallback' : 'faq',
+      matchedId: botReply.matchedId,
+    });
 
     // FAQ locale a répondu : on affiche et on gère la navigation éventuelle.
     if (!botReply.isFallback) {
@@ -141,6 +156,29 @@ export class ChatComponent {
   onSuggestion(text: string): void {
     this.draft.set(text);
     this.onSubmit();
+  }
+
+  /**
+   * Id de session anonyme, persistant le temps de l'onglet (sessionStorage).
+   * Sert uniquement à regrouper les messages d'une même visite dans le journal ;
+   * ne contient aucune donnée personnelle.
+   */
+  private getSessionId(): string {
+    if (this.sessionId) return this.sessionId;
+    if (!this.isBrowser) return 'ssr';
+    try {
+      const existing = sessionStorage.getItem('chat_sid');
+      if (existing) return (this.sessionId = existing);
+      const id =
+        typeof crypto !== 'undefined' && crypto.randomUUID
+          ? crypto.randomUUID()
+          : `sid-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      sessionStorage.setItem('chat_sid', id);
+      return (this.sessionId = id);
+    } catch {
+      // sessionStorage indisponible (mode privé strict) → id éphémère en mémoire.
+      return (this.sessionId = `mem-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+    }
   }
 
   private focusInput(): void {

@@ -32,6 +32,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
     title: 'Général',
     items: [
       { key: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', route: 'dashboard', comingSoon: true }, // 📊
+      { key: 'chat-analytics', label: 'Chatbot (stats)', icon: '\u{1F4AC}', route: 'chat-analytics', adminOnly: true }, // 💬
       { key: 'users', label: 'Utilisateurs', icon: '\u{1F464}', route: 'users', adminOnly: true }, // 👤
     ],
   },

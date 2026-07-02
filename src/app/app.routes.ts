@@ -65,6 +65,9 @@ export const routes: Routes = [
       { path: 'testimonials-form', loadComponent: () => import('./admin/testimonials-form/testimonials-form').then(m => m.TestimonialsFormComponent) },
       { path: 'actualites-form', loadComponent: () => import('./admin/actualites-form/actualites-form').then(m => m.ActualitesFormComponent) },
 
+      // Statistiques d'utilisation du chatbot (réservé aux admins)
+      { path: 'chat-analytics', loadComponent: () => import('./admin/chat-analytics/chat-analytics').then(m => m.ChatAnalyticsComponent), canActivate: [AdminGuard] },
+
       // Gestion Utilisateurs (réservée aux admins)
       { path: 'users', loadComponent: () => import('./admin/users-list/users-list').then(m => m.UsersListComponent), canActivate: [AdminGuard] },
       // Pas de guard ici : le composant affiche lui-même un message de blocage
