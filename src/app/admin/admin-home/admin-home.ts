@@ -15,7 +15,7 @@ import { firstAccessibleRoute } from '../admin-menu.config';
   template: `
     <div *ngIf="noAccess"
          class="max-w-2xl mx-auto bg-white rounded-2xl shadow p-10 text-center">
-      <p class="text-4xl mb-3">🔒</p>
+      <p class="text-4xl mb-3">⛔</p>
       <h2 class="text-xl font-semibold text-gray-800">Aucune section accessible</h2>
       <p class="text-gray-500 mt-2">
         Votre compte n'a accès à aucune section pour le moment.

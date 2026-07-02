@@ -14,6 +14,7 @@ import { ScrollTopComponent } from './core/scroll-top/scroll-top';
 import { SearchComponent } from './core/search/search';
 import { ChatComponent } from './core/chat/chat';
 import { ConsentBannerComponent } from './consent-banner/consent-banner';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +40,9 @@ export class App implements AfterViewInit {
 
   isLoading = signal(true);
   showNewYearWish = signal(false);
+
+  /** Widget chatbot : en pause en prod (voir environment.prod.ts). */
+  readonly chatbotEnabled = environment.chatbotEnabled;
 
   showAbout = signal(false);
   showDonation = signal(false);

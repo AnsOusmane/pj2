@@ -13,5 +13,7 @@ export const environment = {
   apiBaseUrl: `http://${host}:3000/api`,
   mediaBaseUrl: `http://${host}:3000/storage`,
   // Clé de TEST Cloudflare Turnstile (valide toujours) — ok en dev.
-  turnstileSiteKey: '1x00000000000000000000AA'
+  turnstileSiteKey: '1x00000000000000000000AA',
+  // Widget chatbot : activé en local, en pause en prod (voir environment.prod.ts).
+  chatbotEnabled: true
 };

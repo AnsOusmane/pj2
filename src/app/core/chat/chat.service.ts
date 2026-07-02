@@ -63,9 +63,9 @@ export class ChatService {
 
   /** Message de confirmation avant une navigation. */
   private readonly confirmNav: Record<ChatLang, string> = {
-    fr: "Je vous y conduis 👍",
-    wo: "Maa ngi la fa yóbbu 👍",
-    en: "Taking you there 👍",
+    fr: "Je vous y conduis ➡️",
+    wo: "Maa ngi la fa yóbbu ➡️",
+    en: "Taking you there ➡️",
   };
 
   open() { this.isOpen.set(true); }
@@ -74,15 +74,15 @@ export class ChatService {
 
   // ── Messages d'accueil / repli, par langue ─────────────────────────────
   private readonly greeting: Record<ChatLang, string> = {
-    fr: "Bonjour 👋 Je suis l'assistant de la SEN-CSU. Posez-moi une question sur la couverture santé, la césarienne, la dialyse, le Plan Sésame, les agences… en français, en wolof ou en anglais.",
-    wo: "Salaamaalekum 👋 Man may jokkukaayu SEN-CSU. Laaj ma ci sa wergu yaram, césarienne, dialyse, Plan Sésame, mbaa fan la agence yi nekk… ci wolof, français walla anglais ma tontu la.",
-    en: "Hello 👋 I'm the SEN-CSU assistant. Ask me about health coverage, C-section, dialysis, the Sésame Plan, our offices… in French, Wolof or English.",
+    fr: "Bonjour 🤝 Je suis l'assistant de la SEN-CSU. Posez-moi une question sur la couverture santé, la césarienne, la dialyse, le Plan Sésame, les agences… en français, en wolof ou en anglais.",
+    wo: "Salaamaalekum 🤝 Man may jokkukaayu SEN-CSU. Laaj ma ci sa wergu yaram, césarienne, dialyse, Plan Sésame, mbaa fan la agence yi nekk… ci wolof, français walla anglais ma tontu la.",
+    en: "Hello 🤝 I'm the SEN-CSU assistant. Ask me about health coverage, C-section, dialysis, the Sésame Plan, our offices… in French, Wolof or English.",
   };
 
   private readonly fallback: Record<ChatLang, string> = {
-    fr: "Je n'ai pas de réponse toute prête à cette question. Vous pouvez reformuler, ou nous contacter directement via la page Contact. Voici quelques sujets que je connais :",
-    wo: "Amuma tontu bu jaar ci laaj bii. Mën nga ko waxaat ci beneen anam, walla jokkoo ak nun ci xët Contact bi. Nii lañuy xam:",
-    en: "I don't have a ready answer for that. You can rephrase, or reach us via the Contact page. Here are some topics I know:",
+    fr: "Pour cette question, veuillez nous contacter pour plus d'informations :\n☎️ +221 33 859 15 15\n📧 contact@sencsu.sn\n🗺️ Dakar, Sénégal\nSouhaitez-vous que je vous conduise à la page Contact ? Vous pouvez aussi choisir un sujet ci-dessous :",
+    wo: "Ci laaj bii, jokkool ak nun ngir am xibaar bu gën a bare :\n☎️ +221 33 859 15 15\n📧 contact@sencsu.sn\n🗺️ Dakar, Senegaal\nBëgg nga ma yóbbu la ci xët Contact bi ? Mën nga it tànn benn mbir ci suuf :",
+    en: "For this question, please contact us for more information:\n☎️ +221 33 859 15 15\n📧 contact@sencsu.sn\n🗺️ Dakar, Senegal\nWould you like me to take you to the Contact page? You can also pick a topic below:",
   };
 
   private readonly topics: Record<ChatLang, string[]> = {
@@ -97,18 +97,18 @@ export class ChatService {
       id: 'greeting',
       keywords: ['bonjour', 'salut', 'coucou', 'hello', 'hi', 'salam', 'salaam', 'asalaa', 'naka nga def', 'nanga def', 'nagadef', 'jaam nga am', 'bonsoir'],
       answers: {
-        fr: "Bonjour et bienvenue 👋 Comment puis-je vous aider aujourd'hui ?",
-        wo: "Salaamaalekum, dalal ak jamm 👋 Naka laa la mën a dimbali tey ?",
-        en: "Hello and welcome 👋 How can I help you today?",
+        fr: "Bonjour et bienvenue 🤝 Comment puis-je vous aider aujourd'hui ?",
+        wo: "Salaamaalekum, dalal ak jamm 🤝 Naka laa la mën a dimbali tey ?",
+        en: "Hello and welcome 🤝 How can I help you today?",
       },
     },
     {
       id: 'languages',
       keywords: ['wolof', 'deg nga wolof', 'degg nga wolof', 'parle wolof', 'parles wolof', 'tu parles', 'vous parlez', 'quelle langue', 'langue', 'langues', 'do you speak', 'speak wolof', 'what language', 'francais', 'anglais', 'english'],
       answers: {
-        fr: "Oui, je comprends le wolof, le français et l'anglais 🙂 Posez-moi votre question dans la langue de votre choix, ou changez la langue avec les boutons en haut. Sur quoi puis-je vous renseigner ?",
-        wo: "Waaw, dégg naa wolof, français ak anglais 🙂 Laajal ma ci làkk wi la neex, walla soppil làkk wi ak butoŋ yi ci kaw. Ci lan laa la mën a xamal ?",
-        en: "Yes, I understand Wolof, French and English 🙂 Ask me in the language you prefer, or switch language with the buttons above. What can I help you with?",
+        fr: "Oui, je comprends le wolof, le français et l'anglais 🗣️ Posez-moi votre question dans la langue de votre choix, ou changez la langue avec les boutons en haut. Sur quoi puis-je vous renseigner ?",
+        wo: "Waaw, dégg naa wolof, français ak anglais 🗣️ Laajal ma ci làkk wi la neex, walla soppil làkk wi ak butoŋ yi ci kaw. Ci lan laa la mën a xamal ?",
+        en: "Yes, I understand Wolof, French and English 🗣️ Ask me in the language you prefer, or switch language with the buttons above. What can I help you with?",
       },
       suggest: true,
     },
@@ -126,18 +126,18 @@ export class ChatService {
       id: 'thanks',
       keywords: ['merci', 'thanks', 'thank you', 'jërëjëf', 'jerejef', 'jaraama', 'nice'],
       answers: {
-        fr: "Avec plaisir ! 🙏 Autre chose ?",
-        wo: "Amul solo ! 🙏 Am nga beneen ladj ?",
-        en: "You're welcome! 🙏 Anything else?",
+        fr: "Avec plaisir ! 💚 Autre chose ?",
+        wo: "Amul solo ! 💚 Am nga beneen ladj ?",
+        en: "You're welcome! 💚 Anything else?",
       },
     },
     {
       id: 'bye',
       keywords: ['au revoir', 'bye', 'goodbye', 'ba beneen', 'ba benen', 'mangi dem', 'a bientot'],
       answers: {
-        fr: "À bientôt et prenez soin de vous ! 👋",
-        wo: "Ba beneen yoon, té samal sa wergu yaram ! 👋",
-        en: "See you soon, take care! 👋",
+        fr: "À bientôt et prenez soin de vous ! 🍃",
+        wo: "Ba beneen yoon, té samal sa wergu yaram ! 🍃",
+        en: "See you soon, take care! 🍃",
       },
     },
     {
@@ -338,7 +338,8 @@ export class ChatService {
       };
     }
 
-    this.pendingAction = null;
+    // Pas de réponse : on propose la page Contact (un « oui » ensuite y conduit).
+    this.pendingAction = { route: '/contact' };
     this.pendingFollowUp = null;
     return { from: 'bot', text: this.fallback[lang], suggestions: this.topics[lang], isFallback: true };
   }

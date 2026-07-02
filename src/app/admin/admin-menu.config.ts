@@ -31,43 +31,43 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
   {
     title: 'Général',
     items: [
-      { key: 'dashboard', label: 'Dashboard', icon: '\u{1F4CA}', route: 'dashboard', comingSoon: true }, // 📊
-      { key: 'chat-analytics', label: 'Chatbot (stats)', icon: '\u{1F4AC}', route: 'chat-analytics', adminOnly: true }, // 💬
-      { key: 'users', label: 'Utilisateurs', icon: '\u{1F464}', route: 'users', adminOnly: true }, // 👤
+      { key: 'dashboard', label: 'Dashboard', icon: '\u{1F4C8}', route: 'dashboard', comingSoon: true }, // 📈
+      { key: 'chat-analytics', label: 'Chatbot (stats)', icon: '\u{1F5E8}\u{FE0F}', route: 'chat-analytics', adminOnly: true }, // 🗨️
+      { key: 'users', label: 'Utilisateurs', icon: '\u{1F465}', route: 'users', adminOnly: true }, // 👥
     ],
   },
   {
     title: 'Contenu',
     items: [
-      { key: 'newsletters', label: 'News / Newsletters', icon: '\u{1F4F0}', route: 'newsletters-form' }, // 📰
-      { key: 'rapports', label: 'Rapports officiels', icon: '\u{1F4D1}', route: 'official-reports-form' }, // 📑
-      { key: 'decrets', label: 'Décrets', icon: '\u{2696}\u{FE0F}', route: 'decrets-form' }, // ⚖️
-      { key: 'communiques', label: 'Communiqués', icon: '\u{1F4E2}', route: 'communiques-form' }, // 📢
-      { key: 'guides', label: 'Guides', icon: '\u{1F4D8}', route: 'guides-form' }, // 📘
+      { key: 'newsletters', label: 'News / Newsletters', icon: '\u{1F5DE}\u{FE0F}', route: 'newsletters-form' }, // 🗞️
+      { key: 'rapports', label: 'Rapports officiels', icon: '\u{1F4D7}', route: 'official-reports-form' }, // 📗
+      { key: 'decrets', label: 'Décrets', icon: '\u{1F4DC}', route: 'decrets-form' }, // 📜
+      { key: 'communiques', label: 'Communiqués', icon: '\u{1F4E3}', route: 'communiques-form' }, // 📣
+      { key: 'guides', label: 'Guides', icon: '\u{1F4D9}', route: 'guides-form' }, // 📙
     ],
   },
   {
     title: 'Médias',
     items: [
-      { key: 'media', label: 'Dossiers médias', icon: '\u{1F39E}\u{FE0F}', route: 'media', comingSoon: true }, // 🎞️
-      { key: 'banque-images', label: "Banque d'images", icon: '\u{1F5BC}\u{FE0F}', route: 'images-bank-form' }, // 🖼️
+      { key: 'media', label: 'Dossiers médias', icon: '\u{1F3AC}', route: 'media', comingSoon: true }, // 🎬
+      { key: 'banque-images', label: "Banque d'images", icon: '\u{1F4F8}', route: 'images-bank-form' }, // 📸
     ],
   },
   {
     title: 'Carrière',
     items: [
-      { key: 'offres-emploi', label: "Publier une offre", icon: '\u{1F4BC}', route: 'offres-emploi-form' }, // 💼
-      { key: 'offres-emploi-gestion', label: "Gérer les offres", icon: '\u{1F5C2}\u{FE0F}', route: 'offres-emploi-gestion' }, // 🗂️
-      { key: 'candidatures', label: 'Candidatures', icon: '\u{1F4C4}', route: 'candidatures' }, // 📄
+      { key: 'offres-emploi', label: "Publier une offre", icon: '\u{1F4E4}', route: 'offres-emploi-form' }, // 📤
+      { key: 'offres-emploi-gestion', label: "Gérer les offres", icon: '\u{1F5C4}\u{FE0F}', route: 'offres-emploi-gestion' }, // 🗄️
+      { key: 'candidatures', label: 'Candidatures', icon: '\u{1F4E5}', route: 'candidatures' }, // 📥
     ],
   },
   {
     title: 'Marchés Publics',
     items: [
-      { key: 'ppm', label: 'Plan de Passation (PPM)', icon: '\u{1F4CB}', route: 'ppm-gestion' }, // 📋
-      { key: 'appels-offre', label: "Appels d'offres", icon: '\u{1F4E8}', route: 'appels-offre-gestion' }, // 📨
-      { key: 'avis-attribution', label: "Avis d'attribution", icon: '\u{1F3C6}', route: 'avis-attribution-gestion' }, // 🏆
-      { key: 'fournisseurs', label: "Demande d'agrément", icon: '\u{1F91D}', route: 'fournisseurs-gestion' }, // 🤝
+      { key: 'ppm', label: 'Plan de Passation (PPM)', icon: '\u{1F5D2}\u{FE0F}', route: 'ppm-gestion' }, // 🗒️
+      { key: 'appels-offre', label: "Appels d'offres", icon: '\u{1F4EC}', route: 'appels-offre-gestion' }, // 📬
+      { key: 'avis-attribution', label: "Avis d'attribution", icon: '\u{1F3C5}', route: 'avis-attribution-gestion' }, // 🏅
+      { key: 'fournisseurs', label: "Demande d'agrément", icon: '\u{1FAAA}', route: 'fournisseurs-gestion' }, // 🪪
     ],
   },
 ];

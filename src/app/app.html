@@ -136,8 +136,8 @@
 <!-- Palette de recherche globale (ouverte via la loupe de la navbar ou Ctrl+K) -->
 <app-search></app-search>
 
-<!-- Assistant de discussion (chatbot local trilingue FR / Wolof / EN) -->
-<app-chat></app-chat>
+<!-- Assistant de discussion (chatbot local trilingue FR / Wolof / EN) — en pause en prod -->
+<app-chat *ngIf="chatbotEnabled"></app-chat>
 
 <!-- Bouton flottant « Revenir en haut » (visible seulement après défilement) -->
 <app-scroll-top></app-scroll-top>

@@ -5,5 +5,7 @@ export const environment = {
   mediaBaseUrl: 'https://sencsu-backend.onrender.com',
   // À REMPLACER par la vraie clé de site Cloudflare Turnstile (dashboard Turnstile).
   // Pour l'instant : clé de TEST (le widget passe toujours → aucune protection réelle).
-  turnstileSiteKey: '1x00000000000000000000AA'
+  turnstileSiteKey: '1x00000000000000000000AA',
+  // Chatbot EN PAUSE en prod pour l'instant. Repasser à true pour le réactiver.
+  chatbotEnabled: false
 };
