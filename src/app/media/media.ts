@@ -85,7 +85,7 @@ export class MediaComponent implements OnInit {
   // =====================================================
 
   media(path: string | null | undefined): string {
-    if (!path) return 'assets/studio.png';
+    if (!path) return 'assets/studio.webp';
 
     if (path.startsWith('http')) return path;
 
@@ -95,7 +95,7 @@ export class MediaComponent implements OnInit {
   }
 
   onImageError(event: Event): void {
-    (event.target as HTMLImageElement).src = 'assets/studio.png';
+    (event.target as HTMLImageElement).src = 'assets/studio.webp';
   }
 
   // =====================================================
@@ -135,7 +135,7 @@ export class MediaComponent implements OnInit {
 
             cover: cover
               ? this.media(cover)
-              : 'assets/studio.png',
+              : 'assets/studio.webp',
 
             file_url: file
               ? this.media(file)
@@ -176,7 +176,7 @@ export class MediaComponent implements OnInit {
 
           thumbnail_url: v.thumbnail
             ? this.media(v.thumbnail)
-            : 'assets/studio.png',
+            : 'assets/studio.webp',
 
           video_url: v.video
             ? this.media(v.video)
@@ -285,7 +285,7 @@ export class MediaComponent implements OnInit {
 
             image_url: image
               ? this.media(image)
-              : 'assets/studio.png'
+              : 'assets/studio.webp'
           };
         });
 

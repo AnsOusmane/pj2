@@ -32,6 +32,15 @@ const authMiddleware = async (req, res, next) => {
     });
   }
 
+  // Sécurité : un refresh token (cookie /api/auth) ne doit jamais servir de
+  // jeton d'accès sur les routes protégées. Seul l'access token est accepté ici.
+  if (decoded.type === 'refresh') {
+    return res.status(401).json({
+      success: false,
+      message: 'Jeton invalide. Veuillez vous reconnecter.'
+    });
+  }
+
   try {
     // Le token est valide jusqu'à 8h : on revérifie l'état du compte en base à
     // CHAQUE requête. Sans ça, désactiver un compte ou rétrograder un admin

@@ -15,5 +15,8 @@ export const environment = {
   // Clé de TEST Cloudflare Turnstile (valide toujours) — ok en dev.
   turnstileSiteKey: '1x00000000000000000000AA',
   // Widget chatbot : activé en local, en pause en prod (voir environment.prod.ts).
-  chatbotEnabled: true
+  chatbotEnabled: true,
+  // Section « Appels d'offres » : accessible en local, masquée en prod
+  // (affiche une modale « bientôt disponible » au lieu de la vraie page).
+  appelsOffreEnabled: true
 };

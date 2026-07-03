@@ -53,7 +53,7 @@
               (click)="afficherDetails(offre)"
             >
               <!-- Image de couverture (optionnelle) -->
-              <img *ngIf="offre.cover_url" [src]="offre.cover_url" [alt]="offre.title"
+              <img loading="lazy" *ngIf="offre.cover_url" [src]="offre.cover_url" [alt]="offre.title"
                    class="w-full h-40 object-cover" />
               <div class="p-5 sm:p-6 md:p-7">
                 <h3 class="text-lg sm:text-xl font-semibold text-green-700 mb-2">

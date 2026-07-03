@@ -31,7 +31,7 @@
 
 
   <!-- 
-    <img
+    <img loading="lazy"
   [src]="currentMembre.photo"
   class="w-full h-80 object-cover object-top transition-transform duration-300"
   alt="{{ currentMembre.nom }}"
@@ -52,7 +52,7 @@
     <div *ngFor="let membre of membres; let i = index"
          (mouseenter)="currentIndex = i"
          class="w-20 h-20 rounded-full overflow-hidden cursor-pointer border-2 border-green-300 hover:border-green-600 transition">
-      <img [src]="membre.photo" class="w-full h-full object-cover" alt="{{membre.nom}}">
+      <img loading="lazy" [src]="membre.photo" class="w-full h-full object-cover" alt="{{membre.nom}}">
      </div> 
      -->
   </div> 

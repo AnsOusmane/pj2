@@ -44,6 +44,7 @@
   (openDonation)="openDonation()"
   (openOrganigramme)="openOrganigramme()"
   (openMissionsvision)="openMissionsvision()"
+  (openAppelsOffreInfo)="openAppelsOffreInfo()"
   (goHome)="goHome()"
 ></app-header>
 
@@ -123,6 +124,40 @@
     <app-missionsvision></app-missionsvision>
   </div>
 </div>
+<!-- Modale Appels d'offres (section en pause en prod : « bientôt disponible ») -->
+<div
+  *ngIf="showAppelsOffreInfo()"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+  (click)="closeAppelsOffreInfo()"
+>
+  <div
+    class="relative w-full max-w-md p-8 bg-white rounded-2xl shadow-2xl text-center"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      (click)="closeAppelsOffreInfo()"
+      class="absolute top-3 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold leading-none"
+      aria-label="Fermer"
+    >
+      &times;
+    </button>
+    <div class="w-16 h-16 mx-auto bg-green-100 rounded-2xl flex items-center justify-center mb-4 text-3xl">
+      🗂️
+    </div>
+    <h2 class="text-2xl font-bold text-green-700 mb-2">Appels d'offres</h2>
+    <p class="text-gray-600 leading-relaxed">
+      Cette section est en cours de préparation et sera bientôt disponible.
+      Merci de votre patience.
+    </p>
+    <button
+      (click)="closeAppelsOffreInfo()"
+      class="mt-6 inline-block px-6 py-2.5 rounded-full bg-green-600 text-white font-semibold hover:bg-green-700 transition"
+    >
+      J'ai compris
+    </button>
+  </div>
+</div>
+
 <!-- Composant accueil -->
 <!-- <app-accueilsunu *ngIf="router.url === '' || router.url === '/'"></app-accueilsunu> -->
  <app-footer

@@ -48,6 +48,8 @@ export class App implements AfterViewInit {
   showDonation = signal(false);
   showOrganigramme = signal(false);
   showMissionsvision = signal(false);
+  /** Modale « Appels d'offres bientôt disponible » (affichée en prod, cf. environment). */
+  showAppelsOffreInfo = signal(false);
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -86,6 +88,8 @@ export class App implements AfterViewInit {
   closeOrganigramme() { this.showOrganigramme.set(false); }
   openMissionsvision() { this.showMissionsvision.set(true); }
   closeMissionsvision() { this.showMissionsvision.set(false); }
+  openAppelsOffreInfo() { this.showAppelsOffreInfo.set(true); }
+  closeAppelsOffreInfo() { this.showAppelsOffreInfo.set(false); }
   goHome() { this.router.navigate(['/']); }
 }
 

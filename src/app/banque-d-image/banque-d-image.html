@@ -16,7 +16,7 @@
          (click)="openLightbox(img.src)">
       
       <div class="img-wrapper">
-        <img [src]="img.src" [alt]="img.title" />
+        <img loading="lazy" [src]="img.src" [alt]="img.title" />
 
         <div class="overlay">
           <p>{{ img.title }}</p>
@@ -27,7 +27,7 @@
 
   <!-- LIGHTBOX -->
   <div class="lightbox" *ngIf="lightboxImage" (click)="closeLightbox()">
-    <img [src]="lightboxImage" class="lightbox-img" />
+    <img loading="lazy" [src]="lightboxImage" class="lightbox-img" />
   </div>
 
 </div>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sen-CSU — Présentation Sécurité</title>
+<style>
+  :root{
+    --green-900:#0f3d2e; --green-700:#166534; --green-600:#16a34a;
+    --green-100:#dcfce7; --green-50:#f0fdf4; --amber:#d97706;
+    --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:#0b241b; color:var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .deck{width:100vw;height:100vh;position:relative}
+  .slide{
+    position:absolute; inset:0;
+    display:none; flex-direction:column;
+    padding:4.5vh 6vw; background:#fff;
+    animation:fade .35s ease;
+  }
+  .slide.active{display:flex}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+  /* Cover */
+  .cover{
+    background:linear-gradient(140deg,var(--green-900),var(--green-700));
+    color:#fff; align-items:flex-start; justify-content:center;
+  }
+  .cover .shield{
+    font-size:96px;line-height:1;margin-bottom:22px;
+    width:150px;height:150px;border:4px solid #4ade80;border-radius:26px;
+    display:flex;align-items:center;justify-content:center;color:#bbf7d0;
+  }
+  .cover h1{font-size:clamp(34px,5vw,64px);font-weight:800;line-height:1.05;max-width:16ch}
+  .cover .sub{margin-top:20px;font-size:clamp(16px,2vw,24px);color:#bbf7d0;font-weight:500}
+  .cover .org{margin-top:auto;font-size:14px;color:#86efac;letter-spacing:.08em;text-transform:uppercase}
+
+  /* Content slides */
+  .kicker{
+    display:inline-flex;align-items:center;gap:10px;
+    color:var(--green-700);font-weight:700;font-size:15px;
+    letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px
+  }
+  .kicker .dot{width:9px;height:9px;border-radius:50%;background:var(--green-600)}
+  h2{font-size:clamp(26px,3.4vw,44px);font-weight:800;color:var(--green-900);line-height:1.1;margin-bottom:6px}
+  .lede{color:var(--muted);font-size:clamp(15px,1.7vw,20px);margin-bottom:26px;max-width:60ch}
+
+  .grid{display:grid;gap:18px;grid-template-columns:1fr 1fr;flex:1;align-content:start}
+  .card{
+    border:1px solid var(--line);border-left:5px solid var(--green-600);
+    border-radius:14px;padding:20px 22px;background:var(--green-50);
+    display:flex;flex-direction:column;gap:6px
+  }
+  .card .h{display:flex;align-items:center;gap:14px}
+  .card .ic{
+    font-size:22px;color:var(--green-700);
+    width:44px;height:44px;flex-shrink:0;
+    border:2px solid var(--green-600);border-radius:12px;
+    display:flex;align-items:center;justify-content:center;background:#fff
+  }
+  .card .t{font-size:clamp(16px,1.8vw,21px);font-weight:700;color:var(--green-900)}
+  .card .d{font-size:clamp(13px,1.45vw,16px);color:#374151;line-height:1.5}
+  .card .tag{
+    margin-top:2px;align-self:flex-start;font-size:11px;font-weight:700;
+    background:var(--green-100);color:var(--green-700);
+    padding:3px 9px;border-radius:999px;letter-spacing:.04em
+  }
+  .card.wide{grid-column:1/-1;background:#fff;border-left-color:var(--amber)}
+  .card.wide .t{color:#92400e}
+  .card.wide{border-color:#fde68a}
+
+  ul.big{list-style:none;display:flex;flex-direction:column;gap:16px;flex:1;justify-content:center}
+  ul.big li{display:flex;align-items:center;gap:18px;font-size:clamp(16px,2vw,23px);line-height:1.4}
+  ul.big li .b{
+    font-size:22px;color:var(--green-700);flex-shrink:0;
+    width:46px;height:46px;border:2px solid var(--green-600);border-radius:12px;
+    display:flex;align-items:center;justify-content:center;background:var(--green-50)
+  }
+  ul.big li b{color:var(--green-900)}
+
+  .quote{
+    flex:1;display:flex;flex-direction:column;justify-content:center;gap:24px;
+  }
+  .quote blockquote{
+    font-size:clamp(22px,3vw,40px);font-weight:700;color:var(--green-900);
+    line-height:1.3;max-width:24ch;position:relative;padding-left:34px
+  }
+  .quote blockquote:before{content:"“";position:absolute;left:-6px;top:-18px;font-size:90px;color:var(--green-600);opacity:.35}
+
+  /* footer / nav */
+  .foot{
+    position:absolute;left:6vw;right:6vw;bottom:2.4vh;
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px
+  }
+  .cover .foot{border-color:rgba(255,255,255,.2);color:#86efac}
+  .progress{display:flex;gap:6px}
+  .progress i{width:22px;height:4px;border-radius:2px;background:var(--line)}
+  .progress i.on{background:var(--green-600)}
+  .cover .progress i{background:rgba(255,255,255,.25)}
+  .cover .progress i.on{background:#4ade80}
+  .hint{position:fixed;bottom:10px;right:14px;font-size:11px;color:rgba(255,255,255,.4);z-index:99}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1. COVER -->
+  <section class="slide cover active">
+    <div class="shield">◈</div>
+    <h1>La sécurité du site Sen-CSU</h1>
+    <div class="sub">Comment les données de l'agence et des usagers sont protégées</div>
+    <div class="foot">
+      <span class="org">Sen-CSU · Présentation technique</span>
+      <div class="progress" id="p1"></div>
+    </div>
+  </section>
+
+  <!-- 2. PANORAMA -->
+  <section class="slide">
+    <span class="kicker"><span class="dot"></span>Vue d'ensemble</span>
+    <h2>10 protections, sur 3 niveaux</h2>
+    <p class="lede">La sécurité n'est pas un ajout : elle est intégrée à chaque couche du site, du navigateur jusqu'à la base de données.</p>
+    <ul class="big">
+      <li><span class="b">◆</span><div><b>L'accès</b> — connexion, mots de passe et sessions des administrateurs</div></li>
+      <li><span class="b">■</span><div><b>Le serveur</b> — barrières contre les attaques web courantes et les robots</div></li>
+      <li><span class="b">▲</span><div><b>Les données</b> — base chiffrée, fichiers hébergés de façon fiable</div></li>
+    </ul>
+  </section>
+
+  <!-- 3. ACCÈS -->
+  <section class="slide">
+    <span class="kicker"><span class="dot"></span>Niveau 1 — L'accès</span>
+    <h2>Connexion & sessions</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="h"><span class="ic">◉</span><span class="t">Mots de passe chiffrés</span></div>
+        <div class="d">Jamais stockés en clair. Chiffrés avec <b>Argon2id </b> : illisibles même en cas de fuite de la base.</div>
+        <span class="tag">Anti-fuite</span>
+      </div>
+      <div class="card">
+        <div class="h"><span class="ic">▣</span><span class="t">Session sécurisée (8h)</span></div>
+        <div class="d">Jeton signé (JWT), expire automatiquement. Cookie <b>httpOnly</b> + <b>sameSite strict</b> : ni volable par un script, ni utilisable depuis un autre site.</div>
+        <span class="tag">Anti-vol de session · Anti-CSRF</span>
+      </div>
+      <div class="card">
+        <div class="h"><span class="ic">⊘</span><span class="t">Anti-force brute</span></div>
+        <div class="d">Maximum <b>12 tentatives de connexion par heure</b> et par adresse. Bloque le devinage automatique de mots de passe.</div>
+        <span class="tag">Anti-intrusion</span>
+      </div>
+      <div class="card">
+        <div class="h"><span class="ic">◐</span><span class="t">Message d'erreur neutre</span></div>
+        <div class="d">« Identifiants incorrects » quelle que soit l'erreur : impossible de deviner quels comptes existent.</div>
+        <span class="tag">Discrétion</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. LE POINT FORT -->
+  <section class="slide">
+    <span class="kicker"><span class="dot"></span>Le détail qui fait la différence</span>
+    <h2>Droits vérifiés en temps réel</h2>
+    <p class="lede">Beaucoup de sites font confiance au jeton de session pendant toute sa durée de vie. Chose à éviter.</p>
+    <ul class="big">
+      <li><span class="b">↻</span><div>À <b>chaque action</b>, le serveur revérifie le compte dans la base : est-il toujours actif ? quel est son rôle exact ?</div></li>
+      <li><span class="b">➤</span><div>Si on <b>désactive ou rétrograde</b> un administrateur, l'effet est <b>immédiat</b> — pas « dans quelques heures ».</div></li>
+      <li><span class="b">⧉</span><div><b>3 niveaux de droits</b> : administrateur, agent. Chacun ne voit que ce qui le concerne.</div></li>
+    </ul>
+  </section>
+
+  <!-- 5. SERVEUR -->
+  <section class="slide">
+    <span class="kicker"><span class="dot"></span>Niveau 2 — Le serveur</span>
+    <h2>Barrières contre les attaques web</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="h"><span class="ic">◈</span><span class="t">En-têtes de sécurité (Helmet)</span></div>
+        <div class="d">Politique stricte sur ce que le navigateur a le droit de charger → barrière contre l'<b>injection de scripts</b>.</div>
+        <span class="tag">Anti-XSS</span>
+      </div>
+      <div class="card">
+        <div class="h"><span class="ic">▨</span><span class="t">Anti-clickjacking</span></div>
+        <div class="d">Le site <b>ne peut pas être encapsulé</b> dans un autre site piégé pour tromper l'utilisateur.</div>
+        <span class="tag">Frame refusée</span>
+      </div>
+      <div class="card">
+        <div class="h"><span class="ic">⊞</span><span class="t">HTTPS forcé (HSTS)</span></div>
+        <div class="d">Toutes les communications sont <b>chiffrées</b> et le HTTPS est imposé pendant 1 an.</div>
+        <span class="tag">Chiffrement</span>
+      </div>
+      <div class="card">
+        <div class="h"><span class="ic">⊕</span><span class="t">Origines contrôlées (CORS)</span></div>
+        <div class="d">L'API ne répond qu'aux domaines <b>officiels sencsu.sn</b>. Toute autre provenance est rejetée.</div>
+        <span class="tag">Liste blanche</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FORMULAIRES PUBLICS -->
+  <section class="slide">
+    <span class="kicker"><span class="dot"></span>Niveau 2 — Le public</span>
+    <h2>Protéger les formulaires ouverts à tous</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="h"><span class="ic">▢</span><span class="t">Anti-robot (Cloudflare)</span></div>
+        <div class="d">Candidatures, contact, réclamations… exigent une <b>vérification anti-robot</b> validée côté serveur avant tout traitement. Anti-spam efficace.</div>
+        <span class="tag">Turnstile</span>
+      </div>
+      <div class="card">
+        <div class="h"><span class="ic">▮</span><span class="t">Débit limité</span></div>
+        <div class="d"><b>150 requêtes / 15 min</b> par visiteur maximum : protège contre la saturation du site.</div>
+        <span class="tag">Anti-abus</span>
+      </div>
+      <div class="card">
+        <div class="h"><span class="ic">▭</span><span class="t">Taille des envois plafonnée</span></div>
+        <div class="d">Les données reçues sont limitées (10 Ko) → pas d'envoi massif capable de faire tomber le serveur.</div>
+        <span class="tag">Anti-DoS</span>
+      </div>
+      <div class="card">
+        <div class="h"><span class="ic">✓</span><span class="t">Données validées</span></div>
+        <div class="d">Chaque champ est <b>contrôlé et nettoyé</b> (format, longueur) avant d'être accepté.</div>
+        <span class="tag">Validation Zod</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. DONNÉES -->
+  <section class="slide">
+    <span class="kicker"><span class="dot"></span>Niveau 3 — Les données</span>
+    <h2>Base & fichiers</h2>
+    <ul class="big">
+      <li><span class="b">◉</span><div><b>Base PostgreSQL en connexion chiffrée (SSL)</b> — les échanges avec la base sont protégés de bout en bout.</div></li>
+      <li><span class="b">⊘</span><div><b>Aucune injection SQL possible</b> — toutes les requêtes sont « paramétrées », jamais construites en collant du texte utilisateur.</div></li>
+      <li><span class="b">◇</span><div><b>Fichiers hébergés sur Cloudinary</b> — stockage professionnel, fiable et sauvegardé, pas sur un disque local fragile.</div></li>
+    </ul>
+  </section>
+
+  <!-- 8. CONCLUSION -->
+  <section class="slide">
+    <span class="kicker"><span class="dot"></span>En résumé</span>
+    <div class="quote">
+      <blockquote>Le site applique les mêmes standards qu'une application bancaire moderne.</blockquote>
+      <ul class="big" style="flex:0">
+        <li><span class="b">◉</span><div>Mots de passe chiffrés & sessions protégées contre le vol</div></li>
+        <li><span class="b">⊘</span><div>Blocage automatique des tentatives d'intrusion et des robots</div></li>
+        <li><span class="b">➤</span><div>Gestion des droits vérifiée en temps réel</div></li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<div class="hint">← → ou Espace pour naviguer · F plein écran</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  function render(){
+    slides.forEach((s,n)=>s.classList.toggle('active',n===i));
+    const p=document.getElementById('p1');
+    if(p){p.innerHTML=slides.map((_,n)=>`<i class="${n===i?'on':''}"></i>`).join('')}
+  }
+  function go(d){i=Math.min(slides.length-1,Math.max(0,i+d));render()}
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1)}
+    if(e.key==='Home'){i=0;render()}
+    if(e.key==='End'){i=slides.length-1;render()}
+    if(e.key.toLowerCase()==='f'){
+      if(!document.fullscreenElement)document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+  document.addEventListener('click',e=>{ if(!e.target.closest('a'))go(1) });
+  render();
+</script>
+</body>
+</html>

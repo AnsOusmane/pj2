@@ -195,7 +195,7 @@
               </button>
             </li>
             <li>
-              <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToAppelsOffre()">
+              <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToAppelsOffreSection()">
                 Appels d'offres
               </button>
             </li>
@@ -360,7 +360,6 @@
                rounded-tl-[1px] rounded-bl-[30px] rounded-tr-[30px] rounded-br-[1px]
                bg-white hover:bg-gray-50 border border-gray-200 text-gray-500 transition">
         <span class="flex-1 text-center text-sm text-gray-500 truncate">Rechercher…</span>
-        <kbd class="hidden xl:inline text-[10px] text-gray-400 border border-gray-300 rounded px-1 py-px">Ctrl K</kbd>
       </button>
     </div>
   </nav>
@@ -466,7 +465,7 @@
         <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="onAboutClick(); closeMobileMenu()">A propos</button>
         <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="openMissionsvision.emit(); closeMobileMenu()">Vision & Missions</button>
         <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="showOrganigrammeClick(); closeMobileMenu()">Organigramme</button>
-        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="goToAppelsOffre(); closeMobileMenu()">Appels d'offres</button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="goToAppelsOffreSection()">Appels d'offres</button>
 
         <!-- Sous-menu Publications -->
         <button class="w-full text-left px-2 py-2 rounded-lg flex justify-between items-center hover:bg-green-600/10 transition"

@@ -29,7 +29,7 @@
         [class.scale-110]="swiperActiveIndex === i"
         style="will-change: transform;"
       >
-        <img
+        <img loading="lazy"
           *ngIf="n.image"
           [src]="'http://localhost:3000' + n.image"
           alt="{{ n.title }}"

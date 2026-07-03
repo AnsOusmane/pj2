@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
   <section class="min-h-screen w-full bg-gradient-to-b from-green-50 to-white flex flex-col items-center py-0 px-6">
     <!-- Photo de couverture + Titre -->
     <div class="w-full relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden rounded-b-3xl">
-      <img src="assets/illustrations/mission1.png" alt="Cover Image" class="absolute inset-0 w-full h-full object-cover brightness-75">
+      <img src="assets/illustrations/mission1.webp" alt="Cover Image" class="absolute inset-0 w-full h-full object-cover brightness-75">
       <div class="relative text-center text-white animate-fade-in">
         <h1 class="text-5xl md:text-7xl font-extrabold drop-shadow-xl">SEN-CSU</h1>
         <p class="text-2xl md:text-3xl mt-4 font-semibold">Vision & Missions</p>
@@ -39,7 +39,7 @@ import { RouterModule } from '@angular/router';
     <!-- Mission 1 -->
     <div class="bg-white p-6 rounded-2xl shadow-lg border border-green-100 flex flex-col md:flex-row items-start gap-5 animate-slide-up delay-100 hover:shadow-2xl transition-all duration-300">
       <img
-        src="assets/illustrations/mission5.png"
+        src="assets/illustrations/mission5.webp"
         alt="Renforcer l'offre de soins"
         class="h-48 md:h-56 w-full md:w-1/3 object-cover rounded-xl flex-shrink-0"
       >
@@ -54,7 +54,7 @@ import { RouterModule } from '@angular/router';
     <!-- Mission 2 -->
     <div class="bg-white p-6 rounded-2xl shadow-lg border border-green-100 flex flex-col md:flex-row items-start gap-5 animate-slide-up delay-200 hover:shadow-2xl transition-all duration-300">
       <img
-        src="assets/illustrations/mission2.png"
+        src="assets/illustrations/mission2.webp"
         alt="Rendre la demande de soins solvable"
         class="h-48 md:h-56 w-full md:w-1/3 object-cover rounded-xl flex-shrink-0"
       >
@@ -84,7 +84,7 @@ import { RouterModule } from '@angular/router';
     <!-- Mission 4 -->
     <div class="bg-white p-6 rounded-2xl shadow-lg border border-green-100 flex flex-col md:flex-row items-start gap-5 animate-slide-up delay-400 hover:shadow-2xl transition-all duration-300">
       <img
-        src="assets/illustrations/mission4.png"
+        src="assets/illustrations/mission4.webp"
         alt="Assurer l'équité d'accès"
         class="h-48 md:h-56 w-full md:w-1/3 object-cover rounded-xl flex-shrink-0"
       >
@@ -99,7 +99,7 @@ import { RouterModule } from '@angular/router';
     <!-- Mission 5 – Pleine largeur -->
     <div class="md:col-span-2 bg-white p-6 rounded-2xl shadow-lg border border-green-100 flex flex-col sm:flex-row items-start gap-5 animate-slide-up delay-500 hover:shadow-2xl transition-all duration-300">
       <img
-        src="assets/illustrations/mission5.png"
+        src="assets/illustrations/mission5.webp"
         alt="Développer l’assistance médicale gratuite"
         class="h-32 w-32 sm:h-40 sm:w-40 flex-shrink-0 object-cover rounded-xl"
       >
@@ -114,7 +114,7 @@ import { RouterModule } from '@angular/router';
     <!-- Mission 6 – Pleine largeur -->
     <div class="md:col-span-2 bg-white p-6 rounded-2xl shadow-lg border border-green-100 flex flex-col sm:flex-row items-start gap-5 animate-slide-up delay-600 hover:shadow-2xl transition-all duration-300">
       <img
-        src="assets/illustrations/mission6.png"
+        src="assets/illustrations/mission6.webp"
         alt="Promouvoir un financement durable"
         class="h-32 w-32 sm:h-40 sm:w-40 flex-shrink-0 object-cover rounded-xl"
       >

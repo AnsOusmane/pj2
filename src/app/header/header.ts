@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
 import { SearchService } from '../core/search/search.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +23,8 @@ export class HeaderComponent implements AfterViewInit {
   @Output() openOrganigramme = new EventEmitter<void>();
   @Output() openMissionsvision = new EventEmitter<void>();
   @Output() goHome = new EventEmitter<void>();
+  /** Prod : la section Appels d'offres est en pause → on ouvre une modale d'info. */
+  @Output() openAppelsOffreInfo = new EventEmitter<void>();
 
   bannerImages: string[] = [
     'assets/pub/1.png',
@@ -40,8 +43,8 @@ export class HeaderComponent implements AfterViewInit {
     'assets/mincarou/1.png',
     'assets/mincarou/2.png',
     'assets/mincarou/3.png',
-    'assets/mincarou/4.png',
-    'assets/mincarou/5.png',
+    'assets/mincarou/4.webp',
+    'assets/mincarou/5.webp',
   ];
 
   partnerIndex: number = 0;
@@ -202,6 +205,19 @@ export class HeaderComponent implements AfterViewInit {
   goToAssuranceMaladie() { this.router.navigate(['/assurance-maladie']); }
   // Section « Appels d'offres » temporairement en cours d'édition → redirige vers la page maintenance
   goToAppelsOffre() { this.router.navigate(['/maintenance']); }
+
+  /**
+   * Entrée « Appels d'offres » : accessible en local (vraie page publique),
+   * en pause en prod (ouvre une modale « bientôt disponible » — cf. environment).
+   */
+  goToAppelsOffreSection() {
+    this.closeMobileMenu();
+    if (environment.appelsOffreEnabled) {
+      this.router.navigate(['/appels-offre']);
+    } else {
+      this.openAppelsOffreInfo.emit();
+    }
+  }
   goToCarriere() { this.router.navigate(['/carriere']); }
   goToAdmin() { this.router.navigate(['/admin']); }
   goToActualites() { this.router.navigate(['pages/actualites']); }
