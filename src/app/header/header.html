@@ -160,7 +160,7 @@
          pl-3 lg:pl-4 xl:pl-5 pr-2 pt-1.5 pb-1.5 mt-2
          rounded-xl">
     <!-- Navigation principale desktop -->
-    <div class="flex items-center gap-x-2.5 lg:gap-x-3 xl:gap-x-4 2xl:gap-x-5 text-[13px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] font-sharetech flex-wrap">
+    <div class="flex items-center gap-x-2.5 lg:gap-x-3 xl:gap-x-4 2xl:gap-x-5 text-[13px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] font-sharetech flex-nowrap">
       <!-- Bouton Nous soutenir -->
       <button (click)="goToMaintenance()"
         class="border-2 border-yellow-500 text-yellow-500 font-semibold px-2.5 py-1.5 rounded-full bg-white hover:bg-yellow-400 hover:text-green-700 transition whitespace-nowrap text-[13px] xl:text-[15px] 2xl:text-[18px]"
@@ -170,7 +170,7 @@
 
       <!-- Dropdown La SEN-CSU -->
       <div class="relative group">
-        <button class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50"
+        <button class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50 whitespace-nowrap"
         (click)="GoHomeClick()">
           La Sen-CSU▾
         </button>
@@ -244,7 +244,7 @@
 <!-- Dropdown Assurance Maladie -->
 <div class="relative group">
   <button
-    class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50"
+    class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50 whitespace-nowrap"
   >
     Assurance Maladie ▾
   </button>
@@ -288,7 +288,7 @@
 
       <!-- Dropdown Assistance médicale -->
       <div class="relative group">
-        <button class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50">
+        <button class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50 whitespace-nowrap">
           Assistance médicale ▾
         </button>
         <div
@@ -314,7 +314,7 @@
       
       <!-- Dropdown Espace Média -->
       <div class="relative group">
-        <button class=" text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50">
+        <button class=" text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50 whitespace-nowrap">
           Espace Média ▾
         </button>
         <div
@@ -332,7 +332,7 @@
       
       <!-- Dropdown Assistance & Contact -->
       <div class="relative group">
-        <button class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50">
+        <button class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50 whitespace-nowrap">
           Assistance et Contact ▾
         </button>
         <div
@@ -349,12 +349,12 @@
       </div>
 
       <!-- Appels d'offres -->
-      <button (click)="goToAppelsOffreSection()" class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50">
+      <button (click)="goToAppelsOffreSection()" class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50 whitespace-nowrap">
         Appels d'offres
       </button>
 
       <!-- Carrière -->
-      <button (click)="goToCarriere()" class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50">
+      <button (click)="goToCarriere()" class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50 whitespace-nowrap">
         Carrière
       </button>
 
