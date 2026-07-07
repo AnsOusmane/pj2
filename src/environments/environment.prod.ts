@@ -10,5 +10,5 @@ export const environment = {
   chatbotEnabled: false,
   // Section « Appels d'offres » EN PAUSE en prod : clic → modale « bientôt
   // disponible » (pas la vraie page). Repasser à true pour la publier.
-  appelsOffreEnabled: false
+  appelsOffreEnabled: true
 };
