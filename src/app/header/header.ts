@@ -212,7 +212,11 @@ export class HeaderComponent implements AfterViewInit {
    */
   goToAppelsOffreSection() {
     this.closeMobileMenu();
-    this.router.navigate(['/appels-offre']);
+    if (environment.appelsOffreEnabled) {
+      this.router.navigate(['/appels-offre']);
+    } else {
+      this.openAppelsOffreInfo.emit();
+    }
   }
   goToCarriere() { this.router.navigate(['/carriere']); }
   goToAdmin() { this.router.navigate(['/admin']); }
