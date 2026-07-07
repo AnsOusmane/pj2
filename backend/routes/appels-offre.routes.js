@@ -4,7 +4,7 @@ const { z } = require('zod');
 const { pool } = require('../db');
 const { makeUpload, pdfOnly } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
-const celluleOrAdmin = require('../middleware/cellule.middleware');
+const requirePermission = require('../middleware/permission.middleware');
 const { lazySweep, sweepAoStatuses } = require('../jobs/ao-status.job');
 
 const upload = makeUpload('appels-offre', { fileFilter: pdfOnly });
@@ -95,7 +95,7 @@ router.get('/', async (req, res) => {
 });
 
 // ====================== GET GESTION (cellule/admin) ======================
-router.get('/manage', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.get('/manage', authMiddleware, requirePermission('appels-offre'), async (req, res) => {
   try {
     await lazySweep(); // réconcilie les statuts avec les dates avant de répondre
     const archived = req.query.archived === 'true';
@@ -116,7 +116,7 @@ router.get('/manage', authMiddleware, celluleOrAdmin, async (req, res) => {
 });
 
 // ====================== POST (création) ======================
-router.post('/', authMiddleware, celluleOrAdmin, upload.single('file'), async (req, res) => {
+router.post('/', authMiddleware, requirePermission('appels-offre'), upload.single('file'), async (req, res) => {
   let client;
   try {
     const data = aoSchema.parse(clean(req.body));
@@ -179,7 +179,7 @@ router.post('/', authMiddleware, celluleOrAdmin, upload.single('file'), async (r
 });
 
 // ====================== PUT (mise à jour partielle) ======================
-router.put('/:id', authMiddleware, celluleOrAdmin, upload.single('file'), async (req, res) => {
+router.put('/:id', authMiddleware, requirePermission('appels-offre'), upload.single('file'), async (req, res) => {
   try {
     const data = aoUpdateSchema.parse(clean(req.body));
 
@@ -258,7 +258,7 @@ router.put('/:id', authMiddleware, celluleOrAdmin, upload.single('file'), async 
 });
 
 // ====================== ARCHIVAGE (remplace la suppression) ======================
-router.patch('/:id/archive', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.patch('/:id/archive', authMiddleware, requirePermission('appels-offre'), async (req, res) => {
   try {
     const result = await pool.query(
       `UPDATE appels_offre SET archived_at = CURRENT_TIMESTAMP, archived_by = $1
@@ -275,7 +275,7 @@ router.patch('/:id/archive', authMiddleware, celluleOrAdmin, async (req, res) =>
   }
 });
 
-router.patch('/:id/unarchive', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.patch('/:id/unarchive', authMiddleware, requirePermission('appels-offre'), async (req, res) => {
   try {
     const result = await pool.query(
       `UPDATE appels_offre SET archived_at = NULL, archived_by = NULL

@@ -20,7 +20,7 @@ const { z } = require('zod');
 const { pool } = require('../db');
 const rateLimit = require('express-rate-limit');
 const authMiddleware = require('../middleware/auth.middleware');
-const celluleOrAdmin = require('../middleware/cellule.middleware');
+const requirePermission = require('../middleware/permission.middleware');
 
 // Dépôt public anonyme : on limite par IP pour prévenir l'abus
 // (en plus du limiteur global /api/).
@@ -87,7 +87,7 @@ router.post('/', depotLimiter, async (req, res) => {
 
 // ====================== GET GESTION (cellule/admin) ======================
 // Filtres optionnels : ?statut=recu  &  ?archived=true
-router.get('/manage', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.get('/manage', authMiddleware, requirePermission('candidatures'), async (req, res) => {
   try {
     const { statut } = req.query;
     const archived = req.query.archived === 'true';
@@ -112,7 +112,7 @@ router.get('/manage', authMiddleware, celluleOrAdmin, async (req, res) => {
 });
 
 // ====================== PUT (mise à jour du statut / note) ======================
-router.put('/:id', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.put('/:id', authMiddleware, requirePermission('candidatures'), async (req, res) => {
   try {
     const schema = z.object({
       statut: z.enum(STATUTS).optional(),
@@ -157,7 +157,7 @@ router.put('/:id', authMiddleware, celluleOrAdmin, async (req, res) => {
 });
 
 // ====================== ARCHIVAGE (remplace la suppression) ======================
-router.patch('/:id/archive', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.patch('/:id/archive', authMiddleware, requirePermission('candidatures'), async (req, res) => {
   try {
     const result = await pool.query(
       `UPDATE candidatures SET archived_at = CURRENT_TIMESTAMP, archived_by = $1
@@ -174,7 +174,7 @@ router.patch('/:id/archive', authMiddleware, celluleOrAdmin, async (req, res) =>
   }
 });
 
-router.patch('/:id/unarchive', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.patch('/:id/unarchive', authMiddleware, requirePermission('candidatures'), async (req, res) => {
   try {
     const result = await pool.query(
       `UPDATE candidatures SET archived_at = NULL, archived_by = NULL

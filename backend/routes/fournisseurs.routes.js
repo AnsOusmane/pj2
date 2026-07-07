@@ -5,7 +5,7 @@ const { pool } = require('../db');
 const rateLimit = require('express-rate-limit');
 const { makeUpload, pdfOnly } = require('../config/cloudinary');
 const authMiddleware = require('../middleware/auth.middleware');
-const celluleOrAdmin = require('../middleware/cellule.middleware');
+const requirePermission = require('../middleware/permission.middleware');
 const verifyTurnstile = require('../middleware/turnstile.middleware');
 const { sendAgrementConfirmation } = require('../services/agrement-notify');
 
@@ -176,7 +176,7 @@ router.post('/', depotLimiter, /* verifyTurnstile, */ handleDepotUpload, async (
 
 // ====================== GET GESTION (cellule/admin) ======================
 // Filtre optionnel : ?statut=recu
-router.get('/manage', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.get('/manage', authMiddleware, requirePermission('fournisseurs'), async (req, res) => {
   try {
     const { statut } = req.query;
     const archived = req.query.archived === 'true';
@@ -201,7 +201,7 @@ router.get('/manage', authMiddleware, celluleOrAdmin, async (req, res) => {
 });
 
 // ====================== PUT (mise à jour du statut / note) ======================
-router.put('/:id', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.put('/:id', authMiddleware, requirePermission('fournisseurs'), async (req, res) => {
   try {
     const schema = z.object({
       statut: z.enum(STATUTS).optional(),
@@ -246,7 +246,7 @@ router.put('/:id', authMiddleware, celluleOrAdmin, async (req, res) => {
 });
 
 // ====================== ARCHIVAGE (remplace la suppression) ======================
-router.patch('/:id/archive', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.patch('/:id/archive', authMiddleware, requirePermission('fournisseurs'), async (req, res) => {
   try {
     const result = await pool.query(
       `UPDATE fournisseurs_agrements SET archived_at = CURRENT_TIMESTAMP, archived_by = $1
@@ -263,7 +263,7 @@ router.patch('/:id/archive', authMiddleware, celluleOrAdmin, async (req, res) =>
   }
 });
 
-router.patch('/:id/unarchive', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.patch('/:id/unarchive', authMiddleware, requirePermission('fournisseurs'), async (req, res) => {
   try {
     const result = await pool.query(
       `UPDATE fournisseurs_agrements SET archived_at = NULL, archived_by = NULL

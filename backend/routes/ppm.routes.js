@@ -3,7 +3,7 @@ const router = express.Router();
 const { z } = require('zod');
 const { pool } = require('../db');
 const authMiddleware = require('../middleware/auth.middleware');
-const celluleOrAdmin = require('../middleware/cellule.middleware');
+const requirePermission = require('../middleware/permission.middleware');
 
 // ====================== SCHÉMAS DE VALIDATION ======================
 const STATUTS = ['prevu', 'lance', 'attribue', 'cloture'];
@@ -54,7 +54,7 @@ router.get('/', async (req, res) => {
 });
 
 // ====================== GET GESTION (cellule/admin : tout, brouillons inclus) ======================
-router.get('/manage', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.get('/manage', authMiddleware, requirePermission('ppm'), async (req, res) => {
   try {
     // ?archived=true → lignes archivées ; sinon lignes actives uniquement.
     const archived = req.query.archived === 'true';
@@ -73,7 +73,7 @@ router.get('/manage', authMiddleware, celluleOrAdmin, async (req, res) => {
 });
 
 // ====================== POST (création) ======================
-router.post('/', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.post('/', authMiddleware, requirePermission('ppm'), async (req, res) => {
   try {
     const data = ppmSchema.parse(req.body);
     const result = await pool.query(
@@ -102,7 +102,7 @@ router.post('/', authMiddleware, celluleOrAdmin, async (req, res) => {
 });
 
 // ====================== PUT (mise à jour partielle) ======================
-router.put('/:id', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.put('/:id', authMiddleware, requirePermission('ppm'), async (req, res) => {
   try {
     const data = ppmUpdateSchema.parse(req.body);
 
@@ -144,7 +144,7 @@ router.put('/:id', authMiddleware, celluleOrAdmin, async (req, res) => {
 });
 
 // ====================== ARCHIVAGE (remplace la suppression) ======================
-router.patch('/:id/archive', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.patch('/:id/archive', authMiddleware, requirePermission('ppm'), async (req, res) => {
   try {
     const result = await pool.query(
       `UPDATE ppm SET archived_at = CURRENT_TIMESTAMP, archived_by = $1
@@ -161,7 +161,7 @@ router.patch('/:id/archive', authMiddleware, celluleOrAdmin, async (req, res) =>
   }
 });
 
-router.patch('/:id/unarchive', authMiddleware, celluleOrAdmin, async (req, res) => {
+router.patch('/:id/unarchive', authMiddleware, requirePermission('ppm'), async (req, res) => {
   try {
     const result = await pool.query(
       `UPDATE ppm SET archived_at = NULL, archived_by = NULL

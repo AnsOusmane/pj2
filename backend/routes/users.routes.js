@@ -10,7 +10,7 @@ const createUserSchema = z.object({
   fullname: z.string().min(2, "Le nom complet doit contenir au moins 2 caractères"),
   email: z.string().email("Email invalide").trim().toLowerCase(),
   password: z.string().min(8, "Le mot de passe doit contenir au moins 8 caractères"),
-  role: z.enum(['user', 'admin', 'cellule-pm']).optional().default('user'),
+  role: z.enum(['user', 'admin']).optional().default('user'),
   is_active: z.boolean().optional().default(true),
   // Clés du menu admin auxquelles l'utilisateur a accès (ignorées pour un admin).
   permissions: z.array(z.string()).optional().default([])
@@ -19,7 +19,7 @@ const createUserSchema = z.object({
 const updateUserSchema = z.object({
   fullname: z.string().min(2).optional(),
   email: z.string().email().trim().toLowerCase().optional(),
-  role: z.enum(['user', 'admin', 'cellule-pm']).optional(),
+  role: z.enum(['user', 'admin']).optional(),
   is_active: z.boolean().optional(),
   permissions: z.array(z.string()).optional()
 });

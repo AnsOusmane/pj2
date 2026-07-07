@@ -146,9 +146,9 @@
         <span class="tag">Anti-fuite</span>
       </div>
       <div class="card">
-        <div class="h"><span class="ic">▣</span><span class="t">Session sécurisée (8h)</span></div>
-        <div class="d">Jeton signé (JWT), expire automatiquement. Cookie <b>httpOnly</b> + <b>sameSite strict</b> : ni volable par un script, ni utilisable depuis un autre site.</div>
-        <span class="tag">Anti-vol de session · Anti-CSRF</span>
+        <div class="h"><span class="ic">▣</span><span class="t">Session courte + renouvellement</span></div>
+        <div class="d">Jeton d'accès très court (<b>5 min</b>) gardé en mémoire + jeton de renouvellement en <b>cookie httpOnly</b> (7 j). L'accès se rafraîchit tout seul ; en cas de vol, la fenêtre d'exposition est minime.</div>
+        <span class="tag">Access 5 min · Refresh 7 j · Anti-CSRF</span>
       </div>
       <div class="card">
         <div class="h"><span class="ic">⊘</span><span class="t">Anti-force brute</span></div>
@@ -171,7 +171,7 @@
     <ul class="big">
       <li><span class="b">↻</span><div>À <b>chaque action</b>, le serveur revérifie le compte dans la base : est-il toujours actif ? quel est son rôle exact ?</div></li>
       <li><span class="b">➤</span><div>Si on <b>désactive ou rétrograde</b> un administrateur, l'effet est <b>immédiat</b> — pas « dans quelques heures ».</div></li>
-      <li><span class="b">⧉</span><div><b>3 niveaux de droits</b> : administrateur, agent. Chacun ne voit que ce qui le concerne.</div></li>
+      <li><span class="b">⧉</span><div><b>2 niveaux de droits</b> : administrateur, agent. Chacun ne voit que ce qui le concerne.</div></li>
     </ul>
   </section>
 

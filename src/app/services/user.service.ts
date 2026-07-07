@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 
-export type UserRole = 'admin' | 'user' | 'cellule-pm';
+export type UserRole = 'admin' | 'user';
 
 export interface User {
   id: number;

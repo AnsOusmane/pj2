@@ -12,7 +12,7 @@ export interface LoginResponse {
     id: number;
     fullname: string;
     email: string;
-    role: 'admin' | 'user' | 'cellule-pm';
+    role: 'admin' | 'user';
     permissions: string[];
   };
 }
@@ -21,7 +21,7 @@ export interface User {
   id: number;
   fullname: string;
   email: string;
-  role: 'admin' | 'user' | 'cellule-pm';
+  role: 'admin' | 'user';
   permissions: string[];
 }
 

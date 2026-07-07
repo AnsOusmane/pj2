@@ -347,6 +347,11 @@
         </div>
       </div>
 
+      <!-- Appels d'offres -->
+      <button (click)="goToAppelsOffreSection()" class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50">
+        Appels d'offres
+      </button>
+
       <!-- Carrière -->
       <button (click)="goToCarriere()" class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50">
         Carrière
@@ -541,6 +546,13 @@
         <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="goToSr(); closeMobileMenu()">Localiser une agence</button>
         <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="goToReclamation(); closeMobileMenu()">Faire une réclamation</button>
       </div>
+    </li>
+
+    <!-- Appels d'offres -->
+    <li class="py-1">
+      <button (click)="goToAppelsOffreSection(); closeMobileMenu()" class="block w-full text-left px-2 py-2.5 rounded-lg hover:bg-green-600/10 transition">
+        Appels d'offres
+      </button>
     </li>
 
     <!-- Carrière -->
