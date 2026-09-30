@@ -69,9 +69,9 @@ app.use(cors({
   origin: (origin, callback) => {
     const allowed = [
       'http://localhost:4200', 'https://sencsu.sn', 'https://www.sencsu.sn', 'https://pj2-gr26.vercel.app',
-      // admin-app (front admin séparé) : port dev dédié (4200 déjà pris par le site public)
-      // + URL Vercel à compléter après le premier déploiement (voir plan de séparation admin).
-      'http://localhost:4201',
+      // admin-app (front admin séparé, voir plan de séparation admin) : port dev dédié
+      // (4200 déjà pris par le site public) + URL Vercel de prod.
+      'http://localhost:4201', 'https://pj2-5u7x.vercel.app',
     ];
     // Origines du réseau local (démo multi-PC) : uniquement si explicitement
     // activé (CORS_ALLOW_LAN=1), jamais par défaut. Avec `credentials: true`,
