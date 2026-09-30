@@ -52,6 +52,31 @@
               "extractLicenses": false,
               "sourceMap": true,
               "prerender": false
+            },
+            "staging": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "4mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "300kb",
+                  "maximumError": "500kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "prerender": false
             }
           },
           "defaultConfiguration": "production"
@@ -67,6 +92,9 @@
             },
             "development": {
               "buildTarget": "admin-app:build:development"
+            },
+            "staging": {
+              "buildTarget": "admin-app:build:staging"
             }
           },
           "defaultConfiguration": "development"

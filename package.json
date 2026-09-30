@@ -7,6 +7,7 @@
     "dev:server": "nodemon server.js",
     "frontend": "ng serve",
     "build": "ng build",
+    "build:staging": "ng build --configuration staging",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:pj2": "node dist/pj2/server/server.mjs"
