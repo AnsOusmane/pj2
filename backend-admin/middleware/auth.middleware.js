@@ -1,12 +1,14 @@
 const jwt = require('jsonwebtoken');
 const { pool } = require('../db');
+const { logSecurityEvent } = require('../utils/security-log');
 
 const authMiddleware = async (req, res, next) => {
-  // 1. Récupération du token : Priorité au cookie httpOnly (recommandé)
-  let token = req.cookies?.auth_token;
-
-  // 2. Fallback sur Bearer Token (pour compatibilité avec d'anciens appels)
-  if (!token && req.headers.authorization?.startsWith('Bearer ')) {
+  // L'access token est gardé en mémoire côté front (pas en cookie, pour ne
+  // pas l'exposer au XSS) et envoyé via l'en-tête Authorization. Seul le
+  // refresh token voyage en cookie httpOnly, et uniquement vers /api/auth
+  // (voir routes/auth.routes.js) : il n'atteint jamais ce middleware.
+  let token;
+  if (req.headers.authorization?.startsWith('Bearer ')) {
     token = req.headers.authorization.split(' ')[1];
   }
 
@@ -23,6 +25,7 @@ const authMiddleware = async (req, res, next) => {
     decoded = jwt.verify(token, process.env.JWT_SECRET);
   } catch (err) {
     console.error('JWT Error:', err.message);
+    logSecurityEvent('auth_invalid_token', req, err.message);
     // 401 (et non 403) : l'authentification a échoué → le client doit se
     // reconnecter. Le front s'appuie sur ce code pour rediriger vers /login.
     // (403 est réservé à « authentifié mais droits insuffisants ».)
@@ -54,6 +57,7 @@ const authMiddleware = async (req, res, next) => {
     const user = rows[0];
 
     if (!user || !user.is_active) {
+      logSecurityEvent('auth_inactive_account', req, `user id ${decoded.id}`);
       // 401 : la session ne correspond plus à un compte actif → reconnexion requise.
       return res.status(401).json({
         success: false,

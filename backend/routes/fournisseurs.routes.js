@@ -1,11 +1,12 @@
+// Gestion (GET /manage, PUT, archivage) déplacée vers
+// backend-admin/routes/fournisseurs.routes.js — voir le plan de séparation
+// admin. Ce fichier ne sert plus que le dépôt public anonyme.
 const express = require('express');
 const router = express.Router();
 const { z } = require('zod');
 const { pool } = require('../db');
 const rateLimit = require('express-rate-limit');
 const { makeUpload, pdfOnly } = require('../config/cloudinary');
-const authMiddleware = require('../middleware/auth.middleware');
-const requirePermission = require('../middleware/permission.middleware');
 const verifyTurnstile = require('../middleware/turnstile.middleware');
 const { sendAgrementConfirmation } = require('../services/agrement-notify');
 
@@ -50,7 +51,6 @@ const depotLimiter = rateLimit({
 });
 
 // ====================== VALIDATION ======================
-const STATUTS = ['recu', 'en_cours', 'valide', 'rejete'];
 const empty = (v) => (v === '' || v === undefined || v === null ? undefined : v);
 
 // Dépôt public : on valide les champs métier (les fichiers sont gérés par multer).
@@ -93,8 +93,7 @@ async function nextNumero() {
 //   - doc_presentation : présentation entreprise/plaquette (OBLIGATOIRE)
 //   - doc_registre     : registre de commerce             (OBLIGATOIRE)
 //   - doc_fiscale      : attestation fiscale              (facultatif, bonus)
-// Anti-robot Cloudflare Turnstile désactivé pour l'instant (réactiver : remettre verifyTurnstile)
-router.post('/', depotLimiter, /* verifyTurnstile, */ handleDepotUpload, async (req, res) => {
+router.post('/', depotLimiter, verifyTurnstile, handleDepotUpload, async (req, res) => {
   try {
     const data = depotSchema.parse(clean(req.body));
 
@@ -170,112 +169,6 @@ router.post('/', depotLimiter, /* verifyTurnstile, */ handleDepotUpload, async (
       return res.status(400).json({ message: 'Données invalides', errors: err.errors });
     }
     console.error('Erreur POST fournisseurs:', err);
-    res.status(500).json({ message: 'Erreur serveur' });
-  }
-});
-
-// ====================== GET GESTION (cellule/admin) ======================
-// Filtre optionnel : ?statut=recu
-router.get('/manage', authMiddleware, requirePermission('fournisseurs'), async (req, res) => {
-  try {
-    const { statut } = req.query;
-    const archived = req.query.archived === 'true';
-    const conditions = [`f.archived_at IS ${archived ? 'NOT NULL' : 'NULL'}`];
-    const values = [];
-    if (statut) { values.push(statut); conditions.push(`f.statut = $${values.length}`); }
-    const where = `WHERE ${conditions.join(' AND ')}`;
-
-    const result = await pool.query(
-      `SELECT f.*, u.fullname AS updated_by_name
-       FROM fournisseurs_agrements f
-       LEFT JOIN users u ON u.id = f.updated_by
-       ${where}
-       ORDER BY f.created_at DESC`,
-      values
-    );
-    res.json(result.rows);
-  } catch (err) {
-    console.error('Erreur GET fournisseurs/manage:', err);
-    res.status(500).json({ message: 'Erreur serveur' });
-  }
-});
-
-// ====================== PUT (mise à jour du statut / note) ======================
-router.put('/:id', authMiddleware, requirePermission('fournisseurs'), async (req, res) => {
-  try {
-    const schema = z.object({
-      statut: z.enum(STATUTS).optional(),
-      note_traitement: z.string().trim().optional().nullable()
-    });
-    const data = schema.parse(req.body);
-
-    const fields = [];
-    const values = [];
-    if (data.statut !== undefined) { values.push(data.statut); fields.push(`statut = $${values.length}`); }
-    if (data.note_traitement !== undefined) {
-      values.push(data.note_traitement || null);
-      fields.push(`note_traitement = $${values.length}`);
-    }
-
-    if (fields.length === 0) {
-      return res.status(400).json({ message: 'Aucun champ à mettre à jour' });
-    }
-
-    values.push(req.user.id);
-    fields.push(`updated_by = $${values.length}`);
-    fields.push(`updated_at = CURRENT_TIMESTAMP`);
-
-    values.push(req.params.id);
-
-    const result = await pool.query(
-      `UPDATE fournisseurs_agrements SET ${fields.join(', ')} WHERE id = $${values.length} RETURNING *`,
-      values
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Demande non trouvée' });
-    }
-    res.json(result.rows[0]);
-  } catch (err) {
-    if (err instanceof z.ZodError) {
-      return res.status(400).json({ message: 'Données invalides', errors: err.errors });
-    }
-    console.error('Erreur PUT fournisseurs:', err);
-    res.status(500).json({ message: 'Erreur serveur' });
-  }
-});
-
-// ====================== ARCHIVAGE (remplace la suppression) ======================
-router.patch('/:id/archive', authMiddleware, requirePermission('fournisseurs'), async (req, res) => {
-  try {
-    const result = await pool.query(
-      `UPDATE fournisseurs_agrements SET archived_at = CURRENT_TIMESTAMP, archived_by = $1
-       WHERE id = $2 AND archived_at IS NULL RETURNING id`,
-      [req.user.id, req.params.id]
-    );
-    if (result.rowCount === 0) {
-      return res.status(404).json({ message: 'Demande non trouvée ou déjà archivée' });
-    }
-    res.json({ success: true, message: 'Demande archivée' });
-  } catch (err) {
-    console.error('Erreur archive fournisseurs:', err);
-    res.status(500).json({ message: 'Erreur serveur' });
-  }
-});
-
-router.patch('/:id/unarchive', authMiddleware, requirePermission('fournisseurs'), async (req, res) => {
-  try {
-    const result = await pool.query(
-      `UPDATE fournisseurs_agrements SET archived_at = NULL, archived_by = NULL
-       WHERE id = $1 AND archived_at IS NOT NULL RETURNING id`,
-      [req.params.id]
-    );
-    if (result.rowCount === 0) {
-      return res.status(404).json({ message: 'Demande non trouvée ou déjà active' });
-    }
-    res.json({ success: true, message: 'Demande restaurée' });
-  } catch (err) {
-    console.error('Erreur unarchive fournisseurs:', err);
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });

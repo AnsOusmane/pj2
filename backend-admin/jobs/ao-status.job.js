@@ -26,8 +26,9 @@ let running = false;
 async function sweepAoStatuses() {
   if (running) return 0; // évite les exécutions concurrentes (intervalle + lecture)
   running = true;
-  const client = await pool.connect();
+  let client;
   try {
+    client = await pool.connect();
     await client.query('BEGIN');
 
     // 1) Lancement automatique : « à venir » → « ouvert »
@@ -75,11 +76,13 @@ async function sweepAoStatuses() {
     lastRun = Date.now();
     return n;
   } catch (err) {
-    try { await client.query('ROLLBACK'); } catch (_) { /* pas de tx active */ }
+    if (client) {
+      try { await client.query('ROLLBACK'); } catch (_) { /* pas de tx active */ }
+    }
     console.error('[ao-status] échec du balayage:', err.message);
     return 0;
   } finally {
-    client.release();
+    if (client) client.release();
     running = false;
   }
 }

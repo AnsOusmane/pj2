@@ -4,6 +4,7 @@ const { pool } = require('../db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { z } = require('zod');
+const { logSecurityEvent } = require('../utils/security-log');
 
 /* ======================================================================
    JETONS : access token court (mémoire côté front) + refresh token long
@@ -82,12 +83,14 @@ router.post('/login', async (req, res) => {
 
     // Message volontairement flou : ne pas révéler si l'email existe.
     if (!user || !user.is_active) {
+      logSecurityEvent('login_failed', req, email);
       return res.status(401).json({ success: false, message: 'Identifiants incorrects' });
     }
 
     // 3. Vérification du mot de passe
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
+      logSecurityEvent('login_failed', req, email);
       return res.status(401).json({ success: false, message: 'Identifiants incorrects' });
     }
 

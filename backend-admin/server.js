@@ -2,14 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const path = require('path');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 
 const { pool } = require('./db');
 
-// Routes — public uniquement (la gestion/admin vit dans backend-admin/,
-// voir le plan de séparation admin).
+// Routes — 100% admin (auth/users/security-events), ou moitié admin des
+// routeurs mixtes du backend public (voir plan de séparation admin).
+const authRouter = require('./routes/auth.routes');
+const usersRouter = require('./routes/users.routes');
+const securityEventsRouter = require('./routes/security-events.routes');
 const communiquesRouter = require('./routes/communiques.routes');
 const newslettersRouter = require('./routes/newsletters.routes');
 const decretsRouter = require('./routes/decrets.routes');
@@ -26,16 +28,18 @@ const appelsOffreRouter = require('./routes/appels-offre.routes');
 const avisAttributionRouter = require('./routes/avis-attribution.routes');
 const fournisseursRouter = require('./routes/fournisseurs.routes');
 const candidaturesRouter = require('./routes/candidatures.routes');
-const facebookRouter = require('./routes/facebook.routes');
 const chatRouter = require('./routes/chat.routes');
 
 const { logSecurityEvent } = require('./utils/security-log');
 
+// Job planifié — tourne UNIQUEMENT ici (voir jobs/ao-status.job.js) : le
+// backend public n'appelle plus lazySweep() pour éviter une double exécution
+// concurrente entre les deux services sur la même base.
+const { scheduleAoStatusSweep } = require('./jobs/ao-status.job');
+
 const app = express();
 
 // Render (comme la plupart des PaaS) place l'app derrière un reverse proxy.
-// Sans ceci, express-rate-limit voit l'IP du proxy pour tout le monde
-// (rate-limit inefficace) et lève un avertissement de validation X-Forwarded-For.
 app.set('trust proxy', 1);
 
 /* ==========================
@@ -45,11 +49,10 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:", "https:", "blob:"],
-      fontSrc: ["'self'", "https:", "data:"],
-      connectSrc: ["'self'", "https://sencsu.sn", "https://pj2-gr26.vercel.app"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'"],
       frameAncestors: ["'none'"],
     },
   },
@@ -62,17 +65,12 @@ app.use(cookieParser());
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Seul admin-app (front admin séparé) appelle cette API — jamais le site
+    // public. Port dev dédié (4200 déjà pris par le site public) + URL(s) Vercel.
     const allowed = [
-      'http://localhost:4200', 'https://sencsu.sn', 'https://www.sencsu.sn', 'https://pj2-gr26.vercel.app',
-      // admin-app (front admin séparé, voir plan de séparation admin) : port dev dédié
-      // (4200 déjà pris par le site public) + URL Vercel de prod.
-      'http://localhost:4201', 'https://pj2-5u7x.vercel.app',
+      'http://localhost:4201',
+      'https://pj2-5u7x.vercel.app',
     ];
-    // Origines du réseau local (démo multi-PC) : uniquement si explicitement
-    // activé (CORS_ALLOW_LAN=1), jamais par défaut. Avec `credentials: true`,
-    // accepter n'importe quelle IP privée revient à autoriser n'importe quel
-    // appareil du même réseau que la victime à rejouer ses cookies httpOnly
-    // (vol de session cross-origin) — donc opt-in explicite, pas un défaut.
     const allowLan = process.env.CORS_ALLOW_LAN === '1';
     const privateLan = /^http:\/\/(localhost|127\.0\.0\.1|(?:10|192\.168|172\.(?:1[6-9]|2\d|3[01]))\.[\d.]+):\d+$/;
     if (!origin || allowed.includes(origin) || (allowLan && privateLan.test(origin))) {
@@ -109,23 +107,12 @@ app.use('/api/auth/', rateLimit({
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-/* =========================
-   STATIC FILES
-============================ */
-// Les fichiers statiques sont servis cross-origin (front Vercel ↔ backend Render) :
-// on autorise explicitement leur chargement, sinon le CORP same-origin de helmet
-// fait bloquer les images par le navigateur.
-const staticOptions = {
-  setHeaders: (res) => {
-    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-  }
-};
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'), staticOptions));
-app.use('/storage/uploads', express.static(path.join(__dirname, 'uploads'), staticOptions));
-
 /* ==========================
    ROUTES
 ========================== */
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/security-events', securityEventsRouter);
 app.use('/api/communiques', communiquesRouter);
 app.use('/api/newsletters', newslettersRouter);
 app.use('/api/decrets', decretsRouter);
@@ -142,13 +129,12 @@ app.use('/api/appels-offre', appelsOffreRouter);
 app.use('/api/avis-attribution', avisAttributionRouter);
 app.use('/api/fournisseurs', fournisseursRouter);
 app.use('/api/candidatures', candidaturesRouter);
-app.use('/api/facebook', facebookRouter);
 app.use('/api/chat', chatRouter);
 
 app.get('/api/test', async (req, res) => {
   try {
     await pool.query('SELECT 1');
-    res.json({ success: true, message: 'Backend OK' });
+    res.json({ success: true, message: 'Backend admin OK' });
   } catch (e) {
     res.status(500).json({ success: false });
   }
@@ -169,7 +155,10 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: 'Erreur serveur' });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`🚀 Serveur sécurisé sur port ${PORT}`);
+  console.log(`🚀 Backend admin sécurisé sur port ${PORT}`);
+  // Pilotage automatique du statut des appels d'offres par les dates.
+  // Tourne UNIQUEMENT dans ce service (voir commentaire plus haut).
+  scheduleAoStatusSweep();
 });
