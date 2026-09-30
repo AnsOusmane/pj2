@@ -1,0 +1,116 @@
+/* ============================================================
+   TAILWIND
+============================================================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   CUSTOM (repris de pj2/src/styles.css — classes utilisées par les
+   templates admin, copiés tels quels)
+============================================================ */
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide-up {
+  animation: fade-slide-up 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.35s ease-out;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.btn-admin {
+  @apply block w-full text-left px-4 py-3 rounded-lg font-medium text-gray-700 hover:bg-green-100 hover:text-green-800 transition;
+}
+
+/* ===== En-tête vert des formulaires admin ===== */
+.admin-form-head {
+  margin-bottom: 2rem;
+  padding: 1.5rem 1.75rem;
+  background: linear-gradient(90deg, #16a34a, #15803d);
+  border-radius: 1.25rem;
+  text-align: center;
+  box-shadow: 0 10px 25px -12px rgba(21, 128, 61, 0.6);
+}
+.admin-form-head h1,
+.admin-form-head h2 {
+  color: #ffffff !important;
+}
+.admin-form-head p {
+  color: #dcfce7 !important;
+}
+.admin-form-head > div[class*="rounded"] {
+  background: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* ===== Barre d'en-tête verte des pages de gestion / listes ===== */
+.admin-page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 1.25rem;
+  background: linear-gradient(90deg, #16a34a, #15803d);
+  box-shadow: 0 10px 25px -12px rgba(21, 128, 61, 0.6);
+}
+.admin-page-head h1,
+.admin-page-head h2,
+.admin-page-head p,
+.admin-page-head label {
+  color: #ffffff !important;
+}
+.admin-page-head p {
+  color: #dcfce7 !important;
+}
+.admin-page-head .head-cta {
+  background-color: #ffffff !important;
+  color: #15803d !important;
+}
+.admin-page-head .head-cta:hover {
+  background-color: #f0fdf4 !important;
+}
+.admin-page-head .head-toggle {
+  display: inline-flex;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.admin-page-head .head-toggle button {
+  padding: 0.375rem 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+  transition: 0.15s;
+}
+.admin-page-head .head-toggle button.active {
+  background-color: #ffffff;
+  color: #15803d;
+}

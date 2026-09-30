@@ -29,6 +29,9 @@ const fournisseursRouter = require('./routes/fournisseurs.routes');
 const candidaturesRouter = require('./routes/candidatures.routes');
 const facebookRouter = require('./routes/facebook.routes');
 const chatRouter = require('./routes/chat.routes');
+const securityEventsRouter = require('./routes/security-events.routes');
+
+const { logSecurityEvent } = require('./utils/security-log');
 
 // Jobs planifiés
 const { scheduleAoStatusSweep } = require('./jobs/ao-status.job');
@@ -64,10 +67,20 @@ app.use(cookieParser());
 
 app.use(cors({
   origin: (origin, callback) => {
-    const allowed = ['http://localhost:4200', 'https://sencsu.sn', 'https://www.sencsu.sn', 'https://pj2-gr26.vercel.app'];
-    // Origines du réseau local (démo multi-PC) : localhost + plages d'IP privées.
+    const allowed = [
+      'http://localhost:4200', 'https://sencsu.sn', 'https://www.sencsu.sn', 'https://pj2-gr26.vercel.app',
+      // admin-app (front admin séparé) : port dev dédié (4200 déjà pris par le site public)
+      // + URL Vercel à compléter après le premier déploiement (voir plan de séparation admin).
+      'http://localhost:4201',
+    ];
+    // Origines du réseau local (démo multi-PC) : uniquement si explicitement
+    // activé (CORS_ALLOW_LAN=1), jamais par défaut. Avec `credentials: true`,
+    // accepter n'importe quelle IP privée revient à autoriser n'importe quel
+    // appareil du même réseau que la victime à rejouer ses cookies httpOnly
+    // (vol de session cross-origin) — donc opt-in explicite, pas un défaut.
+    const allowLan = process.env.CORS_ALLOW_LAN === '1';
     const privateLan = /^http:\/\/(localhost|127\.0\.0\.1|(?:10|192\.168|172\.(?:1[6-9]|2\d|3[01]))\.[\d.]+):\d+$/;
-    if (!origin || allowed.includes(origin) || privateLan.test(origin)) {
+    if (!origin || allowed.includes(origin) || (allowLan && privateLan.test(origin))) {
       callback(null, true);
     } else {
       callback(new Error('Origin non autorisée'));
@@ -81,13 +94,21 @@ app.use(cors({
 app.use('/api/', rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 150,
-  message: { error: "Trop de requêtes." }
+  message: { error: "Trop de requêtes." },
+  handler: (req, res, next, options) => {
+    logSecurityEvent('rate_limited', req, req.originalUrl);
+    res.status(options.statusCode).json(options.message);
+  }
 }));
 
 app.use('/api/auth/', rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 12,
-  message: { error: "Trop de tentatives." }
+  message: { error: "Trop de tentatives." },
+  handler: (req, res, next, options) => {
+    logSecurityEvent('rate_limited', req, req.originalUrl);
+    res.status(options.statusCode).json(options.message);
+  }
 }));
 
 app.use(express.json({ limit: '10kb' }));
@@ -130,6 +151,7 @@ app.use('/api/fournisseurs', fournisseursRouter);
 app.use('/api/candidatures', candidaturesRouter);
 app.use('/api/facebook', facebookRouter);
 app.use('/api/chat', chatRouter);
+app.use('/api/security-events', securityEventsRouter);
 
 app.get('/api/test', async (req, res) => {
   try {
@@ -141,6 +163,19 @@ app.get('/api/test', async (req, res) => {
 });
 
 app.use((req, res) => res.status(404).json({ message: 'Route non trouvée' }));
+
+// Filet de sécurité : capte toute erreur qui échappe aux try/catch des routes
+// (ex. origine CORS refusée, corps JSON malformé, erreur synchrone dans un
+// middleware) pour ne jamais laisser Express renvoyer sa page d'erreur HTML
+// par défaut (qui peut exposer la stack trace) à la place d'une réponse JSON.
+app.use((err, req, res, next) => {
+  if (err.message === 'Origin non autorisée') {
+    logSecurityEvent('cors_blocked', req, req.headers.origin || null);
+    return res.status(403).json({ message: 'Origine non autorisée' });
+  }
+  console.error('Erreur non interceptée:', err);
+  res.status(err.status || 500).json({ message: 'Erreur serveur' });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

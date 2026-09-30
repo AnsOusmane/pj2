@@ -1,0 +1,87 @@
+<div class="max-w-6xl mx-auto">
+
+  <!-- En-tête + sélecteur de période -->
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+    <div>
+      <h1 class="text-2xl font-semibold text-gray-800">Journal de sécurité</h1>
+      <p class="text-gray-500 text-sm">Connexions refusées, jetons invalides, anti-robot bloqué, origines et débit refusés.</p>
+    </div>
+    <div class="flex items-center gap-1 bg-gray-100 rounded-full p-1">
+      <button *ngFor="let p of periods"
+              (click)="setDays(p.value)"
+              class="px-3 py-1.5 text-sm rounded-full transition"
+              [ngClass]="days() === p.value ? 'bg-green-600 text-white shadow' : 'text-gray-600 hover:bg-white'">
+        {{ p.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- États -->
+  <div *ngIf="loading()" class="text-center text-gray-500 py-16">Chargement…</div>
+  <div *ngIf="error()" class="bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 mb-4">
+    {{ error() }}
+  </div>
+
+  <ng-container *ngIf="data() as d">
+
+    <!-- Bandeau de suspicion : IP ayant franchi le seuil sur les dernières minutes -->
+    <div *ngIf="d.suspiciousIps.length > 0"
+         class="bg-red-50 border border-red-200 rounded-2xl px-5 py-4 mb-6 flex items-start gap-3">
+      <span class="text-xl leading-none">⚠️</span>
+      <div>
+        <p class="font-semibold text-red-800">
+          Activité suspecte détectée — {{ d.suspiciousIps.length }} IP au-dessus du seuil
+          ({{ d.suspicionWindowMinutes }} dernières minutes)
+        </p>
+        <ul class="mt-1.5 text-sm text-red-700 space-y-0.5">
+          <li *ngFor="let s of d.suspiciousIps">
+            <span class="font-mono">{{ s.ip }}</span> — {{ s.n }} évènements, dernier à {{ s.last_seen | date:'HH:mm:ss' }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div *ngIf="d.total === 0" class="bg-white rounded-2xl shadow p-10 text-center text-gray-500">
+      Aucun évènement suspect sur cette période — bon signe.
+    </div>
+
+    <ng-container *ngIf="d.total > 0">
+
+      <!-- Répartition par type (cliquable pour filtrer la liste) -->
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button *ngFor="let t of d.byType"
+                (click)="filterType(t.type)"
+                class="bg-white rounded-2xl shadow px-5 py-3 text-left transition border-2"
+                [ngClass]="activeType() === t.type ? 'border-green-600' : 'border-transparent'">
+          <p class="text-2xl font-bold text-gray-800">{{ t.n }}</p>
+          <p class="text-sm text-gray-500">{{ t.label }}</p>
+        </button>
+      </div>
+
+      <!-- Liste récente -->
+      <div class="bg-white rounded-2xl shadow overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wide">
+            <tr>
+              <th class="text-left px-4 py-3 whitespace-nowrap">Date</th>
+              <th class="text-left px-4 py-3">Type</th>
+              <th class="text-left px-4 py-3">Route</th>
+              <th class="text-left px-4 py-3">IP</th>
+              <th class="text-left px-4 py-3">Détail</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr *ngFor="let e of d.recent">
+              <td class="px-4 py-2.5 text-gray-500 whitespace-nowrap">{{ e.created_at | date:'dd/MM/yy HH:mm' }}</td>
+              <td class="px-4 py-2.5 text-gray-800">{{ e.event_type }}</td>
+              <td class="px-4 py-2.5 text-gray-600 whitespace-nowrap">{{ e.method }} {{ e.route }}</td>
+              <td class="px-4 py-2.5 text-gray-600 whitespace-nowrap">{{ e.ip }}</td>
+              <td class="px-4 py-2.5 text-gray-600 max-w-xs truncate" [title]="e.detail || ''">{{ e.detail }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </ng-container>
+  </ng-container>
+</div>
