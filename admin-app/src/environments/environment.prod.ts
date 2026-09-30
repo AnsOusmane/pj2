@@ -1,7 +1,7 @@
 // admin-app/src/environments/environment.prod.ts
-// Phase 1 : l'admin continue d'appeler le backend existant (backend-jnjz).
-// Phase 2 : basculera vers le futur service Render dédié (backend-admin).
+// Phase 2 : l'admin appelle désormais son propre backend dédié (backend-admin),
+// séparé du backend public (backend-jnjz) — voir le plan de séparation admin.
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://backend-jnjz.onrender.com/api'
+  apiBaseUrl: 'https://backend-admin-rg7i.onrender.com/api'
 };
