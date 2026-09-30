@@ -70,6 +70,8 @@ app.use(cors({
     const allowed = [
       'http://localhost:4201',
       'https://pj2-5u7x.vercel.app',
+      // Préprod (branche staging, voir Phase 3 du plan) : admin-app de préprod.
+      'https://admin-app-staging-vert.vercel.app',
     ];
     const allowLan = process.env.CORS_ALLOW_LAN === '1';
     const privateLan = /^http:\/\/(localhost|127\.0\.0\.1|(?:10|192\.168|172\.(?:1[6-9]|2\d|3[01]))\.[\d.]+):\d+$/;

@@ -67,6 +67,8 @@ app.use(cors({
       // admin-app (front admin séparé, voir plan de séparation admin) : port dev dédié
       // (4200 déjà pris par le site public) + URL Vercel de prod.
       'http://localhost:4201', 'https://pj2-5u7x.vercel.app',
+      // Préprod (branche staging, voir Phase 3 du plan) : site public de préprod.
+      'https://pj2-staging.vercel.app',
     ];
     // Origines du réseau local (démo multi-PC) : uniquement si explicitement
     // activé (CORS_ALLOW_LAN=1), jamais par défaut. Avec `credentials: true`,
