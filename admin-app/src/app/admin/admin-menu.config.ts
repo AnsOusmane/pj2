@@ -12,7 +12,7 @@ export interface AdminMenuItem {
   key: string;
   /** Libellé affiché. */
   label: string;
-  /** Emoji affiché devant le libellé. */
+  /** Nom d'icône Heroicons (voir shared/icon/icon.ts) affiché devant le libellé. */
   icon: string;
   /** Route relative à /admin. */
   route: string;
@@ -31,48 +31,48 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
   {
     title: 'Général',
     items: [
-      { key: 'dashboard', label: 'Dashboard', icon: '\u{1F4C8}', route: 'dashboard', comingSoon: true }, // 📈
-      { key: 'chat-analytics', label: 'Chatbot (stats)', icon: '\u{1F5E8}\u{FE0F}', route: 'chat-analytics', adminOnly: true }, // 🗨️
-      { key: 'security-events', label: 'Journal de sécurité', icon: '\u{1F6E1}\u{FE0F}', route: 'security-events', adminOnly: true }, // 🛡️
-      { key: 'users', label: 'Utilisateurs', icon: '\u{1F465}', route: 'users', adminOnly: true }, // 👥
+      { key: 'dashboard', label: 'Dashboard', icon: 'chart-bar', route: 'dashboard', comingSoon: true },
+      { key: 'chat-analytics', label: 'Chatbot (stats)', icon: 'chat-bubble-left-right', route: 'chat-analytics', adminOnly: true },
+      { key: 'security-events', label: 'Journal de sécurité', icon: 'shield-check', route: 'security-events', adminOnly: true },
+      { key: 'users', label: 'Utilisateurs', icon: 'users', route: 'users', adminOnly: true },
     ],
   },
   {
     title: 'Contenu',
     items: [
-      { key: 'newsletters', label: 'News / Newsletters', icon: '\u{1F5DE}\u{FE0F}', route: 'newsletters-form' }, // 🗞️
-      { key: 'rapports', label: 'Rapports officiels', icon: '\u{1F4D7}', route: 'official-reports-form' }, // 📗
-      { key: 'decrets', label: 'Décrets', icon: '\u{1F4DC}', route: 'decrets-form' }, // 📜
-      { key: 'communiques', label: 'Communiqués', icon: '\u{1F4E3}', route: 'communiques-form' }, // 📣
-      { key: 'guides', label: 'Guides', icon: '\u{1F4D9}', route: 'guides-form' }, // 📙
-      { key: 'actualites', label: 'Actualités', icon: '\u{1F4F0}', route: 'actualites-form' }, // 📰
-      { key: 'audit-manuals', label: "Manuels d'audit", icon: '\u{1F4D8}', route: 'audit-manuals-form' }, // 📘
+      { key: 'newsletters', label: 'News / Newsletters', icon: 'envelope', route: 'newsletters-form' },
+      { key: 'rapports', label: 'Rapports officiels', icon: 'document-chart-bar', route: 'official-reports-form' },
+      { key: 'decrets', label: 'Décrets', icon: 'scale', route: 'decrets-form' },
+      { key: 'communiques', label: 'Communiqués', icon: 'megaphone', route: 'communiques-form' },
+      { key: 'guides', label: 'Guides', icon: 'book-open', route: 'guides-form' },
+      { key: 'actualites', label: 'Actualités', icon: 'newspaper', route: 'actualites-form' },
+      { key: 'audit-manuals', label: "Manuels d'audit", icon: 'clipboard-document-check', route: 'audit-manuals-form' },
     ],
   },
   {
     title: 'Médias',
     items: [
-      { key: 'media', label: 'Dossiers médias', icon: '\u{1F3AC}', route: 'media', comingSoon: true }, // 🎬
-      { key: 'banque-images', label: "Banque d'images", icon: '\u{1F4F8}', route: 'images-bank-form' }, // 📸
-      { key: 'videos', label: 'Vidéos', icon: '\u{1F3A5}', route: 'videos-form' }, // 🎥
-      { key: 'testimonials', label: 'Témoignages', icon: '\u{1F4AC}', route: 'testimonials-form' }, // 💬
+      { key: 'media', label: 'Dossiers médias', icon: 'film', route: 'media', comingSoon: true },
+      { key: 'banque-images', label: "Banque d'images", icon: 'photo', route: 'images-bank-form' },
+      { key: 'videos', label: 'Vidéos', icon: 'video-camera', route: 'videos-form' },
+      { key: 'testimonials', label: 'Témoignages', icon: 'chat-bubble-bottom-center-text', route: 'testimonials-form' },
     ],
   },
   {
     title: 'Carrière',
     items: [
-      { key: 'offres-emploi', label: "Publier une offre", icon: '\u{1F4E4}', route: 'offres-emploi-form' }, // 📤
-      { key: 'offres-emploi-gestion', label: "Gérer les offres", icon: '\u{1F5C4}\u{FE0F}', route: 'offres-emploi-gestion' }, // 🗄️
-      { key: 'candidatures', label: 'Candidatures', icon: '\u{1F4E5}', route: 'candidatures' }, // 📥
+      { key: 'offres-emploi', label: "Publier une offre", icon: 'paper-airplane', route: 'offres-emploi-form' },
+      { key: 'offres-emploi-gestion', label: "Gérer les offres", icon: 'briefcase', route: 'offres-emploi-gestion' },
+      { key: 'candidatures', label: 'Candidatures', icon: 'inbox-arrow-down', route: 'candidatures' },
     ],
   },
   {
     title: 'Marchés Publics',
     items: [
-      { key: 'ppm', label: 'Plan de Passation (PPM)', icon: '\u{1F5D2}\u{FE0F}', route: 'ppm-gestion' }, // 🗒️
-      { key: 'appels-offre', label: "Appels d'offres", icon: '\u{1F4EC}', route: 'appels-offre-gestion' }, // 📬
-      { key: 'avis-attribution', label: "Avis d'attribution", icon: '\u{1F3C5}', route: 'avis-attribution-gestion' }, // 🏅
-      { key: 'fournisseurs', label: "Demande d'agrément", icon: '\u{1FAAA}', route: 'fournisseurs-gestion' }, // 🪪
+      { key: 'ppm', label: 'Plan de Passation (PPM)', icon: 'clipboard-document-list', route: 'ppm-gestion' },
+      { key: 'appels-offre', label: "Appels d'offres", icon: 'document-duplicate', route: 'appels-offre-gestion' },
+      { key: 'avis-attribution', label: "Avis d'attribution", icon: 'trophy', route: 'avis-attribution-gestion' },
+      { key: 'fournisseurs', label: "Demande d'agrément", icon: 'identification', route: 'fournisseurs-gestion' },
     ],
   },
 ];

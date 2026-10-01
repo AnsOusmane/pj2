@@ -177,7 +177,10 @@
                   [checked]="isPermissionSelected(item.key)"
                   (change)="togglePermission(item.key, $any($event.target).checked)"
                 >
-                <span class="text-sm text-gray-700">{{ item.icon }} {{ item.label }}</span>
+                <span class="text-sm text-gray-700 flex items-center gap-1.5">
+                  <app-icon [name]="item.icon" class="w-4 h-4"></app-icon>
+                  {{ item.label }}
+                </span>
               </label>
             </div>
           </div>

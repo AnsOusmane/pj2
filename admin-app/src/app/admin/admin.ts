@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService, User } from '../services/auth.service';
 import { ADMIN_MENU, AdminMenuGroup, AdminMenuItem } from './admin-menu.config';
+import { IconComponent } from '../shared/icon/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconComponent],
   templateUrl: './admin.html',
 })
 export class AdminComponent implements OnInit {

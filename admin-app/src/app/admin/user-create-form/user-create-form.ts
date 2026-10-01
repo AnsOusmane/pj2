@@ -12,12 +12,13 @@ import {
 import { UsersService } from 'app/services/user.service';
 import { AuthService } from 'app/services/auth.service';
 import { ADMIN_MENU } from 'app/admin/admin-menu.config';
+import { IconComponent } from 'app/shared/icon/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-user-create-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent],
   templateUrl: './user-create-form.html',
   styleUrls: ['./user-create-form.css']
 })
