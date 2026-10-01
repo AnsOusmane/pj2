@@ -8,12 +8,13 @@ import {
 } from '@angular/forms';
 import { DecretsService } from 'app/services/decrets.service';
 import { PdfCoverFormBase } from '../shared/pdf-cover-form.base';
+import { IconComponent } from 'app/shared/icon/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-decrets-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent],
   templateUrl: './decrets-form.html',
   styleUrls: ['./decrets-form.css']
 })

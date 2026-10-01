@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OfficialReportsService } from '../../services/official-reports.service';
 import { PdfCoverFormBase } from '../shared/pdf-cover-form.base';
+import { IconComponent } from 'app/shared/icon/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-official-reports-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent],
   templateUrl: './official-reports-form.html'
 })
 export class OfficialReportsForm extends PdfCoverFormBase {

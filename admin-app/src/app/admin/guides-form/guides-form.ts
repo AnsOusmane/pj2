@@ -8,12 +8,13 @@ import {
 } from '@angular/forms';
 import { GuidesService } from 'app/services/guides.service';
 import { PdfCoverFormBase } from '../shared/pdf-cover-form.base';
+import { IconComponent } from 'app/shared/icon/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-guides-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent],
   templateUrl: './guides-form.html',
   styleUrls: ['./guides-form.css']
 })

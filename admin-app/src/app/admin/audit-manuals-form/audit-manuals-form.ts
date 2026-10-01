@@ -8,12 +8,13 @@ import {
 } from '@angular/forms';
 import { AuditManualsService } from 'app/services/audit-manuals.service';
 import { PdfCoverFormBase } from '../shared/pdf-cover-form.base';
+import { IconComponent } from 'app/shared/icon/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-audit-manuals-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent],
   templateUrl: './audit-manuals-form.html',
   styleUrls: ['./audit-manuals-form.css']
 })

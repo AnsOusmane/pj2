@@ -16,6 +16,7 @@ export abstract class PdfCoverFormBase {
   loading = signal(false);
   selectedPdf = signal<string | null>(null);
   selectedCover = signal<string | null>(null);
+  coverPreviewUrl = signal<string | null>(null);
 
   // Alignés sur la limite multer par défaut côté backend (10 Mo/fichier) ;
   // la couverture est plafonnée plus bas car c'est une simple image de vignette.
@@ -57,7 +58,25 @@ export abstract class PdfCoverFormBase {
 
     this.form.patchValue({ cover: file });
     this.selectedCover.set(file.name);
+    if (this.coverPreviewUrl()) URL.revokeObjectURL(this.coverPreviewUrl()!);
+    this.coverPreviewUrl.set(URL.createObjectURL(file));
     this.error.set(null);
+  }
+
+  removePdf(): void {
+    this.form.patchValue({ file: null });
+    this.selectedPdf.set(null);
+    const fileInput = document.getElementById('file') as HTMLInputElement | null;
+    if (fileInput) fileInput.value = '';
+  }
+
+  removeCover(): void {
+    if (this.coverPreviewUrl()) URL.revokeObjectURL(this.coverPreviewUrl()!);
+    this.form.patchValue({ cover: null });
+    this.selectedCover.set(null);
+    this.coverPreviewUrl.set(null);
+    const coverInput = document.getElementById('cover') as HTMLInputElement | null;
+    if (coverInput) coverInput.value = '';
   }
 
   isInvalid(field: string): boolean {
@@ -106,6 +125,8 @@ export abstract class PdfCoverFormBase {
     this.form.reset();
     this.selectedPdf.set(null);
     this.selectedCover.set(null);
+    if (this.coverPreviewUrl()) URL.revokeObjectURL(this.coverPreviewUrl()!);
+    this.coverPreviewUrl.set(null);
 
     const fileInput = document.getElementById('file') as HTMLInputElement | null;
     const coverInput = document.getElementById('cover') as HTMLInputElement | null;

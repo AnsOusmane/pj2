@@ -10,12 +10,13 @@ import {
 
 import { NewslettersService } from '../../services/newsletters.service';
 import { PdfCoverFormBase } from '../shared/pdf-cover-form.base';
+import { IconComponent } from 'app/shared/icon/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-newsletters-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent],
   templateUrl: './newsletters-form.html',
   styleUrls: ['./newsletters-form.css']
 })

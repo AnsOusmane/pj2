@@ -2,12 +2,13 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImagesBankService } from '../../services/images-bank.service';
+import { IconComponent } from 'app/shared/icon/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-images-bank-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent],
   templateUrl: './images-bank-form.html',
   styleUrls: ['./images-bank-form.css']
 })
@@ -17,6 +18,7 @@ export class ImagesBankForm {
   error = signal<string | null>(null);
   loading = signal(false);
   selectedImage = signal<string | null>(null);
+  imagePreviewUrl = signal<string | null>(null);
 
   constructor(
     private fb: FormBuilder,
@@ -36,7 +38,18 @@ export class ImagesBankForm {
     const file = input.files[0];
     this.form.patchValue({ image: file });
     this.selectedImage.set(file.name);
+    if (this.imagePreviewUrl()) URL.revokeObjectURL(this.imagePreviewUrl()!);
+    this.imagePreviewUrl.set(URL.createObjectURL(file));
     this.error.set(null);
+  }
+
+  removeImage(): void {
+    if (this.imagePreviewUrl()) URL.revokeObjectURL(this.imagePreviewUrl()!);
+    this.form.patchValue({ image: null });
+    this.selectedImage.set(null);
+    this.imagePreviewUrl.set(null);
+    const imageInput = document.getElementById('image') as HTMLInputElement | null;
+    if (imageInput) imageInput.value = '';
   }
 
   onSubmit(): void {
@@ -61,6 +74,8 @@ export class ImagesBankForm {
         this.loading.set(false);
         this.form.reset();
         this.selectedImage.set(null);
+        if (this.imagePreviewUrl()) URL.revokeObjectURL(this.imagePreviewUrl()!);
+        this.imagePreviewUrl.set(null);
         (document.getElementById('image') as HTMLInputElement).value = '';
       },
       error: (err) => {

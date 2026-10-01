@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CommuniqueService } from '../../services/communiques.service';  // ajuste le chemin si nécessaire
+import { IconComponent } from 'app/shared/icon/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,7 +15,8 @@ import { CommuniqueService } from '../../services/communiques.service';  // ajus
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IconComponent
   ],
   templateUrl: './communiques-form.html',
   // styleUrls: ['./communiques-form.component.css']   // décommente si tu as un fichier css
@@ -25,6 +27,7 @@ export class CommuniqueFormComponent {
   error = signal<string | null>(null);
   loading = signal<boolean>(false);
   selectedFileName = signal<string | null>(null);
+  selectedFilePreviewUrl = signal<string | null>(null);
 
   constructor(
     private fb: FormBuilder,
@@ -63,8 +66,19 @@ export class CommuniqueFormComponent {
       this.form.patchValue({ file });
       this.form.get('file')?.markAsTouched();
       this.selectedFileName.set(file.name);
+      if (this.selectedFilePreviewUrl()) URL.revokeObjectURL(this.selectedFilePreviewUrl()!);
+      this.selectedFilePreviewUrl.set(file.type.startsWith('image/') ? URL.createObjectURL(file) : null);
       this.error.set(null); // reset erreur précédente
     }
+  }
+
+  removeFile(): void {
+    if (this.selectedFilePreviewUrl()) URL.revokeObjectURL(this.selectedFilePreviewUrl()!);
+    this.form.patchValue({ file: null });
+    this.selectedFileName.set(null);
+    this.selectedFilePreviewUrl.set(null);
+    const fileInput = document.getElementById('file') as HTMLInputElement | null;
+    if (fileInput) fileInput.value = '';
   }
 
   async onSubmit(): Promise<void> {
@@ -93,6 +107,8 @@ export class CommuniqueFormComponent {
       // Reset complet
       this.form.reset();
       this.selectedFileName.set(null);
+      if (this.selectedFilePreviewUrl()) URL.revokeObjectURL(this.selectedFilePreviewUrl()!);
+      this.selectedFilePreviewUrl.set(null);
 
       // Reset manuel du champ fichier (important)
       const fileInput = document.getElementById('file') as HTMLInputElement;

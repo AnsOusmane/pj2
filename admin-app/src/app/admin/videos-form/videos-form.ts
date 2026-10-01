@@ -8,12 +8,13 @@ import {
 } from '@angular/forms';
 
 import { VideosService } from '../../services/videos.service';
+import { IconComponent } from 'app/shared/icon/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-videos-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent],
   templateUrl: './videos-form.html',
   styleUrls: ['./videos-form.css']
 })
@@ -27,6 +28,7 @@ export class VideosFormComponent {
 
   selectedThumbnail = signal<string | null>(null);
   selectedVideo = signal<string | null>(null);
+  thumbnailPreviewUrl = signal<string | null>(null);
 
   constructor(
     private fb: FormBuilder,
@@ -66,7 +68,25 @@ export class VideosFormComponent {
 
     this.form.patchValue({ thumbnail: file });
     this.selectedThumbnail.set(file.name);
+    if (this.thumbnailPreviewUrl()) URL.revokeObjectURL(this.thumbnailPreviewUrl()!);
+    this.thumbnailPreviewUrl.set(URL.createObjectURL(file));
     this.error.set(null);
+  }
+
+  removeThumbnail(): void {
+    if (this.thumbnailPreviewUrl()) URL.revokeObjectURL(this.thumbnailPreviewUrl()!);
+    this.form.patchValue({ thumbnail: null });
+    this.selectedThumbnail.set(null);
+    this.thumbnailPreviewUrl.set(null);
+    const thumbnailInput = document.getElementById('thumbnail') as HTMLInputElement | null;
+    if (thumbnailInput) thumbnailInput.value = '';
+  }
+
+  removeVideo(): void {
+    this.form.patchValue({ video: null });
+    this.selectedVideo.set(null);
+    const videoInput = document.getElementById('video') as HTMLInputElement | null;
+    if (videoInput) videoInput.value = '';
   }
 
   // ========================
@@ -157,6 +177,8 @@ export class VideosFormComponent {
 
     this.selectedThumbnail.set(null);
     this.selectedVideo.set(null);
+    if (this.thumbnailPreviewUrl()) URL.revokeObjectURL(this.thumbnailPreviewUrl()!);
+    this.thumbnailPreviewUrl.set(null);
 
     const thumbnailInput = document.getElementById('thumbnail') as HTMLInputElement;
     if (thumbnailInput) thumbnailInput.value = '';
