@@ -78,175 +78,158 @@
         <p class="text-gray-600">Dernières nouvelles de la CSU</p>
       </div>
 
-      <!-- ================================================== -->
-      <!-- FIL FACEBOOK (API Graph officielle — màj auto)     -->
-      <!-- ================================================== -->
-      <div class="rounded-3xl bg-white shadow-lg p-4 sm:p-6">
-        <div class="flex items-center gap-3 mb-6">
-          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-[#1877F2] text-white">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/>
-            </svg>
-          </span>
-          <div>
-            <h3 class="text-xl font-semibold leading-tight">Nos publications Facebook</h3>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+
+        <!-- ================================================== -->
+        <!-- FIL FACEBOOK (API Graph officielle — màj auto)     -->
+        <!-- ================================================== -->
+        <div class="rounded-3xl bg-white shadow-lg p-4 sm:p-6">
+          <div class="flex justify-center mb-6">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-[#1877F2] text-white">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/>
+              </svg>
+            </span>
+          </div>
+
+          <!-- Chargement -->
+          <div *ngIf="isLoadingFbPosts" class="text-center py-12 text-gray-500">
+            Chargement des publications…
+          </div>
+
+          <!-- Aucune publication / fil indisponible -->
+          <div *ngIf="!isLoadingFbPosts && fbPosts.length === 0"
+               class="text-center py-12 text-gray-500">
+            <p>Aucune publication à afficher pour le moment.</p>
             <a [href]="facebookPageUrl" target="_blank" rel="noopener noreferrer"
-               class="text-sm text-[#1877F2] hover:underline">Voir la page &rarr;</a>
+               class="inline-block mt-2 text-[#1877F2] hover:underline">
+              Consulter la page Facebook &rarr;
+            </a>
           </div>
-        </div>
 
-        <!-- Chargement -->
-        <div *ngIf="isLoadingFbPosts" class="text-center py-12 text-gray-500">
-          Chargement des publications…
-        </div>
-
-        <!-- Aucune publication / fil indisponible -->
-        <div *ngIf="!isLoadingFbPosts && fbPosts.length === 0"
-             class="text-center py-12 text-gray-500">
-          <p>Aucune publication à afficher pour le moment.</p>
-          <a [href]="facebookPageUrl" target="_blank" rel="noopener noreferrer"
-             class="inline-block mt-2 text-[#1877F2] hover:underline">
-            Consulter la page Facebook &rarr;
-          </a>
-        </div>
-
-        <!-- Publications natives -->
-        <div *ngIf="!isLoadingFbPosts && fbPosts.length > 0"
-             class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <a *ngFor="let p of fbPosts"
-             [href]="p.permalink_url || facebookPageUrl"
-             target="_blank" rel="noopener noreferrer"
-             class="group flex flex-col rounded-2xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-            <div *ngIf="p.image_url" class="aspect-[16/10] overflow-hidden bg-gray-100">
-              <img [src]="p.image_url" alt="Publication Facebook"
-                   class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                   loading="lazy" referrerpolicy="no-referrer" (error)="onImageError($event)" />
-            </div>
-            <div class="flex flex-col gap-2 p-4 grow">
-              <span class="text-xs text-gray-400">{{ p.created_time | date:'dd MMM yyyy' }}</span>
-              <p class="text-sm text-gray-700 leading-relaxed line-clamp-5 whitespace-pre-line">{{ p.message }}</p>
-              <span class="mt-auto pt-2 text-sm font-medium text-[#1877F2] group-hover:underline">
-                Voir sur Facebook &rarr;
-              </span>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!-- ================================================== -->
-      <!-- PUBLICATIONS DE L'AGENCE (actualités ajoutées manuellement) -->
-      <!-- ================================================== -->
-      <div class="rounded-3xl bg-white shadow-lg p-4 sm:p-6">
-        <div class="flex items-center gap-3 mb-6">
-          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-green-600 text-white">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/>
-            </svg>
-          </span>
-          <div>
-            <h3 class="text-xl font-semibold leading-tight">Publications de l'Agence</h3>
-            <p class="text-sm text-gray-500">Communiqués et actualités publiés par nos équipes</p>
-          </div>
-        </div>
-
-        <!-- Chargement -->
-        <div *ngIf="isLoadingActualites" class="text-center py-12 text-gray-500">
-          Chargement des actualités…
-        </div>
-
-        <!-- Erreur -->
-        <div *ngIf="!isLoadingActualites && actualitesError" class="text-center py-12 text-red-600">
-          {{ actualitesError }}
-        </div>
-
-        <!-- Aucune actualité -->
-        <div *ngIf="!isLoadingActualites && !actualitesError && actualites.length === 0"
-             class="text-center py-12 text-gray-500">
-          <p>Aucune actualité publiée pour le moment.</p>
-        </div>
-
-        <!-- Contenu -->
-        <div *ngIf="!isLoadingActualites && !actualitesError && actualites.length > 0" class="space-y-8">
-
-          <!-- À LA UNE : actualité la plus récente -->
-          <div
-            class="group grid md:grid-cols-2 rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer"
-            (click)="openActualite(actualites[0])"
-          >
-            <div class="relative h-64 md:h-full min-h-[260px] bg-gray-100 overflow-hidden">
-              <img loading="lazy"
-                [src]="actualites[0].image_url"
-                [alt]="actualites[0].title"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                (error)="onImageError($event)"
-              />
-              <span class="absolute top-4 left-4 bg-green-600 text-white text-[11px] font-bold px-3 py-1 rounded-xl shadow">
-                À LA UNE
-              </span>
-              <div *ngIf="actualites[0].video_embed_url || actualites[0].video"
-                   class="absolute inset-0 flex items-center justify-center bg-black/10">
-                <div class="w-14 h-14 bg-white/90 rounded-2xl flex items-center justify-center shadow-lg">
-                  <svg class="w-6 h-6 text-green-600 translate-x-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"/>
-                  </svg>
-                </div>
+          <!-- Publications natives : liste verticale -->
+          <div *ngIf="!isLoadingFbPosts && fbPosts.length > 0" class="space-y-4">
+            <a *ngFor="let p of fbPosts"
+               [href]="p.permalink_url || facebookPageUrl"
+               target="_blank" rel="noopener noreferrer"
+               class="group flex gap-4 rounded-2xl border border-gray-100 bg-white p-3 shadow-sm hover:shadow-md transition-shadow">
+              <div *ngIf="p.image_url" class="shrink-0 w-24 h-24 rounded-xl overflow-hidden bg-gray-100">
+                <img [src]="p.image_url" alt="Publication Facebook"
+                     class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                     loading="lazy" referrerpolicy="no-referrer" (error)="onImageError($event)" />
               </div>
-            </div>
-            <div class="flex flex-col justify-center p-6 md:p-8 bg-white">
-              <span class="text-xs font-medium text-green-600 mb-2">
-                {{ actualites[0].published_at | date:'dd MMMM yyyy' }}
-              </span>
-              <h3 class="text-2xl font-bold leading-snug mb-3 group-hover:text-green-700 transition-colors">
-                {{ actualites[0].title }}
-              </h3>
-              <p class="text-gray-600 leading-relaxed line-clamp-4">
-                {{ actualites[0].content }}
-              </p>
-              <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-green-600 group-hover:gap-2 transition-all">
-                Lire la suite &rarr;
-              </span>
-            </div>
+              <div class="flex flex-col gap-1 min-w-0 justify-center">
+                <span class="text-xs text-gray-400">{{ p.created_time | date:'dd MMM yyyy' }}</span>
+                <p class="text-sm text-gray-700 leading-relaxed line-clamp-3 whitespace-pre-line">{{ p.message }}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- ================================================== -->
+        <!-- PUBLICATIONS DE L'AGENCE (actualités ajoutées manuellement) -->
+        <!-- ================================================== -->
+        <div class="rounded-3xl bg-white shadow-lg p-4 sm:p-6">
+          <div class="flex justify-center mb-6">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-green-600 text-white">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/>
+              </svg>
+            </span>
           </div>
 
-          <!-- Grille des autres actualités -->
-          <div *ngIf="actualites.length > 1" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Chargement -->
+          <div *ngIf="isLoadingActualites" class="text-center py-12 text-gray-500">
+            Chargement des actualités…
+          </div>
+
+          <!-- Erreur -->
+          <div *ngIf="!isLoadingActualites && actualitesError" class="text-center py-12 text-red-600">
+            {{ actualitesError }}
+          </div>
+
+          <!-- Aucune actualité -->
+          <div *ngIf="!isLoadingActualites && !actualitesError && actualites.length === 0"
+               class="text-center py-12 text-gray-500">
+            <p>Aucune actualité publiée pour le moment.</p>
+          </div>
+
+          <!-- Contenu : liste verticale -->
+          <div *ngIf="!isLoadingActualites && !actualitesError && actualites.length > 0" class="space-y-4">
+
+            <!-- À LA UNE : actualité la plus récente -->
             <div
-              *ngFor="let a of actualites | slice:1"
-              class="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer"
-              (click)="openActualite(a)"
+              class="group rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer"
+              (click)="openActualite(actualites[0])"
             >
               <div class="relative h-48 bg-gray-100 overflow-hidden">
                 <img loading="lazy"
-                  [src]="a.image_url"
-                  [alt]="a.title"
+                  [src]="actualites[0].image_url"
+                  [alt]="actualites[0].title"
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   (error)="onImageError($event)"
                 />
-                <div *ngIf="a.video_embed_url || a.video"
+                <span class="absolute top-4 left-4 bg-green-600 text-white text-[11px] font-bold px-3 py-1 rounded-xl shadow">
+                  À LA UNE
+                </span>
+                <div *ngIf="actualites[0].video_embed_url || actualites[0].video"
                      class="absolute inset-0 flex items-center justify-center bg-black/10">
-                  <div class="w-10 h-10 bg-white/90 rounded-xl flex items-center justify-center shadow-lg">
-                    <svg class="w-4 h-4 text-green-600 translate-x-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <div class="w-14 h-14 bg-white/90 rounded-2xl flex items-center justify-center shadow-lg">
+                    <svg class="w-6 h-6 text-green-600 translate-x-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"/>
                     </svg>
                   </div>
                 </div>
               </div>
-              <div class="p-5">
-                <span class="text-xs text-gray-400">{{ a.published_at | date:'dd MMM yyyy' }}</span>
-                <h3 class="font-semibold text-lg mt-2 mb-2 line-clamp-2 group-hover:text-green-700 transition-colors">
-                  {{ a.title }}
-                </h3>
-                <p class="text-gray-600 text-sm line-clamp-3">
-                  {{ a.content }}
-                </p>
-                <span class="mt-3 inline-block text-sm font-medium text-green-600 group-hover:underline">
-                  Lire la suite &rarr;
+              <div class="p-5 bg-white">
+                <span class="text-xs font-medium text-green-600 mb-2 block">
+                  {{ actualites[0].published_at | date:'dd MMMM yyyy' }}
                 </span>
+                <h3 class="text-lg font-bold leading-snug mb-2 group-hover:text-green-700 transition-colors">
+                  {{ actualites[0].title }}
+                </h3>
+                <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                  {{ actualites[0].content }}
+                </p>
               </div>
             </div>
-          </div>
 
+            <!-- Liste des autres actualités -->
+            <div
+              *ngFor="let a of actualites | slice:1"
+              class="group flex gap-4 rounded-2xl border border-gray-100 bg-white p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+              (click)="openActualite(a)"
+            >
+              <div class="relative shrink-0 w-24 h-24 rounded-xl overflow-hidden bg-gray-100">
+                <img loading="lazy"
+                  [src]="a.image_url"
+                  [alt]="a.title"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  (error)="onImageError($event)"
+                />
+                <div *ngIf="a.video_embed_url || a.video"
+                     class="absolute inset-0 flex items-center justify-center bg-black/10">
+                  <div class="w-8 h-8 bg-white/90 rounded-lg flex items-center justify-center shadow">
+                    <svg class="w-3.5 h-3.5 text-green-600 translate-x-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col gap-1 min-w-0 justify-center">
+                <span class="text-xs text-gray-400">{{ a.published_at | date:'dd MMM yyyy' }}</span>
+                <h3 class="font-semibold text-sm line-clamp-1 group-hover:text-green-700 transition-colors">
+                  {{ a.title }}
+                </h3>
+                <p class="text-gray-600 text-xs line-clamp-2">
+                  {{ a.content }}
+                </p>
+              </div>
+            </div>
+
+          </div>
         </div>
+
       </div>
 
     </div>
