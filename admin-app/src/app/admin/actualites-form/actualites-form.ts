@@ -20,6 +20,7 @@ export class ActualitesFormComponent {
   loading = signal<boolean>(false);
 
   selectedFile: File | null = null;
+  selectedVideoFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -28,16 +29,26 @@ export class ActualitesFormComponent {
     this.form = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(5)]],
       content: [''],
+      video_url: [''],
       link: ['']
     });
   }
 
-  // 📌 sélection du fichier
+  // 📌 sélection du fichier image
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
+    }
+  }
+
+  // 📌 sélection du fichier vidéo (alternative au lien YouTube)
+  onVideoFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.selectedVideoFile = input.files[0];
     }
   }
 
@@ -58,7 +69,11 @@ export class ActualitesFormComponent {
     formData.append('title', this.form.value.title);
     formData.append('content', this.form.value.content || '');
     formData.append('link', this.form.value.link || '');
+    formData.append('video_url', this.form.value.video_url || '');
     formData.append('thumbnail', this.selectedFile); // 👈 fichier image
+    if (this.selectedVideoFile) {
+      formData.append('video', this.selectedVideoFile); // 👈 fichier vidéo (optionnel)
+    }
 
     this.actualitesService.createActualiteWithUpload(formData).subscribe({
       next: () => {
@@ -77,6 +92,7 @@ export class ActualitesFormComponent {
     this.loading.set(false);
     this.form.reset();
     this.selectedFile = null;
+    this.selectedVideoFile = null;
   }
 
   isInvalid(field: string): boolean {

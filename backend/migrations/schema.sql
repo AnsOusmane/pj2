@@ -213,6 +213,8 @@ CREATE TABLE IF NOT EXISTS actualites (
   title        VARCHAR(255) NOT NULL,
   content      TEXT NOT NULL,
   image_url    TEXT,
+  video_url    TEXT,
+  video        TEXT,
   link         TEXT,
   published_at TIMESTAMPTZ,
   created_at   TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP

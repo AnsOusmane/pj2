@@ -8,6 +8,8 @@ export interface Actualite {
   title: string;
   content?: string;
   image_url?: string;
+  video_url?: string;
+  video?: string;
   link?: string;
   published_at?: string;
 }

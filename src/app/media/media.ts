@@ -288,6 +288,8 @@ export class MediaComponent implements OnInit {
             item.photo ||
             item.cover;
 
+          const embedId = item.video_url ? this.extractYoutubeId(item.video_url) : null;
+
           return {
             ...item,
 
@@ -297,7 +299,12 @@ export class MediaComponent implements OnInit {
 
             image_url: image
               ? this.media(image)
-              : 'assets/studio.webp'
+              : 'assets/studio.webp',
+
+            video: item.video ? this.media(item.video) : null,
+            video_embed_url: embedId
+              ? this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${embedId}`)
+              : null
           };
         });
 
@@ -311,6 +318,14 @@ export class MediaComponent implements OnInit {
         this.cdr.markForCheck();
       }
     });
+  }
+
+  // Extrait l'ID vidéo d'un lien YouTube (watch?v=, youtu.be/, embed/, shorts/)
+  // pour reconstruire une URL /embed/ valide en iframe — YouTube refuse
+  // d'intégrer ses pages "watch" directement (X-Frame-Options).
+  private extractYoutubeId(url: string): string | null {
+    const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/);
+    return match ? match[1] : null;
   }
 
   // =====================================================

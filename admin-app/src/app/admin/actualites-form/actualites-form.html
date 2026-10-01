@@ -38,6 +38,24 @@
         >
       </div>
 
+      <!-- Vidéo YouTube -->
+      <div>
+        <label class="block font-medium mb-2">Vidéo YouTube (optionnel)</label>
+        <input type="text" formControlName="video_url" placeholder="https://www.youtube.com/watch?v=..." class="w-full border rounded-lg px-4 py-3">
+        <p class="text-xs text-gray-500 mt-1">Ou téléversez un fichier vidéo ci-dessous — pas besoin des deux.</p>
+      </div>
+
+      <!-- Vidéo uploadée -->
+      <div>
+        <label class="block font-medium mb-2">Vidéo à téléverser (optionnel)</label>
+        <input
+          type="file"
+          (change)="onVideoFileSelected($event)"
+          accept="video/*"
+          class="w-full border rounded-lg px-4 py-3"
+        >
+      </div>
+
       <!-- Lien -->
       <div>
         <label class="block font-medium mb-2">Lien externe (optionnel)</label>

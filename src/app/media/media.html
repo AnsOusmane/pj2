@@ -185,6 +185,10 @@
               <span class="absolute top-4 left-4 bg-green-600 text-white text-[11px] font-bold px-3 py-1 rounded-xl shadow">
                 À LA UNE
               </span>
+              <div *ngIf="actualites[0].video_embed_url || actualites[0].video"
+                   class="absolute inset-0 flex items-center justify-center bg-black/10">
+                <div class="w-14 h-14 bg-white/90 rounded-2xl flex items-center justify-center shadow-lg">▶</div>
+              </div>
             </div>
             <div class="flex flex-col justify-center p-6 md:p-8 bg-white">
               <span class="text-xs font-medium text-green-600 mb-2">
@@ -216,6 +220,10 @@
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   (error)="onImageError($event)"
                 />
+                <div *ngIf="a.video_embed_url || a.video"
+                     class="absolute inset-0 flex items-center justify-center bg-black/10">
+                  <div class="w-10 h-10 bg-white/90 rounded-xl flex items-center justify-center shadow-lg text-sm">▶</div>
+                </div>
               </div>
               <div class="p-5">
                 <span class="text-xs text-gray-400">{{ a.published_at | date:'dd MMM yyyy' }}</span>
@@ -549,6 +557,33 @@
     <p class="text-gray-700 whitespace-pre-line leading-relaxed">
       {{ selectedActualite.content }}
     </p>
+
+    <!-- vidéo : lien YouTube intégré en priorité, sinon fichier uploadé -->
+    <div *ngIf="selectedActualite.video_embed_url" class="mt-6 aspect-video rounded-xl overflow-hidden bg-black">
+      <iframe
+        [src]="selectedActualite.video_embed_url"
+        class="w-full h-full"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <div *ngIf="!selectedActualite.video_embed_url && selectedActualite.video" class="mt-6 aspect-video rounded-xl overflow-hidden bg-black">
+      <video controls class="w-full h-full">
+        <source [src]="selectedActualite.video" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- lien externe -->
+    <a
+      *ngIf="selectedActualite.link"
+      [href]="selectedActualite.link"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-green-600 hover:underline"
+    >
+      En savoir plus &rarr;
+    </a>
 
     <!-- date -->
     <div class="mt-6 text-xs text-gray-500">
