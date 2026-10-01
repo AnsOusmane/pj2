@@ -33,15 +33,29 @@
         <p class="px-2 text-[11px] font-bold text-green-300/80 uppercase tracking-wider mb-2">
           {{ group.title }}
         </p>
-        <a
-          *ngFor="let item of group.items"
-          [routerLink]="item.route"
-          routerLinkActive="bg-white text-green-800 shadow-md font-semibold"
-          class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-green-50 hover:bg-white/10 transition mb-1"
-        >
-          <app-icon [name]="item.icon" class="w-5 h-5"></app-icon>
-          <span>{{ item.label }}</span>
-        </a>
+        <ng-container *ngFor="let item of group.items">
+          <a
+            *ngIf="!item.comingSoon"
+            [routerLink]="item.route"
+            routerLinkActive="bg-white text-green-800 shadow-md font-semibold"
+            class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-green-50 hover:bg-white/10 transition mb-1"
+          >
+            <app-icon [name]="item.icon" class="w-5 h-5"></app-icon>
+            <span>{{ item.label }}</span>
+          </a>
+
+          <div
+            *ngIf="item.comingSoon"
+            title="Bientôt disponible"
+            class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-green-100/40 mb-1 cursor-not-allowed select-none"
+          >
+            <app-icon [name]="item.icon" class="w-5 h-5"></app-icon>
+            <span>{{ item.label }}</span>
+            <span class="ml-auto text-[9px] font-bold uppercase tracking-wide bg-white/10 px-2 py-0.5 rounded-full">
+              Bientôt
+            </span>
+          </div>
+        </ng-container>
       </div>
     </nav>
 
