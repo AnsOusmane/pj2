@@ -172,7 +172,11 @@
                 <span class="absolute top-4 left-4 bg-green-600 text-white text-[11px] font-bold px-3 py-1 rounded-xl shadow">
                   À LA UNE
                 </span>
-                <div *ngIf="actualites[0].video_embed_url || actualites[0].video"
+                <span *ngIf="actualites[0].gallery?.length > 0"
+                      class="absolute top-4 right-4 bg-black/60 text-white text-[11px] font-bold px-2.5 py-1 rounded-xl shadow">
+                  +{{ actualites[0].gallery.length }}
+                </span>
+                <div *ngIf="actualites[0].hasVideo"
                      class="absolute inset-0 flex items-center justify-center bg-black/10">
                   <div class="w-14 h-14 bg-white/90 rounded-2xl flex items-center justify-center shadow-lg">
                     <svg class="w-6 h-6 text-green-600 translate-x-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -207,7 +211,11 @@
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   (error)="onImageError($event)"
                 />
-                <div *ngIf="a.video_embed_url || a.video"
+                <span *ngIf="a.gallery?.length > 0"
+                      class="absolute top-1 right-1 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md shadow">
+                  +{{ a.gallery.length }}
+                </span>
+                <div *ngIf="a.hasVideo"
                      class="absolute inset-0 flex items-center justify-center bg-black/10">
                   <div class="w-8 h-8 bg-white/90 rounded-lg flex items-center justify-center shadow">
                     <svg class="w-3.5 h-3.5 text-green-600 translate-x-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -547,20 +555,28 @@
       {{ selectedActualite.content }}
     </p>
 
-    <!-- vidéo : lien YouTube intégré en priorité, sinon fichier uploadé -->
-    <div *ngIf="selectedActualite.video_embed_url" class="mt-6 aspect-video rounded-xl overflow-hidden bg-black">
-      <iframe
-        [src]="selectedActualite.video_embed_url"
-        class="w-full h-full"
-        frameborder="0"
-        allowfullscreen
-      ></iframe>
-    </div>
-
-    <div *ngIf="!selectedActualite.video_embed_url && selectedActualite.video" class="mt-6 aspect-video rounded-xl overflow-hidden bg-black">
-      <video controls class="w-full h-full">
-        <source [src]="selectedActualite.video" type="video/mp4">
-      </video>
+    <!-- galerie façon Facebook : toutes les photos/vidéos, ouvre le lightbox -->
+    <div *ngIf="selectedActualite.gallery?.length > 0" class="mt-6 grid grid-cols-3 gap-2">
+      <div
+        *ngFor="let item of visibleGalleryItems; let i = index"
+        class="relative aspect-square rounded-xl overflow-hidden bg-gray-900 cursor-pointer group"
+        (click)="openLightbox(i)"
+      >
+        <img *ngIf="item.thumbUrl" [src]="item.thumbUrl" [alt]="selectedActualite.title"
+             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+             (error)="onImageError($event)" />
+        <div *ngIf="item.type === 'video'" class="absolute inset-0 flex items-center justify-center bg-black/20">
+          <div class="w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow">
+            <svg class="w-4 h-4 text-green-600 translate-x-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"/>
+            </svg>
+          </div>
+        </div>
+        <div *ngIf="i === 5 && selectedActualite.gallery.length > 6"
+             class="absolute inset-0 flex items-center justify-center bg-black/60 text-white text-xl font-bold">
+          +{{ selectedActualite.gallery.length - 6 }}
+        </div>
+      </div>
     </div>
 
     <!-- lien externe -->
@@ -581,5 +597,54 @@
 
   </div>
 
+</div>
+
+<!-- ===================================================== -->
+<!-- LIGHTBOX GALERIE (façon Facebook) -->
+<!-- ===================================================== -->
+<div
+  *ngIf="lightboxIndex !== null && selectedActualite?.gallery?.[lightboxIndex] as item"
+  class="fixed inset-0 bg-black/90 z-[60] flex items-center justify-center p-4"
+  (click)="closeLightbox()"
+>
+  <button
+    (click)="closeLightbox($event)"
+    class="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white"
+  >
+    ✕
+  </button>
+
+  <button
+    *ngIf="selectedActualite.gallery.length > 1"
+    (click)="prevLightboxItem($event)"
+    class="absolute left-2 sm:left-6 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white text-xl"
+  >
+    &lsaquo;
+  </button>
+
+  <div class="max-w-4xl w-full aspect-video" (click)="$event.stopPropagation()">
+    <img *ngIf="item.type === 'image'" [src]="item.displayUrl" class="w-full h-full object-contain" (error)="onImageError($event)" />
+
+    <iframe *ngIf="item.type === 'video' && item.embedUrl"
+      [src]="item.embedUrl" class="w-full h-full" frameborder="0" allowfullscreen>
+    </iframe>
+
+    <video *ngIf="item.type === 'video' && !item.embedUrl && item.displayUrl" controls class="w-full h-full">
+      <source [src]="item.displayUrl" type="video/mp4">
+    </video>
+  </div>
+
+  <button
+    *ngIf="selectedActualite.gallery.length > 1"
+    (click)="nextLightboxItem($event)"
+    class="absolute right-2 sm:right-6 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white text-xl"
+  >
+    &rsaquo;
+  </button>
+
+  <div *ngIf="selectedActualite.gallery.length > 1"
+       class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-xs bg-white/10 px-3 py-1 rounded-full">
+    {{ lightboxIndex + 1 }} / {{ selectedActualite.gallery.length }}
+  </div>
 </div>
 </div>

@@ -3,6 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
+export interface ActualiteMediaItem {
+  type: 'image' | 'video';
+  url: string;
+  source?: 'upload' | 'youtube';
+}
+
 export interface Actualite {
   id?: number;
   title: string;
@@ -10,6 +16,7 @@ export interface Actualite {
   image_url?: string;
   video_url?: string;
   video?: string;
+  media?: ActualiteMediaItem[];
   link?: string;
   published_at?: string;
 }

@@ -30,6 +30,7 @@ export class MediaComponent implements OnInit {
 
   selectedVideo: any = null;
   selectedActualite: any = null; // MODAL ACTUALITE
+  lightboxIndex: number | null = null; // index dans selectedActualite.gallery
 
   newsletters: any[] = [];
   videos: any[] = [];
@@ -288,7 +289,15 @@ export class MediaComponent implements OnInit {
             item.photo ||
             item.cover;
 
-          const embedId = item.video_url ? this.extractYoutubeId(item.video_url) : null;
+          // Galerie façon Facebook (plusieurs images/vidéos). Si absente (anciennes
+          // actualités créées avant cette fonctionnalité), on reconstitue une
+          // galerie à partir de l'unique vidéo historique (video_url / video).
+          const rawMedia: { type: string; url: string; source?: string }[] = Array.isArray(item.media) ? item.media : [];
+          let gallery = rawMedia.map((m) => this.buildGalleryItem(m));
+          if (gallery.length === 0) {
+            if (item.video_url) gallery.push(this.buildGalleryItem({ type: 'video', url: item.video_url, source: 'youtube' }));
+            if (item.video) gallery.push(this.buildGalleryItem({ type: 'video', url: item.video, source: 'upload' }));
+          }
 
           return {
             ...item,
@@ -301,10 +310,8 @@ export class MediaComponent implements OnInit {
               ? this.media(image)
               : 'assets/studio.webp',
 
-            video: item.video ? this.media(item.video) : null,
-            video_embed_url: embedId
-              ? this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${embedId}`)
-              : null
+            gallery,
+            hasVideo: gallery.some((g) => g.type === 'video')
           };
         });
 
@@ -328,17 +335,77 @@ export class MediaComponent implements OnInit {
     return match ? match[1] : null;
   }
 
+  // Normalise un item de galerie (venant de l'API) en objet prêt à afficher :
+  // vignette (thumbUrl), lecture (displayUrl ou embedUrl selon le type/source).
+  private buildGalleryItem(m: { type: string; url: string; source?: string }): any {
+    if (m.type === 'image') {
+      const url = this.media(m.url);
+      return { type: 'image', thumbUrl: url, displayUrl: url };
+    }
+
+    if (m.source === 'youtube') {
+      const id = this.extractYoutubeId(m.url);
+      return {
+        type: 'video',
+        source: 'youtube',
+        thumbUrl: id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : 'assets/studio.webp',
+        embedUrl: id ? this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${id}`) : null
+      };
+    }
+
+    const url = this.media(m.url);
+    return { type: 'video', source: 'upload', thumbUrl: null, displayUrl: url };
+  }
+
+  // Limité à 6 vignettes dans la modale (façon Facebook, "+N" sur la dernière).
+  get visibleGalleryItems(): any[] {
+    return (this.selectedActualite?.gallery || []).slice(0, 6);
+  }
+
   // =====================================================
   // MODAL ACTUALITE
   // =====================================================
 
   openActualite(actualite: any): void {
     this.selectedActualite = actualite;
+    this.lightboxIndex = null;
     this.cdr.markForCheck();
   }
 
-closeActualite(): void {
-  this.selectedActualite = null;
-  this.cdr.markForCheck();
-}
+  closeActualite(): void {
+    this.selectedActualite = null;
+    this.lightboxIndex = null;
+    this.cdr.markForCheck();
+  }
+
+  // =====================================================
+  // LIGHTBOX GALERIE (façon Facebook)
+  // =====================================================
+
+  openLightbox(index: number): void {
+    this.lightboxIndex = index;
+    this.cdr.markForCheck();
+  }
+
+  closeLightbox(event?: Event): void {
+    event?.stopPropagation();
+    this.lightboxIndex = null;
+    this.cdr.markForCheck();
+  }
+
+  nextLightboxItem(event?: Event): void {
+    event?.stopPropagation();
+    const gallery = this.selectedActualite?.gallery || [];
+    if (this.lightboxIndex === null || gallery.length === 0) return;
+    this.lightboxIndex = (this.lightboxIndex + 1) % gallery.length;
+    this.cdr.markForCheck();
+  }
+
+  prevLightboxItem(event?: Event): void {
+    event?.stopPropagation();
+    const gallery = this.selectedActualite?.gallery || [];
+    if (this.lightboxIndex === null || gallery.length === 0) return;
+    this.lightboxIndex = (this.lightboxIndex - 1 + gallery.length) % gallery.length;
+    this.cdr.markForCheck();
+  }
 }

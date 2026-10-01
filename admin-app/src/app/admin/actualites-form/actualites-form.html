@@ -1,19 +1,20 @@
 <div class="max-w-3xl mx-auto py-12 px-4">
   <div class="bg-white rounded-2xl shadow-xl p-8">
-    
+
     <div class="admin-form-head">
       <h1 class="text-3xl font-bold text-green-700">Ajouter une Actualité</h1>
+      <p class="text-sm text-gray-500 mt-1">Couverture + galerie façon Facebook (plusieurs photos et vidéos).</p>
     </div>
 
-    <div *ngIf="success()" class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+    <div *ngIf="success()" class="mt-6 mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
       {{ success() }}
     </div>
 
-    <div *ngIf="error()" class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+    <div *ngIf="error()" class="mt-6 mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
       {{ error() }}
     </div>
 
-    <form [formGroup]="form" (submit)="onSubmit(); $event.preventDefault()" class="space-y-6">
+    <form [formGroup]="form" (submit)="onSubmit(); $event.preventDefault()" class="space-y-8 mt-6">
 
       <!-- Titre -->
       <div>
@@ -27,48 +28,126 @@
         <textarea rows="6" formControlName="content" class="w-full border rounded-lg px-4 py-3"></textarea>
       </div>
 
-      <!-- Thumbnail upload -->
-      <div>
-        <label class="block font-medium mb-2">Thumbnail *</label>
-        <input 
-          type="file" 
-          (change)="onFileSelected($event)" 
-          accept="image/*"
-          class="w-full border rounded-lg px-4 py-3"
-        >
+      <!-- ============================================== -->
+      <!-- COUVERTURE -->
+      <!-- ============================================== -->
+      <div class="border-t pt-6">
+        <label class="flex items-center gap-2 font-medium mb-3">
+          <app-icon name="photo" class="w-5 h-5 text-green-600"></app-icon>
+          Image de couverture *
+        </label>
+        <p class="text-xs text-gray-500 mb-3">Affichée dans les listes et la mise en avant du site public.</p>
+
+        <div *ngIf="!coverPreviewUrl"
+             class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-green-400 transition">
+          <input type="file" (change)="onCoverSelected($event)" accept="image/*" class="w-full">
+        </div>
+
+        <div *ngIf="coverPreviewUrl" class="relative inline-block">
+          <img [src]="coverPreviewUrl" class="h-40 w-auto rounded-xl object-cover shadow">
+          <button type="button" (click)="removeCover()"
+                  class="absolute -top-2 -right-2 w-7 h-7 bg-white rounded-full shadow flex items-center justify-center hover:bg-red-50 text-red-600">
+            <app-icon name="x-mark" class="w-4 h-4"></app-icon>
+          </button>
+        </div>
       </div>
 
-      <!-- Vidéo YouTube -->
-      <div>
-        <label class="block font-medium mb-2">Vidéo YouTube (optionnel)</label>
-        <input type="text" formControlName="video_url" placeholder="https://www.youtube.com/watch?v=..." class="w-full border rounded-lg px-4 py-3">
-        <p class="text-xs text-gray-500 mt-1">Ou téléversez un fichier vidéo ci-dessous — pas besoin des deux.</p>
+      <!-- ============================================== -->
+      <!-- GALERIE D'IMAGES -->
+      <!-- ============================================== -->
+      <div class="border-t pt-6">
+        <label class="flex items-center gap-2 font-medium mb-3">
+          <app-icon name="photo" class="w-5 h-5 text-green-600"></app-icon>
+          Galerie d'images (optionnel)
+        </label>
+        <p class="text-xs text-gray-500 mb-3">Ajoutez autant de photos supplémentaires que nécessaire.</p>
+
+        <div class="flex flex-wrap gap-3 mb-3">
+          <div *ngFor="let img of galleryImages; let i = index" class="relative">
+            <img [src]="img.previewUrl" class="w-24 h-24 rounded-xl object-cover shadow border border-gray-100">
+            <button type="button" (click)="removeGalleryImage(i)"
+                    class="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full shadow flex items-center justify-center hover:bg-red-50 text-red-600">
+              <app-icon name="x-mark" class="w-3.5 h-3.5"></app-icon>
+            </button>
+          </div>
+        </div>
+
+        <input type="file" (change)="onGalleryImagesSelected($event)" accept="image/*" multiple
+               class="w-full border rounded-lg px-4 py-3">
       </div>
 
-      <!-- Vidéo uploadée -->
-      <div>
-        <label class="block font-medium mb-2">Vidéo à téléverser (optionnel)</label>
-        <input
-          type="file"
-          (change)="onVideoFileSelected($event)"
-          accept="video/*"
-          class="w-full border rounded-lg px-4 py-3"
-        >
+      <!-- ============================================== -->
+      <!-- LIENS VIDÉO YOUTUBE (plusieurs) -->
+      <!-- ============================================== -->
+      <div class="border-t pt-6">
+        <label class="flex items-center gap-2 font-medium mb-3">
+          <app-icon name="video-camera" class="w-5 h-5 text-green-600"></app-icon>
+          Vidéos YouTube (optionnel)
+        </label>
+
+        <div class="space-y-2 mb-3">
+          <div *ngFor="let link of youtubeLinks; let i = index" class="flex items-center gap-2">
+            <input type="text"
+                   [value]="link"
+                   (input)="updateYoutubeLink(i, $any($event.target).value)"
+                   placeholder="https://www.youtube.com/watch?v=..."
+                   class="flex-1 border rounded-lg px-4 py-3">
+            <button type="button" (click)="removeYoutubeLink(i)"
+                    class="shrink-0 w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-red-50 text-red-600">
+              <app-icon name="x-mark" class="w-4 h-4"></app-icon>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" (click)="addYoutubeLink()"
+                class="flex items-center gap-1.5 text-sm font-medium text-green-600 hover:text-green-700">
+          <app-icon name="plus" class="w-4 h-4"></app-icon>
+          Ajouter un lien
+        </button>
       </div>
 
-      <!-- Lien -->
-      <div>
-        <label class="block font-medium mb-2">Lien externe (optionnel)</label>
+      <!-- ============================================== -->
+      <!-- VIDÉOS À TÉLÉVERSER (plusieurs) -->
+      <!-- ============================================== -->
+      <div class="border-t pt-6">
+        <label class="flex items-center gap-2 font-medium mb-3">
+          <app-icon name="video-camera" class="w-5 h-5 text-green-600"></app-icon>
+          Vidéos à téléverser (optionnel)
+        </label>
+
+        <div class="space-y-2 mb-3">
+          <div *ngFor="let video of galleryVideoFiles; let i = index"
+               class="flex items-center justify-between gap-2 border border-gray-200 rounded-lg px-4 py-2.5">
+            <span class="text-sm text-gray-700 truncate">{{ video.name }}</span>
+            <button type="button" (click)="removeGalleryVideo(i)"
+                    class="shrink-0 w-7 h-7 rounded-full flex items-center justify-center hover:bg-red-50 text-red-600">
+              <app-icon name="x-mark" class="w-4 h-4"></app-icon>
+            </button>
+          </div>
+        </div>
+
+        <input type="file" (change)="onGalleryVideosSelected($event)" accept="video/*" multiple
+               class="w-full border rounded-lg px-4 py-3">
+      </div>
+
+      <!-- ============================================== -->
+      <!-- LIEN EXTERNE -->
+      <!-- ============================================== -->
+      <div class="border-t pt-6">
+        <label class="flex items-center gap-2 font-medium mb-2">
+          <app-icon name="link" class="w-5 h-5 text-green-600"></app-icon>
+          Lien externe (optionnel)
+        </label>
         <input type="text" formControlName="link" placeholder="https://..." class="w-full border rounded-lg px-4 py-3">
       </div>
 
       <!-- Submit -->
-      <button 
-        type="submit" 
-        [disabled]="loading()" 
+      <button
+        type="submit"
+        [disabled]="loading()"
         class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-xl"
       >
-        {{ loading() ? 'Enregistrement...' : 'Publier l’Actualité' }}
+        {{ loading() ? 'Enregistrement...' : "Publier l'Actualité" }}
       </button>
 
     </form>

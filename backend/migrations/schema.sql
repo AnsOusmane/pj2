@@ -215,6 +215,9 @@ CREATE TABLE IF NOT EXISTS actualites (
   image_url    TEXT,
   video_url    TEXT,
   video        TEXT,
+  -- Galerie façon Facebook : [{type:'image'|'video', url, source?:'youtube'|'upload'}, ...]
+  -- image_url/video_url/video restent la couverture + 1ère vidéo pour compat ascendante.
+  media        JSONB NOT NULL DEFAULT '[]',
   link         TEXT,
   published_at TIMESTAMPTZ,
   created_at   TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
