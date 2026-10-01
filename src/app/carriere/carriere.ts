@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -6,6 +6,7 @@ import { CandidaturesService } from '../services/candidatures.service';
 import { OffresEmploiService, OffreEmploi } from '../services/offres-emploi.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-carriere',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
@@ -16,6 +17,7 @@ export class CarriereComponent implements OnInit {
   private http = inject(HttpClient);
   private candidaturesService = inject(CandidaturesService);
   private offresService = inject(OffresEmploiService);
+  private cdr = inject(ChangeDetectorRef);
 
   envoiEnCours = false;
   messageSucces = '';
@@ -44,8 +46,8 @@ export class CarriereComponent implements OnInit {
   chargerOffres(): void {
     this.isLoadingOffres = true;
     this.offresService.getAll().subscribe({
-      next: (offres) => { this.offres = offres; this.isLoadingOffres = false; },
-      error: () => { this.offres = []; this.isLoadingOffres = false; }
+      next: (offres) => { this.offres = offres; this.isLoadingOffres = false; this.cdr.markForCheck(); },
+      error: () => { this.offres = []; this.isLoadingOffres = false; this.cdr.markForCheck(); }
     });
   }
 
@@ -150,5 +152,6 @@ ${cvLink}
       this.messageErreur = "Erreur lors de l'envoi";
     }
     this.envoiEnCours = false;
+    this.cdr.markForCheck();
   }
 }

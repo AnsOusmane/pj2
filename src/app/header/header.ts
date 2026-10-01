@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
@@ -6,6 +6,7 @@ import { SearchService } from '../core/search/search.service';
 import { environment } from '../../environments/environment';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule],
@@ -40,8 +41,8 @@ export class HeaderComponent implements AfterViewInit {
   bannerInterval: any;
 
   partnerImages: string[] = [
-    'assets/mincarou/1.png',
-    'assets/mincarou/2.png',
+    'assets/mincarou/1.webp',
+    'assets/mincarou/2.webp',
     'assets/mincarou/3.png',
     'assets/mincarou/4.webp',
     'assets/mincarou/5.webp',
@@ -54,7 +55,8 @@ export class HeaderComponent implements AfterViewInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private cdr: ChangeDetectorRef
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
     this.router.events.subscribe(event => {
@@ -77,17 +79,21 @@ export class HeaderComponent implements AfterViewInit {
   // PUB
   nextBanner() {
     this.imageOpacity = 0;
+    this.cdr.markForCheck();
     setTimeout(() => {
       this.bannerIndex = (this.bannerIndex + 1) % this.bannerImages.length;
       this.imageOpacity = 1;
+      this.cdr.markForCheck();
     }, 200);
   }
 
   previousBanner() {
     this.imageOpacity = 0;
+    this.cdr.markForCheck();
     setTimeout(() => {
       this.bannerIndex = (this.bannerIndex - 1 + this.bannerImages.length) % this.bannerImages.length;
       this.imageOpacity = 1;
+      this.cdr.markForCheck();
     }, 200);
   }
 
@@ -100,9 +106,11 @@ export class HeaderComponent implements AfterViewInit {
   // Partenaires
   nextPartner() {
     this.partnerOpacity = 0;
+    this.cdr.markForCheck();
     setTimeout(() => {
       this.partnerIndex = (this.partnerIndex + 1) % this.partnerImages.length;
       this.partnerOpacity = 1;
+      this.cdr.markForCheck();
     }, 200);
   }
 
@@ -268,6 +276,7 @@ export class HeaderComponent implements AfterViewInit {
     if (!this.isPinned) {
       this.hoverTimeout = setTimeout(() => {
         this.isVisible = false;
+        this.cdr.markForCheck();
       }, 2000);
     }
   }

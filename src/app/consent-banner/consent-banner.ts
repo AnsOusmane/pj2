@@ -1,8 +1,9 @@
-import { Component, signal, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AnalyticsService } from 'core/services/analytics.service/analytics.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-consent-banner',
   standalone: true,
   imports: [CommonModule],

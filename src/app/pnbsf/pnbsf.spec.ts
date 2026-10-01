@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Pnbsf } from './pnbsf';
+import { PnbsfComponent } from './pnbsf';
 
-describe('Pnbsf', () => {
-  let component: Pnbsf;
-  let fixture: ComponentFixture<Pnbsf>;
+describe('PnbsfComponent', () => {
+  let component: PnbsfComponent;
+  let fixture: ComponentFixture<PnbsfComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Pnbsf]
+      imports: [PnbsfComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Pnbsf);
+    fixture = TestBed.createComponent(PnbsfComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -160,7 +160,7 @@
          pl-3 lg:pl-4 xl:pl-5 pr-2 pt-1.5 pb-1.5 mt-2
          rounded-xl">
     <!-- Navigation principale desktop -->
-    <div class="flex items-center gap-x-2.5 lg:gap-x-3 xl:gap-x-4 2xl:gap-x-5 text-[13px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] font-sharetech flex-nowrap">
+    <div class="flex items-center flex-wrap gap-x-2.5 lg:gap-x-3 xl:gap-x-4 2xl:gap-x-5 gap-y-2 text-[13px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] font-sharetech w-full">
       <!-- Bouton Nous soutenir -->
       <button (click)="goToMaintenance()"
         class="border-2 border-yellow-500 text-yellow-500 font-semibold px-2.5 py-1.5 rounded-full bg-white hover:bg-yellow-400 hover:text-green-700 transition whitespace-nowrap text-[13px] xl:text-[15px] 2xl:text-[18px]"
@@ -362,10 +362,15 @@
       <button (click)="openSearch()"
         aria-label="Rechercher sur le site"
         title="Rechercher (Ctrl+K)"
-        class="ml-auto mb-0 flex items-center gap-0.5 w-36 lg:w-44 xl:w-56 h-8 px-2 overflow-hidden cursor-text
+        class="mb-0 flex items-center justify-center gap-0.5 w-9 xl:w-44 2xl:w-56 h-8 px-2 overflow-hidden cursor-text
                rounded-tl-[1px] rounded-bl-[25px] rounded-tr-[25px] rounded-br-[1px]
-               bg-white hover:bg-gray-50 border border-gray-200 text-gray-500 transition flex-shrink-0 mr-6">
-        <span class="hidden lg:block flex-1 text-center text-[13px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] text-gray-500 truncate">Rechercher</span>
+               bg-white hover:bg-gray-50 border border-gray-200 text-gray-500 transition flex-shrink-0 ml-auto mr-2 xl:mr-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0 xl:hidden" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
+        </svg>
+        <span class="hidden xl:block flex-1 text-center text-[14px] xl:text-[16px] 2xl:text-[18px] text-gray-500 truncate">Rechercher</span>
       </button>
     </div>
   </nav>

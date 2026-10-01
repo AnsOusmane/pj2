@@ -1,4 +1,4 @@
-import { Component, signal, AfterViewInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, AfterViewInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FournisseursService } from 'app/services/fournisseurs.service';
@@ -20,6 +20,7 @@ interface RecapDossier {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-fournisseurs',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, BackButtonComponent],

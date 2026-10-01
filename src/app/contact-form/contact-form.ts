@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-contact-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
@@ -25,7 +26,7 @@ export class ContactFormComponent {
   private readonly WEB3FORMS_URL = 'https://api.web3forms.com/submit';
   private readonly ACCESS_KEY = '41427ced-4d84-4f59-abe5-86cdbe354d51';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   onSubmit() {
     if (this.form.invalid) {
@@ -62,11 +63,15 @@ export class ContactFormComponent {
           if (response?.success) {
             this.submitted = true;
             this.form.reset();
-            setTimeout(() => this.submitted = false, 5000); // message disparaît après 5s
+            setTimeout(() => {
+              this.submitted = false; // message disparaît après 5s
+              this.cdr.markForCheck();
+            }, 5000);
           } else {
             this.errorMsg = response?.message || 'Erreur lors de l’envoi.';
           }
           this.loading = false;
+          this.cdr.markForCheck();
         },
         error: (err: HttpErrorResponse) => {
           this.loading = false;
@@ -77,6 +82,7 @@ export class ContactFormComponent {
           } else {
             this.errorMsg = err.error?.message || 'Une erreur est survenue. Réessayez plus tard.';
           }
+          this.cdr.markForCheck();
         }
       });
   }

@@ -1,18 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 
-import { CommuniquesPresse } from './communiques-presse';
+import { CommuniquesPresseComponent } from './communiques-presse';
 
-describe('CommuniquesPresse', () => {
-  let component: CommuniquesPresse;
-  let fixture: ComponentFixture<CommuniquesPresse>;
+describe('CommuniquesPresseComponent', () => {
+  let component: CommuniquesPresseComponent;
+  let fixture: ComponentFixture<CommuniquesPresseComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommuniquesPresse]
+      imports: [CommuniquesPresseComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CommuniquesPresse);
+    fixture = TestBed.createComponent(CommuniquesPresseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

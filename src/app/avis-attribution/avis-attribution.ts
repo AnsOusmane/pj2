@@ -1,10 +1,11 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AvisAttributionService, AvisAttribution } from 'app/services/avis-attribution.service';
 import { BackButtonComponent } from 'app/shared/back-button/back-button';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-avis-attribution',
   standalone: true,
   imports: [CommonModule, FormsModule, BackButtonComponent],

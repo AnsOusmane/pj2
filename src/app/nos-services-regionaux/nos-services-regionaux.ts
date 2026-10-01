@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 
@@ -13,6 +13,7 @@ interface ServiceRegional {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-nos-services-regionaux',
   standalone: true,
   templateUrl: './nos-services-regionaux.html',
@@ -54,6 +55,13 @@ export class NosServicesRegionauxComponent implements AfterViewInit {
   nearest: ServiceRegional | null = null;
   distanceToNearestKm: number | null = null;
 
+  /** true si la géolocalisation a échoué / a été refusée : on propose un choix manuel. */
+  geoFailed = false;
+  /** true après une sélection manuelle (pas de position réelle : pas d'itinéraire tracé). */
+  manualSelection = false;
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
   ngAfterViewInit(): void {
     this.initMap();
     this.getUser();
@@ -73,19 +81,55 @@ export class NosServicesRegionauxComponent implements AfterViewInit {
   // Récupération position utilisateur
   //--------------------------------------------------------------------
   private getUser() {
+    if (!navigator.geolocation) {
+      this.geoFailed = true;
+      return;
+    }
     navigator.geolocation.getCurrentPosition(
       pos => {
         this.userLat = pos.coords.latitude;
         this.userLng = pos.coords.longitude;
+        this.manualSelection = false;
         this.findNearestAndRoute();
+        // Le callback de géolocalisation s'exécute hors de la zone Angular
+        // (zone.js ne le patche pas) : sans ceci, la carte (rendue par
+        // Leaflet, hors Angular) se met à jour mais pas l'encadré « plus
+        // proche » ci-dessus, qui reste figé (OnPush).
+        this.cdr.markForCheck();
       },
       () => {
-        this.userLat = 14.75;
-        this.userLng = -17.47;
-        this.findNearestAndRoute();
+        // Position indisponible ou refus de permission : on ne devine plus une
+        // ville au hasard (l'ancien repli sur Dakar donnait un « plus proche »
+        // faux pour tout le monde ailleurs) — on demande un choix manuel.
+        this.geoFailed = true;
+        this.cdr.markForCheck();
       },
-      { enableHighAccuracy: true }
+      { enableHighAccuracy: true, timeout: 10000 }
     );
+  }
+
+  /**
+   * Choix manuel d'une région, utilisé quand la géolocalisation échoue ou
+   * quand l'utilisateur veut simplement corriger une détection imprécise.
+   * Pas de position réelle connue : on affiche la fiche de l'agence choisie
+   * sans distance ni tracé d'itinéraire (le bouton « Voir l'itinéraire »
+   * laisse Google Maps utiliser la position de l'appareil).
+   */
+  selectRegionManually(sr: ServiceRegional): void {
+    if (this.routingControl) {
+      this.map.removeControl(this.routingControl);
+      this.routingControl = null;
+    }
+    this.nearest = sr;
+    this.distanceToNearestKm = null;
+    this.manualSelection = true;
+    this.geoFailed = false;
+    this.map?.setView([sr.lat, sr.lng], 9);
+
+    // Le résultat (nearest-box) s'affiche en haut de page : on y ramène
+    // l'utilisateur, notamment quand il vient de choisir depuis une carte
+    // tout en bas de la liste « Tous nos Services Régionaux ».
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   //--------------------------------------------------------------------
@@ -164,6 +208,7 @@ private drawRealItinerary() {
 
       // Conversion en km
       this.distanceToNearestKm = route.summary.totalDistance / 1000;
+      this.cdr.markForCheck();
     })
     .addTo(this.map);
 }

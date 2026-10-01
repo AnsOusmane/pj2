@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-missionsvision',
   standalone: true,
   imports: [CommonModule, RouterModule],
@@ -69,7 +70,7 @@ import { RouterModule } from '@angular/router';
     <!-- Mission 3 -->
     <div class="bg-white p-6 rounded-2xl shadow-lg border border-green-100 flex flex-col md:flex-row items-start gap-5 animate-slide-up delay-300 hover:shadow-2xl transition-all duration-300">
       <img
-        src="assets/illustrations/mission3.png"
+        src="assets/illustrations/mission3.webp"
         alt="Étendre l'affiliation"
         class="h-48 md:h-56 w-full md:w-1/3 object-cover rounded-xl flex-shrink-0"
       >

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormGroup,
@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-reclamation-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
@@ -41,7 +42,7 @@ export class ReclamationFormComponent {
 
   private readonly FORMSUBMIT_URL = 'https://formsubmit.co/ajax/reclamation@sencsu.sn';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   phoneValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
@@ -141,8 +142,12 @@ export class ReclamationFormComponent {
         this.form.reset();
         // Reset honeypot aussi
         this.form.get('_honey')?.setValue('');
-        setTimeout(() => this.submitted = false, 7000);
+        setTimeout(() => {
+          this.submitted = false;
+          this.cdr.markForCheck();
+        }, 7000);
         this.loading = false;
+        this.cdr.markForCheck();
       },
       error: (err: HttpErrorResponse) => {
   this.loading = false;
@@ -159,6 +164,7 @@ export class ReclamationFormComponent {
     msg = err.error.message;
   }
   this.errorMsg = msg;
+  this.cdr.markForCheck();
 
       }
     });

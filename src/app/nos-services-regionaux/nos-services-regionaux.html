@@ -5,11 +5,32 @@
   </h1>
 
 
+  <!-- Géolocalisation indisponible : choix manuel de la région -->
+  @if (geoFailed) {
+    <div class="nearest-box mb-6">
+      <h2 class="text-xl font-semibold text-green-700 mb-2">
+        Position non disponible
+      </h2>
+      <p class="mb-3">
+        Nous n'avons pas pu détecter votre position (localisation refusée ou indisponible).
+        Choisissez votre région ci-dessous pour afficher votre agence :
+      </p>
+      <select
+        class="border border-gray-300 rounded-lg px-3 py-2 w-full max-w-xs"
+        (change)="selectRegionManually(services[+($any($event.target).value)])">
+        <option value="" disabled selected>Choisir une région…</option>
+        @for (sr of services; track $index) {
+          <option [value]="$index">{{ sr.region }}</option>
+        }
+      </select>
+    </div>
+  }
+
   <!-- Info SR le plus proche -->
   @if (nearest) {
     <div class="nearest-box mb-6">
       <h2 class="text-xl font-semibold text-green-700 mb-2">
-        Service Régional le plus proche : {{ nearest.region }}
+        {{ manualSelection ? 'Service Régional sélectionné' : 'Service Régional le plus proche' }} : {{ nearest.region }}
       </h2>
 
       <p><strong>Adresse : </strong>{{ nearest.adresse }}</p>
@@ -26,6 +47,12 @@
       <button class="itineraire-btn" (click)="openItinerary()">
         Voir l’itinéraire
       </button>
+
+      <p class="mt-2 text-sm">
+        <a href="javascript:void(0)" class="text-green-700 underline" (click)="geoFailed = true">
+          Ce n'est pas votre région ? Choisissez-la manuellement
+        </a>
+      </p>
     </div>
   }
  <!-- Carte Leaflet -->
@@ -41,6 +68,11 @@
         <p>{{ sr.telephone }}</p>
         <!-- <p>{{ sr.email }}</p> -->
         <p>{{ sr.horaires }}</p>
+        <button
+          class="mt-2 text-sm text-green-700 underline"
+          (click)="selectRegionManually(sr)">
+          Choisir cette agence
+        </button>
       </div>
     }
   </div>

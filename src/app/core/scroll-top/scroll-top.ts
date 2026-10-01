@@ -1,4 +1,4 @@
-import { Component, signal, Inject, PLATFORM_ID, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, Inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 /**
@@ -9,6 +9,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
  * Un clic ramène en haut de page avec un défilement fluide.
  */
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-scroll-top',
   standalone: true,
   imports: [CommonModule],

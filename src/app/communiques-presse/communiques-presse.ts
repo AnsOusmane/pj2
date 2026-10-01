@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment'; // ou environment.prod
@@ -14,6 +14,7 @@ interface Communique {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-communiques-presse',
   standalone: true,
   imports: [CommonModule],
@@ -34,7 +35,7 @@ export class CommuniquesPresseComponent implements OnInit {
 
   private apiUrl = `${environment.apiBaseUrl}/communiques`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.loadCommuniques();
@@ -66,11 +67,13 @@ export class CommuniquesPresseComponent implements OnInit {
 
         this.updateFilteredCommuniques();
         this.isLoading = false;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Erreur chargement communiqués', err);
         this.errorMessage = 'Impossible de charger les communiqués pour le moment. Réessayez plus tard.';
         this.isLoading = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -86,16 +89,19 @@ export class CommuniquesPresseComponent implements OnInit {
   selectCat(cat: string) {
     this.selectedCat = cat;
     this.updateFilteredCommuniques();
+    this.cdr.markForCheck();
   }
 
   openModal(c: Communique) {
     this.modal = c;
     document.body.style.overflow = 'hidden';
+    this.cdr.markForCheck();
   }
 
   closeModal() {
     this.modal = null;
     document.body.style.overflow = 'auto';
+    this.cdr.markForCheck();
   }
 
   retryLoad() {

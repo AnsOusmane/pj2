@@ -1,18 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 
-import { AppelsOffre } from './appels-offre';
+import { AppelsOffreComponent } from './appels-offre';
 
-describe('AppelsOffre', () => {
-  let component: AppelsOffre;
-  let fixture: ComponentFixture<AppelsOffre>;
+describe('AppelsOffreComponent', () => {
+  let component: AppelsOffreComponent;
+  let fixture: ComponentFixture<AppelsOffreComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppelsOffre]
+      imports: [AppelsOffreComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AppelsOffre);
+    fixture = TestBed.createComponent(AppelsOffreComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

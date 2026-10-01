@@ -13,9 +13,8 @@ const pool = new Pool({
 
   // SSL strict : le certificat de Neon est signé par une AC publique de confiance,
   // on valide donc la chaîne (protection contre le MITM).
-  ssl: {
-    rejectUnauthorized: true
-  },
+  // TEMP (test pentest local, à revert): désactivé via PGSSL_DISABLE pour Postgres local sans TLS.
+  ssl: process.env.PGSSL_DISABLE === '1' ? false : { rejectUnauthorized: true },
 
   // Optimisations
   max: 20, // nombre max de connexions simultanées

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-assurance-maladie',
   standalone: true,
   imports: [CommonModule],
@@ -13,7 +14,7 @@ export class AssuranceMaladieComponent implements OnInit {
   selected: string | null = null;
   selectedKey: string | null = null;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private cdr: ChangeDetectorRef) {}
 
   data: Record<string, string> = {
     poste: `
@@ -128,6 +129,7 @@ export class AssuranceMaladieComponent implements OnInit {
       if (type && this.data[type]) {
         this.showContent(type);
       }
+      this.cdr.markForCheck();
     });
   }
 

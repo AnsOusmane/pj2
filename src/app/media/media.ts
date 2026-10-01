@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
@@ -10,6 +10,7 @@ import { ActualitesService } from '../services/actualites.service';
 import { FacebookService, FacebookPost } from '../services/facebook.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-media',
   standalone: true,
   imports: [CommonModule],
@@ -51,7 +52,8 @@ export class MediaComponent implements OnInit {
     private videosService: VideosService,
     private testimonialsService: TestimonialsService,
     private actualitesService: ActualitesService,
-    private facebookService: FacebookService
+    private facebookService: FacebookService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -72,10 +74,12 @@ export class MediaComponent implements OnInit {
       next: (res) => {
         this.fbPosts = res.posts || [];
         this.isLoadingFbPosts = false;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.fbPosts = [];
         this.isLoadingFbPosts = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -144,11 +148,13 @@ export class MediaComponent implements OnInit {
         });
 
         this.isLoadingNewsletters = false;
+        this.cdr.markForCheck();
       },
 
       error: () => {
         this.newslettersError = 'Impossible de charger les newsletters.';
         this.isLoadingNewsletters = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -184,11 +190,13 @@ export class MediaComponent implements OnInit {
         }));
 
         this.isLoadingVideos = false;
+        this.cdr.markForCheck();
       },
 
       error: () => {
         this.videosError = 'Impossible de charger les vidéos.';
         this.isLoadingVideos = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -207,10 +215,12 @@ export class MediaComponent implements OnInit {
       embed_url: embedUrl,
       video_url: video.video_url
     };
+    this.cdr.markForCheck();
   }
 
   closeModal(): void {
     this.selectedVideo = null;
+    this.cdr.markForCheck();
   }
 
   // =====================================================
@@ -247,11 +257,13 @@ export class MediaComponent implements OnInit {
         });
 
         this.isLoadingTestimonials = false;
+        this.cdr.markForCheck();
       },
 
       error: () => {
         this.testimonialsError = 'Impossible de charger les témoignages.';
         this.isLoadingTestimonials = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -290,11 +302,13 @@ export class MediaComponent implements OnInit {
         });
 
         this.isLoadingActualites = false;
+        this.cdr.markForCheck();
       },
 
       error: () => {
         this.actualitesError = 'Impossible de charger les actualités.';
         this.isLoadingActualites = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -305,9 +319,11 @@ export class MediaComponent implements OnInit {
 
   openActualite(actualite: any): void {
     this.selectedActualite = actualite;
+    this.cdr.markForCheck();
   }
 
 closeActualite(): void {
   this.selectedActualite = null;
+  this.cdr.markForCheck();
 }
 }

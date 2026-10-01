@@ -1,6 +1,7 @@
-import { Component, signal, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, signal, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterOutlet, Router } from '@angular/router';
+import { RouterOutlet, Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 // Composants
 import { HeaderComponent } from './header/header';
@@ -15,8 +16,13 @@ import { SearchComponent } from './core/search/search';
 import { ChatComponent } from './core/chat/chat';
 import { ConsentBannerComponent } from './consent-banner/consent-banner';
 import { environment } from '../environments/environment';
+import { SeoService } from './services/seo.service';
+
+// Reprise si une route n'a pas de data.description (ex. pages admin, non indexées).
+const DEFAULT_DESCRIPTION = "Agence de la Couverture Sanitaire Universelle du Sénégal : programmes de santé, marchés publics, actualités et services aux citoyens.";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
   standalone: true,
   imports: [
@@ -53,8 +59,29 @@ export class App implements AfterViewInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    public router: Router
-  ) {}
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    private seo: SeoService,
+    private cdr: ChangeDetectorRef
+  ) {
+    // Meta description par route (le <title>, lui, est géré nativement par
+    // Angular Router via la propriété `title` de chaque Route).
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => {
+          let route = this.activatedRoute;
+          while (route.firstChild) route = route.firstChild;
+          return route;
+        }),
+        filter((route) => route.outlet === 'primary'),
+        mergeMap((route) => route.data)
+      )
+      .subscribe((data) => {
+        this.seo.setDescription(data['description'] || DEFAULT_DESCRIPTION);
+        this.cdr.markForCheck();
+      });
+  }
 
   ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;

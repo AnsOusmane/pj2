@@ -1,23 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { PLATFORM_ID } from '@angular/core';
 
 import { AnalyticsService } from './analytics.service';
 
 describe('AnalyticsService', () => {
-  let component: AnalyticsService;
-  let fixture: ComponentFixture<AnalyticsService>;
+  let service: AnalyticsService;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AnalyticsService]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(AnalyticsService);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }]
+    });
+    service = TestBed.inject(AnalyticsService);
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(service).toBeTruthy();
   });
 });

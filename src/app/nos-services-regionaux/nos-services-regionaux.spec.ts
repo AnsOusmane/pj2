@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NosServicesRegionaux } from './nos-services-regionaux';
+import { NosServicesRegionauxComponent } from './nos-services-regionaux';
 
-describe('NosServicesRegionaux', () => {
-  let component: NosServicesRegionaux;
-  let fixture: ComponentFixture<NosServicesRegionaux>;
+describe('NosServicesRegionauxComponent', () => {
+  let component: NosServicesRegionauxComponent;
+  let fixture: ComponentFixture<NosServicesRegionauxComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NosServicesRegionaux]
+      imports: [NosServicesRegionauxComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NosServicesRegionaux);
+    fixture = TestBed.createComponent(NosServicesRegionauxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

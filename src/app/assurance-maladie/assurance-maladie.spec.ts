@@ -1,18 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 
-import { AssuranceMaladie } from './assurance-maladie';
+import { AssuranceMaladieComponent } from './assurance-maladie';
 
-describe('AssuranceMaladie', () => {
-  let component: AssuranceMaladie;
-  let fixture: ComponentFixture<AssuranceMaladie>;
+describe('AssuranceMaladieComponent', () => {
+  let component: AssuranceMaladieComponent;
+  let fixture: ComponentFixture<AssuranceMaladieComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AssuranceMaladie]
+      imports: [AssuranceMaladieComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AssuranceMaladie);
+    fixture = TestBed.createComponent(AssuranceMaladieComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

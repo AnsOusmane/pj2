@@ -1,9 +1,10 @@
-import { Component, Inject, PLATFORM_ID, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, PLATFORM_ID, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { isPlatformBrowser, NgIf } from '@angular/common';
 import { ContactFormComponent } from "../contact-form/contact-form";
 import { Router } from '@angular/router';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-hero',
   standalone: true,
   imports: [NgIf, ContactFormComponent],
@@ -191,7 +192,8 @@ export class HeroComponent implements OnInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -278,6 +280,7 @@ export class HeroComponent implements OnInit {
     clearTimeout(this.hideOverlayTimer);
     this.hideOverlayTimer = setTimeout(() => {
       this.showPlayOverlay = false;
+      this.cdr.markForCheck();
     }, 1400);
   }
 }

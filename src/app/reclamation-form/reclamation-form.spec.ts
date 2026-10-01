@@ -1,18 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 
-import { ReclamationForm } from './reclamation-form';
+import { ReclamationFormComponent } from './reclamation-form';
 
-describe('ReclamationForm', () => {
-  let component: ReclamationForm;
-  let fixture: ComponentFixture<ReclamationForm>;
+describe('ReclamationFormComponent', () => {
+  let component: ReclamationFormComponent;
+  let fixture: ComponentFixture<ReclamationFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReclamationForm]
+      imports: [ReclamationFormComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReclamationForm);
+    fixture = TestBed.createComponent(ReclamationFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

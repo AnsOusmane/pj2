@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Cec } from './cec';
+import { CecComponent } from './cec';
 
-describe('Cec', () => {
-  let component: Cec;
-  let fixture: ComponentFixture<Cec>;
+describe('CecComponent', () => {
+  let component: CecComponent;
+  let fixture: ComponentFixture<CecComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Cec]
+      imports: [CecComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Cec);
+    fixture = TestBed.createComponent(CecComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

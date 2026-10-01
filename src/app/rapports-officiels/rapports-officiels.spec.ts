@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RapportsOfficiels } from './rapports-officiels';
+import { RapportsOfficielsComponent } from './rapports-officiels';
 
-describe('RapportsOfficiels', () => {
-  let component: RapportsOfficiels;
-  let fixture: ComponentFixture<RapportsOfficiels>;
+describe('RapportsOfficielsComponent', () => {
+  let component: RapportsOfficielsComponent;
+  let fixture: ComponentFixture<RapportsOfficielsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RapportsOfficiels]
+      imports: [RapportsOfficielsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RapportsOfficiels);
+    fixture = TestBed.createComponent(RapportsOfficielsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

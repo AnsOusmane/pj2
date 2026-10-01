@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZeroCinqAns } from './zero-cinq-ans';
+import { ZeroCinqAnsComponent } from './zero-cinq-ans';
 
-describe('ZeroCinqAns', () => {
-  let component: ZeroCinqAns;
-  let fixture: ComponentFixture<ZeroCinqAns>;
+describe('ZeroCinqAnsComponent', () => {
+  let component: ZeroCinqAnsComponent;
+  let fixture: ComponentFixture<ZeroCinqAnsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ZeroCinqAns]
+      imports: [ZeroCinqAnsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ZeroCinqAns);
+    fixture = TestBed.createComponent(ZeroCinqAnsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface Membre {
@@ -9,6 +9,7 @@ interface Membre {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-organigramme',
   standalone: true,
   imports: [CommonModule],
@@ -17,8 +18,8 @@ interface Membre {
 })
 export class OrganigrammeComponent {
   membres: Membre[] = [
-    { nom: 'Dr Séga Gueye', poste: 'Directeur Général de la SEN-CSU', photo: 'assets/team/1.jpg', bio: 'Directeur général depuis 2024...' },
-    { nom: 'Matar Traoré', poste: 'Secrétaire Général', photo: 'assets/team/2.png', bio: 'Secrétaire générale...' },
+    { nom: 'Dr Séga Gueye', poste: 'Directeur Général de la SEN-CSU', photo: 'assets/team/1.webp', bio: 'Directeur général depuis 2024...' },
+    { nom: 'Matar Traoré', poste: 'Secrétaire Général', photo: 'assets/team/2.webp', bio: 'Secrétaire générale...' },
     { nom: 'Samba Diop', poste: 'RH', photo: 'assets/avatar.svg', bio: 'Directeur des...' },
     { nom: 'Mor Fall', poste: 'Audit', photo: 'assets/avatar.svg', bio: 'Directeur de l...' },
   ];

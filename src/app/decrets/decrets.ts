@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DecretsService, Decret } from '../services/decrets.service';
 import { environment } from '../../environments/environment';
@@ -14,6 +14,7 @@ interface DecretDisplay {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-decrets',
   standalone: true,
   imports: [CommonModule],
@@ -29,7 +30,7 @@ export class DecretsComponent implements OnInit {
   private mediaBase = environment.mediaBaseUrl || 
                      environment.apiBaseUrl.replace(/\/api$/, '');
 
-  constructor(private decretsService: DecretsService) {}
+  constructor(private decretsService: DecretsService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadDecrets();
@@ -51,11 +52,13 @@ export class DecretsComponent implements OnInit {
           loaded: false
         }));
         this.isLoading = false;
+        this.cdr.markForCheck();
       },
       error: (err: any) => {                         // ← Typé
         console.error('Erreur lors du chargement des décrets :', err);
         this.errorMessage = 'Impossible de charger les décrets pour le moment.';
         this.isLoading = false;
+        this.cdr.markForCheck();
       }
     });
   }

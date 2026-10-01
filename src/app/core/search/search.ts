@@ -1,5 +1,4 @@
-import {
-  Component,
+import { ChangeDetectionStrategy, Component,
   computed,
   signal,
   effect,
@@ -7,8 +6,7 @@ import {
   ViewChild,
   Inject,
   PLATFORM_ID,
-  HostListener,
-} from '@angular/core';
+  HostListener, } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { SearchService, SearchEntry } from './search.service';
@@ -20,6 +18,7 @@ import { SearchService, SearchEntry } from './search.service';
  * Filtrage instantané côté client, navigation clavier (↑ ↓ Entrée), Échap ferme.
  */
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-search',
   standalone: true,
   imports: [CommonModule],

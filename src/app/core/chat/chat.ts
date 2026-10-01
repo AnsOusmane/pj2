@@ -1,12 +1,10 @@
-import {
-  Component,
+import { ChangeDetectionStrategy, Component,
   signal,
   effect,
   ElementRef,
   ViewChild,
   Inject,
-  PLATFORM_ID,
-} from '@angular/core';
+  PLATFORM_ID, } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { ChatService, ChatMessage, ChatLangMode } from './chat.service';
@@ -20,6 +18,7 @@ import { ChatApiService, ChatHistoryItem } from './chat-api.service';
  * repli sur Claude côté backend.
  */
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-chat',
   standalone: true,
   imports: [CommonModule],
