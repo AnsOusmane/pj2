@@ -27,6 +27,9 @@ export class HeaderComponent implements AfterViewInit {
   /** Prod : la section Appels d'offres est en pause → on ouvre une modale d'info. */
   @Output() openAppelsOffreInfo = new EventEmitter<void>();
 
+  /** Affiche « (en édition) » à côté du libellé tant que la section n'est pas publiée. */
+  readonly appelsOffreEnabled = environment.appelsOffreEnabled;
+
   bannerImages: string[] = [
     'assets/pub/1.png',
     'assets/pub/2.png',
