@@ -198,7 +198,6 @@
             <li>
               <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToAppelsOffreSection()">
                 Appels d'offres
-                <span *ngIf="!appelsOffreEnabled" class="text-xs italic text-gray-400 font-normal">(en édition)</span>
               </button>
             </li>
                  <li>
@@ -352,7 +351,6 @@
       <!-- Appels d'offres -->
       <button (click)="goToAppelsOffreSection()" class="text-white hover:text-green-300 transition pb-1 border-b-4 border-transparent group-hover:border-gray-50 whitespace-nowrap">
         Appels d'offres
-        <span *ngIf="!appelsOffreEnabled" class="text-xs italic text-green-200/70 font-normal">(en édition)</span>
       </button>
 
       <!-- Carrière -->
@@ -480,10 +478,7 @@
         <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="onAboutClick(); closeMobileMenu()">A propos</button>
         <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="openMissionsvision.emit(); closeMobileMenu()">Vision & Missions</button>
         <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="showOrganigrammeClick(); closeMobileMenu()">Organigramme</button>
-        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="goToAppelsOffreSection()">
-          Appels d'offres
-          <span *ngIf="!appelsOffreEnabled" class="text-xs italic text-gray-400 font-normal">(en édition)</span>
-        </button>
+        <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="goToAppelsOffreSection()">Appels d'offres</button>
 
         <!-- Sous-menu Publications -->
         <button class="w-full text-left px-2 py-2 rounded-lg flex justify-between items-center hover:bg-green-600/10 transition"
@@ -565,7 +560,6 @@
     <li class="py-1">
       <button (click)="goToAppelsOffreSection(); closeMobileMenu()" class="block w-full text-left px-2 py-2.5 rounded-lg hover:bg-green-600/10 transition">
         Appels d'offres
-        <span *ngIf="!appelsOffreEnabled" class="text-xs italic text-gray-400 font-normal">(en édition)</span>
       </button>
     </li>
 
