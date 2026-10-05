@@ -26,6 +26,8 @@ export class HeaderComponent implements AfterViewInit {
   @Output() goHome = new EventEmitter<void>();
   /** Prod : la section Appels d'offres est en pause → on ouvre une modale d'info. */
   @Output() openAppelsOffreInfo = new EventEmitter<void>();
+  /** Sous-menu Publications : pages pas encore en prod → modale « Page en rédaction ». */
+  @Output() openPageEnRedaction = new EventEmitter<void>();
 
   /** Affiche « (en édition) » à côté du libellé tant que la section n'est pas publiée. */
   readonly appelsOffreEnabled = environment.appelsOffreEnabled;

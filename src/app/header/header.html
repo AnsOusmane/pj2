@@ -206,22 +206,22 @@
                        transition-all duration-200 z-50"
               >
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToAppelsOffre()"><!-- (click)="goToRapports()"-->
+                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="openPageEnRedaction.emit()">
                     Rapports officiels
                   </button>
                 </li>
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToAppelsOffre()"><!-- (click)="goToGuide()" -->
+                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="openPageEnRedaction.emit()">
                     Guides
                   </button>
                 </li>
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToAppelsOffre()" > <!--(click)="goToDecret()"-->
+                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="openPageEnRedaction.emit()">
                     Décrets
                   </button>
                 </li>
                 <li>
-                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="goToAppelsOffre()" ><!--(click)="goToManuel()"-->
+                  <button class="w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white" (click)="openPageEnRedaction.emit()">
                     Manuels d'audit
                   </button>
                 </li>
@@ -478,10 +478,10 @@
         </button>
 
         <div *ngIf="mobileDropdown.publications" class="pl-3 space-y-0.5 text-[13px] font-normal text-green-800/75">
-          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="goToAppelsOffre(); closeMobileMenu()">Rapports officiels</button>  <!--(click)="goToRapports(); -->
-          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="goToAppelsOffre(); closeMobileMenu()">Guides</button>  <!--(click)="goToGuide();-->
-          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="goToAppelsOffre();  closeMobileMenu()">Décrets</button> <!--(click)="goToDecret();-->
-          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="goToAppelsOffre();  closeMobileMenu()">Manuels d'audit</button> <!--(click)="goToManuel();-->
+          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="openPageEnRedaction.emit(); closeMobileMenu()">Rapports officiels</button>
+          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="openPageEnRedaction.emit(); closeMobileMenu()">Guides</button>
+          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="openPageEnRedaction.emit(); closeMobileMenu()">Décrets</button>
+          <button class="block w-full text-left px-2 py-1.5 rounded-lg hover:bg-green-600/10 transition" (click)="openPageEnRedaction.emit(); closeMobileMenu()">Manuels d'audit</button>
         </div>
       </div>
     </li>

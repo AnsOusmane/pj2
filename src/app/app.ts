@@ -56,6 +56,8 @@ export class App implements AfterViewInit {
   showMissionsvision = signal(false);
   /** Modale « Appels d'offres bientôt disponible » (affichée en prod, cf. environment). */
   showAppelsOffreInfo = signal(false);
+  /** Modale générique « Page en rédaction » (sections Publications pas encore en prod). */
+  showPageEnRedaction = signal(false);
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -117,6 +119,8 @@ export class App implements AfterViewInit {
   closeMissionsvision() { this.showMissionsvision.set(false); }
   openAppelsOffreInfo() { this.showAppelsOffreInfo.set(true); }
   closeAppelsOffreInfo() { this.showAppelsOffreInfo.set(false); }
+  openPageEnRedaction() { this.showPageEnRedaction.set(true); }
+  closePageEnRedaction() { this.showPageEnRedaction.set(false); }
   goHome() { this.router.navigate(['/']); }
 }
 

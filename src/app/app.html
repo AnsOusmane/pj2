@@ -45,6 +45,7 @@
   (openOrganigramme)="openOrganigramme()"
   (openMissionsvision)="openMissionsvision()"
   (openAppelsOffreInfo)="openAppelsOffreInfo()"
+  (openPageEnRedaction)="openPageEnRedaction()"
   (goHome)="goHome()"
 ></app-header>
 
@@ -155,6 +156,46 @@
     >
       J'ai compris
     </button>
+  </div>
+</div>
+
+<!-- Modale générique « Page en rédaction » (sections Publications pas encore en prod) -->
+<div
+  *ngIf="showPageEnRedaction()"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+  (click)="closePageEnRedaction()"
+>
+  <div
+    class="relative w-full max-w-xl bg-white rounded-2xl shadow-xl overflow-hidden"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      (click)="closePageEnRedaction()"
+      class="fixed top-4 right-4 text-white bg-red-600 hover:bg-red-700 w-10 h-10 rounded-full flex items-center justify-center text-2xl font-bold leading-none z-50"
+      aria-label="Fermer"
+    >
+      &times;
+    </button>
+    <div class="flex flex-col items-center justify-center h-80 text-center px-6">
+      <div class="mb-4 text-green-500">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="w-14 h-14"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor"
+             stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M11.25 9v2.25m0 3h.008v.008H11.25v-.008ZM21 12a9 9 0 11-18 0 9 9 0 0118 0Z" />
+        </svg>
+      </div>
+      <h2 class="text-xl font-semibold text-gray-800 mb-2">
+        Page en rédaction
+      </h2>
+      <p class="text-gray-500 max-w-sm">
+        Cette section est actuellement en cours de mise à jour.
+        Merci de revenir un peu plus tard.
+      </p>
+    </div>
   </div>
 </div>
 
