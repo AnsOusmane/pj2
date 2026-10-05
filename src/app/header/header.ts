@@ -39,7 +39,12 @@ export class HeaderComponent implements AfterViewInit {
     'assets/pub/4.png',
   ];
 
-  bannerLinks: string[] = [];
+  bannerLinks: string[] = [
+    '/maintenance',
+    '/maintenance',
+    '/maintenance',
+    '/maintenance',
+  ];
 
   bannerIndex: number = 0;
   imageOpacity: number = 1;
