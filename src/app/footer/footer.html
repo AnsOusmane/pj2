@@ -41,7 +41,12 @@
         <li><button (click)="openAboutTimeline.emit()" class="hover:underline">A propos</button></li>
         <li><button (click)="openMissionsvision.emit()" class="hover:underline">Vision et missions</button></li>
         <li><button (click)="openOrganigramme.emit()" class="hover:underline">Organnigramme</button></li>
-        <li><button (click)="goToAppelsOffre()" class="hover:underline">Appels d'offres</button></li>
+        <li>
+          <button (click)="goToAppelsOffre()" class="hover:underline">
+            Appels d'offres
+            <span *ngIf="!appelsOffreEnabled" class="text-xs italic text-white/50">(en édition)</span>
+          </button>
+        </li>
       </ul>
     </div>
 

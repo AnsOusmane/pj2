@@ -1,10 +1,12 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './footer.html',
   styleUrls: ['./footer.css'],
 })
@@ -18,6 +20,11 @@ export class Footer {
   @Output() openMissionsvision = new EventEmitter<void>();
   @Output() openOrganigramme = new EventEmitter<void>();
   @Output() openDonation = new EventEmitter<void>();
+  /** Prod : la section Appels d'offres est en pause → on ouvre une modale d'info. */
+  @Output() openAppelsOffreInfo = new EventEmitter<void>();
+
+  /** Affiche « (en édition) » à côté du libellé tant que la section n'est pas publiée. */
+  readonly appelsOffreEnabled = environment.appelsOffreEnabled;
 
   constructor(private router: Router) {}
 
@@ -27,7 +34,13 @@ export class Footer {
   }
 
   //Navigation
-  goToAppelsOffre() { this.router.navigate(['/appels-offre']); }
+  goToAppelsOffre() {
+    if (environment.appelsOffreEnabled) {
+      this.router.navigate(['/appels-offre']);
+    } else {
+      this.openAppelsOffreInfo.emit();
+    }
+  }
   goToRapports() { this.router.navigate(['/rapports-officiels']); }
   goToGuide() { this.router.navigate(['/guide']); }
   goToDecret() { this.router.navigate(['/decrets']); }
