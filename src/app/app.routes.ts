@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { appelsOffreGuard } from './guards/appels-offre.guard';
 
 // NB : tous les composants sont chargés en lazy (`loadComponent`) afin de les
 // sortir du bundle initial. Chaque route ne télécharge son code qu'à la visite.
@@ -99,26 +100,31 @@ export const routes: Routes = [
   },
   {
     path: 'appels-offre', loadComponent: () => import('./marches-publics/marches-publics').then(m => m.MarchesPublicsComponent),
+    canActivate: [appelsOffreGuard],
     title: 'Marchés publics — Sen-CSU',
     data: { description: "Marchés publics de la Sen-CSU : plan de passation, appels d'offres, avis d'attribution et agrément fournisseurs." }
   },
   {
     path: 'appels-offre/ppm', loadComponent: () => import('./ppm-public/ppm-public').then(m => m.PpmPublicComponent),
+    canActivate: [appelsOffreGuard],
     title: 'Plan de passation des marchés — Sen-CSU',
     data: { description: "Plan de passation des marchés (PPM) de la Sen-CSU." }
   },
   {
     path: 'appels-offre/avis', loadComponent: () => import('./appels-offre/appels-offre').then(m => m.AppelsOffreComponent),
+    canActivate: [appelsOffreGuard],
     title: "Appels d'offres — Sen-CSU",
     data: { description: "Appels d'offres en cours de la Sen-CSU." }
   },
   {
     path: 'appels-offre/attributions', loadComponent: () => import('./avis-attribution/avis-attribution').then(m => m.AvisAttributionComponent),
+    canActivate: [appelsOffreGuard],
     title: "Avis d'attribution — Sen-CSU",
     data: { description: "Avis d'attribution des marchés publics de la Sen-CSU." }
   },
   {
     path: 'appels-offre/fournisseurs', loadComponent: () => import('./fournisseurs/fournisseurs').then(m => m.FournisseursComponent),
+    canActivate: [appelsOffreGuard],
     title: "Demande d'agrément fournisseur — Sen-CSU",
     data: { description: "Demande d'agrément fournisseur auprès de la Sen-CSU." }
   },
